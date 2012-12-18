@@ -29,8 +29,9 @@ header[data-login='false'] #logout-btn{
 }
 
 .nav-bar {
-  @back:lighten(@black, 10);
+  @back:lighten(@black, 15);
   background-color: @back;
+  .linear-gradient(@back, darken(@back, 10));
   border:1px solid darken(@back, 5);
   margin: 10px 0;
   padding:0 5px;
@@ -40,7 +41,7 @@ header[data-login='false'] #logout-btn{
 
 .nav-item {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 15px;
   color: darken(@white, 20);
   &:hover{
     color:@white;

@@ -41,6 +41,11 @@ app.configure('development', function () {
     app.get('/think_back', r.think_back.index);
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
+
+    app.get('/team/get', r.team.get);
+    app.post('/team/save', r.team.save);
+    app.post('/team/addMember', r.team.addMember);
+    app.post('/team/removeMember', r.team.removeMember);
 })(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function () {
