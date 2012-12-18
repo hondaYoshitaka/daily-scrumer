@@ -21,6 +21,12 @@ a {
     opacity: 0.8;
   }
 }
+header[data-login='true'] #login-btn{
+  display: none;
+}
+header[data-login='false'] #logout-btn{
+  display: none;
+}
 
 .nav-bar {
   @back:lighten(@black, 10);

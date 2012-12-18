@@ -6,9 +6,9 @@ exports.nav = {
     home:'home',
     daily:'daily',
     think_back:'think_back',
-    login:'login'
+    login:'login',
+    logout:'logout'
 };
-
 
 exports.labels = {
     login:{
@@ -20,5 +20,6 @@ exports.labels = {
 
 exports.btn = {
     close:'×',
-    login:'login'
+    login:'login',
+    logout:'logout'
 };

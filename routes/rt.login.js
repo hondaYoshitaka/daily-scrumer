@@ -10,3 +10,8 @@ exports.auth = function(req, res){
         success:true
     });
 };
+
+/* ログアウト */
+exports.logout = function(req, res){
+
+};

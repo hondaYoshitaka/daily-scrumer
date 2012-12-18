@@ -14,7 +14,7 @@ html
     block head
 
   body
-    header
+    header(data-login='false')
         nav.nav-bar.positioned
             a.nav-item(href='/') #{msg.nav.home}
             a.nav-item(href='/daily') #{msg.nav.daily}
@@ -22,6 +22,8 @@ html
 
             a.stick-right#login-btn
                 | #{msg.nav.login}
+            a.stick-right#logout-btn
+                | #{msg.nav.logout}
 
         #login-dialog.stick-right(
             data-role='dialog',

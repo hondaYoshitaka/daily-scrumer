@@ -159,7 +159,7 @@
                     .submit(function (e) {
                         form.showSpin();
                         $.ajax({
-                            method:method,
+                            type:method,
                             url:action,
                             success:function (data) {
                                 callback.call(form, data);
@@ -226,6 +226,12 @@
             $('#login-from', dialog).ajaxForm(function (data) {
                 console.log('login done');
                 dialog.findByRole('closer').trigger('click');
+                header.attr('data-login', true);
+            });
+            $('#logout-btn', dialog).click(function(){
+                $.post('/logout', function(){
+                    header.attr('data-login', false);
+                });
             });
             return header;
         }

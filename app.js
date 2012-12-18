@@ -39,7 +39,8 @@ app.configure('development', function () {
     app.get('/', r.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
-    app.get('/auth', r.login.auth);
+    app.post('/auth', r.login.auth);
+    app.post('/logout', r.login.logout);
 })(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function () {
