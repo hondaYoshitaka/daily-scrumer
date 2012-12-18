@@ -20,6 +20,7 @@ exports.labels = {
 
 exports.btn = {
     close:'×',
+    add:'+',
     login:'login',
     logout:'logout'
 };
