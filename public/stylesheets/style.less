@@ -1,9 +1,10 @@
+@import 'bakery';
 @white: #feefea;
 @black: #332c2e;
 
 
 body {
-  padding: 10px 20px;
+  padding: 0 20px 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-image: url('../images/texture/purty_wood.png');
   color: @black;
@@ -18,7 +19,7 @@ a {
 }
 .nav-bar{
   background-color: lighten(@black, 10);
-
+  margin: 10px 0;
 }
 .nav-item{
   display: inline-block;
@@ -40,3 +41,64 @@ a {
   .stick;
   left: 5px;
 }
+
+
+.paper{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  .box-shadow(1px 1px 3px, 0.4);
+  &:before,&:after{
+    content: '';
+    width: 50%;
+    height: 20%;
+    bottom: 15px;
+    position: absolute;
+    z-index: 1;
+    .black-back(0.7);
+    .box-shadow(0 15px 10px, 0.7);
+  }
+  @deg:3deg;
+  &:before{
+    left:4px;
+    .rotate( -1 * @deg);
+  }
+  &:after{
+    right:10px;
+    .rotate(@deg);
+  }
+  .paper-content{
+    position: relative;
+    z-index: 5;
+    background-color: #FFF;
+    border: 1px solid @silver;
+    padding: 20px;
+    &.taped{
+      &:before,&:after{
+        content: "";
+        position: absolute;
+        .white-back(0.35);
+        width:85px;
+        height: 30px;
+        top:0;
+        .box-shadow(1px 1px 2px, 0.2);
+      }
+      @rotate:15deg;
+      @side:-20px;
+      &:before{
+        left: @side;
+        .rotate(-1 *  @rotate);
+      }
+      &:after{
+        right:@side;
+        .rotate(@rotate);
+      }
+    }
+  }
+}
+
+section{
+  max-width: 400px;
+  margin: 10px;
+}
+
