@@ -10,6 +10,7 @@ var should = require('should'),
     route = require('../../routes/rt.team.js');
 
 describe('rt.team', function () {
+    require('../check_env.js')();
     it('get', function (done) {
         route.get(new Req({
 

@@ -9,6 +9,9 @@ var should = require('should'),
     route = require('../../routes/rt.daily.js');
 
 describe('rt.daily.js', function(){
+
+    require('../check_env.js')();
+
     it('daily', function(done){
        route.index(new Req({
 

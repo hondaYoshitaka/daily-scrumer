@@ -10,6 +10,9 @@ var should = require('should'),
     route = require('../../routes/rt.index.js');
 
 describe('mch.rt.index', function(){
+
+    require('../check_env.js')();
+
     it('index', function(done){
         route.index(new Req({
 

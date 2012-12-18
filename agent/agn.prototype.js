@@ -14,7 +14,7 @@ var Agent = exports = module.exports = function () {
 var Cookie = exports.Cookie = require('./cookie');
 var Query = exports.Query = require('./query');
 
-Agent.Iconv = require('iconv').Iconv;
+//Agent.Iconv = require('iconv').Iconv;
 Agent.prototype.request = function (method, url, callback) {
     var s = this;
 

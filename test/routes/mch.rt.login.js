@@ -10,6 +10,9 @@ var should = require('should'),
     route = require('../../routes/rt.login.js');
 
 describe('rt.login', function(){
+
+    require('../check_env.js')();
+
     it('auth', function(done){
         route.auth(new Req({
 

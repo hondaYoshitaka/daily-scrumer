@@ -10,6 +10,8 @@ var should = require('should'),
     route = require('../../routes/rt.think_back.js');
 
 describe('rt.think_back', function () {
+    require('../check_env.js')();
+
     it('index', function (done) {
         route.index(new Req({
 

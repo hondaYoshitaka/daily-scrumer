@@ -7,6 +7,9 @@ var should = require('should'),
     Member = Team.Member;
 
 describe('mdl.team', function(){
+
+    require('../check_env.js')();
+
     before(function(done){
 
         done();
