@@ -8,3 +8,15 @@ exports.nav = {
     think_back:'think_back',
     login:'login'
 };
+
+
+exports.labels = {
+    login:{
+        username:'username',
+        password:'password'
+    }
+};
+
+exports.btn = {
+    close:'×'
+};

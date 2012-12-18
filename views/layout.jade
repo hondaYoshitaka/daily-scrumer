@@ -19,8 +19,19 @@ html
             a.nav-item(href='/daily') #{msg.nav.daily}
             a.nav-item(href='/think_back') #{msg.nav.think_back}
 
-            a.stick-right(href='login') #{msg.nav.login}
+            a.stick-right#login-btn
+                | #{msg.nav.login}
+
+        #login-dialog(
+            data-role='dialog',
+            data-opener='#login-btn')
+                a(data-role='closer').stick-right
+                    | #{msg.btn.close}
+                include parts/dialog.login-form.jade
+
     #main
         block content
 
     footer
+
+

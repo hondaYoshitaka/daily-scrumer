@@ -1,7 +1,7 @@
 @import 'bakery';
-@white: #feefea;
-@black: #332c2e;
 
+@white: #FEFEFE;
+@black: #333;
 
 body {
   padding: 0 20px 10px;
@@ -13,42 +13,50 @@ body {
 a {
   color: #00B7FF;
   text-decoration: none;
-  &:hover{
+  cursor:pointer
+  &:hover {
     text-decoration: underline;
   }
+  &:active{
+    opacity: 0.8;
+  }
 }
-.nav-bar{
+
+.nav-bar {
   background-color: lighten(@black, 10);
   margin: 10px 0;
 }
-.nav-item{
+
+.nav-item {
   display: inline-block;
   padding: 5px 10px;
-  color:@white;
+  color: @white;
 }
 
-.positioned{
+.positioned {
   position: relative;
 }
-.stick{
+
+.stick {
   position: absolute;
 }
-.stick-right{
+
+.stick-right {
   .stick;
   right: 5px;
 }
-.stick-left{
+
+.stick-left {
   .stick;
   left: 5px;
 }
 
-
-.paper{
+.paper {
   position: relative;
   margin: 0;
   padding: 0;
   .box-shadow(1px 1px 3px, 0.4);
-  &:before,&:after{
+  &:before, &:after {
     content: '';
     width: 50%;
     height: 20%;
@@ -58,47 +66,60 @@ a {
     .black-back(0.7);
     .box-shadow(0 15px 10px, 0.7);
   }
-  @deg:3deg;
-  &:before{
-    left:4px;
+  @deg: 3deg;
+  &:before {
+    left: 4px;
     .rotate( -1 * @deg);
   }
-  &:after{
-    right:10px;
+  &:after {
+    right: 10px;
     .rotate(@deg);
   }
-  .paper-content{
+  .paper-content {
     position: relative;
     z-index: 5;
     background-color: #FFF;
     border: 1px solid @silver;
     padding: 20px;
-    &.taped{
-      &:before,&:after{
+    &.taped {
+      &:before, &:after {
         content: "";
         position: absolute;
         .white-back(0.35);
-        width:85px;
+        width: 85px;
         height: 30px;
-        top:0;
+        top: 0;
         .box-shadow(1px 1px 2px, 0.2);
       }
-      @rotate:15deg;
-      @side:-20px;
-      &:before{
+      @rotate: 15deg;
+      @side: -20px;
+      &:before {
         left: @side;
         .rotate(-1 *  @rotate);
       }
-      &:after{
-        right:@side;
+      &:after {
+        right: @side;
         .rotate(@rotate);
       }
     }
   }
 }
 
-section{
+section {
   max-width: 400px;
   margin: 10px;
 }
 
+.hidden {
+  display: none;
+}
+
+.dialog {
+  position: absolute;
+  background-color: @white;
+  z-index: 200;
+  border: 1px solid darken(@white , 4);
+  .border-radius(2px);
+  .box-shadow(5px 5px 10px, 0.4);
+
+}

@@ -166,9 +166,27 @@
                 elm.removeClass(className);
             }
             return elm;
+        },
+        /* ダイアログ */
+        dialog:function(){
+            return $(this).each(function(){
+                var dialog = $(this).hide().addClass('dialog'),
+                    opener = $(dialog.data('opener')),
+                    closer = dialog.findByRole('closer');
+                opener.click(function(){
+                    dialog.fadeIn();
+                });
+                closer.click(function(){
+                    dialog.fadeOut();
+                });
+            });
         }
     });
     $(function () {
+        var body = $('body');
+
+        body.findByRole('dialog').dialog();
+
 
     });
 })(jQuery);

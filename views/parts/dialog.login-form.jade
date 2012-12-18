@@ -1,0 +1,15 @@
+form#login-from(action='/login')
+    table
+        tr
+            th
+                label(for='login-username-input')
+                    #{msg.labels.login.username}
+            td
+                input#login-username-input(name='username', type='text')
+        tr
+            th
+                label(for='login-password-input')
+                    #{msg.labels.login.password}
+            td
+                input#login-password-input(name='password', type='password')
+
