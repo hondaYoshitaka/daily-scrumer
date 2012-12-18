@@ -14,10 +14,12 @@ html
 
   body
     head
-        nav#top-nav
-            a.nav-item(href='/') home
-            a.nav-item(href='/daily') daily
-            a.nav-item(href='/think_back') think_back
+        nav.nav-bar.positioned
+            a.nav-item(href='/') #{msg.nav.home}
+            a.nav-item(href='/daily') #{msg.nav.daily}
+            a.nav-item(href='/think_back') #{msg.nav.think_back}
+
+            a.stick-right(href='login') #{msg.nav.login}
     #main
         block content
 

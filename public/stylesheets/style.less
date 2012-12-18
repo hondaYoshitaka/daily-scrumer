@@ -1,17 +1,36 @@
+@white:#FEFEFE;
+@black:#333;
+
+
 body {
-  padding: 50px;
+  padding: 10px 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
-
-@black:#333;
-#top-nav{
+.nav-bar{
   background-color: lighten(@black, 10);
+
 }
 .nav-item{
   display: inline-block;
   padding: 5px 10px;
+  color:@white;
+}
+
+.positioned{
+  position: relative;
+}
+.stick{
+  position: absolute;
+}
+.stick-right{
+  .stick;
+  right: 5px;
+}
+.stick-left{
+  .stick;
+  left: 5px;
 }
