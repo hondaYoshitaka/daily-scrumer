@@ -9,7 +9,9 @@
             var team_id = null; //TODO
             $.get('/team/get', {_id:team_id}, function(data){
                 data.members.forEach(function(member){
-                    var li = $('<li/>').appendTo(memberList);
+                    var li = $('<li/>')
+                        .addClass('positioned')
+                        .appendTo(memberList);
                     $('<input/>')
                         .attr({
                             type:'text'
@@ -17,6 +19,9 @@
                         .appendTo(li)
                         .val(member.name)
                         .editableText();
+                    $('<a/>').addClass('list-remove-btn')
+                        .text('×')
+                        .appendTo(li)
                 });
             });
 

@@ -185,3 +185,23 @@ i.icon{
 
   }
 }
+.list-remove-btn{
+  color: fadeout(@red, 30);
+  font-weight: bolder;
+  font-size: 1.2em;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top:-8px;
+  cursor:pointer;
+  display: block;
+  padding: 4px 8px;
+  opacity: 0;
+  &:hover{
+    color:@red;
+    text-decoration: none;
+  }
+}
+li:hover .list-remove-btn{
+  opacity: 1;
+}
