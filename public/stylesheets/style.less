@@ -23,8 +23,11 @@ a {
 }
 
 .nav-bar {
-  background-color: lighten(@black, 10);
+  @back:lighten(@black, 10);
+  background-color: @back;
+  border:1px solid darken(@back, 5);
   margin: 10px 0;
+  .box-shadow(2px 2px 3px, 0.4);
 }
 
 .nav-item {
