@@ -7,13 +7,14 @@ html
     block script
 
     script(src='/javascripts/jquery.js')
+    script(src='/javascripts/spin.js')
     script(src='/javascripts/view.js')
     block javascript
 
     block head
 
   body
-    head
+    header
         nav.nav-bar.positioned
             a.nav-item(href='/') #{msg.nav.home}
             a.nav-item(href='/daily') #{msg.nav.daily}
@@ -22,7 +23,7 @@ html
             a.stick-right#login-btn
                 | #{msg.nav.login}
 
-        #login-dialog(
+        #login-dialog.stick-right(
             data-role='dialog',
             data-opener='#login-btn')
                 a(data-role='closer').stick-right

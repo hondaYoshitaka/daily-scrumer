@@ -2,7 +2,7 @@
 (function ($) {
 
     $.fn.extend({
-        findByAttr:function(key, val){
+        findByAttr:function (key, val) {
             var condition = ['[', key, '="', val, '"]'].join('');
             return $(this).find(condition);
         },
@@ -110,11 +110,11 @@
                 }
             });
         },
-        showSpin:function(size){
-            if(!size) size = 16;
+        showSpin:function (size) {
+            if (!size) size = 16;
             var elm = $(this),
                 spin = $('.spin', elm);
-            if(!spin.size()){
+            if (!spin.size()) {
                 var spin = $('<div/>').css({
                     width:size,
                     height:size,
@@ -126,41 +126,78 @@
             spin.show();
             return elm;
         },
+        /* フォーム */
+        form:function () {
+            return $(this).each(function () {
+                var form = $(this);
+                form.findByRole('submit-btn').click(function () {
+                    form.submit();
+                });
+            });
+        },
         /* ajax検索フォーム */
         searchForm:function (callback) {
-            var form = $(this).addClass('search-form'),
-                action = form.attr('action');
-            form.submit(function (e) {
-                $.get(action, form.serializeObj(), callback);
-                e.preventDefault();
+            return $(this).each(function () {
+                var form = $(this).addClass('search-form'),
+                    action = form.attr('action');
+                form.submit(function (e) {
+                    $.get(action, form.serializeObj(), callback);
+                    e.preventDefault();
+                });
             });
-            return form;
+        },
+        /* ajax投稿フォーム */
+        ajaxForm:function (callback) {
+            return $(this).each(function () {
+
+                var form = $(this).addClass('post-form'),
+                    action = form.attr('action'),
+                    method = form.attr('method');
+
+                form
+                    .form()
+                    .submit(function (e) {
+                        form.showSpin();
+                        $.ajax({
+                            method:method,
+                            url:action,
+                            success:function (data) {
+                                callback.call(form, data);
+                            },
+                            complete:function () {
+                                $('.spin', form).hide();
+                            }
+                        });
+                        e.preventDefault();
+                    });
+            });
+
         },
         /* データを動的に取り込むテーブル */
-        loadableTable:function(data){
+        loadableTable:function (data) {
             var table = $(this),
                 thead = $('thead', table),
                 tbody = $('tbody', table).empty();
-            var keys = (function(){
+            var keys = (function () {
                 var keys = [];
-                $('th', thead).each(function(){
+                $('th', thead).each(function () {
                     var key = $(this).data('key');
                     keys.push(key);
                 });
                 return keys;
             })();
-            data.forEach(function(data){
+            data.forEach(function (data) {
                 var tr = $('<tr/>').appendTo(tbody);
-                keys.forEach(function(key){
+                keys.forEach(function (key) {
                     $('<td/>').text(data[key]).appendTo(tr);
                 });
             });
             return table;
         },
         /* クラス名をつけたり外したり */
-        flipClass:function(className, flg){
+        flipClass:function (className, flg) {
             var elm = $(this);
-            if(flg){
+            if (flg) {
                 elm.addClass(className);
             } else {
                 elm.removeClass(className);
@@ -168,25 +205,34 @@
             return elm;
         },
         /* ダイアログ */
-        dialog:function(){
-            return $(this).each(function(){
+        dialog:function () {
+            return $(this).each(function () {
                 var dialog = $(this).hide().addClass('dialog'),
                     opener = $(dialog.data('opener')),
                     closer = dialog.findByRole('closer');
-                opener.click(function(){
+                opener.click(function () {
                     dialog.fadeIn();
                 });
-                closer.click(function(){
+                closer.click(function () {
                     dialog.fadeOut();
                 });
             });
+        },
+        header:function () {
+            var header = $(this);
+
+            var dialog = header.findByRole('dialog').dialog();
+
+            $('#login-from', dialog).ajaxForm(function (data) {
+                console.log('login done');
+                dialog.findByRole('closer').trigger('click');
+            });
+            return header;
         }
     });
     $(function () {
         var body = $('body');
 
-        body.findByRole('dialog').dialog();
-
-
+        $('header', body).header();
     });
 })(jQuery);

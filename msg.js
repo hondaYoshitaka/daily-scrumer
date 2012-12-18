@@ -12,11 +12,13 @@ exports.nav = {
 
 exports.labels = {
     login:{
+        caption:'login',
         username:'username',
         password:'password'
     }
 };
 
 exports.btn = {
-    close:'×'
+    close:'×',
+    login:'login'
 };

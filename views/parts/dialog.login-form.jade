@@ -1,5 +1,6 @@
-form#login-from(action='/login')
+form#login-from(action='/auth', data-role='ajax-from', method='POST')
     table
+        caption #{msg.labels.login.caption}
         tr
             th
                 label(for='login-username-input')
@@ -12,4 +13,7 @@ form#login-from(action='/login')
                     #{msg.labels.login.password}
             td
                 input#login-password-input(name='password', type='password')
+
+    a.btn(data-role='submit-btn')
+        | #{msg.btn.login}
 

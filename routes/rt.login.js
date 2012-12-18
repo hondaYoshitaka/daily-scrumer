@@ -3,6 +3,10 @@
  */
 
 /* 認証実行 */
-exports.auth = function(){
+exports.auth = function(req, res){
 
+    //TODO redmineをたたきにいく
+    res.json({
+        success:true
+    });
 };
