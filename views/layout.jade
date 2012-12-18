@@ -1,7 +1,16 @@
 doctype 5
 html
   head
-    title= title
+    meta(charset='utf-8')
+    title #{app.title}
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block script
+
+    block javascript
+        script(src='/javascripts/jquery.js')
+        script(src='/javascripts/view.js')
+
+    block head
+
   body
     block content
