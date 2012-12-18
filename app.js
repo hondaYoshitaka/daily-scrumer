@@ -36,7 +36,7 @@ app.configure('development', function () {
 });
 
 (function (r) {
-    app.get('/', r.index);
+    app.get('/', r.index.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
     app.post('/auth', r.login.auth);

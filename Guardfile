@@ -26,7 +26,7 @@ group :code do
   guard 'shell' do
     watch(%r{^logic/lgc\.(.*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/logic/mch.lgc.#{m[1]}.js") }
     watch(%r{^agent/agn\.(.*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/agent/mch.agn.#{m[1]}.js") }
-    watch(%r{^routes/(.*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/routes/mch.#{m[1]}.js") }
+    watch(%r{^routes/(rt\..*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/routes/mch.#{m[1]}.js") }
     watch(%r{^db/models/mdl\.(.*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/models/mch\.mdl\.#{m[1]}.js") }
     watch(%r{^util/utl\.(.*)\.js$})   { |m| system("mocha --ui bdd --reporter spec test/util/mch.utl.#{m[1]}.js") }
     watch(%r{^(validation/vld\.client\.js)$})   { |m| system("mocha --ui bdd --reporter spec test/validation/*") }

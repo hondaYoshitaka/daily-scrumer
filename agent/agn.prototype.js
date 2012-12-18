@@ -12,6 +12,9 @@ var Agent = exports = module.exports = function () {
 };
 
 var Cookie = exports.Cookie = require('./cookie');
+var Query = exports.Query = require('./query');
+
+Agent.Iconv = require('iconv').Iconv;
 Agent.prototype.request = function (method, url, callback) {
     var s = this;
 
@@ -56,5 +59,5 @@ Agent.prototype.post = function (url, callback) {
 };
 Agent.prototype.get = function (url, callback) {
     var s = this;
-    s.request('GET', url, callback);
+    return s.request('GET', url, callback);
 };

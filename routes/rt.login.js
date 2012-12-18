@@ -13,5 +13,7 @@ exports.auth = function(req, res){
 
 /* ログアウト */
 exports.logout = function(req, res){
-
+    res.json({
+        success:true
+    });
 };
