@@ -11,12 +11,10 @@
         "less-middleware":"*",
         "uglify-js":"*",
         "mongojs":"*",
-        "less-middleware":"*",
         "mocha":"*",
         "should":"*",
         "node-uuid":"*",
         "cheerio":"*",
-        "iconv":"*",
         "request":"*"
     }
 }

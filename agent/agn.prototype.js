@@ -12,7 +12,6 @@ var Agent = exports = module.exports = function () {
 };
 
 var Cookie = exports.Cookie = require('./cookie');
-Agent.Iconv = require('iconv').Iconv;
 Agent.prototype.request = function (method, url, callback) {
     var s = this;
 
