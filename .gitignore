@@ -14,5 +14,8 @@ results
 .idea
 
 style.css
+index.css
+daily.css
+think_back.css
 
 npm-debug.log
