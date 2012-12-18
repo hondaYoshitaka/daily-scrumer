@@ -13,4 +13,12 @@ html
     block head
 
   body
-    block content
+    head
+        nav#top-nav
+            a.nav-item(href='/') home
+            a.nav-item(href='/daily') daily
+            a.nav-item(href='/think_back') think_back
+    #main
+        block content
+
+    footer

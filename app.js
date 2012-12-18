@@ -3,16 +3,17 @@
  */
 
 var express = require('express')
-    , routes = require('./routes')
     , http = require('http')
-    , path = require('path'),
-    package = require('./package.json');
+    , path = require('path')
+    , msg = require('./msg')
+    , package = require('./package.json');
 
 var app = express();
 app.locals({
     app:{
         title:package.name
-    }
+    },
+    msg:msg
 });
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
@@ -34,7 +35,7 @@ app.configure('development', function () {
 
 });
 
-(function(r){
+(function (r) {
     app.get('/', r.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
