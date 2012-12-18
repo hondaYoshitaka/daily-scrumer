@@ -218,6 +218,42 @@
                 });
             });
         },
+        //編集可能ラベル
+        //テキストボックスに対してこのプラグインを呼ぶといい感じになる。
+        editableText:function(){
+            return $(this).each(function(){
+                var input = $(this).keydown(function(e){
+                    switch(e.keyCode){
+                        case 9:
+                        case 13:
+                            input.trigger('change');
+                    }
+                }).change(function(){
+                        var val = input.val();
+                        if(!val) return;
+                        input.hide();
+                        span.text(val).show();
+                    });
+                var span = $('<span/>').addClass('editable')
+                    .insertAfter(input)
+                    .click(function(){
+                        input.show();
+                        setTimeout(function(){
+                            input.trigger('focus').select();
+                        }, 20);
+                        span.hide();
+                    })
+                    .css({
+                        cursor:'pointer'
+                    });
+                var name = input.attr('name');
+                if(name) span.attr('data-rs-name', name);
+                if(input.attr('id'))span.attr('for', input.attr('id'));
+                var fontSize = input.css('font-size');
+                if(fontSize) span.css('font-size', fontSize)
+                if(input.val()) input.trigger('change');
+            });
+        },
         header:function () {
             var header = $(this);
 

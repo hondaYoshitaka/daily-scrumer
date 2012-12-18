@@ -9,9 +9,14 @@
             var team_id = null; //TODO
             $.get('/team/get', {_id:team_id}, function(data){
                 data.members.forEach(function(member){
-                    $('<li/>')
-                        .text(member.name)
-                        .appendTo(memberList);
+                    var li = $('<li/>').appendTo(memberList);
+                    $('<input/>')
+                        .attr({
+                            type:'text'
+                        })
+                        .appendTo(li)
+                        .val(member.name)
+                        .editableText();
                 });
             });
 
