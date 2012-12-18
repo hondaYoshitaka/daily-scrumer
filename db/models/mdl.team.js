@@ -9,6 +9,7 @@ var Team = exports = module.exports = function(data){
     var s = this;
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
+    s.members = [];
 };
 
 Team.prototype.defaultvalue = {
@@ -17,7 +18,6 @@ Team.prototype.defaultvalue = {
     /* メンバー */
     members:[]
 };
-
 (function(Prototype){
     Team.prototype = new Prototype();
     for(var name in Prototype){
@@ -25,3 +25,22 @@ Team.prototype.defaultvalue = {
         Team[name] = Prototype[name];
     }
 })(Model);
+
+
+var Member = exports.Member = function(data){
+    var s = this;
+    util.obj.deepCopy(s.defaultValue, s);
+    util.obj.deepCopy(data, s);
+};
+Member.prototype.defaultValue = {
+    /* メンバ名 */
+    name:null
+};
+
+/* メンバーを追加する */
+Team.prototype.addMember = function(member, callback){
+    var s = this;
+    s.members.push(member);
+    s.update(callback);
+};
+
