@@ -3,11 +3,17 @@
  */
 
 var Agent = require('./agn.prototype.js'),
+    util = require('../util'),
     conf = require('../conf');
 
-var RedmineAgent = exports = module.exports = function () {
+var RedmineAgent = exports = module.exports = function (data) {
     var s = this;
-    s.cookie = new Agent.Cookie();
+    if(data){
+        util.obj.deepCopy(data, s);
+        s.cookie = new Agent.Cookie(data.cookie);
+    } else {
+        s.cookie = new Agent.Cookie();
+    }
 };
 
 (function (Prototype) {
@@ -31,6 +37,14 @@ RedmineAgent.prototype.login = function (auth, callback) {
                 password:auth.password,
                 authenticity_token:token
             });
+    });
+};
+
+RedmineAgent.prototype.logout = function(callback){
+    var s = this;
+    return s.get(conf.url.logout, function(){
+        s.cookie = new Agent.Cookie(); //kill session
+        callback.call(s, true);
     });
 };
 

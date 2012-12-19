@@ -214,9 +214,11 @@
                     opener = $(dialog.data('opener')),
                     closer = dialog.findByRole('closer');
                 opener.click(function () {
+                    opener.fadeOut();
                     dialog.fadeIn();
                 });
                 closer.click(function () {
+                    opener.fadeIn();
                     dialog.fadeOut();
                 });
             });
@@ -262,7 +264,7 @@
 
             var dialog = header.findByRole('dialog').dialog();
 
-            $('#login-from', dialog).ajaxForm(function (data) {
+            var form = $('#login-from', dialog).ajaxForm(function (data) {
                 var form = $(this),
                     loginErrMsg = $('#login-err-msg'),
                     input = $('input', form);
@@ -276,7 +278,10 @@
                     loginErrMsg.show();
                 }
             });
-            $('#logout-btn', dialog).click(function(){
+            $('input:last', form).pressEnter(function(){
+                form.submit();
+            });
+            $('#logout-btn', header).click(function(){
                 $.post('/logout', function(){
                     header.attr('data-login', false);
                 });
