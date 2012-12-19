@@ -24,3 +24,7 @@ exports.btn = {
     login:'login',
     logout:'logout'
 };
+
+exports.err = {
+    login_fail:'failed to login'
+};

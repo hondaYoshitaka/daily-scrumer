@@ -2,17 +2,25 @@
  * ログイン関連
  */
 
-/* 認証実行 */
-exports.auth = function(req, res){
+var RedmineAgent = require('../agent')['Redmine'];
 
-    //TODO redmineをたたきにいく
-    res.json({
-        success:true
+/* 認証実行 */
+exports.auth = function (req, res) {
+    var data = req.body;
+    var auth = {
+        username:data.username,
+        password:data.password
+    };
+    var agent = new RedmineAgent();
+    agent.login(auth, function (sucess) {
+        res.json({
+            success:sucess
+        });
     });
 };
 
 /* ログアウト */
-exports.logout = function(req, res){
+exports.logout = function (req, res) {
     res.json({
         success:true
     });

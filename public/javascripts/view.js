@@ -157,10 +157,13 @@
                 form
                     .form()
                     .submit(function (e) {
+                        var data = form.serializeObj();
+                            //TODO validation
                         form.showSpin();
                         $.ajax({
                             type:method,
                             url:action,
+                            data:data,
                             success:function (data) {
                                 callback.call(form, data);
                             },
@@ -250,7 +253,7 @@
                 if(name) span.attr('data-rs-name', name);
                 if(input.attr('id'))span.attr('for', input.attr('id'));
                 var fontSize = input.css('font-size');
-                if(fontSize) span.css('font-size', fontSize)
+                if(fontSize) span.css('font-size', fontSize);
                 if(input.val()) input.trigger('change');
             });
         },
@@ -260,9 +263,18 @@
             var dialog = header.findByRole('dialog').dialog();
 
             $('#login-from', dialog).ajaxForm(function (data) {
-                console.log('login done');
-                dialog.findByRole('closer').trigger('click');
-                header.attr('data-login', true);
+                var form = $(this),
+                    loginErrMsg = $('#login-err-msg'),
+                    input = $('input', form);
+                if(data.success){
+                    input.removeClass('err');
+                    dialog.findByRole('closer').trigger('click');
+                    header.attr('data-login', true);
+                    loginErrMsg.hide();
+                } else {
+                    input.addClass('err');
+                    loginErrMsg.show();
+                }
             });
             $('#logout-btn', dialog).click(function(){
                 $.post('/logout', function(){

@@ -20,10 +20,12 @@ var RedmineAgent = exports = module.exports = function () {
 
 RedmineAgent.prototype.login = function (auth, callback) {
     var s = this;
-    s.get(conf.url.login, function (res, body, $) {
+    return s.get(conf.url.login, function (res, body, $) {
         var token = $('input[name=authenticity_token]').attr('value');
         s.post(conf.url.login,function (res, body, $) {
-            callback && callback.call(s);
+            var err = !!$('.flash.error').html();
+            var success = !err;
+            callback && callback.call(s, success);
         }).form({
                 username:auth.username,
                 password:auth.password,
@@ -32,6 +34,6 @@ RedmineAgent.prototype.login = function (auth, callback) {
     });
 };
 
-new RedmineAgent().login(conf.auth, function () {
-
-});
+//new RedmineAgent().login(conf.auth, function (success) {
+//
+//});

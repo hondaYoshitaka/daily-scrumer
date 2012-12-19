@@ -1,19 +1,20 @@
 form#login-from(action='/auth', data-role='ajax-from', method='POST')
+    .hidden.err-msg#login-err-msg #{msg.err.login_fail}
     table
         caption #{msg.labels.login.caption}
         tr
             th
                 label(for='login-username-input')
-                    #{msg.labels.login.username}
+                    | #{msg.labels.login.username}
             td
                 input#login-username-input(name='username', type='text')
         tr
             th
                 label(for='login-password-input')
-                    #{msg.labels.login.password}
+                    | #{msg.labels.login.password}
             td
                 input#login-password-input(name='password', type='password')
 
-    a.btn(data-role='submit-btn')
+    a.btn.block-btn(data-role='submit-btn')
         | #{msg.btn.login}
 

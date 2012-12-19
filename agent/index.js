@@ -1,4 +1,5 @@
-var fs = require('fs');
+var fs = require('fs'),
+    util = require('../util');
 
 function getTypeName(name){
     return util.string.toUpperInitial(util.string.underscore2Camel(name));
