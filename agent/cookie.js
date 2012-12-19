@@ -18,11 +18,7 @@ exports = module.exports = (function () {
 
     var Cookie = function (data) {
         var s = this;
-        if(typeof data === 'string'){
-            s.set(data);
-        } else {
-            util.obj.deepCopy(data, s);
-        }
+        s.set(data);
     };
 
     /* set-cookieヘッダの情報をセットする */
