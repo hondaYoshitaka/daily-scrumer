@@ -49,8 +49,27 @@ header[data-login='false'] #logout-btn {
   color: darken(@white, 20);
   &:hover {
     color: @white;
-    background-color: lighten(@black , 1);
+    background-color: lighten(@black , 20);
   }
+}
+.nav-item-pressed,
+.nav-item-pressed:hover,
+.nav-item-pressed:active{
+  cursor: default;
+  background-color: @black;
+  color: darken(@white, 10);
+  .box-shadow(1px 1px 2px, 0.3, inset);
+  text-decoration: none;
+}
+.nav-separator{
+  opacity: 0.5;
+  width:1px;
+  height:1em;
+  background-color: lighten(@black, 20);
+  display: inline-block;
+}
+.nav-item-blue{
+  padding: 5px 0;
 }
 
 .positioned {
@@ -63,7 +82,7 @@ header[data-login='false'] #logout-btn {
 
 .stick-right {
   .stick;
-  right: 5px;
+  right: 10px;
 }
 
 .stick-left {

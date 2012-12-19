@@ -259,6 +259,13 @@
                 if(input.val()) input.trigger('change');
             });
         },
+        nav:function(key){
+            var nav = $(this);
+            $('.nav-item', nav)
+                .filter('[data-key=' + key + ']')
+                .addClass('nav-item-pressed');
+
+        },
         header:function () {
             var header = $(this);
 

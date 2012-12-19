@@ -6,6 +6,6 @@
 
     });
     $(function(){
-
+        $('#head-nav').nav('think_back');
     });
 })(jQuery);

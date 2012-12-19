@@ -16,14 +16,19 @@ html
 
   body
     header(data-login='false')
-        nav.nav-bar.positioned
-            a.nav-item(href='/') #{msg.nav.home}
-            a.nav-item(href='/daily') #{msg.nav.daily}
-            a.nav-item(href='/think_back') #{msg.nav.think_back}
+        nav.nav-bar.positioned#head-nav
+            a.nav-item(href='/', data-key='home')
+                | #{msg.nav.home}
+            span.nav-separator
+            a.nav-item(href='/daily', data-key='daily')
+                | #{msg.nav.daily}
+            span.nav-separator
+            a.nav-item(href='/think_back', data-key='think_back')
+                | #{msg.nav.think_back}
 
-            a.stick-right#login-btn
+            a.stick-right#login-btn.nav-item-blue
                 | #{msg.nav.login}
-            a.stick-right#logout-btn
+            a.stick-right#logout-btn.nav-item-blue
                 | #{msg.nav.logout}
 
         #login-dialog.stick-right(

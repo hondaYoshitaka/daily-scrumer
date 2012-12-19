@@ -6,6 +6,6 @@
 
     });
     $(function(){
-
+        $('#head-nav').nav('daily');
     });
 })(jQuery);
