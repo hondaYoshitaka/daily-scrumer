@@ -160,6 +160,7 @@
                         var data = form.serializeObj();
                             //TODO validation
                         form.showSpin();
+                        form.addClass('loading');
                         $.ajax({
                             type:method,
                             url:action,
@@ -168,6 +169,7 @@
                                 callback.call(form, data);
                             },
                             complete:function () {
+                                form.removeClass('loading');
                                 $('.spin', form).hide();
                             }
                         });

@@ -1,19 +1,27 @@
 form#login-from(action='/auth', data-role='ajax-from', method='POST')
     .hidden.err-msg#login-err-msg #{msg.err.login_fail}
     table
-        caption #{msg.labels.login.caption}
+        caption
+            img.icon.redmine-icon(src='/images/redmine.fav.ico')
+            |#{msg.labels.login.caption}
         tr
             th
                 label(for='login-username-input')
-                    | #{msg.labels.login.username}
             td
-                input#login-username-input(name='username', type='text')
+                input#login-username-input(
+                    name='username',
+                    type='text',
+                    placeholder='#{msg.labels.login.username}'
+                )
         tr
             th
                 label(for='login-password-input')
-                    | #{msg.labels.login.password}
             td
-                input#login-password-input(name='password', type='password')
+                input#login-password-input(
+                    name='password',
+                    type='password',
+                    placeholder='#{msg.labels.login.password}'
+                )
 
     a.btn.block-btn(data-role='submit-btn')
         | #{msg.btn.login}

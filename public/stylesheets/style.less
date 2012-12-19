@@ -70,6 +70,9 @@ header[data-login='false'] #logout-btn {
 }
 .nav-item-blue{
   padding: 5px 0;
+  &.stick-right{
+    top:0;
+  }
 }
 
 .positioned {
@@ -240,4 +243,18 @@ input.err{
 }
 form{
   padding: 5px;
+  position:relative;
+  &.loading:before{
+    .cover;
+    .white-back(0.7);
+  }
+}
+.redmine-icon{
+  position: relative;
+  top: 2px;
+  margin: 0 4px;
+}
+#login-dialog{
+  padding: 10px;
+  right: 30px;
 }
