@@ -12,6 +12,16 @@ exports = module.exports = {
         events:'events',
         issues:'issues',
         tasks:'tasks',
-        keep_in_mind:'Trial for this sprint'
+        keep_in_mind:'Trial for this sprint',
+        task_time:{
+            estimated:'estimated time',
+            remain:'remain time',
+            done:'done time'
+        },
+        issue_count:{
+            total:'total',
+            modified:'modified',
+            done:'done'
+        }
     }
 };

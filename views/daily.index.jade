@@ -19,10 +19,29 @@ block content
             #calendar.calendar.tucked-corners-bottom
     section#task-section
         h3  #{label.tasks}
+        table
+            tr
+                th #{label.task_time.estimated}
+                td
+            tr
+                th #{label.task_time.remain}
+                td
+            tr
+                th #{label.task_time.done}
+                td
 
     section#issue-section
         h3  #{label.issues}
-
+        table
+            tr
+                th #{label.issue_count.total}
+                td
+            tr
+                th #{label.issue_count.modified}
+                td
+            tr
+                th #{label.issue_count.done}
+                td
     section#keep-in-mind-section
         .photo-panel-container
             .photo-panel
