@@ -313,3 +313,56 @@ form{
 .float-right{
   float: right;
 }
+
+
+
+.tucked-corners-top{
+  position: relative;
+  padding: 20px;
+  .gradient-surrond(8px);
+  background-position: bottom left, bottom right, top right, top left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  @rotate:45deg;
+  @side:-15px;
+  @width:32px;
+  @height:8px;
+  @shadowStyle:0 3px 8px -3px;
+  @shadowDense:0.5;
+  @v:-1px;
+  &:before,&:after {
+    top:@v;
+    height: @height;
+    width: @width;
+    content: '';
+    position: absolute;
+    .box-shadow(@shadowStyle, @shadowDense);
+  }
+  &:before {
+    left: @side;
+    .rotate(@rotate * -1);
+  }
+  &:after{
+    .rotate(@rotate);
+    right:@side;
+  }
+  .tucked-corners-bottom{
+    @rotate:135deg;
+    &:before,&:after{
+      height: @height;
+      width: @width;
+      .box-shadow(@shadowStyle, @shadowDense);
+      content: '';
+      position: absolute;
+      bottom:@v + 2px;
+    }
+    &:before {
+      left: @side;
+      .rotate(@rotate * -1);
+    }
+    &:after{
+      .rotate(@rotate);
+      right:@side;
+    }
+  }
+}
