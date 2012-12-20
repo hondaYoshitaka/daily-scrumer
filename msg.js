@@ -15,9 +15,21 @@ exports.labels = {
         caption:'login',
         username:'username',
         password:'password'
+    },
+    daily:{
+        keep_in_mind:'Trial for this sprint'
     }
 };
+exports.placeholder = {
 
+    daily:{
+        keep_in_mind:[
+            " Trial 1",
+            " Trial 2",
+            " Trial 3"
+        ]
+    }
+};
 exports.btn = {
     close:'×',
     add:'+',

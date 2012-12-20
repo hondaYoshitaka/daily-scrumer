@@ -1,7 +1,7 @@
 extends layout
 
 block stylesheet
-    link(rel='stylesheet', href='/stylesheet/daily')
+    link(rel='stylesheet', href='/stylesheets/daily.css')
 
 block javascript
     script(src='/javascripts/view.daily.js')
@@ -11,3 +11,26 @@ block content
     h1 daily !
 
     section#issue-section
+
+
+    section#keep-in-mind-section
+        .photo-panel-container
+            .photo-panel
+                .frame-bar-top.photo-frame-bar
+                .frame-bar-bottom.photo-frame-bar
+                .frame-bar-left.photo-frame-bar
+                .frame-bar-right.photo-frame-bar
+                .photo-inner-frame
+                    ol.keep-in-mind-list
+                        li.keep-in-mind-list-item
+                            input(name='keep-in-mind-0',
+                                placeholder="#{msg.placeholder.daily.keep_in_mind[0]}")
+                        li.keep-in-mind-list-item
+                            input(name='keep-in-mind-1',
+                                placeholder="#{msg.placeholder.daily.keep_in_mind[1]}")
+                        li.keep-in-mind-list-item
+                            input(name='keep-in-mind-2',
+                                placeholder="#{msg.placeholder.daily.keep_in_mind[2]}")
+            .name-plate-container
+                .name-plate
+                    | #{msg.labels.daily.keep_in_mind}
