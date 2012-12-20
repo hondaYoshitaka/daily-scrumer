@@ -15,7 +15,7 @@ html
     block head
 
   body
-    header(data-login='false')
+    header(data-login='#{!!login_user}')
         nav.nav-bar.positioned#head-nav
             a.nav-item(href='/', data-key='home')
                 | #{msg.nav.home}
@@ -26,11 +26,26 @@ html
             a.nav-item(href='/think_back', data-key='think_back')
                 | #{msg.nav.think_back}
 
-            .stick-right.nav-right-item
-                a#login-btn.nav-item-blue
+            .nav-right-item
+                span.show-when-login
+                    span#login-user-name.nav-item-khaki
+                        |#{login_user && login_user.name}
+                    | @
+                    select#user-project-select
+
+                    a.dropdown-btn#user-dropdown-btn
+                        .dropdown-btn-icon
+                    ul.dropdown-menu.hidden.stick-right(
+                        data-role='dropdown-menu',
+                        data-btn='#user-dropdown-btn')
+                        li.dropdown-menu-item
+                            a#logout-btn.nav-item-blue
+                                | #{msg.nav.logout}
+
+
+
+                a#login-btn.nav-item-blue.show-when-not-login
                     | #{msg.nav.login}
-                a#logout-btn.nav-item-blue
-                    | #{msg.nav.logout}
 
         #login-dialog.stick-right(
             data-role='dialog',

@@ -2,7 +2,13 @@
  * ログイン関連
  */
 
-var RedmineAgent = require('../agent')['Redmine'];
+var RedmineAgent = require('../agent')['Redmine'],
+    util = require('../util');
+
+var User = function(redmineAgent){
+    var s = this;
+    s.redmineAgent = redmineAgent;
+};
 
 /* 認証実行 */
 exports.auth = function (req, res) {
@@ -13,22 +19,27 @@ exports.auth = function (req, res) {
     };
     var agent = new RedmineAgent();
     agent.login(auth, function (sucess) {
-        req.session.redmineAgent = agent;
+        var user= new User(agent);
+        user.name = data.username;
+        req.session.user = user;
         res.json({
-            success:sucess
+            success:sucess,
+            user:user
         });
     });
 };
 
 /* ログアウト */
 exports.logout = function (req, res) {
-    if(!req.session.redmineAgent){
+    var user = req.session.user;
+    if(!user){
         res.json({
             success:false
         });
         return;
     }
-    new RedmineAgent(req.session.redmineAgent).logout(function(sucess){
+    new RedmineAgent(user.redmineAgent).logout(function(sucess){
+        req.session.user = null;
         res.json({
             success:sucess
         });

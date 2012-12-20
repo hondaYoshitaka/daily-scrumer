@@ -6,6 +6,7 @@ var express = require('express')
     , http = require('http')
     , path = require('path')
     , msg = require('./msg')
+    , logic = require('./logic')
     , package = require('./package.json');
 
 var app = express();
@@ -36,6 +37,20 @@ app.configure('development', function () {
 });
 
 (function (r) {
+    app.all('*', function (req, res, next) {
+        var path = req.path;
+        var isPublic = logic.url.isPublic(path);
+        if (isPublic) {
+            next();
+            return;
+        }
+        res.locals({
+            login_user:req.session.user || null
+        });
+
+        next();
+    });
+
     app.get('/', r.index.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);

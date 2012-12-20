@@ -2,6 +2,7 @@
 
 @white: #FEFEFE;
 @black: #333;
+@khaki: #E0B466;
 
 body {
   padding: 0 20px 10px;
@@ -22,14 +23,18 @@ a {
   }
 }
 
-header[data-login='true'] #login-btn {
+.out-of-screen{
   display: none;
   opacity: 0;
+  position: absolute;
+  left: -9999;
+}
+header[data-login='true'] .show-when-not-login {
+  .out-of-screen;
 }
 
-header[data-login='false'] #logout-btn {
-  opacity: 0;
-  display: none;
+header[data-login='false'] .show-when-login {
+  .out-of-screen;
 }
 
 .nav-bar {
@@ -41,6 +46,7 @@ header[data-login='false'] #logout-btn {
   padding: 0 5px;
   .border-radius(2px);
   .box-shadow(2px 2px 3px, 0.4);
+  color: darken(@white, 20);
 }
 
 .nav-item {
@@ -70,6 +76,13 @@ header[data-login='false'] #logout-btn {
 }
 .nav-right-item{
   top:4px;
+  .stick;
+  right: 0;
+}
+.nav-item-khaki{
+  display: inline-block;
+  padding: 0 2px;
+  color: @khaki;
 }
 .nav-item-blue{
   padding: 5px 0;
@@ -86,7 +99,7 @@ header[data-login='false'] #logout-btn {
 
 .stick-right {
   .stick;
-  right: 10px;
+  right: 5px;
 }
 
 .stick-left {
@@ -258,4 +271,34 @@ form{
 #login-dialog{
   padding: 10px;
   right: 30px;
+}
+.dropdown-btn{
+  display: inline-block;
+  padding: 0 3px;
+}
+.dropdown-btn-icon{
+  display: inline-block;
+  width:0;
+  height: 0;
+  border-style: solid;
+  border-color: fadeout(@white, 20) transparent transparent;
+  border-width: 12px 6px 0;
+  margin:0 10px;
+  position:relative;
+  top:1px;
+  &:hover{
+    border-top-color: fadeout(@white, 10);
+  }
+}
+.dropdown-menu{
+  position: absolute;
+  .black-back(0.4);
+  .box-shadow(5px 5px 10px, 0.4);
+  border: 1px solid fadeout(@black, 20);
+  padding: 5px 10px;
+  margin: 2px;
+
+}
+.dropdown-menu-item{
+  list-style: none;
 }

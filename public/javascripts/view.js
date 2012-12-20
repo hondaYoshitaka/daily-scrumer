@@ -266,7 +266,15 @@
             $('.nav-item', nav)
                 .filter('[data-key=' + key + ']')
                 .addClass('nav-item-pressed');
-
+            nav.findByRole('dropdown-menu').dropdownMenu();
+        },
+        dropdownMenu:function(){
+            var menu = $(this),
+                btn = $(menu.data('btn'));
+            btn
+                .click(function(){
+                    menu.toggleClass('hidden');
+                });
         },
         header:function () {
             var header = $(this);
@@ -282,6 +290,8 @@
                     dialog.findByRole('closer').trigger('click');
                     header.attr('data-login', true);
                     loginErrMsg.hide();
+                    var user = data.user;
+                    $('#login-user-name').text(user.name);
                 } else {
                     input.addClass('err');
                     loginErrMsg.show();
@@ -295,6 +305,7 @@
                     header.attr('data-login', false);
                 });
             });
+
             return header;
         }
     });
