@@ -26,14 +26,22 @@ block content
                 .frame-bar-right.photo-frame-bar
                 .photo-inner-frame
                     ol.keep-in-mind-list
+                        - var keepInMindMaxLength = 120;
+                        - var trialDefault = '(none)';
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-0',
+                                maxlength = '#{keepInMindMaxLength}',
+                                value='#{trialDefault}',
                                 placeholder="#{placeholder.keep_in_mind[0]}")
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-1',
+                                maxlength = '#{keepInMindMaxLength}',
+                                value='#{trialDefault}',
                                 placeholder="#{placeholder.keep_in_mind[1]}")
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-2',
+                                maxlength = '#{keepInMindMaxLength}',
+                                value='#{trialDefault}',
                                 placeholder="#{placeholder.keep_in_mind[2]}")
             .name-plate-container
                 .name-plate

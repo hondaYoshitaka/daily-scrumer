@@ -15,6 +15,15 @@
 
             }
             return section;
+        },
+        keepInMindSection:function(){
+            var section = $(this);
+            $(':text', section)
+                .editableText()
+                .change(function(){
+
+                });
+            return section;
         }
     });
     $(function(){
@@ -30,5 +39,7 @@
                 issueSection.issueSection(project);
             }
         });
+
+        $('#keep-in-mind-section').keepInMindSection();
     });
 })(jQuery);
