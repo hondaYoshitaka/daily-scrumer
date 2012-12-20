@@ -26,10 +26,11 @@ html
             a.nav-item(href='/think_back', data-key='think_back')
                 | #{msg.nav.think_back}
 
-            a.stick-right#login-btn.nav-item-blue
-                | #{msg.nav.login}
-            a.stick-right#logout-btn.nav-item-blue
-                | #{msg.nav.logout}
+            .stick-right.nav-right-item
+                a#login-btn.nav-item-blue
+                    | #{msg.nav.login}
+                a#logout-btn.nav-item-blue
+                    | #{msg.nav.logout}
 
         #login-dialog.stick-right(
             data-role='dialog',
