@@ -29,6 +29,11 @@ RedmineAgent.prototype.login = function (auth, callback) {
     return s.get(conf.url.login, function (res, body, $) {
         var token = $('input[name=authenticity_token]').attr('value');
         s.post(conf.url.login,function (res, body, $) {
+            if(res.statusCode === '411'){
+                console.error('failed to login');
+                callback.call(s, false);
+                return;
+            }
             var err = !!$('.flash.error').html();
             var success = !err;
             if (!success) {
