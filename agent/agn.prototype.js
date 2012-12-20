@@ -22,7 +22,7 @@ Agent.prototype.request = function (method, url, callback) {
         url = urlParser.parse(url);
     }
     var cookie = s.cookie.getHeaderString(url.hostname, url.pathname);
-    console.log('href', url.href);
+    console.log('[agn]', method, url.href);
     return request({
         method:method,
         url:url.href,
