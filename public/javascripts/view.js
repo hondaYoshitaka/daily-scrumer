@@ -264,9 +264,14 @@ var CS = {};
         },
         nav:function (key) {
             var nav = $(this);
-            $('.nav-item', nav)
+            var item = $('.nav-item', nav);
+            var pressed = item
                 .filter('[data-key=' + key + ']')
                 .addClass('nav-item-pressed');
+            item.not(pressed)
+                .click(function () {
+                    $(this).addClass('nav-item-pressed');
+                });
             nav.findByRole('dropdown-menu').dropdownMenu();
         },
         dropdownMenu:function () {

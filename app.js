@@ -52,9 +52,9 @@ app.configure('development', function () {
     });
 
     app.get('/', r.daily.index);
-    app.get('/setting', r.index.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
+    app.get('/setting', r.setting.index);
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
 

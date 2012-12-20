@@ -55,7 +55,12 @@ header[data-login='false'] .show-when-login {
   color: darken(@white, 20);
   &:hover {
     color: @white;
-    background-color: lighten(@black , 20);
+    text-decoration: none;
+    .linear-gradient(rgba(255,255,255,0.1), rgba(150,150,150,0.1));
+  }
+  &:active{
+    background-color: lighten(@black , 2);
+
   }
 }
 .nav-item-pressed,
