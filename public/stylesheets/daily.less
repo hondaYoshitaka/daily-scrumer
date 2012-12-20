@@ -158,3 +158,13 @@
     float: right;
   }
 }
+.progress-bar{
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  .border-radius(2px);
+  border: 1px solid fadeout(@gray, 30);
+  height: 8px;
+}
+.progress-filled{
+  .linear-gradient(@blue, darken(@blue, 10));
+  height: 100%;
+}
