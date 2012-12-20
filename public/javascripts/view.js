@@ -158,7 +158,7 @@
                     .form()
                     .submit(function (e) {
                         var data = form.serializeObj();
-                            //TODO validation
+                        //TODO validation
                         form.showSpin();
                         form.addClass('loading');
                         $.ajax({
@@ -227,25 +227,25 @@
         },
         //編集可能ラベル
         //テキストボックスに対してこのプラグインを呼ぶといい感じになる。
-        editableText:function(){
-            return $(this).each(function(){
-                var input = $(this).keydown(function(e){
-                    switch(e.keyCode){
+        editableText:function () {
+            return $(this).each(function () {
+                var input = $(this).keydown(function (e) {
+                    switch (e.keyCode) {
                         case 9:
                         case 13:
                             input.trigger('change');
                     }
-                }).change(function(){
+                }).change(function () {
                         var val = input.val();
-                        if(!val) return;
+                        if (!val) return;
                         input.hide();
                         span.text(val).show();
                     });
                 var span = $('<span/>').addClass('editable')
                     .insertAfter(input)
-                    .click(function(){
+                    .click(function () {
                         input.show();
-                        setTimeout(function(){
+                        setTimeout(function () {
                             input.trigger('focus').select();
                         }, 20);
                         span.hide();
@@ -254,27 +254,38 @@
                         cursor:'pointer'
                     });
                 var name = input.attr('name');
-                if(name) span.attr('data-rs-name', name);
-                if(input.attr('id'))span.attr('for', input.attr('id'));
+                if (name) span.attr('data-rs-name', name);
+                if (input.attr('id'))span.attr('for', input.attr('id'));
                 var fontSize = input.css('font-size');
-                if(fontSize) span.css('font-size', fontSize);
-                if(input.val()) input.trigger('change');
+                if (fontSize) span.css('font-size', fontSize);
+                if (input.val()) input.trigger('change');
             });
         },
-        nav:function(key){
+        nav:function (key) {
             var nav = $(this);
             $('.nav-item', nav)
                 .filter('[data-key=' + key + ']')
                 .addClass('nav-item-pressed');
             nav.findByRole('dropdown-menu').dropdownMenu();
         },
-        dropdownMenu:function(){
+        dropdownMenu:function () {
             var menu = $(this),
                 btn = $(menu.data('btn'));
             btn
-                .click(function(){
+                .click(function () {
                     menu.toggleClass('hidden');
                 });
+        },
+        projectSelect:function (projects) {
+            var select = $(this).empty();
+            projects && projects.forEach(function (project) {
+                $('<option/>')
+                    .appendTo(select)
+                    .val(project.key)
+                    .text(project.name);
+                console.log('project', project);
+            });
+            return select;
         },
         header:function () {
             var header = $(this);
@@ -285,23 +296,26 @@
                 var form = $(this),
                     loginErrMsg = $('#login-err-msg'),
                     input = $('input', form);
-                if(data.success){
+                if (data.success) {
                     input.removeClass('err');
                     dialog.findByRole('closer').trigger('click');
                     header.attr('data-login', true);
                     loginErrMsg.hide();
                     var user = data.user;
                     $('#login-user-name').text(user.name);
+
+                    $('#user-project-select').projectSelect(user.projectes);
+
                 } else {
                     input.addClass('err');
                     loginErrMsg.show();
                 }
             });
-            $('input:last', form).pressEnter(function(){
+            $('input:last', form).pressEnter(function () {
                 form.submit();
             });
-            $('#logout-btn', header).click(function(){
-                $.post('/logout', function(){
+            $('#logout-btn', header).click(function () {
+                $.post('/logout', function () {
                     header.attr('data-login', false);
                 });
             });

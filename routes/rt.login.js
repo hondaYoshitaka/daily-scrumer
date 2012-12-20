@@ -18,9 +18,10 @@ exports.auth = function (req, res) {
         password:data.password
     };
     var agent = new RedmineAgent();
-    agent.login(auth, function (sucess) {
+    agent.login(auth, function (sucess, data) {
         var user= new User(agent);
-        user.name = data.username;
+        user.name = auth.username;
+        user.projectes = data && data.projects;
         req.session.user = user;
         res.json({
             success:sucess,
