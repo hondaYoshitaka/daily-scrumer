@@ -1,4 +1,5 @@
 ;
+var CS = {};
 (function ($) {
 
     $.fn.extend({
@@ -283,8 +284,8 @@
                     .appendTo(select)
                     .val(project.key)
                     .text(project.name);
-                console.log('project', project);
             });
+            select.trigger('change');
             return select;
         },
         header:function () {
@@ -327,5 +328,9 @@
         var body = $('body');
 
         $('header', body).header();
+
+        var projects = CS.login_user && CS.login_user.projectes;
+        if (projects) $('#user-project-select').projectSelect(projects);
+
     });
 })(jQuery);

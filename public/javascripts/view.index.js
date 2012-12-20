@@ -41,5 +41,6 @@
     $(function(){
         $('#member-section').memberSection();
         $('#head-nav').nav('home');
+
     });
 })(jQuery);

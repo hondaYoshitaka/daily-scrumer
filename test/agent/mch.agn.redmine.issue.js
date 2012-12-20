@@ -1,4 +1,0 @@
-/*
- * agent for redmine issues
- */
-

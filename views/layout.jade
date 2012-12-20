@@ -10,9 +10,12 @@ html
     script(src='/javascripts/jquery.js')
     script(src='/javascripts/spin.js')
     script(src='/javascripts/view.js')
+    script
+        CS.login_user = !{login_user && JSON.stringify(login_user) || 'null'};
     block javascript
 
     block head
+
 
   body
     header(data-login='#{!!login_user}')

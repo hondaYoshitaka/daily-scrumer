@@ -70,6 +70,18 @@ RedmineAgent.prototype.logout = function (callback) {
     });
 };
 
+RedmineAgent.prototype.getIssue = function(condition, callback){
+    var s = this,
+        url = conf.url.base + '/issues.json',
+        query = new RedmineAgent.Query(condition).toQueryString();
+    s.get([url, query].join('&'), function(res, body){
+        console.log('body', body);
+        var json = JSON.parse(body);
+        callback.cal(s, true, json);
+    });
+
+};
+
 //new RedmineAgent().login(conf.auth, function (success) {
 //
 //});

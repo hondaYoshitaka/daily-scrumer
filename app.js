@@ -61,6 +61,8 @@ app.configure('development', function () {
     app.post('/team/save', r.team.save);
     app.post('/team/addMember', r.team.addMember);
     app.post('/team/removeMember', r.team.removeMember);
+
+    app.get('/issue/count', r.issue.count);
 })(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function () {
