@@ -3,6 +3,7 @@
  */
 
 exports = module.exports = {
+    current_sprint:'we are on',
     login:{
         caption:'login',
         username:'username',
