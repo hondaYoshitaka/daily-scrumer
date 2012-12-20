@@ -108,9 +108,10 @@ header[data-login='false'] .show-when-login {
 
 .paper {
   position: relative;
-  margin: 0;
+  margin: 5px;
   padding: 0;
   .box-shadow(1px 1px 3px, 0.4);
+  color:lighten(@black, 10);
   &:before, &:after {
     content: '';
     width: 50%;
@@ -130,34 +131,39 @@ header[data-login='false'] .show-when-login {
     right: 10px;
     .rotate(@deg);
   }
-  .paper-content {
-    position: relative;
-    z-index: 5;
-    background-color: #FFF;
-    border: 1px solid @silver;
-    padding: 20px;
-    &.taped {
-      &:before, &:after {
-        content: "";
-        position: absolute;
-        .white-back(0.35);
-        width: 85px;
-        height: 30px;
-        top: 0;
-        .box-shadow(1px 1px 2px, 0.2);
-      }
-      @rotate: 15deg;
-      @side: -20px;
-      &:before {
-        left: @side;
-        .rotate(-1 *  @rotate);
-      }
-      &:after {
-        right: @side;
-        .rotate(@rotate);
-      }
+}
+.paper-content {
+  position: relative;
+  z-index: 5;
+  background-color: #FFF;
+  border: 1px solid @silver;
+  padding: 10px 20px 15px;
+  .border-radius(2px);
+  &.taped {
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      .white-back(0.35);
+      width: 85px;
+      height: 30px;
+      top: 0;
+      .box-shadow(1px 1px 2px, 0.2);
+    }
+    @rotate: 15deg;
+    @side: -20px;
+    &:before {
+      left: @side;
+      .rotate(-1 *  @rotate);
+    }
+    &:after {
+      right: @side;
+      .rotate(@rotate);
     }
   }
+}
+.paper-title{
+  font-size: 1.5em;
+  margin: 10px 0;
 }
 
 section {
