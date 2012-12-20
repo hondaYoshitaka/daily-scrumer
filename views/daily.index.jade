@@ -44,12 +44,15 @@ block content
                 tr
                     th #{label.issue_count.total}
                     td
+                        span(data-key='total')
                 tr
                     th #{label.issue_count.modified}
                     td
+                        span(data-key='modified')
                 tr
                     th #{label.issue_count.done}
                     td
+                        span(data-key='done')
             #issue-progress-bar(data-role='progress-bar', data-rate='0.5')
 
     br.clear

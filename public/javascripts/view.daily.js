@@ -18,10 +18,19 @@
         },
         issueSection:function(project){
             var section = $(this);
-
+            project = true;//TODO remove
             if(project){
                 var data = {project_id:project};
-                $.getJSON('issue/count', data, function(data){
+                $.getJSON('project/issue_count', data, function(data){
+                    if(!data.success){
+                        console.error('failed to get issue_count');
+                        return;
+                    }
+                    $('[data-key]', section).each(function(){
+                        var elm = $(this),
+                            key = elm.data('key');
+                        elm.text(data[key]);
+                    });
                     console.log('get issue counts');
                 });
                 section.findByRole('progress-bar').progressBar();
@@ -66,7 +75,9 @@
                 issueSection.issueSection(project);
                 taskSection.taskSection();
             }
-        });
+        })
+            .trigger('change') //TODO remove
+        ;
 
         $('#keep-in-mind-section', body).keepInMindSection();
 

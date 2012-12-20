@@ -1,12 +1,22 @@
 /*
- * 不具合関連s
+ * プロジェクト情報
  */
 
 var RedmineAgent = require('../agent')['Redmine'],
     util = require('../util');
 
 /* */
-exports.count = function(req, res){
+exports.issue_count = function(req, res){
+
+    //TODO
+    res.json({
+        success:true,
+        total:80,
+        modified:30,
+        done:50
+    });
+    return;
+
     var user = req.session.user,
         query = req.query;
     if(!user){
@@ -24,4 +34,22 @@ exports.count = function(req, res){
             count:data.length
         })
     });
+};
+
+/* */
+exports.task_count = function(req, res){
+
+    //TODO
+    res.json({
+        success:true
+    });
+    return;
+    var user = req.session.user,
+        query = req.query;
+    if(!user){
+        res.json({
+            success:false
+        });
+        return;
+    }
 };

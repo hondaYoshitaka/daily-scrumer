@@ -55,15 +55,18 @@ app.configure('development', function () {
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
     app.get('/setting', r.setting.index);
+
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
 
     app.get('/team/get', r.team.get);
     app.post('/team/save', r.team.save);
-    app.post('/team/addMember', r.team.addMember);
-    app.post('/team/removeMember', r.team.removeMember);
+    app.post('/team/add_member', r.team.addMember);
+    app.post('/team/remove_member', r.team.removeMember);
 
-    app.get('/issue/count', r.issue.count);
+    app.get('/project/issue_count', r.project.issue_count);
+    app.get('/project/task_count', r.project.task_count);
+
 })(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function () {
