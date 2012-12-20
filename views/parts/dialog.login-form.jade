@@ -3,7 +3,7 @@ form#login-from(action='/auth', data-role='ajax-from', method='POST')
     table
         caption
             img.icon.redmine-icon(src='/images/redmine.fav.ico')
-            |#{msg.labels.login.caption}
+            |#{msg.label.login.caption}
         tr
             th
                 label(for='login-username-input')
@@ -11,7 +11,7 @@ form#login-from(action='/auth', data-role='ajax-from', method='POST')
                 input#login-username-input(
                     name='username',
                     type='text',
-                    placeholder='#{msg.labels.login.username}'
+                    placeholder='#{msg.label.login.username}'
                 )
         tr
             th
@@ -20,7 +20,7 @@ form#login-from(action='/auth', data-role='ajax-from', method='POST')
                 input#login-password-input(
                     name='password',
                     type='password',
-                    placeholder='#{msg.labels.login.password}'
+                    placeholder='#{msg.label.login.password}'
                 )
 
     a.btn.block-btn(data-role='submit-btn')
