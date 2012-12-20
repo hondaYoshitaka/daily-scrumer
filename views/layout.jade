@@ -47,13 +47,13 @@ html
 
 
 
-                a#login-btn.nav-item-blue.show-when-not-login
+                a#login-btn.show-when-not-login.stick-right
                     | #{msg.nav.login}
 
         #login-dialog.stick-right(
             data-role='dialog',
             data-opener='#login-btn')
-                a(data-role='closer').stick-right
+                a(data-role='closer').stick-right.closer
                     | #{msg.btn.close}
                 include parts/dialog.login-form.jade
 
