@@ -35,7 +35,7 @@ RedmineAgent.prototype.login = function (auth, callback) {
                 callback && callback.call(s, success);
                 return;
             }
-            s.get(res.headers.location, function (res, body, $) {
+            function loginDone(res, body, $) {
                 var data = {};
                 var projects = [];
                 var option = $('#quick-search').find('select').find('option');
@@ -53,7 +53,13 @@ RedmineAgent.prototype.login = function (auth, callback) {
                 }
                 data.projects = projects;
                 callback && callback.call(s, success, data);
-            });
+            }
+            if(res.headers.location){
+                s.get(res.headers.location, loginDone);
+            } else {
+                res.headers.location.apply(s, arguments);
+            }
+
         }).form({
                 username:auth.username,
                 password:auth.password,
@@ -76,8 +82,8 @@ RedmineAgent.prototype.getIssue = function(condition, callback){
         query = new RedmineAgent.Query(condition).toQueryString();
     s.get([url, query].join('&'), function(res, body){
         console.log('body', body);
-        var json = JSON.parse(body);
-        callback.cal(s, true, json);
+        var json = {};//TODO
+        callback.call(s, true, json);
     });
 
 };

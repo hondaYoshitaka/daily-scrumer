@@ -40,7 +40,7 @@
     });
     $(function(){
         $('#member-section').memberSection();
-        $('#head-nav').nav('home');
+        $('#head-nav').nav('setting');
 
     });
 })(jQuery);

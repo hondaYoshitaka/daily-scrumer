@@ -51,7 +51,8 @@ app.configure('development', function () {
         next();
     });
 
-    app.get('/', r.index.index);
+    app.get('/', r.daily.index);
+    app.get('/setting', r.index.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
     app.post('/auth', r.login.auth);

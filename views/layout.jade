@@ -20,14 +20,14 @@ html
   body
     header(data-login='#{!!login_user}')
         nav.nav-bar.positioned#head-nav
-            a.nav-item(href='/', data-key='home')
-                | #{msg.nav.home}
-            span.nav-separator
             a.nav-item(href='/daily', data-key='daily')
                 | #{msg.nav.daily}
             span.nav-separator
             a.nav-item(href='/think_back', data-key='think_back')
                 | #{msg.nav.think_back}
+            span.nav-separator
+            a.nav-item(href='/', data-key='setting')
+                | #{msg.nav.setting}
 
             .nav-right-item
                 span.show-when-login
