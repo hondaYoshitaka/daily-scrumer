@@ -24,15 +24,23 @@
 
                 });
             return section;
+        },
+        calendarSection:function(){
+            var section = $(this);
+            $('#calendar').datepicker({
+
+            });
+            return section;
         }
     });
     $(function(){
-        $('#head-nav').nav('daily');
+        var body = $('body');
+        $('#head-nav', body).nav('daily');
 
 
 
-        var issueSection = $('#issue-section').issueSection();
-        $('#user-project-select').change(function(){
+        var issueSection = $('#issue-section', body).issueSection();
+        $('#user-project-select', body).change(function(){
             var select = $(this),
                 project = select.val();
             if(project){
@@ -40,6 +48,8 @@
             }
         });
 
-        $('#keep-in-mind-section').keepInMindSection();
+        $('#keep-in-mind-section', body).keepInMindSection();
+
+        $('#calendar-section', body).calendarSection();
     });
 })(jQuery);

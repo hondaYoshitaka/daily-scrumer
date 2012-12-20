@@ -9,6 +9,9 @@ exports = module.exports = {
         password:'password'
     },
     daily:{
+        events:'events',
+        issues:'issues',
+        tasks:'tasks',
         keep_in_mind:'Trial for this sprint'
     }
 };

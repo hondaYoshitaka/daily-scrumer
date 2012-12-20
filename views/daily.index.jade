@@ -6,16 +6,21 @@ block stylesheet
 
 block javascript
     script(src='/javascripts/view.daily.js')
+    script(src='/javascripts/jquery-ui.custom.js')
 
 
 block content
 
     - var placeholder = msg.placeholder.daily;
+    - var label = msg.label.daily;
 
+    section#calendar-section.float-right
+        #calendar.calendar
     section#task-section
+        h3  #{label.tasks}
 
     section#issue-section
-
+        h3  #{label.issues}
 
     section#keep-in-mind-section
         .photo-panel-container
@@ -45,4 +50,4 @@ block content
                                 placeholder="#{placeholder.keep_in_mind[2]}")
             .name-plate-container
                 .name-plate
-                    | #{msg.label.daily.keep_in_mind}
+                    | #{label.keep_in_mind}
