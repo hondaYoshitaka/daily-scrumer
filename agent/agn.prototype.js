@@ -15,7 +15,7 @@ var Cookie = exports.Cookie = require('./cookie');
 var Query = exports.Query = require('./query');
 
 //Agent.Iconv = require('iconv').Iconv;
-Agent.prototype.request = function (method, url, callback) {
+Agent.prototype.request = function (method, url, callback, headers) {
     var s = this;
 
     if (typeof url === 'string') {
@@ -27,9 +27,9 @@ Agent.prototype.request = function (method, url, callback) {
         method:method,
         url:url.href,
         encoding:null,
-        headers:{
+        headers:util.obj.deepCopy(headers, {
             "Cookie":cookie || ''
-        }
+        })
     }, function (err, res, body) {
         if (err) {
             console.error(err);

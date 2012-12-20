@@ -28,6 +28,12 @@ RedmineAgent.prototype.login = function (auth, callback) {
     var s = this;
     return s.get(conf.url.login, function (res, body, $) {
         var token = $('input[name=authenticity_token]').attr('value');
+        var form = {
+            username:auth.username,
+            password:auth.password,
+            authenticity_token:token
+        };
+        console.log(JSON.stringify(form).length, JSON.stringify(form).length);
         s.post(conf.url.login,function (res, body, $) {
             if(res.statusCode == '411'){
                 console.error('failed to login');
@@ -64,12 +70,9 @@ RedmineAgent.prototype.login = function (auth, callback) {
             } else {
                 callback.apply(s, arguments);
             }
-
-        }).form({
-                username:auth.username,
-                password:auth.password,
-                authenticity_token:token
-            });
+        },{
+            "Content-Length":JSON.stringify(form).length
+        }).form(form);
     });
 };
 
