@@ -2,13 +2,18 @@
  * メッセージリソース
  */
 
-exports.nav = {
-    daily:'daily',
-    think_back:'think_back',
-    setting:'setting',
-    login:'login',
-    logout:'logout'
-};
+
+var fs = require('fs');
+fs.readdirSync(__dirname).forEach(function (file) {
+    var isSelf = __filename.match(new RegExp('^' + file + '$'));
+    if (isSelf) return;
+    var name = file
+        .replace(/^msg\./, '')
+        .replace(/\.[^\.]*$/, '');
+    exports[name] = require('./' + file);
+});
+
+
 
 exports.labels = {
     login:{
@@ -20,16 +25,7 @@ exports.labels = {
         keep_in_mind:'Trial for this sprint'
     }
 };
-exports.placeholder = {
 
-    daily:{
-        keep_in_mind:[
-            " Trial 1",
-            " Trial 2",
-            " Trial 3"
-        ]
-    }
-};
 exports.btn = {
     close:'×',
     add:'+',

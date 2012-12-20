@@ -1,5 +1,6 @@
 extends layout
 
+
 block stylesheet
     link(rel='stylesheet', href='/stylesheets/daily.css')
 
@@ -8,7 +9,10 @@ block javascript
 
 
 block content
-    h1 daily !
+
+    - var placeholder = msg.placeholder.daily;
+
+    section#task-section
 
     section#issue-section
 
@@ -24,13 +28,13 @@ block content
                     ol.keep-in-mind-list
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-0',
-                                placeholder="#{msg.placeholder.daily.keep_in_mind[0]}")
+                                placeholder="#{placeholder.keep_in_mind[0]}")
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-1',
-                                placeholder="#{msg.placeholder.daily.keep_in_mind[1]}")
+                                placeholder="#{placeholder.keep_in_mind[1]}")
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-2',
-                                placeholder="#{msg.placeholder.daily.keep_in_mind[2]}")
+                                placeholder="#{placeholder.keep_in_mind[2]}")
             .name-plate-container
                 .name-plate
                     | #{msg.labels.daily.keep_in_mind}
