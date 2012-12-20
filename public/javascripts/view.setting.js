@@ -1,36 +1,58 @@
-;(function($){
+;(function ($) {
+    var msg = {
+        placeholder:{
+            member_name:'member name'
+        }
+    };
     $.extend({
 
     });
     $.fn.extend({
-        memberListItem:function(data){
-            return $(this).each(function(){
+        memberListItem:function (data) {
+            return $(this).each(function () {
                 var li = $(this)
                     .addClass('positioned');
                 $('<input/>')
                     .attr({
-                        type:'text'
+                        type:'text',
+                        placeholder:msg.placeholder.member_name
                     })
                     .appendTo(li)
                     .val(data.name || '')
-                    .editableText();
+                    .editableText()
+                    .change(function () {
+
+                    });
                 $('<a/>').addClass('list-remove-btn')
                     .text('×')
                     .appendTo(li)
+                    .click(function () {
+                        var data = {};//TODO
+                        $.post('/team/removeMember', data, function (data) {
+
+                        });
+                        li.animate({
+                            height:0,
+                            paddingTop:0,
+                            paddingBottom:0
+                        }, function () {
+                            li.empty();
+                        });
+                    });
             });
         },
-        memberSection:function(){
+        memberSection:function () {
             var section = $(this),
                 memberList = $('#mebmer-list', section);
             var team_id = null; //TODO
             var li = '<li/>';
-            $.get('/team/get', {_id:team_id}, function(data){
-                data.members.forEach(function(data){
+            $.get('/team/get', {_id:team_id}, function (data) {
+                data.members.forEach(function (data) {
                     $(li).appendTo(memberList)
                         .memberListItem(data);
                 });
             });
-            $('#member-add-btn', section).click(function(){
+            $('#member-add-btn', section).click(function () {
                 $(li).appendTo(memberList)
                     .memberListItem({});
 
@@ -38,7 +60,7 @@
             return section;
         }
     });
-    $(function(){
+    $(function () {
         $('#member-section').memberSection();
         $('#head-nav').nav('setting');
 

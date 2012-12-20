@@ -43,6 +43,11 @@ exports.addMember = function(req, res){
     });
 };
 
+/* メンバー情報の更新 */
+exports.updateMember = function(req, res){
+    var data = req.body;
+};
+
 /* メンバー削除 */
 exports.removeMember = function(req, res){
     var data = req.body;
