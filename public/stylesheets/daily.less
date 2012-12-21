@@ -171,6 +171,7 @@
   .ui-datepicker-prev{
     float: left;
     color:@brown;
+    .unselectable;
     &:before{
       .arrow;
       border-left-width:0;
@@ -180,6 +181,7 @@
   .ui-datepicker-next{
     float: right;
     color:@brown;
+    .unselectable;
     &:after{
       .arrow;
       border-right-width:0;
@@ -218,11 +220,15 @@
   height: 8px;
 }
 .progress-filled{
-  .linear-gradient(@blue, darken(@blue, 10));
+  .linear-gradient(@blue, darken(@blue, 30));
   height: 100%;
 }
 
 .report-chart-section{
   width:800px;
   max-width: none;
+}
+
+#top-line{
+  margin-right:300px;
 }
