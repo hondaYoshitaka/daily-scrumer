@@ -65,6 +65,10 @@
                     }
 
                     return [true, ''];
+                },
+                onSelect:function(date){
+                    date = new Date(date);
+                    console.log('day selected:', date); //TODO
                 }
             });
             return section;
