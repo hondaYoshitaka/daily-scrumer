@@ -149,7 +149,8 @@
                     .addClass('grouping-roulette-item')
                     .text(data.name)
                     .draggable({
-                        revert:true
+                        revert:true,
+                        containment:'#grouping-section'
                     });
             });
         },
@@ -176,19 +177,26 @@
                 });
             });
 
-            $('#grouping-shuffle-btn', roulette).click(function () {
+            var startBtn = $('#grouping-shuffle-btn', roulette).click(function () {
                 var group = $('.grouping-group', roulette),
-                    item = $('.grouping-roulette-item', roulette).appendTo(roulette);
-                var index = 0;
-                item.randomEach(function (i, item) {
-                    var isFull = isGroupFull(group.eq(index));
-                    if (isFull) {
-                        index++;
-                    }
-                    group.eq(index).append(item);
-                });
+                    item = $('.grouping-roulette-item', roulette);
+                roulette.shuffleTimer = setInterval(function(){
+                    item.appendTo(roulette);
+                    var index = 0;
+                    item.randomEach(function (i, item) {
+                        var isFull = isGroupFull(group.eq(index));
+                        if (isFull) {
+                            index++;
+                        }
+                        group.eq(index).append(item);
+                    });
+                }, 300);
+                startBtn.fadeOut();
+                stopBtn.fadeIn();
             });
-
+            var stopBtn = $('#grouping-stop-btn').click(function(){
+                clearTimeout(roulette.shuffleTimer);
+            }).hide();
             return roulette;
         },
         groupingSection:function () {

@@ -242,16 +242,46 @@
 .grouping-group{
   padding: 0;
   float:left;
-  &:nth-child(even){
+  @back:fadeout(@blue, 94);
+  @border:fadeout(@blue, 80);
+  @color:fadeout(darken(@blue, 30), 10);
+  &:nth-child(4n){
     .grouping-roulette-item{
-      background-color: darken(@white, 5);
-
+      background-color: @back;
+      color:@color;
+      border-color:@border;
+    }
+  }
+  &:nth-child(4n+1){
+    .grouping-roulette-item{
+      @deg:45;
+      background-color: spin(@back, @deg);
+      color:spin(@color, @deg);
+      border-color:spin(@border, @deg);
+    }
+  }
+  &:nth-child(4n+2){
+    .grouping-roulette-item{
+      @deg:90;
+      background-color: spin(@back, 90);
+      color:spin(@color, @deg);
+      border-color:spin(@border, @deg);
+    }
+  }
+  &:nth-child(4n+3){
+    .grouping-roulette-item{
+      @deg:135;
+      background-color: spin(@back, @deg);
+      color:spin(@color, @deg);
+      border-color:spin(@border, @deg);
     }
   }
 }
 .grouping-roulette-item{
   position: relative;
+  font-weight: bold;
   display: block;
   padding: 10px 15px;
+  border:1px solid @gray;
   .grabbable;
 }

@@ -8,6 +8,7 @@ exports = module.exports = {
     login:'login',
     logout:'logout',
     daily:{
-        shuffle:'shuffle!'
+        shuffle:'shuffle!',
+        shuffle_stop:'stop!'
     }
 };
