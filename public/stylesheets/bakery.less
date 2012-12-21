@@ -89,7 +89,9 @@
 }
 
 .box-shadow(@style, @dence) {
-  @shadow: @style rgba(0, 0, 0,@dence);
+  .box-shadow(@style rgba(0, 0, 0,@dence));
+}
+.box-shadow(@shadow){
   -webkit-box-shadow: @shadow;
   -moz-box-shadow: @shadow;
   -o-box-shadow: @shadow;
