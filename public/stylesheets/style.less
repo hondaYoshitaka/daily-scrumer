@@ -105,6 +105,10 @@ header[data-login='false'] .show-when-login {
   .stick;
   left: 5px;
 }
+.stick-bottom{
+  .stick;
+  bottom:5px;
+}
 
 .paper {
   position: relative;
@@ -389,4 +393,12 @@ form{
   .box-shadow(0 1px 0 rgba(255,255,255,0.6));
   height: 1px;
   margin:5px 0;
+}
+
+.ui-draggable:active{
+  .box-shadow(1px 1px 2px, 0.2);
+}
+.ui-draggable-dragging{
+  .box-shadow(4px 4px 8px, 0.4);
+  z-index: 100;
 }

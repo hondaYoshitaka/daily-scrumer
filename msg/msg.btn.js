@@ -6,5 +6,8 @@ exports = module.exports = {
     close:'×',
     add:'+',
     login:'login',
-    logout:'logout'
+    logout:'logout',
+    daily:{
+        shuffle:'shuffle!'
+    }
 };

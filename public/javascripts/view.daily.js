@@ -1,9 +1,26 @@
 ;
 (function ($) {
+    Array.prototype.shuffle = function () {
+        var s = this;
+        return s.sort(function () {
+            return Math.random() > 0.5;
+        });
+    };
     $.extend({
 
     });
     $.fn.extend({
+        randomEach:function (callback) {
+            var elm = $(this),
+                array = [];
+            elm.each(function () {
+                array.push(this);
+            });
+            array.shuffle().forEach(function (entry, i) {
+                callback.call(entry, i, entry);
+            });
+            return elm;
+        },
         progressBar:function () {
             var bar = $(this).empty().addClass('progress-bar'),
                 rate = bar.data('rate'),
@@ -66,7 +83,7 @@
 
                     return [true, ''];
                 },
-                onSelect:function(date){
+                onSelect:function (date) {
                     date = new Date(date);
                     console.log('day selected:', date); //TODO
                 }
@@ -126,30 +143,55 @@
             $('#report-chart', section).reportChart(data);
             return section;
         },
-        groupingRouletteItem:function(data){
-            return $(this).each(function(){
+        groupingRouletteItem:function (data) {
+            return $(this).each(function () {
                 var item = $(this)
                     .addClass('grouping-roulette-item')
                     .text(data.name)
                     .draggable({
-                        containment:'parent'
+                        revert:true
                     });
             });
         },
-        groupingRoulette:function(){
+        groupingRoulette:function () {
             var roulette = $(this).addClass('grouping-roulette');
-            $.getJSON('/team/get', function(data){
-                data.members.forEach(function(data){
-                    $('<div/>')
-                        .appendTo(roulette)
-                        .groupingRouletteItem(data);
 
+            function newGroup() {
+                return $('<ul/>').appendTo(roulette)
+                    .addClass('grouping-group');
+            }
+
+            function isGroupFull(group) {
+                return group.children().size() >= 2;
+            }
+
+            $.getJSON('/team/get', function (data) {
+                var group = newGroup();
+                data.members.forEach(function (data) {
+                    if (isGroupFull(group)) {
+                        group = newGroup();
+                    }
+                    $('<li/>').appendTo(group)
+                        .groupingRouletteItem(data);
+                });
+            });
+
+            $('#grouping-shuffle-btn', roulette).click(function () {
+                var group = $('.grouping-group', roulette),
+                    item = $('.grouping-roulette-item', roulette).appendTo(roulette);
+                var index = 0;
+                item.randomEach(function (i, item) {
+                    var isFull = isGroupFull(group.eq(index));
+                    if (isFull) {
+                        index++;
+                    }
+                    group.eq(index).append(item);
                 });
             });
 
             return roulette;
         },
-        groupingSection:function(){
+        groupingSection:function () {
             var section = $(this);
 
             var roulette = $('#grouping-roulette', section)

@@ -14,6 +14,7 @@ block content
 
     - var placeholder = msg.placeholder.daily;
     - var label = msg.label.daily;
+    - var btn = msg.btn.daily;
 
     section#calendar-section.float-right
         #calendar.calendar
@@ -105,8 +106,20 @@ block content
 
     br.clear
     .etched-line
-
+    br
     section#grouping-section.paper
         .paper-content
             h3.paper-title #{label.grouping}
-            #grouping-roulette
+            #grouping-roulette.positioned
+
+                a.btn.stick-right.stick-bottom#grouping-shuffle-btn
+                    | #{btn.shuffle}
+    br
+    .etched-line
+    br
+    section#event-section.paper
+        .paper-content
+                h3.paper-title
+
+    br
+    br

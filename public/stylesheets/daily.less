@@ -239,9 +239,19 @@
   .border-radius(3px);
   padding: 20px;
 }
+.grouping-group{
+  padding: 0;
+  float:left;
+  &:nth-child(even){
+    .grouping-roulette-item{
+      background-color: darken(@white, 5);
+
+    }
+  }
+}
 .grouping-roulette-item{
   position: relative;
-  display: inline-block;
-  padding: 2px 4px;
+  display: block;
+  padding: 10px 15px;
   .grabbable;
 }
