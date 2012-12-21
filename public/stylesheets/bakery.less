@@ -124,14 +124,15 @@
   -ms-box-shadow: none;
   box-shadow: none;
 }
-
-.text-shadow(@style, @dence) {
-  @shadow: @style rgba(0, 0, 0,@dence);
+.text-shadow(@shadow){
   -webkit-text-shadow: @shadow;
   -moz-text-shadow: @shadow;
   -o-text-shadow: @shadow;
   -ms-text-shadow: @shadow;
   text-shadow: @shadow;
+}
+.text-shadow(@style, @dence) {
+  .text-shadow(@style rgba(0, 0, 0,@dence));
 }
 
 .text-shadow(none) {
