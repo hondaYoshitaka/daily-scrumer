@@ -55,7 +55,16 @@
         calendarSection:function(){
             var section = $(this);
             $('#calendar').datepicker({
+                beforeShowDay:function(date){
+                    switch(date.getDay()){
+                        case 0:
+                            return [true, 'sunday'];
+                        case 6:
+                            return [true, 'saturday'];
+                    }
 
+                    return [true, ''];
+                }
             });
             return section;
         }

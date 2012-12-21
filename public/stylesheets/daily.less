@@ -2,6 +2,7 @@
 @import 'color';
 
 @darkRed:rgba(255, 131, 131, 0.6);
+@brown:#915100;
 
 .frame-shadow(@inStyle, @inDense, @outSytle, @outDense) {
   @shadow:
@@ -150,14 +151,61 @@
   min-width:80px;
   max-width:300px;
 }
+.arrow{
+  content: '';
+  display: inline-block;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 6px;
+  margin: 0 2px;
+}
 
 .calendar{
-  background-color: @white;
-  padding: 0 10px;
+  .white-back(0.15);
+  border:1px solid rgba(255,255,255,0.2);
+  .box-shadow(2px 2px 4px, 0.4);
+  background-image: none;
+  padding: 8px 5px;
+
+  .border-radius(2px);
+  .ui-datepicker-prev{
+    float: left;
+    color:@brown;
+    &:before{
+      .arrow;
+      border-left-width:0;
+      border-right-color:@brown;
+    }
+  }
   .ui-datepicker-next{
     float: right;
+    color:@brown;
+    &:after{
+      .arrow;
+      border-right-width:0;
+      border-left-color:@brown;
+    }
   }
 }
+.ui-datepicker-calendar{
+  margin: 0 auto;
+  .text-shadow(1px 1px 2px, 0.3);
+}
+.ui-state-default{
+  color:@black;
+  font-weight: bolder;
+}
+.ui-datepicker-title{
+  text-align: center;
+  margin-bottom:5px;
+}
+.sunday a{
+  color:fadeout(@red, 30);
+}
+.saturday a{
+  color:fadeout(@blue, 30);
+}
+
 .progress-bar{
   .box-shadow(1px 1px 3px, 0.4, inset);
   .border-radius(2px);
