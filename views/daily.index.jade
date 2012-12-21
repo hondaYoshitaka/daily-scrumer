@@ -86,22 +86,26 @@ block content
                         - var trialDefault = '(none)';
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-0',
-                                maxlength = '#{keepInMindMaxLength}',
-                                value='#{trialDefault}',
-                                placeholder="#{placeholder.keep_in_mind[0]}")
+                                maxlength = keepInMindMaxLength,
+                                value=trialDefault,
+                                placeholder=placeholder.keep_in_mind[0])
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-1',
-                                maxlength = '#{keepInMindMaxLength}',
-                                value='#{trialDefault}',
-                                placeholder="#{placeholder.keep_in_mind[1]}")
+                                maxlength = keepInMindMaxLength,
+                                value=trialDefault,
+                                placeholder=placeholder.keep_in_mind[1])
                         li.keep-in-mind-list-item
                             input(name='keep-in-mind-2',
-                                maxlength = '#{keepInMindMaxLength}',
-                                value='#{trialDefault}',
-                                placeholder="#{placeholder.keep_in_mind[2]}")
+                                maxlength =keepInMindMaxLength,
+                                value=trialDefault,
+                                placeholder=placeholder.keep_in_mind[2])
             .name-plate-container
                 .name-plate
                     | #{label.keep_in_mind}
 
-
     br.clear
+    .etched-line
+
+    section#grouping-section
+        h3 #{label.grouping}
+        #grouping-roulette

@@ -9,7 +9,6 @@ var db = require('../db'),
 /* チーム情報取得 */
 exports.get = function(req, res){
     var data = req.body;
-
     //TODO
     var team = new Team({
         name:'mock.team.01',

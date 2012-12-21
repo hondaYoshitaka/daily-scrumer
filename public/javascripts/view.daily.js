@@ -125,6 +125,18 @@
             };
             $('#report-chart', section).reportChart(data);
             return section;
+        },
+        groupingSection:function(){
+            var section = $(this);
+
+            var roulette = $('#grouping-roulette', section);
+            $.getJSON('/team/get', function(data){
+                data.members.forEach(function(data){
+                    $('<div/>').text(data.name)
+                        .appendTo(roulette);
+                });
+            });
+            return section;
         }
     });
     $(function () {
@@ -150,5 +162,7 @@
         $('#calendar-section', body).calendarSection();
 
         $('#report-chart-section', body).reportChartSection();
+
+        $('#grouping-section', body).groupingSection();
     });
 })(jQuery);
