@@ -5,8 +5,9 @@ block stylesheet
     link(rel='stylesheet', href='/stylesheets/daily.css')
 
 block javascript
-    script(src='/javascripts/view.daily.js')
     script(src='/javascripts/jquery-ui.custom.js')
+    script(src='/javascripts/highcharts.js')
+    script(src='/javascripts/view.daily.js')
 
 
 block content
@@ -55,6 +56,10 @@ block content
             #issue-progress-bar(data-role='progress-bar', data-rate='0.5')
 
     br.clear
+
+    section#report-chart-section.paper
+        .paper-content
+            #report-chart
 
 
     section#keep-in-mind-section
