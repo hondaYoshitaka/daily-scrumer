@@ -126,16 +126,34 @@
             $('#report-chart', section).reportChart(data);
             return section;
         },
+        groupingRouletteItem:function(data){
+            return $(this).each(function(){
+                var item = $(this)
+                    .addClass('grouping-roulette-item')
+                    .text(data.name)
+                    .draggable({
+                        containment:'parent'
+                    });
+            });
+        },
+        groupingRoulette:function(){
+            var roulette = $(this).addClass('grouping-roulette');
+            $.getJSON('/team/get', function(data){
+                data.members.forEach(function(data){
+                    $('<div/>')
+                        .appendTo(roulette)
+                        .groupingRouletteItem(data);
+
+                });
+            });
+
+            return roulette;
+        },
         groupingSection:function(){
             var section = $(this);
 
-            var roulette = $('#grouping-roulette', section);
-            $.getJSON('/team/get', function(data){
-                data.members.forEach(function(data){
-                    $('<div/>').text(data.name)
-                        .appendTo(roulette);
-                });
-            });
+            var roulette = $('#grouping-roulette', section)
+                .groupingRoulette();
             return section;
         }
     });
