@@ -24,6 +24,7 @@ exports = module.exports = {
             total:'total',
             modified:'modified',
             done:'done'
-        }
+        },
+        grouping_absentee:'absentee'
     }
 };

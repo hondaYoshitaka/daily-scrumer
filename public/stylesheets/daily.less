@@ -244,6 +244,7 @@
   @border:fadeout(@base, 80);
   @color:@white;
   background-color: @back;
+  .linear-gradient(@back, darken(@back, 15));
   color:@color;
   border-color:@border;
   &.highlight{
@@ -297,4 +298,16 @@
     .cover;
     .white-back(0.4);
   }
+}
+#grouping-absentee-area{
+  margin-top:10px;
+  padding: 5px 10px;
+  border:1px solid @gray;
+}
+.grouping-roulette-item-absent{
+    display: inline-block;
+}
+.absentee-area-active{
+  position: relative;
+  background-color: lighten(@yellow, 40);
 }

@@ -193,7 +193,7 @@
 
             var shuffle = function(){
                 var group = $('.grouping-group', roulette),
-                    item = $('.grouping-roulette-item', roulette);
+                    item = $('.grouping-roulette-item', roulette).not('.grouping-roulette-item-absent');
                 group.addClass('grouping-group-grouped');
 
                 item.appendTo(roulette);
@@ -238,6 +238,18 @@
                 }
                 tick();
             }).hide();
+
+            var absenteeArea = $('#grouping-absentee-area', roulette).droppable({
+                hoverClass:'absentee-area-active',
+                accept:'.grouping-roulette-item',
+                drop:function(e, ui){
+                    var item = $(ui.draggable.get(0));
+                    item
+                        .addClass('grouping-roulette-item-absent')
+                        .appendTo(absenteeArea);
+                    console.log('droped', arguments);
+                }
+            });
             return roulette;
         },
         groupingSection:function () {
