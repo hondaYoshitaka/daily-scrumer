@@ -159,20 +159,45 @@
         groupingRouletteItem:function (data) {
             return $(this).each(function () {
                 var item = $(this)
+                    .data('data', data)
                     .addClass('grouping-roulette-item')
                     .text(data.name)
+                    .css({
+                        left:0,
+                        top:0
+                    })
                     .draggable({
                         revert:true,
                         containment:'#grouping-section'
                     });
             });
         },
+        groupingRouletteGroup:function(){
+            return $(this).each(function(){
+                var ul = $(this);
+                ul.droppable({
+                    hoverClass:'grouping-group-active',
+                    accept:'.grouping-roulette-item',
+                    drop:function(e, ui){
+                        var item = $(ui.draggable.get(0));
+                        var isSelf = item.parent().is(ul);
+                        if(isSelf) return;
+                        var data = item.data('data');
+                        item
+                            .remove()
+                            .clone()
+                            .appendTo(ul)
+                            .groupingRouletteItem(data);
+                    }
+                });
+            }).addClass('grouping-group');
+        },
         groupingRoulette:function () {
             var roulette = $(this).addClass('grouping-roulette');
 
             function newGroup() {
                 return $('<ul/>').prependTo(roulette)
-                    .addClass('grouping-group');
+                    .groupingRouletteGroup();
             }
 
             function isGroupFull(group) {
@@ -243,11 +268,15 @@
                 hoverClass:'absentee-area-active',
                 accept:'.grouping-roulette-item',
                 drop:function(e, ui){
-                    var item = $(ui.draggable.get(0));
+                    var item = $(ui.draggable.get(0)),
+                        data = item.data('data');
                     item
+                        .remove()
+                        .clone()
+                        .appendTo(absenteeArea)
+                        .groupingRouletteItem(data)
                         .addClass('grouping-roulette-item-absent')
-                        .appendTo(absenteeArea);
-                    console.log('droped', arguments);
+
                 }
             });
             return roulette;

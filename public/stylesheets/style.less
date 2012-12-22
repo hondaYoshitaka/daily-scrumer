@@ -406,11 +406,15 @@ form{
 }
 .ui-draggable.ui-draggable-dragging{
   .box-shadow(4px 4px 8px, 0.4);
-  z-index: 100;
+  z-index: 1001;
 }
 .btn{
   .btn(@white);
 }
 .btn.primary{
   .btn(lighten(@brown, 40));
+}
+
+.half-transparent{
+  opacity: 0.5;
 }
