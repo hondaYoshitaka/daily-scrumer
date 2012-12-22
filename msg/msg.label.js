@@ -18,7 +18,7 @@ exports = module.exports = {
         task_time:{
             estimated:'estimated',
             remain:'remain',
-            done:'done'
+            consumed:'consumed'
         },
         issue_count:{
             total:'total',

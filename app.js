@@ -65,7 +65,7 @@ app.configure('development', function () {
     app.post('/team/remove_member', r.team.removeMember);
 
     app.get('/project/issue_count', r.project.issue_count);
-    app.get('/project/task_count', r.project.task_count);
+    app.get('/project/task_time', r.project.task_time);
 
 })(require('./routes'));
 

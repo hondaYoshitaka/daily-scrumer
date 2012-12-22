@@ -91,7 +91,7 @@
                         return;
                     }
                     section.dataDisplay(data);
-                    var rate = data.done / data.total;
+                    var rate = (data.estimated - data.remain) / data.estimated;
                     progressBar.progressBar(rate);
                     doneRate.text((rate * 100).toFixed(1))
                 });

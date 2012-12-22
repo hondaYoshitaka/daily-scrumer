@@ -35,13 +35,16 @@ block content
             table
                 tr
                     th #{label.task_time.estimated}
-                    td
+                    td.number-data
+                        span(data-key='estimated').suffix-hour
                 tr
                     th #{label.task_time.remain}
-                    td
+                    td.number-data
+                        span(data-key='remain').suffix-hour
                 tr
-                    th #{label.task_time.done}
-                    td
+                    th #{label.task_time.consumed}
+                    td.number-data
+                        span(data-key='consumed').suffix-hour
 
 
             #task-progress-bar(data-role='progress-bar')
@@ -57,16 +60,16 @@ block content
             table
                 tr
                     th #{label.issue_count.total}
-                    td
-                        span(data-key='total')
+                    td.number-data
+                        span(data-key='total').suffix-ticket
                 tr
                     th #{label.issue_count.modified}
-                    td
-                        span(data-key='modified')
+                    td.number-data
+                        span(data-key='modified').suffix-ticket
                 tr
                     th #{label.issue_count.done}
-                    td
-                        span(data-key='done')
+                    td.number-data
+                        span(data-key='done').suffix-ticket
             #issue-progress-bar(data-role='progress-bar')
 
     br.clear

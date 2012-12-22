@@ -37,11 +37,14 @@ exports.issue_count = function(req, res){
 };
 
 /* */
-exports.task_count = function(req, res){
+exports.task_time = function(req, res){
 
     //TODO
     res.json({
-        success:true
+        success:true,
+        estimated:130,
+        remain:80,
+        consumed:80
     });
     return;
     var user = req.session.user,

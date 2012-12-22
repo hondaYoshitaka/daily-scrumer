@@ -421,9 +421,25 @@ form{
 .large{
   font-size: 2em;
 }
-
-.suffix-rate:after{
-  content: "%";
+.suffix{
   font-size: 12px;
   font-style: normal;
+  display: inline-block;
+  margin: 0 2px;
+  opacity: 0.8;
+}
+.suffix-rate:after{
+  content: "%";
+  .suffix;
+}
+.suffix-hour:after{
+  content:'h';
+  .suffix;
+}
+.suffix-ticket:after{
+  content:'tickets';
+  .suffix;
+}
+.number-data{
+  text-align: right;
 }
