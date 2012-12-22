@@ -8,18 +8,21 @@ block javascript
 block content
 
 
-    section.paper
+    section.paper.inline.float-left
         .paper-content
             h1= title
             p Welcome to #{title}
 
 
-    section#member-section
-        span.title members
-        ul#mebmer-list.positioned
-        a.list-item-add-btn#member-add-btn
-            i.icon
-                span.add-icon-bar-v
-                span.add-icon-bar-h
+    section#member-section.paper.inline.float-left
+        .paper-content
+            h3.paper-title members
+            ul#mebmer-list.positioned.no-style-list
+            a.list-item-add-btn#member-add-btn
+                i.icon
+                    span.add-icon-bar-v
+                    span.add-icon-bar-h
+
+    br.clear
 
 

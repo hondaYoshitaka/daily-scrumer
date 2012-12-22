@@ -14,6 +14,7 @@ exports = module.exports = {
         issues:'issues',
         tasks:'task time',
         grouping:'grouping',
+        events:'events',
         keep_in_mind:'Trial for this sprint',
         task_time:{
             estimated:'estimated',
