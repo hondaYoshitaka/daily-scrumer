@@ -10,13 +10,13 @@
 
     });
     $.fn.extend({
-        blink:function(duration, callback){
-            return $(this).each(function(){
+        blink:function (duration, callback) {
+            return $(this).each(function () {
                 var elm = $(this);
-                var timer = setInterval(function(){
+                var timer = setInterval(function () {
                     elm.toggleClass('blink');
                 }, 80);
-                setTimeout(function(){
+                setTimeout(function () {
                     elm.removeClass('blink');
                     clearInterval(timer);
                     callback && callback(this);
@@ -172,22 +172,23 @@
                     });
             });
         },
-        groupingRouletteGroup:function(){
-            return $(this).each(function(){
+        groupingRouletteGroup:function () {
+            return $(this).each(function () {
                 var ul = $(this);
                 ul.droppable({
                     hoverClass:'grouping-group-active',
                     accept:'.grouping-roulette-item',
-                    drop:function(e, ui){
+                    drop:function (e, ui) {
                         var item = $(ui.draggable.get(0));
                         var isSelf = item.parent().is(ul);
-                        if(isSelf) return;
+                        if (isSelf) return;
                         var data = item.data('data');
                         item
                             .remove()
                             .clone()
                             .appendTo(ul)
-                            .groupingRouletteItem(data);
+                            .groupingRouletteItem(data)
+                            .removeClass('grouping-roulette-item-absent');
                     }
                 });
             }).addClass('grouping-group');
@@ -216,7 +217,7 @@
                 });
             });
 
-            var shuffle = function(){
+            var shuffle = function () {
                 var group = $('.grouping-group', roulette),
                     item = $('.grouping-roulette-item', roulette).not('.grouping-roulette-item-absent');
                 group.addClass('grouping-group-grouped');
@@ -231,7 +232,7 @@
                     group.eq(index).append(item);
                 });
                 var hasHighlight = item.filter('.highlight').size() > 0;
-                if(hasHighlight){
+                if (hasHighlight) {
                     item.toggleClass('highlight');
                 } else {
                     item.filter(':even').addClass('highlight');
@@ -242,32 +243,36 @@
                 roulette.shuffleTimer = setInterval(shuffle, 140);
                 startBtn.hide();
                 stopBtn.fadeIn();
+                $('.ui-draggable', roulette).draggable('disable');
             });
-            var stopBtn = $('#grouping-stop-btn').click(function(){
+            var stopBtn = $('#grouping-stop-btn').click(function () {
                 stopBtn.addClass('active');
                 clearTimeout(roulette.shuffleTimer);
                 var times = [200, 300, 400, 500, 800];
-                function tick(){
+
+                function tick() {
                     shuffle();
                     var time = times.shift();
-                    if(time){
+                    if (time) {
                         setTimeout(tick, time);
                     } else {
                         $('.grouping-roulette-item', roulette).removeClass('highlight');
-                    $('.grouping-group').blink(800, function(){
+                        $('.grouping-group').blink(800, function () {
                             stopBtn.hide()
                                 .removeClass('active');
                             startBtn.show();
+                            $('.ui-draggable', roulette).draggable('enable');
                         });
                     }
                 }
+
                 tick();
             }).hide();
 
             var absenteeArea = $('#grouping-absentee-area', roulette).droppable({
                 hoverClass:'absentee-area-active',
                 accept:'.grouping-roulette-item',
-                drop:function(e, ui){
+                drop:function (e, ui) {
                     var item = $(ui.draggable.get(0)),
                         data = item.data('data');
                     item
