@@ -116,7 +116,7 @@ block content
     br.clear
     .etched-line
     br
-    section#grouping-section.paper.inline
+    section#grouping-section.paper.inline.float-left
         .paper-content
             h3.paper-title #{label.grouping}
             #grouping-roulette
@@ -128,13 +128,18 @@ block content
                     | #{btn.shuffle_stop}
                 #grouping-absentee-area
                     span.half-transparent #{label.grouping_absentee}
-    br
+            .float-right
+    section#availabel-group-section.paper.inline.float-left
+        .paper-content
+            h3.paper-title #{label.available_group}
+            #availabel-group-count.extra-large.italic.suffix-group
+    br.clear
     br
     .etched-line
     br
     section#event-section.paper
         .paper-content
-                h3.paper-title
+            h3.paper-title
 
     br
     br

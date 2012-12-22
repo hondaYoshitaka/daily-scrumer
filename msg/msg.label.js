@@ -25,6 +25,7 @@ exports = module.exports = {
             modified:'modified',
             done:'done'
         },
-        grouping_absentee:'absentee'
+        grouping_absentee:'absentee',
+        available_group:'available'
     }
 };

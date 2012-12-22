@@ -215,6 +215,7 @@
                             .removeClass('grouping-roulette-item-absent');
                     }
                 });
+                ul.trigger('roulette-group.change');
             }).addClass('grouping-group');
         },
         groupingRoulette:function () {
@@ -239,6 +240,7 @@
                     $('<li/>').appendTo(group)
                         .groupingRouletteItem(data);
                 });
+                roulette.trigger('roulette-group.change')
             });
 
             var shuffle = function () {
@@ -285,11 +287,11 @@
                             stopBtn.hide()
                                 .removeClass('active');
                             startBtn.show();
+                            roulette.trigger('roulette-group.change')
                             $('.ui-draggable', roulette).draggable('enable');
                         });
                     }
                 }
-
                 tick();
             }).hide();
 
@@ -304,9 +306,15 @@
                         .clone()
                         .appendTo(absenteeArea)
                         .groupingRouletteItem(data)
-                        .addClass('grouping-roulette-item-absent')
-
+                        .addClass('grouping-roulette-item-absent');
+                    absenteeArea.trigger('roulette-group.change');
                 }
+            });
+
+            var availableCount = $('#availabel-group-count');
+            roulette.on('roulette-group.change', function(){
+                var count = $('.grouping-group').not(':empty').size();
+                availableCount.text(count);
             });
             return roulette;
         },
