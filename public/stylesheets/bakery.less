@@ -338,26 +338,27 @@ table {
   clear: both;
 }
 
-.btn {
+.btn(@color) {
   display: inline-block;
-  .linear-gradient(@white, @white - #151515);
-  border: 1px solid @white - #181818;
+  .linear-gradient(@color, darken(@color, 10));
+  border: 1px solid darken(@color, 12);
   .box-shadow(1px 1px 2px, 0.2);
   .border-radius(5px);
   padding: 0.5em 1em;
   cursor: pointer;
-  color: @black + #333;
+  color: darken(@color, 70);
   .unselectable;
   &:hover {
-    .linear-gradient(@white, @white - #111);
+    .linear-gradient(lighten(@color, 3), darken(@color, 6));
     .box-shadow(1px 1px 2px, 0.3);
-    color: @black;
+    border-color: darken(@color, 8);
+    color: darken(@color, 80);
     text-decoration: none;
   }
-  &:active {
+  &:active,&.active {
     .box-shadow(none);
     background-image: none;
-    color: @black + #555;
+    color: darken(@color, 50);
   }
 }
 

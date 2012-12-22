@@ -17,8 +17,10 @@ exports.get = function(req, res){
             {name:'mock.member02'},
             {name:'mock.member03'},
             {name:'mock.member04'},
+            {name:'mock.member05'},
             {name:'mock.member06'},
-            {name:'mock.member07'}
+            {name:'mock.member07'},
+            {name:'mock.member08'}
         ]
     });
     res.json(team);

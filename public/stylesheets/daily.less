@@ -235,45 +235,49 @@
 .grouping-roulette{
   min-height: 80px;
   min-width: 100px;
-  border:1px solid lighten(@gray, 30);
   .border-radius(3px);
   padding: 20px;
 }
+.colored-item(@deg){
+  @base:spin(@blue, @deg);
+  @back:@base;
+  @border:fadeout(@base, 80);
+  @color:@white;
+  background-color: @back;
+  color:@color;
+  border-color:@border;
+  &.highlight{
+    .blink;
+//    background-color: fadeout(@color, 40);
+//    color:@white;
+//    border-color:@border;
+  }
+}
 .grouping-group{
+  position: relative;
   padding: 0;
   float:left;
-  @back:fadeout(@blue, 94);
-  @border:fadeout(@blue, 80);
-  @color:fadeout(darken(@blue, 30), 10);
+  margin: 0;
+}
+.grouping-group-grouped{
   &:nth-child(4n){
     .grouping-roulette-item{
-      background-color: @back;
-      color:@color;
-      border-color:@border;
+      .colored-item(0);
     }
   }
   &:nth-child(4n+1){
     .grouping-roulette-item{
-      @deg:45;
-      background-color: spin(@back, @deg);
-      color:spin(@color, @deg);
-      border-color:spin(@border, @deg);
+      .colored-item(45);
     }
   }
   &:nth-child(4n+2){
     .grouping-roulette-item{
-      @deg:90;
-      background-color: spin(@back, 90);
-      color:spin(@color, @deg);
-      border-color:spin(@border, @deg);
+      .colored-item(90);
     }
   }
   &:nth-child(4n+3){
     .grouping-roulette-item{
-      @deg:135;
-      background-color: spin(@back, @deg);
-      color:spin(@color, @deg);
-      border-color:spin(@border, @deg);
+      .colored-item(135);
     }
   }
 }
@@ -281,7 +285,16 @@
   position: relative;
   font-weight: bold;
   display: block;
-  padding: 10px 15px;
-  border:1px solid @gray;
+  padding: 10px 18px;
+  border:1px solid transparent;
+  .border-radius(25px);
+  margin: 5px 8px;
+  font-weight:bolder;
   .grabbable;
+}
+.blink{
+  &:before{
+    .cover;
+    .white-back(0.4);
+  }
 }

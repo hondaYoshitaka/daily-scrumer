@@ -105,6 +105,10 @@ header[data-login='false'] .show-when-login {
   .stick;
   left: 5px;
 }
+.stick-top{
+  .stick;
+  top:5px;
+}
 .stick-bottom{
   .stick;
   bottom:5px;
@@ -171,9 +175,11 @@ header[data-login='false'] .show-when-login {
 }
 
 section {
-  max-width: 600px;
   min-width:260px;
   margin: 10px;
+  &.inline{
+    display: inline-block;
+  }
 }
 
 .hidden {
@@ -401,4 +407,10 @@ form{
 .ui-draggable.ui-draggable-dragging{
   .box-shadow(4px 4px 8px, 0.4);
   z-index: 100;
+}
+.btn{
+  .btn(@white);
+}
+.btn.primary{
+  .btn(lighten(@brown, 40));
 }

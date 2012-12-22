@@ -10,6 +10,19 @@
 
     });
     $.fn.extend({
+        blink:function(duration, callback){
+            return $(this).each(function(){
+                var elm = $(this);
+                var timer = setInterval(function(){
+                    elm.toggleClass('blink');
+                }, 80);
+                setTimeout(function(){
+                    elm.removeClass('blink');
+                    clearInterval(timer);
+                    callback && callback(this);
+                }, duration);
+            });
+        },
         randomEach:function (callback) {
             var elm = $(this),
                 array = [];
@@ -158,7 +171,7 @@
             var roulette = $(this).addClass('grouping-roulette');
 
             function newGroup() {
-                return $('<ul/>').appendTo(roulette)
+                return $('<ul/>').prependTo(roulette)
                     .addClass('grouping-group');
             }
 
@@ -167,6 +180,7 @@
             }
 
             $.getJSON('/team/get', function (data) {
+                $('.grouping-group', roulette).remove();
                 var group = newGroup();
                 data.members.forEach(function (data) {
                     if (isGroupFull(group)) {
@@ -177,25 +191,52 @@
                 });
             });
 
-            var startBtn = $('#grouping-shuffle-btn', roulette).click(function () {
+            var shuffle = function(){
                 var group = $('.grouping-group', roulette),
                     item = $('.grouping-roulette-item', roulette);
-                roulette.shuffleTimer = setInterval(function(){
-                    item.appendTo(roulette);
-                    var index = 0;
-                    item.randomEach(function (i, item) {
-                        var isFull = isGroupFull(group.eq(index));
-                        if (isFull) {
-                            index++;
-                        }
-                        group.eq(index).append(item);
-                    });
-                }, 300);
-                startBtn.fadeOut();
+                group.addClass('grouping-group-grouped');
+
+                item.appendTo(roulette);
+                var index = 0;
+                item.randomEach(function (i, item) {
+                    var isFull = isGroupFull(group.eq(index));
+                    if (isFull) {
+                        index++;
+                    }
+                    group.eq(index).append(item);
+                });
+                var hasHighlight = item.filter('.highlight').size() > 0;
+                if(hasHighlight){
+                    item.toggleClass('highlight');
+                } else {
+                    item.filter(':even').addClass('highlight');
+                    item.filter(':odd').removeClass('highlight');
+                }
+            };
+            var startBtn = $('#grouping-shuffle-btn', roulette).click(function () {
+                roulette.shuffleTimer = setInterval(shuffle, 140);
+                startBtn.hide();
                 stopBtn.fadeIn();
             });
             var stopBtn = $('#grouping-stop-btn').click(function(){
+                stopBtn.addClass('active');
                 clearTimeout(roulette.shuffleTimer);
+                var times = [200, 300, 400, 500, 800];
+                function tick(){
+                    shuffle();
+                    var time = times.shift();
+                    if(time){
+                        setTimeout(tick, time);
+                    } else {
+                        $('.grouping-roulette-item', roulette).removeClass('highlight');
+                    $('.grouping-group').blink(800, function(){
+                            stopBtn.hide()
+                                .removeClass('active');
+                            startBtn.show();
+                        });
+                    }
+                }
+                tick();
             }).hide();
             return roulette;
         },

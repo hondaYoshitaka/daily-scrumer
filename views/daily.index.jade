@@ -107,14 +107,17 @@ block content
     br.clear
     .etched-line
     br
-    section#grouping-section.paper
-        .paper-content
+    section#grouping-section.paper.inline
+        .paper-content.positioned
             h3.paper-title #{label.grouping}
-            #grouping-roulette.positioned
-                a.btn.stick-right.stick-bottom#grouping-shuffle-btn
+            #grouping-roulette
+
+                br.clear
+                a.btn.stick-right.stick-top#grouping-shuffle-btn
                     | #{btn.shuffle}
-                a.btn.stick-right.stick-bottom#grouping-stop-btn
+                a.btn.stick-right.stick-top#grouping-stop-btn.primary
                     | #{btn.shuffle_stop}
+    br
     br
     .etched-line
     br
