@@ -23,5 +23,7 @@ think_back.css
 
 npm-debug.log
 
+cnf.auth.js
+cnf.url.js
 
 Gemfile.lock
