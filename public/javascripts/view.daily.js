@@ -34,44 +34,68 @@
             });
             return elm;
         },
-        progressBar:function () {
+        progressBar:function (rate) {
             var bar = $(this).empty().addClass('progress-bar'),
-                rate = bar.data('rate'),
                 width = bar.width(),
                 div = '<div/>';
             $(div)
                 .appendTo(bar)
                 .addClass('progress-filled')
-                .css({
+                .animate({
                     width:width * rate
                 });
             return bar;
         },
+        /* dataの中身をdata-key属性を持った要素に突っ込む */
+        dataDisplay:function(data){
+            var display = $(this);
+            $('[data-key]', display).each(function () {
+                var elm = $(this),
+                    key = elm.data('key');
+                elm.text(data[key]);
+            });
+            return display;
+        },
         issueSection:function (project) {
-            var section = $(this);
+            var section = $(this),
+                doneRate = $('#issue-done-rate', section),
+                progressBar = section.findByRole('progress-bar');
+
             project = true;//TODO remove
             if (project) {
                 var data = {project_id:project};
-                $.getJSON('project/issue_count', data, function (data) {
+                $.getJSON('/project/issue_count', data, function (data) {
                     if (!data.success) {
                         console.error('failed to get issue_count');
                         return;
                     }
-                    $('[data-key]', section).each(function () {
-                        var elm = $(this),
-                            key = elm.data('key');
-                        elm.text(data[key]);
-                    });
-                    console.log('get issue counts');
+                    section.dataDisplay(data);
+                    var rate = data.done / data.total;
+                    progressBar.progressBar(rate);
+                    doneRate.text((rate * 100).toFixed(1))
                 });
-                section.findByRole('progress-bar').progressBar();
             }
             return section;
         },
-        taskSection:function () {
-            var section = $(this);
+        taskSection:function (project) {
+            var section = $(this),
+                doneRate = $('#task-done-rate', section),
+                progressBar = section.findByRole('progress-bar');
 
-            section.findByRole('progress-bar').progressBar();
+            project = true; //TODO remove
+            if (project) {
+                var data = {project_id:project};
+                $.getJSON('/project/task_time', data, function(data){
+                    if(!data.success){
+                        console.error('failed to get task time');
+                        return;
+                    }
+                    section.dataDisplay(data);
+                    var rate = data.done / data.total;
+                    progressBar.progressBar(rate);
+                    doneRate.text((rate * 100).toFixed(1))
+                });
+            }
             return section;
         },
         keepInMindSection:function () {

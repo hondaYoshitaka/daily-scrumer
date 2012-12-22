@@ -30,6 +30,8 @@ block content
         .paper-content
             h3.paper-title
                 | #{label.tasks}
+            span.rate-box.float-right
+                span#task-done-rate.large.suffix-rate.rate-number
             table
                 tr
                     th #{label.task_time.estimated}
@@ -40,7 +42,9 @@ block content
                 tr
                     th #{label.task_time.done}
                     td
-            #task-progress-bar(data-role='progress-bar', data-rate='0.5')
+
+
+            #task-progress-bar(data-role='progress-bar')
 
 
 
@@ -48,6 +52,8 @@ block content
         .paper-content
             h3.paper-title.blue
                 | #{label.issues}
+            span.rate-box.float-right
+                span#issue-done-rate.large.suffix-rate.rate-number
             table
                 tr
                     th #{label.issue_count.total}
@@ -61,7 +67,7 @@ block content
                     th #{label.issue_count.done}
                     td
                         span(data-key='done')
-            #issue-progress-bar(data-role='progress-bar', data-rate='0.5')
+            #issue-progress-bar(data-role='progress-bar')
 
     br.clear
 
