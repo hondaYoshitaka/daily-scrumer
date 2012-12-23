@@ -31,6 +31,7 @@ exports = module.exports = {
     settings:{
         selected_team:'team',
         teams:'teams',
+        projects:'projects',
         members:'members'
     }
 };
