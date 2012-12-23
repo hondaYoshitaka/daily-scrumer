@@ -12,7 +12,7 @@ exports.all = function(req, res, next){
     if(sameTeam){
         next();
     } else {
-        Team.findByName(req.params.team.name, function(team){
+        Team.findByName(req.params.name, function(team){
             if(team){
                 req.session.team = team;
                 next();

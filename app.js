@@ -52,26 +52,25 @@ app.configure('development', function () {
         next();
     });
 
-    app.all('/team/:name/*', r.team.all);
+    app.all('/team/:name', r.team.all);
 
     app.get('/', r.index.index);
     app.get('/daily', r.daily.index); //TODO remove
-    app.get('/think_back', r.think_back.index);
-    app.get('/setting', r.setting.index);
+    app.get('/think_back', r.think_back.index); //TODO remove
+    app.get('/setting', r.setting.index); //TODO remove
 
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
 
-//    app.get('/team/get', r.team.get);
-//    app.post('/team/save', r.team.save);
-//    app.post('/team/add_member', r.team.addMember);
-//    app.post('/team/remove_member', r.team.removeMember);
-//    app.post('/team/select', r.team.select);
-
+    app.get('/team/:name', r.daily.index);
     app.get('/team/:name/daily', r.daily.index);
+    app.get('/team/:name/think_back', r.think_back.index);
+    app.get('/team/:name/setting', r.setting.index);
+
 
     app.get('/project/issue_count', r.project.issue_count);
     app.get('/project/task_time', r.project.task_time);
+
 
 })(require('./routes'));
 

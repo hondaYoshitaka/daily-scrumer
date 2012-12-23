@@ -9,6 +9,9 @@ exports = module.exports = {
         username:'username',
         password:'password'
     },
+    index:{
+
+    },
     daily:{
         issues:'issues',
         tasks:'task time',
