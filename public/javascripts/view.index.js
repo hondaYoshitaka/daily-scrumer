@@ -8,6 +8,7 @@
             var newForm = $('#new-team-form', section).ajaxForm(function(data){
                 if(!data.success){
                     console.error('failed to create team');
+                    newForm.errForm();
                     return;
                 }
                 var li = $('<li/>').appendTo(list);
@@ -16,12 +17,13 @@
                     .attr('href', '/team/' + name)
                     .text(name)
                     .appendTo(li);
+                $(':text', newForm).val('');
                 newForm.hide();
                 newBtn.removeAttr('style');
             });
             $(':text', newForm).change(function(){
                 newForm.submit();
-            }).patternedText();
+            }).patternedText(500);
             var newBtn = $('#team-add-btn', section);
             newBtn.click(function(){
                 var h = newForm.height();

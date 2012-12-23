@@ -62,7 +62,7 @@ var CS = {};
             });
         },
         /* パターン属性に合致しない中身を勝手に消す */
-        patternedText:function(){
+        patternedText:function(interval){
             return $(this).each(function(){
                var text = $(this),
                    pattern = text.attr('pattern');
@@ -71,7 +71,7 @@ var CS = {};
                 text.textchange(function(){
                     var val = text.val();
                     text.val(val.replace(regex, ''));
-                });
+                }, interval);
             });
         },
         /* エンターキーを補足する */
@@ -160,6 +160,11 @@ var CS = {};
                 });
             });
         },
+        errForm:function(){
+            var form = $(this).addClass('err');
+            //TODO
+            return form;
+        },
         /* ajax投稿フォーム */
         ajaxForm:function (callback) {
             return $(this).each(function () {
@@ -172,7 +177,7 @@ var CS = {};
                     .form()
                     .submit(function (e) {
                         var data = form.serializeObj();
-                        form.showSpin();
+                        form.removeClass('err').showSpin();
                         form.addClass('loading');
                         $.ajax({
                             type:method,
