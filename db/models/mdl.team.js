@@ -26,6 +26,16 @@ Team.prototype.defaultvalue = {
     }
 })(Model);
 
+/* 名称による検索 */
+Team.findByName = function(name, callback){
+    var s = this;
+    return s.findByCondition({
+        name:name
+    }, function(data){
+        callback.call(s, data && data.length && data[0] || null);
+    });
+};
+
 
 var Member = exports.Member = function(data){
     var s = this;

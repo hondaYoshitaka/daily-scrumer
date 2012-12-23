@@ -12,7 +12,7 @@ exports.all = function(req, res, next){
     if(sameTeam){
         next();
     } else {
-
+        Team.findByName
         res.redirect('/');
     }
 };

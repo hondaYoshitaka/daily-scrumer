@@ -55,7 +55,7 @@ app.configure('development', function () {
     app.all('/team/:name/*', r.team.all);
 
     app.get('/', r.index.index);
-    app.get('/daily', r.daily.index);
+    app.get('/daily', r.daily.index); //TODO remove
     app.get('/think_back', r.think_back.index);
     app.get('/setting', r.setting.index);
 
