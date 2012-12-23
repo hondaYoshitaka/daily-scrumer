@@ -10,7 +10,6 @@ exports = module.exports = {
         password:'password'
     },
     daily:{
-        events:'events',
         issues:'issues',
         tasks:'task time',
         grouping:'grouping',
@@ -28,5 +27,9 @@ exports = module.exports = {
         },
         grouping_absentee:'absentee',
         available_group:'available'
+    },
+    settings:{
+        teams:'teams',
+        members:'members'
     }
 };

@@ -6,17 +6,25 @@ block javascript
     script(src='/javascripts/view.setting.js')
 
 block content
+    - var label = msg.label.settings;
 
-
-    section.paper.inline.float-left
+    br
+    .etched-line#top-line
+    br
+    section#team-section.paper.inline.float-left
         .paper-content
-            h1= title
-            p Welcome to #{title}
+            h3.paper-title #{label.teams}
+            ul#team-list.positioned.no-style-list
+
+            a.list-item-add-btn#team-add-btn
+                i.icon
+                                span.add-icon-bar-v
+                                span.add-icon-bar-h
 
 
     section#member-section.paper.inline.float-left
         .paper-content
-            h3.paper-title members
+            h3.paper-title #{label.members}
             ul#mebmer-list.positioned.no-style-list
             a.list-item-add-btn#member-add-btn
                 i.icon
