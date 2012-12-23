@@ -9,6 +9,14 @@ block content
     - var label = msg.label.settings;
 
     br
+    br
+    section#team-select-section
+        span.etched
+            | #{label.selected_team}:
+        select#team-select.no-appearance.large
+            - each team in teams
+                option #{team.name}
+
     .etched-line#top-line
     br
     section#team-section.paper.inline.float-left

@@ -51,7 +51,6 @@ exports.collections = collections;
 
 console.log('DB connected.', url, collections);
 
-
 (function () {
     // 実際のDBアクセスはそれぞれのモデル内で行うので、コネクタを事前に渡しておく。
     for (var name in models) {
@@ -61,3 +60,7 @@ console.log('DB connected.', url, collections);
         model.prototype.connector = db[collectionName];
     }
 })();
+
+(function(launch){
+    launch.load();
+})(require('./data/launch'));

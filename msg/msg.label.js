@@ -29,6 +29,7 @@ exports = module.exports = {
         available_group:'available'
     },
     settings:{
+        selected_team:'team',
         teams:'teams',
         members:'members'
     }

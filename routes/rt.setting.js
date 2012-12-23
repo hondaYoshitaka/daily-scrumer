@@ -1,8 +1,11 @@
-
+var db = require('../db'),
+    Team = db.models['Team'];
 
 
 exports.index = function (req, res) {
-    res.render('setting.index.jade', {
-        title:'Express'
+    Team.findAll(function(teams){
+        res.render('setting.index.jade', {
+            teams:teams
+        });
     });
 };
