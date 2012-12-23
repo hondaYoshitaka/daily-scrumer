@@ -53,7 +53,6 @@ describe('agn.prototype', function () {
             done();
         });
 
-
         it('getHeaderString', function (done) {
             var cookie = new Cookie([
                 "key0=; key1=val1; domain=.example.com; path=/path1/",

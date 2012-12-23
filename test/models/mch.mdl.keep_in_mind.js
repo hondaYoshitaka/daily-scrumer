@@ -10,9 +10,9 @@ var should = require('should'),
 describe('mdl.keep_in_mind', function(){
     before(function(done){
 
+        done();
     });
     it('findByTeamSprint', function(done){
-
         done();
     });
 });

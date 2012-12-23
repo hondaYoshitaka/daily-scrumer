@@ -5,72 +5,14 @@
 var db = require('../db'),
     Team = db.models['Team'];
 
+/* /team以下全てを受け取る */
+exports.all = function(req, res, next){
+    var team = req.session.team;
+    var sameTeam = team && team.name == req.params.name;
+    if(sameTeam){
+        next();
+    } else {
 
-/* チーム情報取得 */
-exports.get = function (req, res) {
-    var data = req.body;
-    //TODO
-    var team = new Team({
-        name:'mock.team.01',
-        members:[
-            {name:'mock.member01'},
-            {name:'mock.member02'},
-            {name:'mock.member03'},
-            {name:'mock.member04'},
-            {name:'mock.member05'},
-            {name:'mock.member06'},
-            {name:'mock.member07'},
-            {name:'mock.member08'}
-        ]
-    });
-    res.json(team);
-};
-
-/* チーム情報の保存 */
-exports.save = function (req, res) {
-    var data = req.body;
-    var team = new Team(data);
-    team.save(function () {
-        res.json({
-            success:true
-        });
-    });
-};
-
-/* メンバー追加 */
-exports.addMember = function (req, res) {
-    var data = req.body;
-    Team.findById(data._id, function (team) {
-        //TODO
-        res.json({
-            success:true
-        });
-    });
-};
-
-/* メンバー情報の更新 */
-exports.updateMember = function (req, res) {
-    var data = req.body;
-};
-
-/* メンバー削除 */
-exports.removeMember = function (req, res) {
-    var data = req.body;
-    Team.findById(data._id, function (team) {
-        //TODO
-        res.json({
-            success:true
-        });
-    });
-};
-
-exports.select = function (req, res) {
-    var data = req.body;
-    Team.findById(new db.ObjectId(data._id), function (team) {
-        req.session.team = team;
-        res.json({
-            success:true,
-            team:team
-        });
-    });
+        res.redirect('/');
+    }
 };

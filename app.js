@@ -52,7 +52,9 @@ app.configure('development', function () {
         next();
     });
 
-    app.get('/', r.daily.index);
+    app.all('/team/:name/*', r.team.all);
+
+    app.get('/', r.index.index);
     app.get('/daily', r.daily.index);
     app.get('/think_back', r.think_back.index);
     app.get('/setting', r.setting.index);
@@ -60,11 +62,13 @@ app.configure('development', function () {
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
 
-    app.get('/team/get', r.team.get);
-    app.post('/team/save', r.team.save);
-    app.post('/team/add_member', r.team.addMember);
-    app.post('/team/remove_member', r.team.removeMember);
-    app.post('/team/select', r.team.select);
+//    app.get('/team/get', r.team.get);
+//    app.post('/team/save', r.team.save);
+//    app.post('/team/add_member', r.team.addMember);
+//    app.post('/team/remove_member', r.team.removeMember);
+//    app.post('/team/select', r.team.select);
+
+    app.get('/team/:name/daily', r.daily.index);
 
     app.get('/project/issue_count', r.project.issue_count);
     app.get('/project/task_time', r.project.task_time);
@@ -74,3 +78,9 @@ app.configure('development', function () {
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
+
+
+(function(launch){
+    //load launch data for db
+    launch.load();
+})(require('./db/data/launch'));

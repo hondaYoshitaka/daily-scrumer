@@ -61,6 +61,3 @@ console.log('DB connected.', url, collections);
     }
 })();
 
-(function(launch){
-    launch.load();
-})(require('./data/launch'));

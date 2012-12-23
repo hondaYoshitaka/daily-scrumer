@@ -11,20 +11,20 @@ var should = require('should'),
 
 describe('rt.team', function () {
     require('../check_env.js')();
-    it('get', function (done) {
-        route.get(new Req({
 
+    it('all (invalid team name)', function(done){
+        route.all(new Req({
+            session:{
+
+            },
+            params:{
+                team:'some_invalid_name'
+            }
         }), new Res({
-            json:function (team) {
-                should.exist(team);
+            redirect:function(path){
+                path.should.equal('/');
                 done();
             }
         }));
-    });
-    it('addMember', function(){
-
-    });
-    it('removeMember', function(){
-
     });
 });

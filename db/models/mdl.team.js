@@ -9,6 +9,7 @@ var Team = exports = module.exports = function(data){
     var s = this;
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
+    if(!s.members) s.members = [];
 };
 
 Team.prototype.defaultvalue = {
