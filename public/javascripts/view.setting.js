@@ -62,7 +62,21 @@
     });
     $(function () {
         $('#member-section').memberSection();
+
         $('#head-nav').nav('setting');
+
+        var teamSelect = $('#team-select').change(function(){
+
+            var data = {_id:teamSelect.val()};
+            $.post('/team/select', data, function(data){
+                if(!data.success){
+                    console.error('failed to select team.');
+                    return;
+                }
+                var team = data.team;
+                $('#selected-team').text(team.name);
+            });
+        });
 
     });
 })(jQuery);

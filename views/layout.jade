@@ -21,7 +21,7 @@ html
     header(data-login='#{!!login_user}')
 
         .logo
-            | #{team.name}
+            span#selected-team #{team.name}
         nav.nav-bar.positioned#head-nav
             a.nav-item(href='/daily', data-key='daily')
                 | #{msg.nav.daily}

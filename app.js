@@ -64,6 +64,7 @@ app.configure('development', function () {
     app.post('/team/save', r.team.save);
     app.post('/team/add_member', r.team.addMember);
     app.post('/team/remove_member', r.team.removeMember);
+    app.post('/team/select', r.team.select);
 
     app.get('/project/issue_count', r.project.issue_count);
     app.get('/project/task_time', r.project.task_time);

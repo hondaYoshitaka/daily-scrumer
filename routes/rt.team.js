@@ -7,7 +7,7 @@ var db = require('../db'),
 
 
 /* チーム情報取得 */
-exports.get = function(req, res){
+exports.get = function (req, res) {
     var data = req.body;
     //TODO
     var team = new Team({
@@ -27,10 +27,10 @@ exports.get = function(req, res){
 };
 
 /* チーム情報の保存 */
-exports.save = function(req, res){
+exports.save = function (req, res) {
     var data = req.body;
     var team = new Team(data);
-    team.save(function(){
+    team.save(function () {
         res.json({
             success:true
         });
@@ -38,28 +38,39 @@ exports.save = function(req, res){
 };
 
 /* メンバー追加 */
-exports.addMember = function(req, res){
+exports.addMember = function (req, res) {
     var data = req.body;
-    Team.findById(data._id, function(team){
+    Team.findById(data._id, function (team) {
         //TODO
         res.json({
-           success:true
+            success:true
         });
     });
 };
 
 /* メンバー情報の更新 */
-exports.updateMember = function(req, res){
+exports.updateMember = function (req, res) {
     var data = req.body;
 };
 
 /* メンバー削除 */
-exports.removeMember = function(req, res){
+exports.removeMember = function (req, res) {
     var data = req.body;
-    Team.findById(data._id, function(team){
+    Team.findById(data._id, function (team) {
         //TODO
         res.json({
             success:true
+        });
+    });
+};
+
+exports.select = function (req, res) {
+    var data = req.body;
+    Team.findById(new db.ObjectId(data._id), function (team) {
+        req.session.team = team;
+        res.json({
+            success:true,
+            team:team
         });
     });
 };

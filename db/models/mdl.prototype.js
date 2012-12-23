@@ -52,7 +52,9 @@ Model.findByCondition = function(condition, callback){
             return;
         }
         data && data.forEach(function(data){
-            result.push(new s(data));
+            var entity = new s(data);
+            entity._id = data._id.toString();
+            result.push(entity);
         });
         callback && callback.call(s, result);
     });

@@ -14,8 +14,10 @@ block content
         span.etched
             | #{label.selected_team}:
         select#team-select.no-appearance.large
+            option
             - each team in teams
-                option #{team.name}
+                option(value='#{team._id.toString()}')
+                    | #{team.name}
 
     .etched-line#top-line
     br
