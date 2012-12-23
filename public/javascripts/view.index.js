@@ -21,7 +21,7 @@
             });
             $(':text', newForm).change(function(){
                 newForm.submit();
-            });
+            }).patternedText();
             var newBtn = $('#team-add-btn', section);
             newBtn.click(function(){
                 var h = newForm.height();

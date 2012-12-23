@@ -61,6 +61,19 @@ var CS = {};
                     });
             });
         },
+        /* パターン属性に合致しない中身を勝手に消す */
+        patternedText:function(){
+            return $(this).each(function(){
+               var text = $(this),
+                   pattern = text.attr('pattern');
+                if(!pattern) return;
+                var regex = new RegExp('[^' + pattern + ']', 'g');
+                text.textchange(function(){
+                    var val = text.val();
+                    text.val(val.replace(regex, ''));
+                });
+            });
+        },
         /* エンターキーを補足する */
         pressEnter:function (callback) {
             return $(this).keypress(function (e) {

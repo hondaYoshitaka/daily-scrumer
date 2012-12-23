@@ -58,5 +58,5 @@ Team.prototype.addMember = function(member, callback){
 /* 有効かどうか */
 Team.prototype.isValid = function(){
     var s = this;
-    return !!(s.name);
+    return !!(s.name && s.name.match(/^[a-zA-Z0-9_]*$/));
 };

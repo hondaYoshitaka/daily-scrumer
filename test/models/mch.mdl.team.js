@@ -48,13 +48,8 @@ describe('mdl.team', function () {
 
     it('isValid (valid)', function(done){
         var team = new Team({
-            name:'some name'
+            name:'some_name'
         });
-        team.members.push(
-            new Member({
-                name:'some one'
-            })
-        );
         team.isValid().should.be.true;
         done();
     });
@@ -62,11 +57,13 @@ describe('mdl.team', function () {
         var team = new Team({
             name:''
         });
-        team.members.push(
-            new Member({
-                name:''
-            })
-        );
+        team.isValid().should.be.false;
+        done();
+    });
+    it('isValid (invalid)', function(done){
+        var team = new Team({
+            name:' +*?'
+        });
         team.isValid().should.be.false;
         done();
     });
