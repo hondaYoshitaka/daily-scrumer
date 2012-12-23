@@ -23,22 +23,11 @@
                     .change(function () {
 
                     });
-                $('<a/>').addClass('list-remove-btn')
-                    .text('×')
-                    .appendTo(li)
-                    .click(function () {
-                        var data = {};//TODO
-                        $.post('/team/removeMember', data, function (data) {
-
-                        });
-                        li.animate({
-                            height:0,
-                            paddingTop:0,
-                            paddingBottom:0
-                        }, function () {
-                            li.empty();
-                        });
+                li.removableListItem(function(){
+                    var data = {};//TODO
+                    $.post('/team/removeMember', data, function (data) {
                     });
+                });
             });
         },
         memberSection:function () {

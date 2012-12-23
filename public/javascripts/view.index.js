@@ -1,17 +1,25 @@
 ;(function($){
     $.fn.extend({
-
+        teamSelectListItem:function(){
+            return $(this).each(function(){
+                var li = $(this).addClass('positioned');
+                li.removableListItem(function(){
+                    //TODO remove;
+                });
+            })
+        },
         teamSelectSection:function(){
             var section = $(this);
 
             var list = $('#team-list');
+            $('li', list).teamSelectListItem();
             var newForm = $('#new-team-form', section).ajaxForm(function(data){
                 if(!data.success){
                     console.error('failed to create team');
                     newForm.errForm();
                     return;
                 }
-                var li = $('<li/>').appendTo(list);
+                var li = $('<li/>').appendTo(list).teamSelectListItem();
                 var name = data.team.name;
                 $('<a/>')
                     .attr('href', '/team/' + name)

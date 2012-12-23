@@ -291,6 +291,26 @@ var CS = {};
                 });
             nav.findByRole('dropdown-menu').dropdownMenu();
         },
+        removableListItem:function(remove){
+            return $(this).each(function(){
+                var li = $(this);
+                if(li.is('.removable-list-item')) return;
+                li.addClass('removable-list-item');
+                $('<a/>').addClass('list-remove-btn')
+                    .text('×')
+                    .appendTo(li)
+                    .click(function () {
+                        remove.call(li);
+                        li.animate({
+                            height:0,
+                            paddingTop:0,
+                            paddingBottom:0
+                        }, function () {
+                            li.hide();
+                        });
+                    });
+            });
+        },
         dropdownMenu:function () {
             var menu = $(this),
                 btn = $(menu.data('btn'));
