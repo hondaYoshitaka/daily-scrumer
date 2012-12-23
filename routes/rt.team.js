@@ -24,30 +24,39 @@ exports.all = function (req, res, next) {
 };
 
 
-exports.new = function (req, res, next) {
+exports.new = function (req, res) {
     var data = req.body;
     var team = new Team({
         name:data.name
     });
-    function fail(){
+
+    function fail() {
         res.json({
             success:false
         });
     }
+
     if (!team.isValid()) {
         fail();
         return;
     }
-    Team.findByName(team.name, function(data){
-        if(data){
+    Team.findByName(team.name, function (data) {
+        if (data) {
             fail();
             return;
         }
-        team.save(function(){
+        team.save(function () {
             res.json({
                 success:true,
                 team:team
             });
         });
+    });
+};
+
+exports.remove = function (req, res) {
+
+    res.json({
+
     });
 };

@@ -291,7 +291,7 @@ var CS = {};
                 });
             nav.findByRole('dropdown-menu').dropdownMenu();
         },
-        removableListItem:function(remove){
+        removableListItem:function(remove, confirmMsg){
             return $(this).each(function(){
                 var li = $(this);
                 if(li.is('.removable-list-item')) return;
@@ -300,6 +300,10 @@ var CS = {};
                     .text('×')
                     .appendTo(li)
                     .click(function () {
+                        if(confirmMsg){
+                            var cancel = !confirm(confirmMsg);
+                            if(cancel) return;
+                        }
                         remove.call(li);
                         li.animate({
                             height:0,

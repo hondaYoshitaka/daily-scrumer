@@ -5,12 +5,15 @@
                 var li = $(this).addClass('positioned');
                 li.removableListItem(function(){
                     //TODO remove;
-                });
+                    var data  = {}; //TODO
+                    $.post('/remove_team', data, function(){
+
+                    });
+                }, "Are you sure?" /*TODO msg resource*/);
             })
         },
         teamSelectSection:function(){
             var section = $(this);
-
             var list = $('#team-list');
             $('li', list).teamSelectListItem();
             var newForm = $('#new-team-form', section).ajaxForm(function(data){
