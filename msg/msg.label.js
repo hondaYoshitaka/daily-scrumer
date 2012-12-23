@@ -10,7 +10,7 @@ exports = module.exports = {
         password:'password'
     },
     index:{
-
+        teams:'select your team'
     },
     daily:{
         issues:'issues',

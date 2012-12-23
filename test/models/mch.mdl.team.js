@@ -45,4 +45,29 @@ describe('mdl.team', function () {
             done();
         });
     });
+
+    it('isValid (valid)', function(done){
+        var team = new Team({
+            name:'some name'
+        });
+        team.members.push(
+            new Member({
+                name:'some one'
+            })
+        );
+        team.isValid().should.be.true;
+        done();
+    });
+    it('isValid (invalid)', function(done){
+        var team = new Team({
+            name:''
+        });
+        team.members.push(
+            new Member({
+                name:''
+            })
+        );
+        team.isValid().should.be.false;
+        done();
+    });
 });

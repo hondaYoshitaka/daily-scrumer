@@ -159,7 +159,6 @@ var CS = {};
                     .form()
                     .submit(function (e) {
                         var data = form.serializeObj();
-                        //TODO validation
                         form.showSpin();
                         form.addClass('loading');
                         $.ajax({

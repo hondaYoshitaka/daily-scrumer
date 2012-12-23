@@ -54,3 +54,9 @@ Team.prototype.addMember = function(member, callback){
     s.update(callback);
 };
 
+
+/* 有効かどうか */
+Team.prototype.isValid = function(){
+    var s = this;
+    return !!(s.name);
+};

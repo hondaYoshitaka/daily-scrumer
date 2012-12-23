@@ -8,13 +8,30 @@ block javascript
 
 
 block content
-    .etched.large
-        | #{app.title}
+    - var label = msg.label.index;
+    - var placeholder = msg.placeholder.index;
+    #main-content-left.float-left
+        h1#logo.etched.large
+            | #{app.title}
+
+    #main-content-right.float-left
+        section#team-select-section.paper
+            .paper-content
+                h3.paper-title.lead #{label.teams}
+                ul#team-list.positioned
+                    - each team in teams
+                        li
+                            a(href='/team/#{team.name}')
+                                | #{team.name}
+
+                form#new-team-form(action='/new_team', method='POST')
+                    input(type='text', name='name', placeholder=placeholder.team_name, required)
+                    input.btn(type='submit').hidden
+                a#team-add-btn.list-item-add-btn
+                    i.icon
+                        span.add-icon-bar-v
+                        span.add-icon-bar-h
+    br.clear
 
 
-    section#team-select
-        - each team in teams
-            a(href='/team/#{team.name}')
-                | #{team.name}
 
-        a#team-add-btn
