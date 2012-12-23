@@ -24,7 +24,25 @@ describe('rt.team', function () {
             done();
         });
     });
-
+    it('all (same team)', function(done){
+        var req = new Req({
+            session:{
+                team:{
+                    name:'team01'
+                }
+            },
+            params:{
+                team:{
+                    name:'team01'
+                }
+            }
+        });
+        var res = new Res({});
+        route.all(req, res, function(){
+            req.session.team.should.have.property('name', 'team01');
+            done();
+        });
+    });
     it('all (invalid team name)', function(done){
         route.all(new Req({
             session:{
