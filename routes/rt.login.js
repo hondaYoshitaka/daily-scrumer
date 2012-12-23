@@ -5,7 +5,7 @@
 var RedmineAgent = require('../agent')['Redmine'],
     util = require('../util');
 
-var User = function(redmineAgent){
+var User = function (redmineAgent) {
     var s = this;
     s.redmineAgent = redmineAgent;
 };
@@ -19,13 +19,18 @@ exports.auth = function (req, res) {
     };
     var agent = new RedmineAgent();
     agent.login(auth, function (sucess, data) {
-        var user= new User(agent);
+        var user = new User(agent);
         user.name = auth.username;
         user.projectes = data && data.projects;
         req.session.user = user;
+
+        var team = require('../test/mock/')['Team'].team01;//TODO
+        req.session.team = team;
+
         res.json({
             success:sucess,
-            user:user
+            user:user,
+            team:team
         });
     });
 };
@@ -33,13 +38,13 @@ exports.auth = function (req, res) {
 /* ログアウト */
 exports.logout = function (req, res) {
     var user = req.session.user;
-    if(!user){
+    if (!user) {
         res.json({
             success:false
         });
         return;
     }
-    new RedmineAgent(user.redmineAgent).logout(function(sucess){
+    new RedmineAgent(user.redmineAgent).logout(function (sucess) {
         req.session.user = null;
         res.json({
             success:sucess

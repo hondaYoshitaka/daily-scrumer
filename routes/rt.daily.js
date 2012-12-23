@@ -4,6 +4,9 @@
 
 
 exports.index = function(req, res){
-    res.render('daily.index.jade');
+    var sprint = require('../test/mock')['Sprint'].sprint01;//TODO
+    res.render('daily.index.jade', {
+        sprint:sprint
+    });
 };
 

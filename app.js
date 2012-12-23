@@ -45,6 +45,7 @@ app.configure('development', function () {
             return;
         }
         res.locals({
+            team:req.session.team || require('./test/mock/')['Team'].team01, //TODO,
             login_user:req.session.user || null
         });
 

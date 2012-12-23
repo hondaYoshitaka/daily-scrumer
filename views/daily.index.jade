@@ -23,7 +23,8 @@ block content
                 small.sub-title
                     | #{msg.label.current_sprint}
                     br
-                | sprint124
+                - if(sprint)
+                    | sprint#{sprint.number}
     .etched-line#top-line
     br
     section#task-section.paper.float-left
