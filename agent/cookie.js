@@ -18,29 +18,30 @@ exports = module.exports = (function () {
 
     var Cookie = function (data) {
         var s = this;
-        if(data){
-            if(data instanceof Array) {
-                s.set(data);
-            } else {
-                util.obj.deepCopy(data, s);
-            }
-        }
+        s.set(data);
     };
 
     /* set-cookieヘッダの情報をセットする */
     Cookie.prototype.set = function (header) {
-        var s = this, phrases = [];
-        header && header.forEach(function (data) {
-            var phrase = new Phrase(data);
-            phrases.push(phrase);
-        });
-        phrases.forEach(function (phrase) {
-            var domain = phrase['domain'],
-                path = phrase.path;
-            if (!s[domain]) s[domain] = {};
-            if (!s[domain][path]) s[domain][path] = {};
-            util.obj.deepCopy(phrase, s[domain][path]);
-        });
+        var s = this;
+        if (!header) return s;
+        var phrases = [];
+
+        if (header.forEach) {
+            header.forEach(function (data) {
+                var phrase = new Phrase(data);
+                phrases.push(phrase);
+            });
+            phrases.forEach(function (phrase) {
+                var domain = phrase['domain'],
+                    path = phrase.path;
+                if (!s[domain]) s[domain] = {};
+                if (!s[domain][path]) s[domain][path] = {};
+                util.obj.deepCopy(phrase, s[domain][path]);
+            });
+        } else {
+            util.obj.deepCopy(header, s);
+        }
         return s;
     };
 
@@ -48,7 +49,7 @@ exports = module.exports = (function () {
     Cookie.prototype.getByDomain = function (domainString) {
         var s = this,
             result = [];
-        if(!domainString) return result;
+        if (!domainString) return result;
         var domain = domainString.split(/\./).reverse();
         Object.keys(s).forEach(function (key) {
             var match = true,
@@ -84,12 +85,12 @@ exports = module.exports = (function () {
             str = '';
         s.get(domain, path).forEach(function (data) {
             Object.keys(data).forEach(function (key) {
-                switch(key){
+                switch (key) {
                     case 'domain':
                     case 'path':
                         return;
                 }
-                if(str) str += " ";
+                if (str) str += " ";
                 str += [key, data[key]].join('=');
                 str += ";"
             });
