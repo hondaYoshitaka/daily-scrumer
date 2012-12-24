@@ -33,7 +33,6 @@ RedmineAgent.prototype.login = function (auth, callback) {
             password:auth.password,
             authenticity_token:token
         };
-        console.log(JSON.stringify(form).length, JSON.stringify(form).length);
         s.post(conf.url.login,function (res, body, $) {
             if(res.statusCode == '411'){
                 console.error('failed to login');

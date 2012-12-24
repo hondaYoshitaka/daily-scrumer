@@ -7,10 +7,17 @@ var util = require('../util'),
     cheerio = require('cheerio'),
     urlParser = require('url');
 
+(function (form) {
+    request.prototype.form = function () {
+        var s = this;
+        var result = form.apply(s, arguments);
+        console.log('s.body', s.body.length, s.body);
+        return result;
+    };
+})(request.prototype.form);
 
 var Agent = exports = module.exports = function () {
 };
-
 var Cookie = exports.Cookie = require('./cookie');
 var Query = exports.Query = require('./query');
 
@@ -23,7 +30,7 @@ Agent.prototype.request = function (method, url, callback, headers) {
     }
     var cookie = s.cookie.getHeaderString(url.hostname, url.pathname);
     console.log('[agn]', method, url.href);
-    return request({
+    var r = request({
         method:method,
         url:url.href,
         encoding:null,
@@ -42,16 +49,25 @@ Agent.prototype.request = function (method, url, callback, headers) {
 
 
         var body = res.body
-        if(s.converter){
+        if (s.converter) {
             body = s.converter.convert(body);
         }
-        else{
+        else {
             body = body.toString();
         }
 
         var $ = cheerio.load(body);
         callback && callback.call(s, res, body, $);
     });
+    (function (form) {
+        r.__proto__.form = function () {
+            var s = this;
+            var result = form.apply(s, arguments);
+            s.headers['content-length'] = s.body.length;
+            return result;
+        }
+    })(r.__proto__.form);
+    return r;
 };
 Agent.prototype.post = function (url, callback) {
     var s = this;
