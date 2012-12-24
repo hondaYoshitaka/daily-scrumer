@@ -4,8 +4,7 @@
             return $(this).each(function(){
                 var li = $(this).addClass('positioned');
                 li.removableListItem(function(){
-                    //TODO remove;
-                    var data  = {}; //TODO
+                    var data  = {name:li.data('name')}; //TODO
                     $.post('/remove_team', data, function(){
 
                     });
@@ -24,6 +23,7 @@
                 }
                 var li = $('<li/>').appendTo(list).teamSelectListItem();
                 var name = data.team.name;
+                li.data('name', name);
                 $('<a/>')
                     .attr('href', '/team/' + name)
                     .text(name)

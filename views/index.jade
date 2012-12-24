@@ -20,7 +20,7 @@ block content
                 h3.paper-title.lead #{label.teams}
                 ul#team-list.positioned
                     - each team in teams
-                        li
+                        li(data-name=team.name)
                             a(href='/team/#{team.name}')
                                 | #{team.name}
 
