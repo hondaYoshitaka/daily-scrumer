@@ -40,6 +40,77 @@ var CS = {};
             }
             return result;
         },
+        /* formのサブミット時にバリデーションを実行する
+         * revalidator.schema.jsのキーを渡す。
+         */
+        validationForm:function (schemaKey) {
+            var form = $(this).addClass('validation-form');
+            if (!form.size()) return form;
+
+            var schema = (function (schema) {
+                var key = schemaKey;
+                while (key.match(/\./)) {
+                    schema = schema[key.match(/^[\.]*/)[0]];
+                    key = key.replace(/^[\.]*\./, '');
+                }
+                return schema[key];
+            })(window.json.validate.schema);
+            form
+                .on('form.validate', function () {
+                    $('.err', form).removeClass('err');
+                    var values = form.serializeObj();
+                    var result = window.json.validate(values, {
+                        properties:schema
+                    });
+                    var valid = result.valid;
+                    form.data('form.valid', valid);
+                    if (!valid) {
+                        form.trigger('form.err', [result.errors]);
+                    }
+                })
+                .on('form.err', function (e, err) {
+                    var errDialog = $('.err-msg-dialog', form);
+                    if (!errDialog.size()) {
+                        errDialog = $('<div/>').appendTo(form);
+                    }
+                    var msg = [];
+                    $.each(err, function (i, err) {
+                        var name = err.property,
+                            label = schema[name].label || 'label';
+                        form.findByName(name).addClass('err');
+                        msg.push(err.message.replace(/\{\{label\}\}/, label));
+                    });
+                    errDialog.errMsgDialog(msg);
+                })
+                .submit(function (e) {
+                    form.trigger('form.validate');
+                    var valid = form.data('form.valid');
+                    if (!valid) {
+                        e.preventDefault();
+                    }
+                });
+            return form;
+        },
+        /* エラーメッセージ表示 */
+        errMsgDialog:function (msg) {
+            var dialog = $(this).addClass('err-msg-dialog').show(),
+                ul = $('ul', dialog).empty();
+            if (!ul.size()) {
+                //一回目に表示した時
+                ul = $('<ul/>').appendTo(dialog);
+                dialog.click(function () {
+                    dialog.fadeOut(200);
+                });
+                $('<a/>').addClass('close')
+                    .text('[修正する]')
+                    .appendTo(dialog);
+            }
+            $.each(msg, function (i, msg) {
+                $('<li/>').text(msg)
+                    .appendTo(ul);
+            });
+            return dialog;
+        },
         /* テキストの変化をリアルタイムで補足する */
         textchange:function (callback, interval) {
             return $(this).each(function () {
@@ -339,7 +410,7 @@ var CS = {};
 
             var dialog = header.findByRole('dialog').dialog();
 
-            var form = $('#login-from', dialog).ajaxForm(function (data) {
+            var form = $('#login-from', dialog).validationForm('login').ajaxForm(function (data) {
                 var form = $(this),
                     loginErrMsg = $('#login-err-msg'),
                     input = $('input', form);
