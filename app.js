@@ -69,6 +69,7 @@ app.configure('development', function () {
 
     app.post('/new_team', r.team.new);
     app.post('/remove_team', r.team.remove);
+    app.get('/get_team', r.team.get);
 
     app.get('/project/issue_count', r.project.issue_count);
     app.get('/project/task_time', r.project.task_time);

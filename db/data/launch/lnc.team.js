@@ -8,15 +8,15 @@ exports = module.exports = [
     new Team({
         name:'sample_team',
         members:[
-            'sample_team_member01',
-            'sample_team_member02',
-            'sample_team_member03',
-            'sample_team_member04',
-            'sample_team_member04',
-            'sample_team_member05',
-            'sample_team_member06',
-            'sample_team_member07',
-            'sample_team_member08'
+            {name:'sample_team_member01'},
+            {name:'sample_team_member02'},
+            {name:'sample_team_member03'},
+            {name:'sample_team_member04'},
+            {name:'sample_team_member04'},
+            {name:'sample_team_member05'},
+            {name:'sample_team_member06'},
+            {name:'sample_team_member07'},
+            {name:'sample_team_member08'}
         ]
     })
 ];

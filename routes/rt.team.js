@@ -56,8 +56,17 @@ exports.new = function (req, res) {
 };
 
 exports.remove = function (req, res) {
-
     res.json({
 
+    });
+};
+
+exports.get = function (req, res) {
+    var name = req.query.name;
+    Team.findByName(name, function (data) {
+        res.json({
+            success:!!data,
+            team:data
+        });
     });
 };

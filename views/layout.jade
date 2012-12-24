@@ -12,6 +12,7 @@ html
     script(src='/javascripts/view.js')
     script
         CS.login_user = !{login_user && JSON.stringify(login_user) || 'null'};
+        CS.team = !{team && JSON.stringify(team) || 'null'};
     block javascript
 
     block head

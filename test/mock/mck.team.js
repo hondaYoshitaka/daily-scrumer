@@ -4,11 +4,11 @@ var db = require('../../db'),
 exports.team01 = new Team({
     name:'MyTeam01',
     members:[
-        'John',
-        'Mike',
-        'Tom',
-        'Susan',
-        'Maika',
-        'Mary'
+        {name:'John'},
+        {name:'Mike'},
+        {name:'Tom'},
+        {name:'Susan'},
+        {name:'Maika'},
+        {name:'Mary'}
     ]
 });

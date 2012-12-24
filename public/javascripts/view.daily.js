@@ -230,16 +230,26 @@
                 return group.children().size() >= 2;
             }
 
-            $.getJSON('/team/get', function (data) {
+            $.getJSON('/get_team', {name:CS.team.name}, function (data) {
+                if(!data.success){
+                    console.error('failed to load team for roulette');
+                    return;
+                }
                 $('.grouping-group', roulette).remove();
                 var group = newGroup();
-                data.members.forEach(function (data) {
-                    if (isGroupFull(group)) {
-                        group = newGroup();
-                    }
-                    $('<li/>').appendTo(group)
-                        .groupingRouletteItem(data);
-                });
+                var team = data.team;
+                if(team.members && team.members.length){
+                    team.members.forEach(function (data) {
+                        if (isGroupFull(group)) {
+                            group = newGroup();
+                        }
+                        $('<li/>').appendTo(group)
+                            .groupingRouletteItem(data);
+                    });
+                    roulette.removeClass('no-member-roulette');
+                } else {
+                    roulette.addClass('no-member-roulette');
+                }
                 roulette.trigger('roulette-group.change')
             });
 
