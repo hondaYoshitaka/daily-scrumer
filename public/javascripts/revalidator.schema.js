@@ -11,12 +11,12 @@
         // 文字列内の'#{}'部分はmsg.jsから適宜置換される。
         login:{
             username:{
-                label:'ユーザ名',
+                label:'username',
                 required:true,
                 minLength:2
             },
             password:{
-                label:'パスワード',
+                label:'password',
                 required:true,
                 minLength:2
             }

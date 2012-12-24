@@ -102,7 +102,7 @@ var CS = {};
                     dialog.fadeOut(200);
                 });
                 $('<a/>').addClass('close')
-                    .text('[修正する]')
+                    .text('[modify]') //TODO msg resource
                     .appendTo(dialog);
             }
             $.each(msg, function (i, msg) {

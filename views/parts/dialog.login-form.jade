@@ -22,7 +22,7 @@ form#login-from(action='/auth', data-role='ajax-from', method='POST')
                     type='password',
                     placeholder='#{msg.label.login.password}'
                 )
-
-    a.btn.block-btn(data-role='submit-btn')
-        | #{msg.btn.login}
+    .btn-area
+        a.btn.block-btn(data-role='submit-btn')
+            | #{msg.btn.login}
 
