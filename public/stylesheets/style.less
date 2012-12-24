@@ -488,3 +488,25 @@ form{
 .etched{
   .etched(0.4);
 }
+
+
+.validation-form{
+  position: relative;
+  .err-msg-dialog{
+    .border-box;
+    .cover;
+    height: auto;
+    padding-bottom:10px;
+    background-color: @pink;
+    border-radius: 2px;
+    border:4px solid @darkPink;
+    color: @red;
+    text-align:left;
+    a.close{
+      display: block;
+      text-align: center;
+      color: @red;
+      cursor: default;
+    }
+  }
+}

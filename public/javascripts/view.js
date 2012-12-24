@@ -133,13 +133,13 @@ var CS = {};
             });
         },
         /* パターン属性に合致しない中身を勝手に消す */
-        patternedText:function(interval){
-            return $(this).each(function(){
-               var text = $(this),
-                   pattern = text.attr('pattern');
-                if(!pattern) return;
+        patternedText:function (interval) {
+            return $(this).each(function () {
+                var text = $(this),
+                    pattern = text.attr('pattern');
+                if (!pattern) return;
                 var regex = new RegExp('[^' + pattern + ']', 'g');
-                text.textchange(function(){
+                text.textchange(function () {
                     var val = text.val();
                     text.val(val.replace(regex, ''));
                 }, interval);
@@ -231,7 +231,7 @@ var CS = {};
                 });
             });
         },
-        errForm:function(){
+        errForm:function () {
             var form = $(this).addClass('err');
             //TODO
             return form;
@@ -245,8 +245,10 @@ var CS = {};
                     method = form.attr('method');
 
                 form
+                    .data('form.valid', true)
                     .form()
                     .submit(function (e) {
+                        if (!form.data('form.valid'))return;
                         var data = form.serializeObj();
                         form.removeClass('err').showSpin();
                         form.addClass('loading');
@@ -362,18 +364,18 @@ var CS = {};
                 });
             nav.findByRole('dropdown-menu').dropdownMenu();
         },
-        removableListItem:function(remove, confirmMsg){
-            return $(this).each(function(){
+        removableListItem:function (remove, confirmMsg) {
+            return $(this).each(function () {
                 var li = $(this);
-                if(li.is('.removable-list-item')) return;
+                if (li.is('.removable-list-item')) return;
                 li.addClass('removable-list-item');
                 $('<a/>').addClass('list-remove-btn')
                     .text('×')
                     .appendTo(li)
                     .click(function () {
-                        if(confirmMsg){
+                        if (confirmMsg) {
                             var cancel = !confirm(confirmMsg);
-                            if(cancel) return;
+                            if (cancel) return;
                         }
                         remove.call(li);
                         li.animate({
