@@ -19,7 +19,7 @@ exports = module.exports = (function () {
     var Cookie = function (data) {
         var s = this;
         if(data){
-            if(data instanceof Arguments) {
+            if(data instanceof Array) {
                 s.set(data);
             } else {
                 util.obj.deepCopy(data, s);
