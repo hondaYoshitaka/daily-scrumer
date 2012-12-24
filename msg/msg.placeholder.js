@@ -5,7 +5,7 @@
 
 exports = module.exports = {
     index:{
-        team_name:'team name'
+        team_name:' new team'
     },
     daily:{
         keep_in_mind:[
