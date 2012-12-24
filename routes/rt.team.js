@@ -15,6 +15,7 @@ exports.all = function (req, res, next) {
         Team.findByName(req.params.name, function (team) {
             if (team) {
                 req.session.team = team;
+                res.locals({team:team});
                 next();
             } else {
                 res.redirect('/');
