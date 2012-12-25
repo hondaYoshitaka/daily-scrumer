@@ -6,6 +6,12 @@
 
 (function(isServer){
     var schema = {
+        new_sprint:{
+            name:{
+                label:'sprint name',
+                required:true
+            }
+        }
     };
     if(isServer){
         exports = module.exports = schema;

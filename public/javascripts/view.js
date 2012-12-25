@@ -102,7 +102,7 @@ var CS = {};
                     dialog.fadeOut(200);
                 });
                 $('<a/>').addClass('close')
-                    .text('[modify]') //TODO msg resource
+                    .text('[modify]')//TODO msg resource
                     .appendTo(dialog);
             }
             $.each(msg, function (i, msg) {
@@ -219,6 +219,31 @@ var CS = {};
                     form.submit();
                 });
             });
+        },
+        /* フォームの中身を空にする */
+        emptyForm:function () {
+            return $(this).each(function () {
+                var form = $(this);
+                $('textarea', form).text('');
+                $('input', form).each(function () {
+                    var input = $(this),
+                        type = input.attr('type');
+                    switch (type) {
+                        case 'checkbox':
+                        case 'radio':
+                            input.removeAttr('checked');
+                            break;
+                        case 'select':
+                            $('option', input).removeAttr('selected');
+                            break;
+                        case 'submit':
+                        case 'image':
+                            break;
+                        default:
+                            input.val('');
+                    }
+                });
+            })
         },
         /* ajax検索フォーム */
         searchForm:function (callback) {

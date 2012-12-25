@@ -15,15 +15,16 @@ block content
     h2.etched
         | #{label.sprints}
     section#sprint-section
-        ul#spoint-list.positioned.no-style-list
+        ul#sprint-list.positioned.no-style-list
+
+            - each sprint in sprints
+                li.sprint-list-item(data-data=sprint)
+
             li.paper.inline.float-left
                 .paper-content
-                    h3.paper-title
-
-
-            li.paper.inline.float-left
-                .paper-content
-                    form.inline(action='/sprint/new', method='POST')
+                    form#new-sprint-form.inline(
+                        action='/sprint/new',
+                        method='POST')
                         input(type='hidden', name='team_name', value=team.name)
                         table
                             caption #{label.sprint.caption_new}
@@ -45,7 +46,7 @@ block content
 
                         input.btn(type='submit', value=btn.new_sprint)
 
-            li.list-item-add-btn#sprint-add-btn
+            a#sprint-add-btn
                 i.icon
                     span.add-icon-bar-v
                     span.add-icon-bar-h

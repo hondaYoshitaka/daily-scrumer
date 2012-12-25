@@ -1,11 +1,12 @@
 var db = require('../db'),
-    Team = db.models['Team'];
+    Sprint = db.models['Sprint'];
 
 
 exports.index = function (req, res) {
-    Team.findAll(function(teams){
+    //TODO teamのスプリントだけを取ってくる
+    Sprint.findAll(function(sprints){
         res.render('setting.index.jade', {
-            teams:teams
+            sprints:sprints
         });
     });
 };

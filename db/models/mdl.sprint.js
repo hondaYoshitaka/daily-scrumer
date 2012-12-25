@@ -30,3 +30,13 @@ Sprint.prototype.defaultValue = {
         Sprint[name] = Prototype[name];
     }
 })(Model);
+
+/* チーム名での検索 */
+Sprint.findByTeamName = function(){
+
+};
+
+/* チーム名検索で、最新のものを取得する */
+Sprint.findLatestByTeam = function(team_name, callback){
+
+};
