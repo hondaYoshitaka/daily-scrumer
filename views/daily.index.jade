@@ -134,7 +134,10 @@ block content
         .paper-content
             h3.paper-title #{label.available_group}
             .number-data
-                #availabel-group-count.extra-large.italic.suffix-group
+                span#availabel-group-count.extra-large.italic.suffix-group
+                | ×
+                span.suffix-hour
+                    input.shorter(type='number', name='hour')
     br.clear
     br
     .etched-line

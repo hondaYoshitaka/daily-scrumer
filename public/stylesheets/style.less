@@ -276,9 +276,15 @@ li:hover .list-remove-btn{
 .err-msg{
   color: @red;
 }
-input.err{
-  border: 1px solid @red;
-  background-color: lighten(@red, 60);
+input{
+
+  &.err{
+    border: 1px solid @red;
+    background-color: lighten(@red, 60);
+  }
+  &.shorter{
+    width:60px;
+  }
 }
 
 .block-btn{
@@ -455,6 +461,14 @@ form{
 }
 .suffix-group:after{
   content:'pairs';
+  .suffix;
+}
+.suffix-hour:after{
+  content: 'h';
+  .suffix;
+}
+.suffix-pair:after{
+  cotent:'pair';
   .suffix;
 }
 .number-data{
