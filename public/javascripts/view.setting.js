@@ -58,9 +58,25 @@
                 li.addClass('paper inline float-left sprint-list-item');
                 var content = $('<div/>').appendTo(li)
                     .addClass('paper-content');
-                $('<input/>')
+
+                var input = '<input/>';
+                $(input)
                     .attr({
-                        type:'text'
+                        type:'number',
+                        name:'number'
+                    })
+                    .addClass('shortest')
+                    .appendTo(content)
+                    .val(data && data.number || 0)
+                    .editableText()
+                    .change(function(){
+
+                    });
+
+                $(input)
+                    .attr({
+                        type:'text',
+                        name:'name'
                     })
                     .appendTo(content)
                     .val(data && data.name || '')

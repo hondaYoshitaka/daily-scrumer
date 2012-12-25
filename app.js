@@ -52,17 +52,18 @@ app.configure('development', function () {
         next();
     });
 
-    app.all('/team/:name', r.team.all);
 
     app.get('/', r.index.index);
-    app.get('/daily', r.daily.index); //TODO remove
-    app.get('/think_back', r.think_back.index); //TODO remove
-    app.get('/setting', r.setting.index); //TODO remove
 
     app.post('/auth', r.login.auth);
     app.post('/logout', r.login.logout);
 
-    app.get('/team/:name', r.daily.index);
+
+    app.all('/team/:name/*', r.team.all);
+    app.get('/team/:name', function(req, res){
+        res.redirect(['/team', req.params.name,'daily'].join('/'));
+    });
+    app.get('/team/:name/', r.daily.index);
     app.get('/team/:name/daily', r.daily.index);
     app.get('/team/:name/think_back', r.think_back.index);
     app.get('/team/:name/setting', r.setting.index);

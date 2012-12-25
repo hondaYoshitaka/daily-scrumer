@@ -20,11 +20,11 @@ block content
         #calendar.calendar
 
     h2#current-sprint-title.etched
-                small.sub-title
-                    | #{msg.label.current_sprint}
-                    br
-                - if(sprint)
-                    | sprint#{sprint.number}
+        small.sub-title
+            | #{msg.label.current_sprint}
+            br
+        - if(sprint)
+            | sprint#{sprint.number}
     .etched-line#top-line
     br
     section#task-section.paper.float-left
@@ -92,21 +92,23 @@ block content
                 .frame-bar-left.photo-frame-bar
                 .frame-bar-right.photo-frame-bar
                 .photo-inner-frame
+                    form(action='/sprint/update')
+                        input(type='hidden', name='_id', value=sprint&&sprint._id)
                     ol.keep-in-mind-list
                         - var keepInMindMaxLength = 120;
                         - var trialDefault = '(none)';
                         li.keep-in-mind-list-item
-                            input(name='keep-in-mind-0',
+                            input(name='keep_in_mind_0',
                                 maxlength = keepInMindMaxLength,
                                 value=trialDefault,
                                 placeholder=placeholder.keep_in_mind[0])
                         li.keep-in-mind-list-item
-                            input(name='keep-in-mind-1',
+                            input(name='keep_in_mind_1',
                                 maxlength = keepInMindMaxLength,
                                 value=trialDefault,
                                 placeholder=placeholder.keep_in_mind[1])
                         li.keep-in-mind-list-item
-                            input(name='keep-in-mind-2',
+                            input(name='keep_in_mind_2',
                                 maxlength =keepInMindMaxLength,
                                 value=trialDefault,
                                 placeholder=placeholder.keep_in_mind[2])

@@ -9,6 +9,7 @@ var db = require('../db'),
 exports.all = function (req, res, next) {
     var team = req.session && req.session.team;
     var sameTeam = team && team.name == req.params.name;
+    req.params.team_name = req.params.name;
     if (sameTeam) {
         next();
     } else {

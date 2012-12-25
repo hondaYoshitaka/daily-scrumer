@@ -20,31 +20,25 @@ block content
             - each sprint in sprints
                 li.sprint-list-item(data-data=sprint)
 
-            li.paper.inline.float-left
-                .paper-content
-                    form#new-sprint-form.inline(
-                        action='/sprint/new',
-                        method='POST')
-                        input(type='hidden', name='team_name', value=team.name)
-                        table
-                            caption #{label.sprint.caption_new}
-                            tr
-                                th
-                                    label(for='')
-                                        | #{label.sprint.number}
-                                td
+            li.inline.float-left
+                form#new-sprint-form.inline(
+                    action='/sprint/new',
+                    method='POST')
+                    input(type='hidden', name='team_name', value=team.name)
+                    fieldset
+                        legend #{label.sprint.caption_new}
+                        span #{msg.label.sprint}
+                        input.shortest#sprint-number-input(
+                            type='number',
+                            value= (sprints.length && sprints[0].number || 0)+1,
+                            name='number'
+                        )
+                        input#sprint-name-input(
+                            type='text',
+                            name='name',
+                            placeholder=placeholder.sprint_name)
 
-                            tr
-                                th
-                                    label(for='sprint-name-input')
-                                        | #{label.sprint.name}
-                                td
-                                    input#sprint-name-input(
-                                        type='text',
-                                        name='name',
-                                        placeholder=placeholder.sprint_name)
-
-                        input.btn(type='submit', value=btn.new_sprint)
+                        input.btn.block-btn(type='submit', value=btn.new_sprint)
 
             a#sprint-add-btn
                 i.icon

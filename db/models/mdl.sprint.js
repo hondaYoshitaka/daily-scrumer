@@ -9,6 +9,7 @@ var Sprint = exports = module.exports = function(data){
     var s = this;
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
+    s.number = parseInt(s.number || 0, 10);
 };
 
 Sprint.prototype.defaultValue = {
@@ -20,7 +21,14 @@ Sprint.prototype.defaultValue = {
     name:null,
 
     /* スプリント番号 */
-    number:null
+    number:null,
+
+    /* スプリントでの心がけ */
+    keep_in_mind_0:null,
+    /* スプリントでの心がけ */
+    keep_in_mind_1:null,
+    /* スプリントでの心がけ */
+    keep_in_mind_2:null
 };
 
 (function(Prototype){
@@ -31,12 +39,13 @@ Sprint.prototype.defaultValue = {
     }
 })(Model);
 
+
 /* チーム名での検索 */
 Sprint.findByTeamName = function(team_name, callback){
     var s = this;
     return s.findByCondition({
         team_name:team_name
-    }, callback);
+    }, callback).sort({number:-1});
 };
 
 /* チーム名検索で、最新のものを取得する */
