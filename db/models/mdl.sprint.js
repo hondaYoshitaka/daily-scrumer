@@ -12,8 +12,13 @@ var Sprint = exports = module.exports = function(data){
 };
 
 Sprint.prototype.defaultValue = {
+
+    /* team名*/
+    team_name:null,
+
     /* スプリント名 */
     name:null,
+
     /* スプリント番号 */
     number:null
 };

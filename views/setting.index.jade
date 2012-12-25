@@ -30,7 +30,7 @@ block content
         | #{label.members}
     section#member-section.paper.inline.float-left
         .paper-content
-            h3.paper-title #{label.members}
+            h3.paper-title
             ul#mebmer-list.positioned.no-style-list
                 - each member in team.members
                     li
@@ -39,7 +39,6 @@ block content
                 i.icon
                     span.add-icon-bar-v
                     span.add-icon-bar-h
-
     br.clear
 
 

@@ -56,15 +56,15 @@
             });
             return display;
         },
-        issueSection:function (project) {
+        issueSection:function (sprint) {
             var section = $(this),
                 doneRate = $('#issue-done-rate', section),
                 progressBar = section.findByRole('progress-bar');
 
-            project = true;//TODO remove
-            if (project) {
-                var data = {project_id:project};
-                $.getJSON('/project/issue_count', data, function (data) {
+            sprint = true;//TODO remove
+            if (sprint) {
+                var data = {sprint_id:sprint};
+                $.getJSON('/sprint/issue_count', data, function (data) {
                     if (!data.success) {
                         console.error('failed to get issue_count');
                         return;
@@ -77,15 +77,15 @@
             }
             return section;
         },
-        taskSection:function (project) {
+        taskSection:function (sprint) {
             var section = $(this),
                 doneRate = $('#task-done-rate', section),
                 progressBar = section.findByRole('progress-bar');
 
-            project = true; //TODO remove
-            if (project) {
-                var data = {project_id:project};
-                $.getJSON('/project/task_time', data, function(data){
+            sprint = true; //TODO remove
+            if (sprint) {
+                var data = {sprint_id:sprint};
+                $.getJSON('/sprint/task_time', data, function(data){
                     if(!data.success){
                         console.error('failed to get task time');
                         return;
@@ -336,25 +336,13 @@
         $('#head-nav', body).nav('daily');
 
 
-        var issueSection = $('#issue-section', body).issueSection();
-        var taskSection = $('#task-section', body).taskSection();
-        $('#user-project-select', body).change(function () {
-            var select = $(this),
-                project = select.val();
-            if (project) {
-                issueSection.issueSection(project);
-                taskSection.taskSection();
-            }
-        })
-            .trigger('change') //TODO remove
-        ;
+        $('#issue-section', body).issueSection();
+        $('#task-section', body).taskSection();
+
 
         $('#keep-in-mind-section', body).keepInMindSection();
-
         $('#calendar-section', body).calendarSection();
-
         $('#report-chart-section', body).reportChartSection();
-
         $('#grouping-section', body).groupingSection();
     });
 })(jQuery);
