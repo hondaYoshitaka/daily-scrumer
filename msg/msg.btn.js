@@ -13,5 +13,8 @@ exports = module.exports = {
     daily:{
         shuffle:'shuffle!',
         shuffle_stop:'stop!'
+    },
+    settings:{
+        new_sprint:'save'
     }
 };

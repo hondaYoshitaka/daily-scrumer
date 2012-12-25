@@ -35,6 +35,12 @@ exports = module.exports = {
         selected_team:'team',
         teams:'teams',
         sprints:'sprints',
-        members:'members'
+        members:'members',
+        sprint:{
+            caption_new:'new sprint',
+            number:'number',
+            name:'name',
+            redmine_sprint:'redmine'
+        }
     }
 };

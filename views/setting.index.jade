@@ -8,6 +8,7 @@ block javascript
 block content
     - var label = msg.label.settings;
     - var placeholder = msg.placeholder.settings;
+    - var btn = msg.btn.settings;
 
     br
     .etched-line#top-line
@@ -25,10 +26,24 @@ block content
                     form.inline(action='/sprint/new', method='POST')
                         input(type='hidden', name='team_name', value=team.name)
                         table
+                            caption #{label.sprint.caption_new}
                             tr
                                 th
+                                    label(for='')
+                                        | #{label.sprint.number}
                                 td
-                                    input(type='text', name='name', placeholder=placeholder.sprint_name)
+
+                            tr
+                                th
+                                    label(for='sprint-name-input')
+                                        | #{label.sprint.name}
+                                td
+                                    input#sprint-name-input(
+                                        type='text',
+                                        name='name',
+                                        placeholder=placeholder.sprint_name)
+
+                        input.btn(type='submit', value=btn.new_sprint)
 
             li.list-item-add-btn#sprint-add-btn
                 i.icon
@@ -46,12 +61,11 @@ block content
             h3.paper-title
             ul#mebmer-list.positioned.no-style-list
                 - each member in team.members
-                    li
-                        | #{member.name}
-            a.list-item-add-btn#member-add-btn
-                i.icon
-                    span.add-icon-bar-v
-                    span.add-icon-bar-h
+                    li.member-list-item(data-data=member)
+                li.list-item-add-btn#member-add-btn
+                    i.icon
+                        span.add-icon-bar-v
+                        span.add-icon-bar-h
     br.clear
 
 

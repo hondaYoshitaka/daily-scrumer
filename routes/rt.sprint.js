@@ -3,10 +3,12 @@
  */
 
 var RedmineAgent = require('../agent')['Redmine'],
-    util = require('../util');
+    util = require('../util'),
+    db = require('../db'),
+    Sprint = db.models['Sprint'];
 
-/* */
-exports.issue_count = function(req, res){
+/* 不具合数を取得する */
+exports.issue_count = function (req, res) {
 
     //TODO
     res.json({
@@ -15,29 +17,10 @@ exports.issue_count = function(req, res){
         modified:30,
         done:50
     });
-    return;
-
-    var user = req.session.user,
-        query = req.query;
-    if(!user){
-        res.json({
-            success:false
-        });
-        return;
-    }
-    var agent = new RedmineAgent(user.redmineAgent);
-    agent.getIssue({
-        project_id:query.project_id
-    }, function(success, data){
-        res.json({
-            success:success,
-            count:data.length
-        })
-    });
 };
 
-/* */
-exports.task_time = function(req, res){
+/* タスク時間の状況を取得する */
+exports.task_time = function (req, res) {
 
     //TODO
     res.json({
@@ -46,13 +29,43 @@ exports.task_time = function(req, res){
         remain:80,
         consumed:80
     });
-    return;
-    var user = req.session.user,
-        query = req.query;
-    if(!user){
-        res.json({
-            success:false
-        });
-        return;
-    }
 };
+
+/* スプリントを新規作成する */
+exports.new = function (req, res) {
+    //TODO バリデーション
+    var body = req.body;
+    var sprint = new Sprint(body);
+    sprint.save(function () {
+        res.json({
+            success:true,
+            sprint:sprint
+        });
+    });
+};
+
+/* スプリントを更新する */
+exports.update = function (req, res) {
+    var body = req.body;
+    var sprint = new Sprint(body);
+    sprint.update(function () {
+        res.json({
+            success:true,
+            sprint:sprint
+        });
+    });
+};
+
+/* スプリントを削除する */
+exports.remove = function (req, res) {
+    var body = req.body;
+    Sprint.findById(body._id, function (sprint) {
+        sprint.remove(function () {
+            res.json({
+                success:true
+            });
+        });
+    });
+};
+
+

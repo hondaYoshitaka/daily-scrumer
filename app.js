@@ -73,6 +73,8 @@ app.configure('development', function () {
     app.get('/sprint/issue_count', r.sprint.issue_count);
     app.get('/sprint/task_time', r.sprint.task_time);
     app.post('/sprint/new', r.sprint.new);
+    app.post('/sprint/update', r.sprint.update);
+    app.post('/sprint/remove', r.sprint.remove);
 
 
 })(require('./routes'));

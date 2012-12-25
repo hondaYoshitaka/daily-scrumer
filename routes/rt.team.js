@@ -59,9 +59,6 @@ exports.remove = function (req, res) {
     var name = req.body.name;
     Team.findByName(name, function (team) {
         if (team) {
-            if(typeof team._id === 'string'){
-                team._id = new db.ObjectId(team._id);
-            }
             team.remove(function () {
                 res.json({
                     success:true,

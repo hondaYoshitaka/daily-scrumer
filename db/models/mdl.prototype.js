@@ -140,6 +140,9 @@ Model.prototype.remove = function(callback){
         proto = s.__proto__;
     //prototypeの値でDBを汚さないよう、一旦回避する。
     s.__proto__ = null;
+    if(typeof s._id === 'string'){
+        s._id = new ObjectId(s._id);
+    }
     return proto.connector.remove({
         _id:s._id
     }, s, function(err){
