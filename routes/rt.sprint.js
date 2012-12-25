@@ -56,6 +56,28 @@ exports.update = function (req, res) {
     });
 };
 
+/* スプリントの心がけを更新する */
+exports.update_keep_in_mind = function (req, res) {
+    var body = req.body;
+    Sprint.findById(body._id, function(sprint){
+        if(!sprint){
+            res.json({
+                success:false
+            });
+            return;
+        }
+        sprint.keep_in_mind_0 = body.keep_in_mind_0;
+        sprint.keep_in_mind_1 = body.keep_in_mind_1;
+        sprint.keep_in_mind_2 = body.keep_in_mind_2;
+        sprint.update(function(){
+            res.json({
+                success:true,
+                sprint:sprint
+            });
+        });
+    });
+};
+
 /* スプリントを削除する */
 exports.remove = function (req, res) {
     var body = req.body;

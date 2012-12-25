@@ -92,26 +92,26 @@ block content
                 .frame-bar-left.photo-frame-bar
                 .frame-bar-right.photo-frame-bar
                 .photo-inner-frame
-                    form(action='/sprint/update')
+                    form#keep-in-mind-form(action='/sprint/update', method='POST')
                         input(type='hidden', name='_id', value=sprint&&sprint._id)
-                    ol.keep-in-mind-list
-                        - var keepInMindMaxLength = 120;
-                        - var trialDefault = '(none)';
-                        li.keep-in-mind-list-item
-                            input(name='keep_in_mind_0',
-                                maxlength = keepInMindMaxLength,
-                                value=trialDefault,
-                                placeholder=placeholder.keep_in_mind[0])
-                        li.keep-in-mind-list-item
-                            input(name='keep_in_mind_1',
-                                maxlength = keepInMindMaxLength,
-                                value=trialDefault,
-                                placeholder=placeholder.keep_in_mind[1])
-                        li.keep-in-mind-list-item
-                            input(name='keep_in_mind_2',
-                                maxlength =keepInMindMaxLength,
-                                value=trialDefault,
-                                placeholder=placeholder.keep_in_mind[2])
+                        ol.keep-in-mind-list
+                            - var keepInMindMaxLength = 120;
+                            - var trialDefault = '(none)';
+                            li.keep-in-mind-list-item
+                                input(name='keep_in_mind_0',
+                                    maxlength = keepInMindMaxLength,
+                                    value=sprint.keep_in_mind_0 || trialDefault,
+                                    placeholder=placeholder.keep_in_mind[0])
+                            li.keep-in-mind-list-item
+                                input(name='keep_in_mind_1',
+                                    maxlength = keepInMindMaxLength,
+                                    value=sprint.keep_in_mind_1 || trialDefault,
+                                    placeholder=placeholder.keep_in_mind[1])
+                            li.keep-in-mind-list-item
+                                input(name='keep_in_mind_2',
+                                    maxlength =keepInMindMaxLength,
+                                    value=sprint.keep_in_mind_2 || trialDefault,
+                                    placeholder=placeholder.keep_in_mind[2])
             .name-plate-container
                 .name-plate
                     | #{label.keep_in_mind}

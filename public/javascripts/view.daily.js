@@ -100,10 +100,14 @@
         },
         keepInMindSection:function () {
             var section = $(this);
+
+            var form = $('#keep-in-mind-form', section).ajaxForm(function(){
+
+            });
             $(':text', section)
                 .editableText()
                 .change(function () {
-
+                    form.submit();
                 });
             return section;
         },
