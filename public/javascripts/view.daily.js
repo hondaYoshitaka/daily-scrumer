@@ -230,16 +230,11 @@
                 return group.children().size() >= 2;
             }
 
-            $.getJSON('/get_team', {name:CS.team.name}, function (data) {
-                if(!data.success){
-                    console.error('failed to load team for roulette');
-                    return;
-                }
+            (function(members){
                 $('.grouping-group', roulette).remove();
                 var group = newGroup();
-                var team = data.team;
-                if(team.members && team.members.length){
-                    team.members.forEach(function (data) {
+                if(members && members.length){
+                    members.forEach(function (data) {
                         if (isGroupFull(group)) {
                             group = newGroup();
                         }
@@ -250,8 +245,8 @@
                 } else {
                     roulette.addClass('no-member-roulette');
                 }
-                roulette.trigger('roulette-group.change')
-            });
+                roulette.trigger('roulette-group.change');
+            })(CS.team.members);
 
             var shuffle = function () {
                 var group = $('.grouping-group', roulette),

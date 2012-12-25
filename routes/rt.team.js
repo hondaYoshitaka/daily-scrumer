@@ -75,13 +75,3 @@ exports.remove = function (req, res) {
         }
     });
 };
-
-exports.get = function (req, res) {
-    var name = req.query.name;
-    Team.findByName(name, function (data) {
-        res.json({
-            success:!!data,
-            team:data
-        });
-    });
-};
