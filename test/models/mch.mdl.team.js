@@ -67,4 +67,12 @@ describe('mdl.team', function () {
         team.isValid().should.be.false;
         done();
     });
+
+    it('findByTeamName', function(done){
+        //TODO
+    });
+
+    it('findLatestByTeam', function(done){
+        //TODO
+    });
 });

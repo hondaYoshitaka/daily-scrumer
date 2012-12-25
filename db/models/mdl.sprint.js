@@ -32,11 +32,18 @@ Sprint.prototype.defaultValue = {
 })(Model);
 
 /* チーム名での検索 */
-Sprint.findByTeamName = function(){
-
+Sprint.findByTeamName = function(team_name, callback){
+    var s = this;
+    return s.findByCondition({
+        team_name:team_name
+    }, callback);
 };
 
 /* チーム名検索で、最新のものを取得する */
 Sprint.findLatestByTeam = function(team_name, callback){
+    var s = this;
+    return s.findByTeamName(team_name, function(data){
+        callback.call(s, data && data.length && data[0] || null);
+    }).sort({number:-1}).limit(1);
 
 };
