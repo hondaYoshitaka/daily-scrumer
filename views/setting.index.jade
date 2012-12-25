@@ -32,6 +32,9 @@ block content
         .paper-content
             h3.paper-title #{label.members}
             ul#mebmer-list.positioned.no-style-list
+                - each member in team.members
+                    li
+                        | #{member.name}
             a.list-item-add-btn#member-add-btn
                 i.icon
                     span.add-icon-bar-v
