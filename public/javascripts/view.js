@@ -395,61 +395,9 @@ var CS = {};
                 .click(function () {
                     menu.toggleClass('hidden');
                 });
-        },
-        projectSelect:function (projects) {
-            var select = $(this).empty();
-            projects && projects.forEach(function (project) {
-                $('<option/>')
-                    .appendTo(select)
-                    .val(project.key)
-                    .text(project.name);
-            });
-            select.trigger('change');
-            return select;
-        },
-        header:function () {
-            var header = $(this);
-
-            var dialog = header.findByRole('dialog').dialog();
-
-            var form = $('#login-from', dialog).validationForm('login').ajaxForm(function (data) {
-                var form = $(this),
-                    loginErrMsg = $('#login-err-msg'),
-                    input = $('input', form);
-                if (data.success) {
-                    input.removeClass('err');
-                    dialog.findByRole('closer').trigger('click');
-                    header.attr('data-login', true);
-                    loginErrMsg.hide();
-                    var user = data.user;
-                    $('#login-user-name').text(user.name);
-
-                    $('#user-project-select').projectSelect(user.projectes);
-
-                } else {
-                    input.addClass('err');
-                    loginErrMsg.show();
-                }
-            });
-            $('input:last', form).pressEnter(function () {
-                form.submit();
-            });
-            $('#logout-btn', header).click(function () {
-                $.post('/logout', function () {
-                    header.attr('data-login', false);
-                });
-            });
-
-            return header;
         }
     });
     $(function () {
         var body = $('body');
-
-        $('header', body).header();
-
-        var projects = CS.login_user && CS.login_user.projectes;
-        if (projects) $('#user-project-select').projectSelect(projects);
-
     });
 })(jQuery);

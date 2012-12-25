@@ -14,7 +14,6 @@ html
     script(src='/javascripts/spin.js')
     script(src='/javascripts/view.js')
     script
-        CS.login_user = !{login_user && JSON.stringify(login_user) || 'null'};
         CS.team = !{team && JSON.stringify(team) || 'null'};
     block javascript
 
@@ -22,48 +21,19 @@ html
 
 
   body
-    header(data-login='#{!!login_user}')
+    header
 
         .logo
             span#selected-team #{team.name}
         nav.nav-bar.positioned#head-nav
-            a.nav-item(href='/daily', data-key='daily')
+            a.nav-item(href='/team/#{team.name}/daily', data-key='daily')
                 | #{msg.nav.daily}
             span.nav-separator
-            a.nav-item(href='/think_back', data-key='think_back')
+            a.nav-item(href='/team/#{team.name}/think_back', data-key='think_back')
                 | #{msg.nav.think_back}
             span.nav-separator
-            a.nav-item(href='/setting', data-key='setting')
+            a.nav-item(href='/team/#{team.name}/setting', data-key='setting')
                 | #{msg.nav.setting}
-
-            .nav-right-item
-                span.show-when-login
-                    span#login-user-name.nav-item-khaki
-                        |#{login_user && login_user.name}
-                    | @
-                    select#user-project-select
-
-                    a.dropdown-btn#user-dropdown-btn
-                        .dropdown-btn-icon
-                    ul.dropdown-menu.hidden.stick-right(
-                        data-role='dropdown-menu',
-                        data-btn='#user-dropdown-btn')
-                        li.dropdown-menu-item
-                            a#logout-btn.nav-item-blue
-                                | #{msg.nav.logout}
-
-
-
-                a#login-btn.show-when-not-login.stick-right
-                    | #{msg.nav.login}
-
-        #login-dialog.stick-right(
-            data-role='dialog',
-            data-opener='#login-btn')
-                a(data-role='closer').stick-right.closer
-                    | #{msg.btn.close}
-                include parts/dialog.login-form.jade
-
     #main
         block content
 

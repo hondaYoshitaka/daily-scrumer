@@ -9,19 +9,10 @@ block content
     - var label = msg.label.settings;
 
     br
-    br
-    section#team-select-section
-        span.etched
-            | #{label.selected_team}:
-        select#team-select.no-appearance.large
-            option
-            - each team in teams
-                option(value='#{team._id.toString()}')
-                    | #{team.name}
-
     .etched-line#top-line
-    br
-    section#projects-section.paper.inline.float-left
+    h2.etched
+        | #{label.sprints}
+    section#sprint-section.paper.inline.float-left
         .paper-content
             h3.paper-title #{label.projects}
             ul#project-list.positioned.no-style-list
@@ -31,7 +22,12 @@ block content
                     span.add-icon-bar-v
                     span.add-icon-bar-h
 
-
+    br.clear
+    br
+    .etched-line
+    br
+    h2.etched
+        | #{label.members}
     section#member-section.paper.inline.float-left
         .paper-content
             h3.paper-title #{label.members}

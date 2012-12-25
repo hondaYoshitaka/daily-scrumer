@@ -6,21 +6,6 @@
 
 (function(isServer){
     var schema = {
-        // クライアントサイドでは$.fn.validationFormにここのキー名を渡しておけば,
-        // submit時に勝手に実行してエラー表示までやってくれる。
-        // 文字列内の'#{}'部分はmsg.jsから適宜置換される。
-        login:{
-            username:{
-                label:'username',
-                required:true,
-                minLength:2
-            },
-            password:{
-                label:'password',
-                required:true,
-                minLength:2
-            }
-        }
     };
     if(isServer){
         exports = module.exports = schema;
