@@ -7,17 +7,30 @@ block javascript
 
 block content
     - var label = msg.label.settings;
+    - var placeholder = msg.placeholder.settings;
 
     br
     .etched-line#top-line
     h2.etched
         | #{label.sprints}
-    section#sprint-section.paper.inline.float-left
-        .paper-content
-            h3.paper-title #{label.projects}
-            ul#project-list.positioned.no-style-list
+    section#sprint-section
+        ul#spoint-list.positioned.no-style-list
+            li.paper.inline.float-left
+                .paper-content
+                    h3.paper-title
 
-            a.list-item-add-btn#projects-add-btn
+
+            li.paper.inline.float-left
+                .paper-content
+                    form.inline(action='/sprint/new', method='POST')
+                        input(type='hidden', name='team_name', value=team.name)
+                        table
+                            tr
+                                th
+                                td
+                                    input(type='text', name='name', placeholder=placeholder.sprint_name)
+
+            li.list-item-add-btn#sprint-add-btn
                 i.icon
                     span.add-icon-bar-v
                     span.add-icon-bar-h

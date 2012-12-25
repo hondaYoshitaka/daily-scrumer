@@ -13,5 +13,8 @@ exports = module.exports = {
             " Trial 2",
             " Trial 3"
         ]
+    },
+    settings:{
+        sprint_name:'sprint name'
     }
 };
