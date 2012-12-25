@@ -137,7 +137,12 @@ block content
                 span#availabel-group-count.extra-large.italic.suffix-group
                 | ×
                 span.suffix-hour
-                    input.shorter(type='number', name='hour')
+                    input.shortest(
+                        type='number',
+                        name='hour',
+                        max='8',
+                        min='0'
+                    )
     br.clear
     br
     .etched-line
