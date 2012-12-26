@@ -40,7 +40,7 @@ app.configure('development', function () {
         require('handlebars');
         //TODO テンプレート分割
         hbsPrecompiler.watchDir(
-            __dirname + "/views/client_templates",
+            __dirname + "/views",
             __dirname + "/public/javascripts/handlebars.template.js",
             ['handlebars', 'hbs'] //extension
         );

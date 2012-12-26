@@ -29,3 +29,6 @@ cnf.auth.js
 cnf.url.js
 
 Gemfile.lock
+
+handlebars.template.js
+handlebars.template.*.js
