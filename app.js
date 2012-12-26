@@ -6,7 +6,9 @@ var express = require('express')
     , http = require('http')
     , path = require('path')
     , msg = require('./msg')
+    , fs = require('fs')
     , logic = require('./logic')
+    , util = require('./util')
     , package = require('./package.json');
 
 var app = express();
@@ -33,7 +35,16 @@ app.configure(function () {
 
 app.configure('development', function () {
     app.use(express.errorHandler());
+    (function (hbsPrecompiler) {
 
+        require('handlebars');
+        //TODO テンプレート分割
+        hbsPrecompiler.watchDir(
+            __dirname + "/views/client_templates",
+            __dirname + "/public/javascripts/handlebars.template.js",
+            ['handlebars', 'hbs'] //extension
+        );
+    })(require('handlebars-precompiler'));
 });
 
 (function (r) {
@@ -60,8 +71,8 @@ app.configure('development', function () {
 
 
     app.all('/team/:name/*', r.team.all);
-    app.get('/team/:name', function(req, res){
-        res.redirect(['/team', req.params.name,'daily'].join('/'));
+    app.get('/team/:name', function (req, res) {
+        res.redirect(['/team', req.params.name, 'daily'].join('/'));
     });
     app.get('/team/:name/', r.daily.index);
     app.get('/team/:name/daily', r.daily.index);
@@ -86,7 +97,8 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 
-(function(launch){
+(function (launch) {
     //load launch data for db
     launch.load();
 })(require('./db/data/launch'));
+

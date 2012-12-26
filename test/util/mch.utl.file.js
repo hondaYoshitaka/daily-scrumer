@@ -67,4 +67,11 @@ describe('utl.file.js', function(){
             }
         });
     });
+
+    it('getAllFilePaths', function(done){
+        var paths = util.getAllFilePaths(__dirname + '/../mock/file/utl.file.get_all_file_path');
+        paths.should.be.lengthOf(2);
+        paths[0].should.match(new RegExp('^' + __dirname));
+        done();
+    });
 });
