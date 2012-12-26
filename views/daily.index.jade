@@ -92,7 +92,7 @@ block content
                 .frame-bar-left.photo-frame-bar
                 .frame-bar-right.photo-frame-bar
                 .photo-inner-frame
-                    form#keep-in-mind-form(action='/sprint/update', method='POST')
+                    form#keep-in-mind-form(action='/sprint/update_keep_in_mind', method='POST')
                         input(type='hidden', name='_id', value=sprint&&sprint._id)
                         ol.keep-in-mind-list
                             - var keepInMindMaxLength = 120;

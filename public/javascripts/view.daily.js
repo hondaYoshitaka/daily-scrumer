@@ -46,6 +46,13 @@
                 });
             return bar;
         },
+        progressBall:function(rate){
+            var ball = $(this).addClass('progress-ball');
+            for(var i=0; i<12;i++){
+
+            }
+            return ball;
+        },
         /* dataの中身をdata-key属性を持った要素に突っ込む */
         dataDisplay:function(data){
             var display = $(this);
