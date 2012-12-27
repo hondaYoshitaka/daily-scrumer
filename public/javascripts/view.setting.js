@@ -59,21 +59,24 @@
                 var li = $(this),
                     data = li.data('data');
                 li.addClass('paper inline float-left sprint-list-item');
-
+                if(!data) return;
                 var html = template({
-                    number:data && data.number,
-                    name:data && data.name
+                    member:data
                 });
                 li.html(html);
+
+                var form = $('form').ajaxForm(function(){
+
+                });
                 li.findByName('number')
                     .editableText()
                     .change(function () {
-
+                        form.submit();
                     });
                 li.findByName('name')
                     .editableText()
                     .change(function () {
-
+                        form.submit();
                     });
                 li.removableListItem(function () {
                     //TODO

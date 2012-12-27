@@ -372,8 +372,6 @@ var CS = {};
                 var name = input.attr('name');
                 if (name) span.attr('data-rs-name', name);
                 if (input.attr('id'))span.attr('for', input.attr('id'));
-                var fontSize = input.css('font-size');
-                if (fontSize) span.css('font-size', fontSize);
                 if (input.val()) input.trigger('change');
             });
         },

@@ -10,7 +10,6 @@ var RedmineAgent = require('../agent')['Redmine'],
 /* 不具合数を取得する */
 exports.issue_count = function (req, res) {
 
-    //TODO
     res.json({
         success:true,
         total:80,

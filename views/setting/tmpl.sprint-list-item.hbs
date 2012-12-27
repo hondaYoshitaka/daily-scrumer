@@ -1,11 +1,13 @@
 <div class="paper-content">
-    <form>
+    <form action="/sprint/update" method="POST">
+        <input type="hidden" name="_id" value="{{member._id}}"/>
         <h3>sprint
             <input type="number" name="number"
-                   class="shortest" value="{{number}}"/>
+                   class="shortest" value="{{member.number}}"/>
         </h3>
         <input type="text" name="name"
-               value = "{{name}}"
+               value = "{{member.name}}"
             />
+
     </form>
 </div>
