@@ -310,6 +310,17 @@
             var roulette = $('#grouping-roulette', section)
                 .groupingRoulette();
             return section;
+        },
+        trafficLightSection:function(){
+            var section = $(this);
+
+            var light = section.findByRole('traffic-light');
+            light.click(function(){
+                $(this).addClass('on')
+                    .siblings('.on')
+                    .removeClass('on');
+            });
+            return section;
         }
     });
     $(function () {
@@ -324,5 +335,7 @@
         $('#keep-in-mind-section', body).keepInMindSection();
         $('#calendar-section', body).calendarSection();
         $('#grouping-section', body).groupingSection();
+
+        $('#traffic-light-section').trafficLightSection();
     });
 })(jQuery);
