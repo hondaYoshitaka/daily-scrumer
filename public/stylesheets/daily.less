@@ -336,3 +336,19 @@
 .rate-box{
   margin: 0 10px;
 }
+
+.traffic-light-box{
+  background-color: @black;
+  .linear-gradient(@black, darken(@black, 5));
+  display: inline-block;
+  padding: 3px 6px;
+  .box-shadow(2px 2px 4px, 0.4);
+  .border-radius(2px);
+}
+.traffic-light{
+  .border-radius(50%);
+  .square(60px);
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  margin: 10px;
+  .radial-gradient(20px, 20px, white, darken(@white, 50));
+}
