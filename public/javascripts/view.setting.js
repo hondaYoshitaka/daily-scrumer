@@ -28,6 +28,8 @@
                     value:data && data.name,
                     placeholder:msg.placeholder.member_name
                 });
+
+
                 li.html(html);
 
                 $(':text', li)

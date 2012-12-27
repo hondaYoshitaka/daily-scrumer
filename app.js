@@ -35,18 +35,18 @@ app.configure(function () {
 
 app.configure('development', function () {
     app.use(express.errorHandler());
-    (function (hbsPrecompiler) {
-        //TODO テンプレート分割
-        ['setting'].forEach(function (key) {
-            var fileName = ["handlebars.template", key, "js"].join('.');
-            console.log('fileName', fileName);
-            hbsPrecompiler.watchDir(
-                [__dirname, "views", key].join('/'),
-                [__dirname, "public/javascripts", fileName].join('/'),
-                ['handlebars', 'hbs'] //extension
-            );
+    (function (precompiler) {
+        ['setting', 'daily', 'think_back'].forEach(function (key) {
+            var watchDir = [__dirname, "views", key].join('/');
+            if (!util.file.exists(watchDir)) return;
+
+            var outFileName = ["handlebars.template", key, "js"].join('.'),
+                outFile = [__dirname, "public/javascripts", outFileName].join('/');
+
+            precompiler.do(watchDir, outFile);
+
         });
-    })(require('handlebars-precompiler'));
+    })(util['handlebars_precompile']);
 });
 
 (function (r) {
