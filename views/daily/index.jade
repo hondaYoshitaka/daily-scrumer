@@ -5,6 +5,8 @@ block stylesheet
     link(rel='stylesheet', href='/stylesheets/daily.css')
 
 block javascript
+    script(src='/javascripts/handlebars.runtime.min.js')
+    script(src='/javascripts/handlebars.template.daily.js')
     script(src='/javascripts/jquery-ui.custom.js')
     script(src='/javascripts/highcharts.js')
     script(src='/javascripts/view.daily.js')
@@ -16,7 +18,9 @@ block content
     - var label = msg.label.daily;
     - var btn = msg.btn.daily;
 
-    section#calendar-section.float-right
+    section#calendar-section.float-right.positioned
+        #calendar-cover.cover(data-role='date-display')
+
         #calendar.calendar
 
     h2#current-sprint-title.etched

@@ -118,9 +118,24 @@
                 });
             return section;
         },
+        dateDisplay:function(date){
+            var template = Handlebars.templates['tmpl.date-display'];
+
+            var display = $(this);
+
+            var html = template({
+                month:date.getMonth() + 1,
+                date:date.getDate()
+            });
+
+            display.html(html);
+
+
+            return display;
+        },
         calendarSection:function () {
             var section = $(this);
-            $('#calendar').datepicker({
+            var calendar = $('#calendar', section).datepicker({
                 beforeShowDay:function (date) {
                     switch (date.getDay()) {
                         case 0:
@@ -136,6 +151,14 @@
                     console.log('day selected:', date); //TODO
                 }
             });
+
+
+            var dateDisplay = section.findByRole('date-display').dateDisplay(new Date());
+            dateDisplay.click(function(){
+                dateDisplay.hide();
+                calendar.show();
+            });
+
             return section;
         },
         reportChart:function (data) {
