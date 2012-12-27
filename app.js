@@ -36,14 +36,16 @@ app.configure(function () {
 app.configure('development', function () {
     app.use(express.errorHandler());
     (function (hbsPrecompiler) {
-
-        require('handlebars');
         //TODO テンプレート分割
-        hbsPrecompiler.watchDir(
-            __dirname + "/views",
-            __dirname + "/public/javascripts/handlebars.template.js",
-            ['handlebars', 'hbs'] //extension
-        );
+        ['setting'].forEach(function (key) {
+            var fileName = ["handlebars.template", key, "js"].join('.');
+            console.log('fileName', fileName);
+            hbsPrecompiler.watchDir(
+                [__dirname, "views", key].join('/'),
+                [__dirname, "public/javascripts", fileName].join('/'),
+                ['handlebars', 'hbs'] //extension
+            );
+        });
     })(require('handlebars-precompiler'));
 });
 

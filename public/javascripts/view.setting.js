@@ -18,17 +18,19 @@
                 });
         },
         memberListItem:function () {
+            var template = Handlebars.templates['tmpl.member-list-item'];
             return $(this).each(function () {
                 var li = $(this)
                         .addClass('positioned'),
                     data = li.data('data');
-                $('<input/>')
-                    .attr({
-                        type:'text',
-                        placeholder:msg.placeholder.member_name
-                    })
-                    .appendTo(li)
-                    .val(data && data.name || '')
+
+                var html = template({
+                    value:data && data.name,
+                    placeholder:msg.placeholder.member_name
+                });
+                li.html(html);
+
+                $(':text', li)
                     .editableText()
                     .change(function () {
 
@@ -51,37 +53,26 @@
             });
             return section;
         },
-        sprintListItem:function(){
-            return $(this).each(function(){
+        sprintListItem:function () {
+            var template = Handlebars.templates['tmpl.sprint-list-item'];
+            return $(this).each(function () {
                 var li = $(this),
                     data = li.data('data');
                 li.addClass('paper inline float-left sprint-list-item');
-                var content = $('<div/>').appendTo(li)
-                    .addClass('paper-content');
 
-                var input = '<input/>';
-                $(input)
-                    .attr({
-                        type:'number',
-                        name:'number'
-                    })
-                    .addClass('shortest')
-                    .appendTo(content)
-                    .val(data && data.number || 0)
+                var html = template({
+                    number:data && data.number,
+                    name:data && data.name
+                });
+                li.html(html);
+                li.findByName('number')
                     .editableText()
-                    .change(function(){
+                    .change(function () {
 
                     });
-
-                $(input)
-                    .attr({
-                        type:'text',
-                        name:'name'
-                    })
-                    .appendTo(content)
-                    .val(data && data.name || '')
+                li.findByName('name')
                     .editableText()
-                    .change(function(){
+                    .change(function () {
 
                     });
                 li.removableListItem(function () {
@@ -89,7 +80,7 @@
                 });
             });
         },
-        sprintList:function(){
+        sprintList:function () {
             var ul = $(this);
             $('.sprint-list-item', ul).sprintListItem();
             return ul;
