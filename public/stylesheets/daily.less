@@ -194,9 +194,12 @@
   }
   .hidden;
 }
-
+#daite-display-wrapper{
+  min-height: 70px;
+}
 #calendar-cover {
   cursor: default;
+  min-height: 80px;
 }
 
 .ui-datepicker-calendar {
@@ -231,19 +234,6 @@
   color: fadeout(@blue, 30);
 }
 
-.progress-bar {
-  .box-shadow(1px 1px 3px, 0.4, inset);
-  .border-radius(2px);
-  background-color: darken(@white, 2);
-  border: 1px solid fadeout(@gray, 30);
-  height: 8px;
-}
-
-.progress-filled {
-  .linear-gradient(@blue, darken(@blue, 30));
-  height: 100%;
-  width: 0;
-}
 
 .report-chart-section {
   width: 800px;
@@ -357,6 +347,18 @@
 
 .rate-box {
   margin: 0 10px;
+  width: 100px;
+  text-align: center;
+  margin: 5px;
+  padding: 5px 5px 5px;
+  font-size: 1.5em;
+}
+.rate-circle {
+  .cover;
+  .square(120px);
+  z-index: -1;
+  top:-45px;
+  left:-10px;
 }
 
 .traffic-light-box {
@@ -420,10 +422,3 @@
   .traffic-light(spin(@lighteColor, 120));
 }
 
-.rate-circle {
-  .cover;
-  .square(100px);
-  z-index: -1;
-  top:-35px;
-  left:-10px;
-}

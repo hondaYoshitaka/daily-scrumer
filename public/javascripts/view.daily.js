@@ -7,49 +7,8 @@
         });
     };
     $.extend({
-
     });
 
-    var RateCircle = (function () {
-        var Circle = function (radius, rate) {
-            var s = this;
-            s.radius = radius;
-            s.rate = rate;
-        };
-
-        var Arc = function (color, radius, rate) {
-            var s = this;
-            s.color = color;
-            s.radius = radius;
-            s.rate = rate;
-        };
-        Arc.prototype.draw = function (ctx) {
-            var s = this,
-                PI = Math.PI;
-            var lineW = 5;
-            var r = s.radius;
-            var x = r + lineW,
-                y = r + lineW;
-            ctx.strokeStyle = s.color;
-            ctx.beginPath();
-            ctx.lineWidth = lineW;
-            ctx.moveTo(x, lineW * 5);
-            var startAngle = PI * -0.5;
-            var radius = r - lineW * 4;
-            ctx.arc(x, y, radius,
-                startAngle,
-                startAngle + PI * 2 * s.rate,
-                false);
-            ctx.stroke();
-        };
-
-        Circle.prototype.draw = function (ctx) {
-            var s = this;
-            new Arc('#EEE', s.radius, 1).draw(ctx);
-            new Arc('#33E', s.radius, s.rate).draw(ctx);
-        };
-        return Circle;
-    })();
     $.fn.extend({
         blink:function (duration, callback) {
             return $(this).each(function () {
@@ -75,18 +34,6 @@
             });
             return elm;
         },
-        progressBar:function (rate) {
-            var bar = $(this).empty().addClass('progress-bar'),
-                width = bar.width(),
-                div = '<div/>';
-            $(div)
-                .appendTo(bar)
-                .addClass('progress-filled')
-                .animate({
-                    width:width * rate
-                });
-            return bar;
-        },
         /* dataの中身をdata-key属性を持った要素に突っ込む */
         dataDisplay:function (data) {
             var display = $(this);
@@ -100,7 +47,7 @@
         issueSection:function (sprint) {
             var section = $(this),
                 doneRate = $('#issue-done-rate', section),
-                progressBar = section.findByRole('progress-bar');
+                rateCircle = $('#issue-done-rate-circle', section);
 
             sprint = true;//TODO remove
             if (sprint) {
@@ -112,8 +59,9 @@
                     }
                     section.dataDisplay(data);
                     var rate = data.done / data.total;
-                    progressBar.progressBar(rate);
                     doneRate.text((rate * 100).toFixed(1))
+
+                    rateCircle.rateCircle(rate);
                 });
             }
             return section;
@@ -121,9 +69,7 @@
         taskSection:function (sprint) {
             var section = $(this),
                 doneRate = $('#task-done-rate', section),
-                progressBar = section.findByRole('progress-bar');
-
-            var rateCircle = $('#task-done-rate-circle');
+                rateCircle = $('#task-done-rate-circle', section);
 
             sprint = true; //TODO remove
             if (sprint) {
@@ -135,10 +81,9 @@
                     }
                     section.dataDisplay(data);
                     var rate = (data.estimated - data.remain) / data.estimated;
-                    progressBar.progressBar(rate);
-                    rateCircle.rateCircle(rate);
                     doneRate.text((rate * 100).toFixed(1))
 
+                    rateCircle.rateCircle(rate);
                 });
             }
             return section;
@@ -360,27 +305,6 @@
                     .removeClass('on');
             });
             return section;
-        },
-        rateCircle:function (rate) {
-            var container = $(this).empty(),
-                w = container.width(),
-                h = container.height();
-                ;
-            var canvas = $('<canvas/>').appendTo(container),
-                ctx = canvas.get(0).getContext('2d');
-
-            var r = w / 2;
-            var size = {
-                width:r * 2,
-                height:r * 2
-            };
-
-            canvas.attr(size).css(size);
-
-            new RateCircle(r, rate).draw(ctx);
-
-
-            return container;
         }
     });
     $(function () {
