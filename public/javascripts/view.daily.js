@@ -17,19 +17,20 @@
             s.rate = rate;
         };
 
-        Circle.prototype.draw = function (ctx) {
+        var Arc = function (color, radius, rate) {
             var s = this;
-            s.strokeArc(ctx, '#EEE', 1);
-            s.strokeArc(ctx, '#33E', s.rate);
+            s.color = color;
+            s.radius = radius;
+            s.rate = rate;
         };
-        Circle.prototype.strokeArc = function(ctx, color, rate){
+        Arc.prototype.draw = function (ctx) {
             var s = this,
                 PI = Math.PI;
             var lineW = 5;
             var r = s.radius;
             var x = r + lineW,
                 y = r + lineW;
-            ctx.strokeStyle = color;
+            ctx.strokeStyle = s.color;
             ctx.beginPath();
             ctx.lineWidth = lineW;
             ctx.moveTo(x, lineW * 5);
@@ -37,9 +38,15 @@
             var radius = r - lineW * 4;
             ctx.arc(x, y, radius,
                 startAngle,
-                startAngle + PI * 2 * rate,
+                startAngle + PI * 2 * s.rate,
                 false);
             ctx.stroke();
+        };
+
+        Circle.prototype.draw = function (ctx) {
+            var s = this;
+            new Arc('#EEE', s.radius, 1).draw(ctx);
+            new Arc('#33E', s.radius, s.rate).draw(ctx);
         };
         return Circle;
     })();
@@ -357,7 +364,7 @@
         rateCircle:function (rate) {
             var container = $(this).empty(),
                 w = container.width(),
-                h = container.height()
+                h = container.height();
                 ;
             var canvas = $('<canvas/>').appendTo(container),
                 ctx = canvas.get(0).getContext('2d');
