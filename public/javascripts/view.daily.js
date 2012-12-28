@@ -9,6 +9,40 @@
     $.extend({
 
     });
+
+    var RateCircle = (function () {
+        var Circle = function (radius, rate) {
+            var s = this;
+            s.radius = radius;
+            s.rate = rate;
+        };
+
+        Circle.prototype.draw = function (ctx) {
+            var s = this;
+            s.strokeArc(ctx, '#EEE', 1);
+            s.strokeArc(ctx, '#33E', s.rate);
+        };
+        Circle.prototype.strokeArc = function(ctx, color, rate){
+            var s = this,
+                PI = Math.PI;
+            var lineW = 5;
+            var r = s.radius;
+            var x = r + lineW,
+                y = r + lineW;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.lineWidth = lineW;
+            ctx.moveTo(x, lineW * 5);
+            var startAngle = PI * -0.5;
+            var radius = r - lineW * 4;
+            ctx.arc(x, y, radius,
+                startAngle,
+                startAngle + PI * 2 * rate,
+                false);
+            ctx.stroke();
+        };
+        return Circle;
+    })();
     $.fn.extend({
         blink:function (duration, callback) {
             return $(this).each(function () {
@@ -46,15 +80,8 @@
                 });
             return bar;
         },
-        progressBall:function(rate){
-            var ball = $(this).addClass('progress-ball');
-            for(var i=0; i<12;i++){
-
-            }
-            return ball;
-        },
         /* dataの中身をdata-key属性を持った要素に突っ込む */
-        dataDisplay:function(data){
+        dataDisplay:function (data) {
             var display = $(this);
             $('[data-key]', display).each(function () {
                 var elm = $(this),
@@ -89,18 +116,22 @@
                 doneRate = $('#task-done-rate', section),
                 progressBar = section.findByRole('progress-bar');
 
+            var rateCircle = $('#task-done-rate-circle');
+
             sprint = true; //TODO remove
             if (sprint) {
                 var data = {sprint_id:sprint};
-                $.getJSON('/sprint/task_time', data, function(data){
-                    if(!data.success){
+                $.getJSON('/sprint/task_time', data, function (data) {
+                    if (!data.success) {
                         console.error('failed to get task time');
                         return;
                     }
                     section.dataDisplay(data);
                     var rate = (data.estimated - data.remain) / data.estimated;
                     progressBar.progressBar(rate);
+                    rateCircle.rateCircle(rate);
                     doneRate.text((rate * 100).toFixed(1))
+
                 });
             }
             return section;
@@ -108,7 +139,7 @@
         keepInMindSection:function () {
             var section = $(this);
 
-            var form = $('#keep-in-mind-form', section).ajaxForm(function(){
+            var form = $('#keep-in-mind-form', section).ajaxForm(function () {
 
             });
             $(':text', section)
@@ -118,7 +149,7 @@
                 });
             return section;
         },
-        dateDisplay:function(date){
+        dateDisplay:function (date) {
             var template = Handlebars.templates['tmpl.date-display'];
 
             var display = $(this);
@@ -154,7 +185,7 @@
 
 
             var dateDisplay = section.findByRole('date-display').dateDisplay(new Date());
-            dateDisplay.click(function(){
+            dateDisplay.click(function () {
                 dateDisplay.hide();
                 calendar.show();
             });
@@ -211,10 +242,10 @@
                 return group.children().size() >= 2;
             }
 
-            (function(members){
+            (function (members) {
                 $('.grouping-group', roulette).remove();
                 var group = newGroup();
-                if(members && members.length){
+                if (members && members.length) {
                     members.forEach(function (data) {
                         if (isGroupFull(group)) {
                             group = newGroup();
@@ -278,6 +309,7 @@
                         });
                     }
                 }
+
                 tick();
             }).hide();
 
@@ -298,7 +330,7 @@
             });
 
             var availableCount = $('#availabel-group-count');
-            roulette.on('roulette-group.change', function(){
+            roulette.on('roulette-group.change', function () {
                 var count = $('.grouping-group').not(':empty').size();
                 availableCount.text(count);
             });
@@ -311,16 +343,37 @@
                 .groupingRoulette();
             return section;
         },
-        trafficLightSection:function(){
+        trafficLightSection:function () {
             var section = $(this);
 
             var light = section.findByRole('traffic-light');
-            light.click(function(){
+            light.click(function () {
                 $(this).addClass('on')
                     .siblings('.on')
                     .removeClass('on');
             });
             return section;
+        },
+        rateCircle:function (rate) {
+            var container = $(this).empty(),
+                w = container.width(),
+                h = container.height()
+                ;
+            var canvas = $('<canvas/>').appendTo(container),
+                ctx = canvas.get(0).getContext('2d');
+
+            var r = w / 2;
+            var size = {
+                width:r * 2,
+                height:r * 2
+            };
+
+            canvas.attr(size).css(size);
+
+            new RateCircle(r, rate).draw(ctx);
+
+
+            return container;
         }
     });
     $(function () {

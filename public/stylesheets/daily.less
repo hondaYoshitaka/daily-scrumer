@@ -389,7 +389,7 @@
 .traffic-light(@color) {
   .radial-gradient(20px, 20px, @white, darken(@white, 50));
   position: relative;
-  &:hover,&.on {
+  &:hover, &.on {
     .radial-gradient(20px, 20px, lighten(@color, 2), saturate(darken(@color, 30), 10));
     &:after {
       opacity: 0.5;
@@ -418,4 +418,12 @@
 
 .traffic-light-green {
   .traffic-light(spin(@lighteColor, 120));
+}
+
+.rate-circle {
+  .cover;
+  .square(100px);
+  z-index: -1;
+  top:-35px;
+  left:-10px;
 }
