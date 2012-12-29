@@ -145,20 +145,16 @@
             return section;
         },
         groupingRouletteItem:function (data) {
-            return $(this).each(function () {
-                var item = $(this)
-                    .data('data', data)
-                    .addClass('grouping-roulette-item')
-                    .text(data.name)
-                    .css({
-                        left:0,
-                        top:0
-                    })
-                    .draggable({
-                        revert:true,
-                        containment:'#grouping-section'
-                    });
-            });
+            return $(this)
+                .data('data', data)
+                .css({
+                    left:0,
+                    top:0
+                })
+                .draggable({
+                    revert:true,
+                    containment:'#grouping-section'
+                });
         },
         groupingRouletteGroup:function () {
             return $(this).each(function () {
@@ -195,6 +191,7 @@
             }
 
             (function (members) {
+                var tmpl = Handlebars.templates['tmple.grouping-roulette-item'];
                 $('.grouping-group', roulette).remove();
                 var group = newGroup();
                 if (members && members.length) {
@@ -202,7 +199,7 @@
                         if (isGroupFull(group)) {
                             group = newGroup();
                         }
-                        $('<li/>').appendTo(group)
+                        $(tmpl(data)).appendTo(group)
                             .groupingRouletteItem(data);
                     });
                     roulette.removeClass('no-member-roulette');

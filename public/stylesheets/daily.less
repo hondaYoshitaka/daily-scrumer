@@ -194,9 +194,11 @@
   }
   .hidden;
 }
-#daite-display-wrapper{
+
+#daite-display-wrapper {
   min-height: 70px;
 }
+
 #calendar-cover {
   cursor: default;
   min-height: 80px;
@@ -234,7 +236,6 @@
   color: fadeout(@blue, 30);
 }
 
-
 .report-chart-section {
   width: 800px;
   max-width: none;
@@ -264,6 +265,12 @@
     .blink; //    background-color: fadeout(@color, 40);
   //    color:@white;
   //    border-color:@border;
+  }
+  .inner {
+    background-color: lighten(@back, 5);
+  }
+  .part {
+    background-color: lighten(@back, 25);
   }
 }
 
@@ -304,18 +311,49 @@
 }
 
 .grouping-roulette-item {
-  @corner: 25px;
   position: relative;
+  border: 1px solid transparent;
+  .box-shadow(2px 2px 4px, 0.5);
   font-weight: bold;
   display: block;
-  padding: 10px 18px;
-  border: 1px solid transparent;
-  .border-radius(@corner);
-  margin: 5px 8px;
+  padding: 5px;
+  margin: 5px 10px;
+  .border-radius(50%);
   font-weight: bolder;
   .grabbable;
-  &:before {
-    .border-radius(@corner);
+  .linear-gradient(@white, darken(@white, 4));
+  .icon-wrapper {
+    text-align: center;
+    .border-radius(50%);
+    .cover;
+    z-index: 0;
+  }
+  &:before, &:after {
+    .border-radius(50%);
+  }
+  .icon {
+    opacity: 0.4;
+    .square(55px);
+    .border-radius(50%);
+  }
+  .name {
+    display: inline-block;
+    margin: 10px 0;
+    text-align: center;
+    position:relative;
+    z-index:1;
+    .text-shadow(1px 1px 2px, 0.6);
+  }
+}
+
+.grouping-roulette-item-inner {
+  .box-shadow(1px 1px 4px, 0.4, inset);
+  .square(60px);
+  position: relative;
+  .border-radius(50%);
+  background-color: darken(@white, 2);
+  &:before, &:after {
+    .border-radius(50%);
   }
 }
 
@@ -353,12 +391,13 @@
   padding: 5px 5px 5px;
   font-size: 1.5em;
 }
+
 .rate-circle {
   .cover;
   .square(120px);
   z-index: -1;
-  top:-45px;
-  left:-10px;
+  top: -45px;
+  left: -10px;
 }
 
 .traffic-light-box {
@@ -366,7 +405,7 @@
   .linear-gradient(315deg, lighten(@black, 7), darken(@black, 6));
   display: inline-block;
   padding: 6px 8px 2px;
-  margin:0 20px;
+  margin: 0 20px;
   .box-shadow(2px 2px 6px, 0.9, inset);
   .border-radius(4px);
   position: relative;
@@ -390,7 +429,7 @@
   .border-radius(50%);
   .square(30px);
   .box-shadow(2px 2px 4px, 0.4, inset);
-    margin: 4px;
+  margin: 4px;
   .traffic-light(@white);
   display: inline-block;
 }
