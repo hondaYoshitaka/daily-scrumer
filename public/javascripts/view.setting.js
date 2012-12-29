@@ -112,47 +112,57 @@
             var sprintList = $('#sprint-list', section).sprintList();
             return section;
         },
-        redmineProjectList:function(callback){
+        redmineProjectList:function (callback) {
             var ul = $(this);
-            $.get('/setting/get_redmine_projects', function(data){
+            $.get('/setting/get_redmine_projects', function (data) {
                 var tmpl = Handlebars.templates['tmpl.redmine-project-list-item'];
-                data.projects.forEach(function(data){
+                data.projects.forEach(function (data) {
                     $(tmpl(data)).appendTo(ul);
                 });
                 callback.call(ul);
             });
             return ul;
         },
-        redmineProjectListPane:function(){
+        redmineProjectListPane:function () {
             var pane = $(this);
             pane.showSpin();
 
-            var form = $('#redmine-projects-form', pane).submit(function(e){
+            var form = $('#redmine-projects-form', pane).submit(function (e) {
                 var action = form.attr('action');
                 var data = {};
                 data._id = form.findByName('_id').val();
                 data.redmine_projects = [];
-                form.findByName('project').filter(':checked').each(function(){
+                form.findByName('project').filter(':checked').each(function () {
                     var project = $(this).val();
                     data.redmine_projects.push(project);
                 });
-                $.post(action, data, function(){
+                $.post(action, data, function () {
 
                 });
                 e.preventDefault();
             });
-            var projectList = $('#redmine-project-list', pane).redmineProjectList(function(){
+            var projectList = $('#redmine-project-list', pane).redmineProjectList(function () {
                 $('.spinner', pane).remove();
-                $(':checkbox', projectList).click(function(){
+                var checkbox = $(':checkbox', projectList).click(function () {
                     var checkbox = $(this),
                         checked = checkbox.is(':checked'),
                         label = checkbox.parent('label');
-                    if(checked){
+                    if (checked) {
                         label.addClass('active');
                     } else {
                         label.removeClass('active');
                     }
                     form.submit();
+                });
+                checkbox.each(function () {
+                    var checkbox = $(this),
+                        checked = form.data('projects').split(',');
+                    checked.forEach(function (checked) {
+                        if (checked === checkbox.val()) {
+                            checkbox.get(0).checked = true;
+                            checkbox.parent('label').addClass('active');
+                        }
+                    })
                 });
             });
 

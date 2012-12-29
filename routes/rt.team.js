@@ -5,6 +5,8 @@
 var db = require('../db'),
     Team = db.models['Team'];
 
+
+
 /* /team下のrouteを全て受け取る */
 exports.all = function (req, res, next) {
     var team = req.session && req.session.team;
@@ -75,7 +77,9 @@ exports.remove = function (req, res) {
 };
 
 
-exports.update = {};
+
+
+exports.update = function(req, res){};
 
 exports.update.redmine_projects = function (req, res) {
     var body = req.body;
@@ -97,6 +101,7 @@ exports.update.redmine_projects = function (req, res) {
         }
         team.redmine_projects = body.redmine_projects;
         team.update(function () {
+            req.session.team = team;
             res.json({
                 success:true,
                 team:team
