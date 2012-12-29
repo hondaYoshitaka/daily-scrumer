@@ -3,7 +3,8 @@
     var msg = {
         placeholder:{
             member_name:'member name'
-        }
+        },
+        sure:'Are you sure?'
     };
     $.extend({
 
@@ -81,7 +82,11 @@
                         form.submit();
                     });
                 li.removableListItem(function () {
-                    //TODO
+                    if(confirm(msg.sure)){
+                        $.post('/sprint/remove',{
+                            _id:form.findByName('_id').val()
+                        });
+                    }
                 });
             });
         },
