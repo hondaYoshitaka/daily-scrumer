@@ -50,6 +50,9 @@
         }
     });
     $(function(){
-        $('#team-select-section').teamSelectSection();
+
+        var body = $(document.body);
+
+        $('#team-select-section', body).teamSelectSection();
     });
 })(jQuery);

@@ -162,14 +162,16 @@
         }
     });
     $(function () {
-        $('#member-section').memberSection();
+        var body = $(document.body);
 
-        $('#sprint-section').sprintSection();
+        $('#member-section', body).memberSection();
 
-        $('#head-nav').nav('setting');
+        $('#sprint-section', body).sprintSection();
 
-        $('#new-sprint-input-dialog').popupDialog();
+        $('#head-nav', body).nav('setting');
 
-        $('#redmine-project-list-pane').redmineProjectListPane();
+        $('#new-sprint-input-dialog', body).popupDialog();
+
+        $('#redmine-project-list-pane', body).redmineProjectListPane();
     });
 })(jQuery);

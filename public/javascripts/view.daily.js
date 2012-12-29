@@ -305,7 +305,8 @@
         }
     });
     $(function () {
-        var body = $('body');
+        var body = $(document.body);
+
         $('#head-nav', body).nav('daily');
 
 
@@ -317,6 +318,6 @@
         $('#calendar-section', body).calendarSection();
         $('#grouping-section', body).groupingSection();
 
-        $('#traffic-light-section').trafficLightSection();
+        $('#traffic-light-section', body).trafficLightSection();
     });
 })(jQuery);

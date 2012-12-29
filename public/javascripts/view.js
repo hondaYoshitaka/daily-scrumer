@@ -445,7 +445,7 @@ var CS = {};
         }
     });
     $(function () {
-        var body = $('body');
+        var body = $(document.body);
 
         body.ajaxError(function (e, req, setting, err) {
             alert('something is wrong!');
