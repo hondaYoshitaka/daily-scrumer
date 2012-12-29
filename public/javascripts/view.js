@@ -433,5 +433,10 @@ var CS = {};
     });
     $(function () {
         var body = $('body');
+
+        body.ajaxError(function () {
+            alert('something is wrong!');
+            console.error('[ajax err]');
+        });
     });
 })(jQuery);

@@ -18,6 +18,7 @@ block content
 
     h2.etched.block-title
         | #{label.redmine}
+        img.icon.redmine-icon(src='/images/redmine.fav.ico')
     section#redmine-section
         #redmine-project-list-pane.paper.float-left
             .paper-content
@@ -80,7 +81,6 @@ block content
                                     label(for='redmine-sprint-select').suffix-colon
                                         img.icon.redmine-icon(
                                             src='/images/redmine.fav.ico'
-                                            for='redmine-sprint-select'
                                         )
                                         | #{label.sprint.redmine_sprint}
                                     br
