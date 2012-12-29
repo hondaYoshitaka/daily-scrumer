@@ -429,6 +429,19 @@ var CS = {};
                 .click(function () {
                     menu.toggleClass('hidden');
                 });
+        },
+        labeledCheckbox:function(change){
+            return $(this).change(function () {
+                var checkbox = $(this),
+                    checked = checkbox.is(':checked'),
+                    label = checkbox.parent('label');
+                if (checked) {
+                    label.addClass('active');
+                } else {
+                    label.removeClass('active');
+                }
+                change && change.call(checkbox);
+            });
         }
     });
     $(function () {

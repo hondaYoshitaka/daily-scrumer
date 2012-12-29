@@ -143,15 +143,7 @@
             });
             var projectList = $('#redmine-project-list', pane).redmineProjectList(function () {
                 $('.spinner', pane).remove();
-                var checkbox = $(':checkbox', projectList).click(function () {
-                    var checkbox = $(this),
-                        checked = checkbox.is(':checked'),
-                        label = checkbox.parent('label');
-                    if (checked) {
-                        label.addClass('active');
-                    } else {
-                        label.removeClass('active');
-                    }
+                var checkbox = $(':checkbox', projectList).labeledCheckbox(function () {
                     form.submit();
                 });
                 checkbox.each(function () {
