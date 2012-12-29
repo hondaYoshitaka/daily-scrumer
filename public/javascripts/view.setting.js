@@ -136,8 +136,12 @@
                     var project = $(this).val();
                     data.redmine_projects.push(project);
                 });
-                $.post(action, data, function () {
-
+                $.post(action, data, function (data) {
+                    if(data.success){
+                        CS.team = data.team;
+                    } else {
+                        console.error('failed to update redmine_projects');
+                    }
                 });
                 e.preventDefault();
             });
