@@ -24,7 +24,7 @@ block content
                 - each sprint in sprints
                     li.sprint-list-item(data-data=sprint)
             br.clear
-            #new-sprint-input-dialog.card(
+            #new-sprint-input-dialog.card.stick-right(
                 data-role='dialog',
                 data-opener='#sprint-add-btn',
                 data-closer='#new-sprint-cancel-btn')
@@ -46,8 +46,20 @@ block content
                                 name='name',
                                 placeholder=placeholder.sprint_name)
 
-                            input.btn(type='submit', value=btn.new_sprint_save)
-                            input#new-sprint-cancel-btn.btn(type='button', value=btn.new_sprint_cancel)
+                            br
+                            input#sprint-begin-input(
+                                type='date',
+                                name='begin',
+                                placeholder=placeholder.sprint_begin)
+                            input#sprint-end-input(
+                                type='date',
+                                name='end',
+                                placeholder=placeholder.sprint_end)
+                            br
+                            br
+                            .btn-area
+                                input.btn(type='submit', value=btn.new_sprint_save)
+                                input#new-sprint-cancel-btn.btn(type='button', value=btn.new_sprint_cancel)
 
             a.btn#sprint-add-btn.stick-right.stick-top
                 i.icon.icon-small
