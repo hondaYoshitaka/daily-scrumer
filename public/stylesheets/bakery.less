@@ -395,21 +395,21 @@ table {
   overflow: hidden;
   .square(@size);
   &.human {
-    .part {
+    .part-head,.part-body {
       position: absolute;
       background-color: @gray;
       .border-radius(50%);
-      &.head {
-        left: 26%;
-        .square(48%);
-        top: 13%;
-      }
-      &.body {
-        width: 50%;
-        top: 50%;
-        left: 25%;
-        height: 100%;
-      }
+    }
+    .part-head {
+      left: 26%;
+      .square(48%);
+      top: 13%;
+    }
+    .part-body {
+      width: 50%;
+      top: 50%;
+      left: 25%;
+      height: 100%;
     }
   }
   &.add {

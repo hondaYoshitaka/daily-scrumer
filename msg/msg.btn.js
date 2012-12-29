@@ -17,6 +17,7 @@ exports = module.exports = {
     settings:{
         new_sprint:'new sprint',
         new_sprint_save:'save',
-        new_sprint_cancel:'cancel'
+        new_sprint_cancel:'cancel',
+        new_member:'new member'
     }
 };

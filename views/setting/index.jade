@@ -64,10 +64,11 @@ block content
         ul#mebmer-list.positioned.no-style-list
             - each member in team.members
                 li.float-left.member-list-item(data-data=member)
-            li.list-item-add-btn#member-add-btn
-                i.icon
-                    span.add-icon-bar-v
-                    span.add-icon-bar-h
+        a.btn#member-add-btn
+            i.icon.icon-small
+                span.add-icon-bar-v
+                span.add-icon-bar-h
+            | #{btn.new_member}
         br.clear
     br.clear
 
