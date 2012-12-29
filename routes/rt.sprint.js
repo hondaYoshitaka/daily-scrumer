@@ -46,11 +46,19 @@ exports.new = function (req, res) {
 /* スプリントを更新する */
 exports.update = function (req, res) {
     var body = req.body;
-    var sprint = new Sprint(body);
-    sprint.update(function () {
-        res.json({
-            success:true,
-            sprint:sprint
+    Sprint.findById(body._id, function(sprint){
+        if(!sprint){
+            res.json({
+                success:false
+            });
+            return;
+        }
+        util.obj.deepCopy(body, sprint);
+        sprint.update(function () {
+            res.json({
+                success:true,
+                sprint:sprint
+            });
         });
     });
 };

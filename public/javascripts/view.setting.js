@@ -61,13 +61,13 @@
                 var li = $(this),
                     data = li.data('data');
                 li.addClass('inline float-left sprint-list-item');
-                if(!data) return;
+                if (!data) return;
                 var html = template({
                     member:data
                 });
                 li.html(html);
 
-                var form = $('form', li).ajaxForm(function(){
+                var form = $('form', li).ajaxForm(function () {
 
                 });
                 li.findByName('number')
@@ -96,9 +96,17 @@
                 .validationForm('new_sprint')
                 .ajaxForm(function (data) {
                     form.emptyForm();
-                    $('<li/>').data('data', data.sprint)
+                    var li = $('<li/>').data('data', data.sprint)
                         .prependTo(sprintList)
                         .sprintListItem();
+                    var width = li.width();
+                    li.css({
+                        width:0
+                    }).animate({
+                            width:width
+                        }, function () {
+                            li.removeAttr('style');
+                        });
                     $('#new-sprint-cancel-btn').trigger('click');
                 });
             var sprintList = $('#sprint-list', section).sprintList();
