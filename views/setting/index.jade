@@ -23,7 +23,11 @@ block content
         #redmine-project-list-pane.paper.float-left
             .paper-content
                 .paper-title #{label.redmine_projects}
-                ul#redmine-project-list
+                form#redmine-projects-form(
+                        action='/update_team/redmine_projects',
+                        method='POST')
+                    input(type='hidden', name='_id', value=team._id)
+                    ul#redmine-project-list
 
         br.clear
 

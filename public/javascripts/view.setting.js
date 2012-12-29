@@ -115,7 +115,6 @@
         redmineProjectList:function(callback){
             var ul = $(this);
             $.get('/setting/get_redmine_projects', function(data){
-                console.log(data);
                 var tmpl = Handlebars.templates['tmpl.redmine-project-list-item'];
                 data.projects.forEach(function(data){
                     $(tmpl(data)).appendTo(ul);
@@ -127,6 +126,21 @@
         redmineProjectListPane:function(){
             var pane = $(this);
             pane.showSpin();
+
+            var form = $('#redmine-projects-form', pane).submit(function(e){
+                var action = form.attr('action');
+                var data = {};
+                data._id = form.findByName('_id').val();
+                data.redmine_projects = [];
+                form.findByName('project').filter(':checked').each(function(){
+                    var project = $(this).val();
+                    data.redmine_projects.push(project);
+                });
+                $.post(action, data, function(){
+
+                });
+                e.preventDefault();
+            });
             var projectList = $('#redmine-project-list', pane).redmineProjectList(function(){
                 $('.spinner', pane).remove();
                 $(':checkbox', projectList).click(function(){
@@ -138,6 +152,7 @@
                     } else {
                         label.removeClass('active');
                     }
+                    form.submit();
                 });
             });
 

@@ -10,13 +10,16 @@ var Team = exports = module.exports = function(data){
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
     if(!s.members) s.members = [];
+    if(!s.redmine_projects) s.redmine_projects = [];
 };
 
 Team.prototype.defaultvalue = {
     /* チーム名 */
     name:null,
     /* メンバー */
-    members:[]
+    members:[],
+    /* project identifier of redmine */
+    redmine_projects:[]
 };
 (function(Prototype){
     Team.prototype = new Prototype();

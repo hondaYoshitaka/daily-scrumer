@@ -73,3 +73,35 @@ exports.remove = function (req, res) {
         }
     });
 };
+
+
+exports.update = {};
+
+exports.update.redmine_projects = function (req, res) {
+    var body = req.body;
+
+    function fail() {
+        res.json({
+            success:false
+        });
+    }
+
+    if (!body._id) {
+        fail();
+        return;
+    }
+    Team.findById(body._id, function (team) {
+        if (!team) {
+            fail();
+            return;
+        }
+        team.redmine_projects = body.redmine_projects;
+        team.update(function () {
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};
+
