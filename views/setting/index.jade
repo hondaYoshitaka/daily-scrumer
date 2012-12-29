@@ -11,11 +11,24 @@ block content
     - var label = msg.label.settings;
     - var placeholder = msg.placeholder.settings;
     - var btn = msg.btn.settings;
-
     a#change-team-btn(href='/').float-right
         | #{msg.btn.change_team}
     br
     .etched-line#top-line
+
+    h2.etched.block-title
+        | #{label.redmine}
+    section#redmine-section
+        #redmine-project-list-pane.paper.float-left
+            .paper-content
+                .paper-title #{label.redmine_projects}
+                ul#redmine-project-list
+
+        br.clear
+
+    br
+
+
     h2.etched.block-title
         | #{label.sprints}
     section#sprint-section.black-board

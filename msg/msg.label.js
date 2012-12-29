@@ -36,6 +36,8 @@ exports = module.exports = {
         selected_team:'team',
         teams:'teams',
         sprints:'sprints',
+        redmine:'redmine',
+        redmine_projects:'projects',
         members:'members',
         sprint:{
             caption_new:'new sprint',

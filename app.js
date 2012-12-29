@@ -91,6 +91,8 @@ app.configure('development', function () {
     app.post('/sprint/update_keep_in_mind', r.sprint.update_keep_in_mind);
     app.post('/sprint/remove', r.sprint.remove);
 
+    app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);
+
 
 })(require('./routes'));
 
@@ -99,10 +101,13 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 
+
 (function (launch) {
     //load launch data for db
     launch.load();
 })(require('./db/data/launch'));
+
+
 
 var RedmineAgent = require('./agent')['Redmine'];
 (function (conf) {
@@ -111,7 +116,9 @@ var RedmineAgent = require('./agent')['Redmine'];
 
     setInterval(function () {
         login(function(){
-            login();//try twice
+            setTimeout(function(){
+                login();//try twice
+            }, 3 * 1000);
         });
     }, 10 * 60 * 1000);
 

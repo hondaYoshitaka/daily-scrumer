@@ -17,6 +17,7 @@
         "cheerio":"*",
         "request":"*",
         "handlebars":"*",
-        "handlebars-precompiler":"*"
+        "handlebars-precompiler":"*",
+        "xml2json":"*"
     }
 }

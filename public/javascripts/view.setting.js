@@ -111,6 +111,27 @@
                 });
             var sprintList = $('#sprint-list', section).sprintList();
             return section;
+        },
+        redmineProjectList:function(callback){
+            var ul = $(this);
+            $.get('/setting/get_redmine_projects', function(data){
+                console.log(data);
+                var tmpl = Handlebars.templates['tmpl.redmine-project-list-item'];
+                data.projects.forEach(function(data){
+                    $(tmpl(data)).appendTo(ul);
+                });
+                callback.call(ul);
+            });
+            return ul;
+        },
+        redmineProjectListPane:function(){
+            var pane = $(this);
+            pane.showSpin();
+            $('#redmine-project-list', pane).redmineProjectList(function(){
+                $('.spinner', pane).remove();
+            });
+
+            return pane;
         }
     });
     $(function () {
@@ -121,5 +142,7 @@
         $('#head-nav').nav('setting');
 
         $('#new-sprint-input-dialog').popupDialog();
+
+        $('#redmine-project-list-pane').redmineProjectListPane();
     });
 })(jQuery);

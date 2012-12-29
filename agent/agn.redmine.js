@@ -4,6 +4,7 @@
 
 var Agent = require('./agn.prototype.js'),
     util = require('../util'),
+    XML = require('xml2json'),
     conf = require('../conf');
 
 var RedmineAgent = exports = module.exports = function (data) {
@@ -87,11 +88,25 @@ RedmineAgent.prototype.getIssue = function(condition, callback){
     var s = this,
         url = conf.url.base + '/issues.json',
         query = new RedmineAgent.Query(condition).toQueryString();
-    s.get([url, query].join('&'), function(res, body){
+    s.get([url, query].join('?'), function(res, body){
         console.log('body', body);
         var json = {};//TODO
         callback.call(s, true, json);
     });
+};
 
+RedmineAgent.prototype.getProjects = function(callback){
+    var s = this,
+        url = conf.url.base + '/projects.xml';
+    s.get(url, function(res, body){
+        try{
+            var data = JSON.parse(XML.toJson(body));
+            var success = true;
+            callback && callback.call(s, success, data['projects']['project']);
+        } catch(e){
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
 };
 
