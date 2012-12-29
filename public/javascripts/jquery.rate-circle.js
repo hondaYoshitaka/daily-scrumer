@@ -1,12 +1,18 @@
 ;
 (function ($) {
-    var requestAnimationFrame = (function(){
-        return  window.requestAnimationFrame       ||
+    var settings = {
+        color:{
+            back:'#EEE',
+            filled:'#33E'
+        }
+    };
+    var requestAnimationFrame = (function () {
+        return  window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            window.oRequestAnimationFrame      ||
-            window.msRequestAnimationFrame     ||
-            function( callback ){
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
@@ -66,8 +72,8 @@
             var s = this;
             s.radius = radius;
             s.rate = rate;
-            s.outline = new Arc('#EEE', s.radius, 1);
-            s.filled = new Arc('#33E', s.radius, s.rate);
+            s.outline = new Arc(settings.color.back, s.radius, 1);
+            s.filled = new Arc(settings.color.filled, s.radius, s.rate);
         };
         Root.prototype.draw = function (ctx) {
             var s = this;
@@ -82,6 +88,12 @@
     })();
     $.fn.extend({
         rateCircle:function (rate) {
+
+            if(arguments[0] instanceof Object){
+                settings = $.extend(settings, arguments[0]);
+                rate = settings.rate;
+            }
+
             var container = $(this).empty(),
                 w = container.width(),
                 h = container.height();
