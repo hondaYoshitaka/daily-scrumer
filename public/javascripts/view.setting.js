@@ -60,7 +60,7 @@
             return $(this).each(function () {
                 var li = $(this),
                     data = li.data('data');
-                li.addClass('paper inline float-left sprint-list-item');
+                li.addClass('inline float-left sprint-list-item');
                 if(!data) return;
                 var html = template({
                     member:data

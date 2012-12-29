@@ -1,13 +1,15 @@
-<div class="paper-content">
+<div class="black-board-item">
     <form action="/sprint/update" method="POST">
         <input type="hidden" name="_id" value="{{member._id}}"/>
         <h3>sprint
             <input type="number" name="number"
                    class="shortest" value="{{member.number}}"/>
         </h3>
-        <input type="text" name="name"
-               value = "{{member.name}}"
-            />
+        <span class='black-board-highlight'>
+            <input type="text" name="name"
+                   value = "{{member.name}}"
+                />
+        </span>
 
     </form>
 </div>

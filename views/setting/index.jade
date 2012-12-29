@@ -16,10 +16,10 @@ block content
     .etched-line#top-line
     h2.etched
         | #{label.sprints}
-    section#sprint-section.board
-        .board-content
+    section#sprint-section.black-board
+        .black-board-frame.black-board-frame-bottom
+        .black-board-content
             ul#sprint-list.positioned.no-style-list
-
                 - each sprint in sprints
                     li.sprint-list-item(data-data=sprint)
             br.clear
@@ -48,8 +48,8 @@ block content
                             input.btn(type='submit', value=btn.new_sprint_save)
                             input#new-sprint-cancel-btn.btn(type='button', value=btn.new_sprint_cancel)
 
-            a.btn#sprint-add-btn
-                i.icon
+            a.btn#sprint-add-btn.stick-right.stick-top
+                i.icon.icon-small
                     span.add-icon-bar-v
                     span.add-icon-bar-h
                 | #{btn.new_sprint}

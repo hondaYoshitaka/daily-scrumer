@@ -59,7 +59,7 @@
 }
 
 .gradient-surrond(@size){
-    @deg:45deg;
+      @deg:45deg;
   @pattern:transparent @size, white @size;
   background:
     -webkit-linear-gradient(@deg, @pattern),
@@ -389,20 +389,11 @@ table {
   background-color: rgba(0, 0, 0,@dense);
 }
 
-.icon {
+.icon(@size) {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  .square(16px);
-  &.miduum {
-    .square(32px);
-  }
-  &.large {
-    .square(64px);
-  }
-  &.small {
-    .square(16px);
-  }
+  .square(@size);
   &.human {
     .part {
       position: absolute;
