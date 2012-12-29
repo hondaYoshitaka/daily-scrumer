@@ -1,10 +1,10 @@
-var requestAnimationFrame = (function(){
-    return  window.requestAnimationFrame       ||
+var requestAnimationFrame = (function () {
+    return  window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        window.oRequestAnimationFrame      ||
-        window.msRequestAnimationFrame     ||
-        function( callback ){
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
@@ -248,6 +248,7 @@ var CS = {};
                             break;
                         case 'submit':
                         case 'image':
+                        case 'button':
                             break;
                         default:
                             input.val('');

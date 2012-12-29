@@ -67,7 +67,7 @@
                 });
                 li.html(html);
 
-                var form = $('form').ajaxForm(function(){
+                var form = $('form', li).ajaxForm(function(){
 
                 });
                 li.findByName('number')
@@ -97,8 +97,9 @@
                 .ajaxForm(function (data) {
                     form.emptyForm();
                     $('<li/>').data('data', data.sprint)
-                        .appendTo(sprintList)
+                        .prependTo(sprintList)
                         .sprintListItem();
+                    $('#new-sprint-cancel-btn').trigger('click');
                 });
             var sprintList = $('#sprint-list', section).sprintList();
             return section;

@@ -1,6 +1,15 @@
 @import 'bakery';
 @import 'color';
 
+.btn.primary{
+  .btn(darken(@blue, 20));
+  color:@white;
+  &:hover{
+    color:@white;
+  }
+}
+
+
 .block-title{
   margin: 10px 0;
 }
@@ -93,5 +102,15 @@
 }
 legend{
   font-weight: bold;
-  color: lighten(@black, 20);
+  color: lighten(@black, 30);
+}
+#new-sprint-input-dialog{
+  .box-shadow(5px 5px 25px, 0.9);
+  right:10px;
+  top:10px;
+  .btn{
+    width:40%;
+    margin: 0 5px;
+  }
+
 }
