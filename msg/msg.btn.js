@@ -7,6 +7,7 @@ exports = module.exports = {
     add:'+',
     login:'login',
     logout:'logout',
+    change_team:'change team',
     index:{
         add_team:'new team'
     },
