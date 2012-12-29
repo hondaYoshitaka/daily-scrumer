@@ -16,6 +16,22 @@
             elm.height(0)
                 .animate({
                     height:height
+                },function(){
+                    elm.removeAttr('style');
+                });
+        },
+        open:function(){
+            var elm = $(this);
+            var w = elm.width(),
+                h = elm.height();
+            elm.css({
+                width:0,
+                height:h,
+                overflow:'hidden'
+            }).animate({
+                    width:w
+                }, function () {
+                    elm.removeAttr('style');
                 });
         },
         memberListItem:function () {
@@ -57,15 +73,8 @@
             return section;
         },
         sprintListItem:function () {
-            var tmpl = Handlebars.templates['tmpl.sprint-list-item'];
             return $(this).each(function () {
-                var li = $(this),
-                    data = li.data('data');
-                li.addClass('inline float-left sprint-list-item');
-                if (!data) return;
-                var html = tmpl(data);
-                li.html(html);
-
+                var li = $(this);
                 var form = $('form', li).ajaxForm(function () {
 
                 });
@@ -80,39 +89,35 @@
                         form.submit();
                     });
                 li.removableListItem(function () {
-                    if(confirm(msg.sure)){
-                        $.post('/sprint/remove',{
+                    if (confirm(msg.sure)) {
+                        $.post('/sprint/remove', {
                             _id:form.findByName('_id').val()
                         });
                     }
                 });
             });
         },
-        sprintList:function () {
-            var ul = $(this);
-            $('.sprint-list-item', ul).sprintListItem();
-            return ul;
-        },
         sprintSection:function () {
+            var tmpl = Handlebars.templates['tmpl.sprint-list-item'];
+
             var section = $(this);
             var form = $('#new-sprint-form', section)
                 .validationForm('new_sprint')
                 .ajaxForm(function (data) {
                     form.emptyForm();
-                    var li = $('<li/>').data('data', data.sprint)
+                    $(tmpl(data.sprint))
                         .prependTo(sprintList)
-                        .sprintListItem();
-                    var width = li.width();
-                    li.css({
-                        width:0
-                    }).animate({
-                            width:width
-                        }, function () {
-                            li.removeAttr('style');
-                        });
+                        .sprintListItem()
+                        .open();
+
                     $('#new-sprint-cancel-btn').trigger('click');
                 });
-            var sprintList = $('#sprint-list', section).sprintList();
+
+            var sprintList = $('#sprint-list', section);
+            sprintList.data('data').forEach(function(data){
+                $(tmpl(data)).appendTo(sprintList)
+                    .sprintListItem();
+            });
             return section;
         },
         redmineProjectList:function (callback) {
@@ -140,7 +145,7 @@
                     data.redmine_projects.push(project);
                 });
                 $.post(action, data, function (data) {
-                    if(data.success){
+                    if (data.success) {
                         CS.team = data.team;
                     } else {
                         console.error('failed to update redmine_projects');

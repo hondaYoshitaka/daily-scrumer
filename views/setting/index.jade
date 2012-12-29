@@ -41,9 +41,7 @@ block content
         include prt.eraser.jade
         .black-board-frame.black-board-frame-bottom
         .black-board-content
-            ul#sprint-list.positioned.no-style-list
-                - each sprint in sprints
-                    li.sprint-list-item(data-data=sprint)
+            ul#sprint-list.positioned.no-style-list(data-data=sprints)
             br.clear
             #new-sprint-input-dialog.card.stick-right.stick-top(
                 data-role='dialog',

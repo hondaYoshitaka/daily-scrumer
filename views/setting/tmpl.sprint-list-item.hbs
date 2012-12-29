@@ -1,20 +1,23 @@
-<div class="black-board-item">
-    <form action="/sprint/update" method="POST">
-        <input type="hidden" name="_id" value="{{_id}}"/>
-        <h3>sprint
-            <input type="number" name="number"
-                   class="shortest" value="{{number}}"/>
-        </h3>
+<li class="inline float-left sprint-list-item">
+    <div class="black-board-item">
+        <form action="/sprint/update" method="POST">
+            <input type="hidden" name="_id" value="{{_id}}"/>
+
+            <h3>sprint
+                <input type="number" name="number"
+                       class="shortest" value="{{number}}"/>
+            </h3>
         <span class='black-board-highlight'>
             <input type="text" name="name"
-                   value = "{{name}}"
+                   value="{{name}}"
                 />
         </span>
-        <br/>
-        <ul>
-            {{#each redmine_versions}}
+            <br/>
+            <ul>
+                {{#each redmine_versions}}
                 <li>{{this}}</li>
-            {{/each}}
-        </ul>
-    </form>
-</div>
+                {{/each}}
+            </ul>
+        </form>
+    </div>
+</li>
