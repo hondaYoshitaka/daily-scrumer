@@ -30,43 +30,49 @@ block content
                 data-role='dialog',
                 data-opener='#sprint-add-btn',
                 data-closer='#new-sprint-cancel-btn')
+                .card-title.large #{label.sprint.caption_new}
                 .card-content
                     form#new-sprint-form.inline(
                         action='/sprint/new',
                         method='POST')
                         input(type='hidden', name='team_name', value=team.name)
                         fieldset.no-border
-                            legend #{label.sprint.caption_new}
-                            span #{msg.label.sprint}
-                            input.shortest#sprint-number-input(
-                                type='number',
-                                value= (sprints.length && sprints[0].number || 0)+1,
-                                name='number'
-                            )
-                            input#sprint-name-input(
-                                type='text',
-                                name='name',
-                                placeholder=placeholder.sprint_name)
-
-                            br
-                            input#sprint-begin-input(
-                                type='date',
-                                name='begin',
-                                placeholder=placeholder.sprint_begin)
-                            | ~
-                            input#sprint-end-input(
-                                type='date',
-                                name='end',
-                                placeholder=placeholder.sprint_end)
-                            br
-                            label
-                                img.icon.redmine-icon(
-                                    src='/images/redmine.fav.ico'
-                                    for='redmine-sprint-select'
-                                )
-                                | #{label.sprint.redmine_sprint}
-                            select#redmine-sprint-select
-                                option
+                            ul.no-style-list
+                                li
+                                    label(for='sprint-number-input')
+                                        | #{msg.label.sprint}
+                                    input.shortest#sprint-number-input(
+                                        type='number',
+                                        value= (sprints.length && sprints[0].number || 0)+1,
+                                        name='number'
+                                    )
+                                    input#sprint-name-input(
+                                        type='text',
+                                        name='name',
+                                        placeholder=placeholder.sprint_name)
+                                li
+                                    label(for='sprint-begin-input').suffix-colon
+                                        | #{label.sprint.duration}
+                                    br
+                                    input#sprint-begin-input(
+                                        type='date',
+                                        name='begin',
+                                        placeholder=placeholder.sprint_begin)
+                                    | ~
+                                    input#sprint-end-input(
+                                        type='date',
+                                        name='end',
+                                        placeholder=placeholder.sprint_end)
+                                li
+                                    label(for='redmine-sprint-select').suffix-colon
+                                        img.icon.redmine-icon(
+                                            src='/images/redmine.fav.ico'
+                                            for='redmine-sprint-select'
+                                        )
+                                        | #{label.sprint.redmine_sprint}
+                                    br
+                                    select#redmine-sprint-select
+                                        option
                             br
                             .btn-area
                                 input#new-sprint-cancel-btn.btn(type='button', value=btn.new_sprint_cancel)

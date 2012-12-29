@@ -41,6 +41,7 @@ exports = module.exports = {
             caption_new:'new sprint',
             number:'number',
             name:'name',
+            duration:'duration',
             redmine_sprint:'redmine sprint'
         }
     }
