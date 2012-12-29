@@ -434,9 +434,9 @@ var CS = {};
     $(function () {
         var body = $('body');
 
-        body.ajaxError(function () {
+        body.ajaxError(function (e, req, setting, err) {
             alert('something is wrong!');
-            console.error('[ajax err]');
+            console.error('[ajax err]', err);
         });
     });
 })(jQuery);

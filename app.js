@@ -101,28 +101,26 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 
-
 (function (launch) {
     //load launch data for db
     launch.load();
 })(require('./db/data/launch'));
 
 
-
 var RedmineAgent = require('./agent')['Redmine'];
 (function (conf) {
     var admin = new RedmineAgent();
-    admin.auth = conf.auth;
+    admin.auth = conf.admin;
 
     setInterval(function () {
-        login(function(){
-            setTimeout(function(){
+        login(function () {
+            setTimeout(function () {
                 login();//try twice
             }, 3 * 1000);
         });
     }, 10 * 60 * 1000);
 
-    function login(fail){
+    function login(fail) {
         admin.login(admin.auth, function (success) {
             if (success) {
                 console.log('[redmine] did login to redmine at', conf.url.base);
@@ -132,7 +130,8 @@ var RedmineAgent = require('./agent')['Redmine'];
             }
         });
     }
+
     login();
 
     RedmineAgent.admin = admin;
-})(require('./conf'));
+})(require('./conf').redmine);

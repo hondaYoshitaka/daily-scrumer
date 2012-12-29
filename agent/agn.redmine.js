@@ -5,7 +5,7 @@
 var Agent = require('./agn.prototype.js'),
     util = require('../util'),
     XML = require('xml2json'),
-    conf = require('../conf');
+    conf = require('../conf').redmine;
 
 var RedmineAgent = exports = module.exports = function (data) {
     var s = this;
