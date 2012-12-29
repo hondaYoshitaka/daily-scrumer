@@ -365,7 +365,8 @@
   background-color: @black;
   .linear-gradient(180deg, lighten(@black, 7), darken(@black, 6));
   display: inline-block;
-  padding: 12px 6px 8px;
+  padding: 6px 6px 3px;
+  margin:0 20px;
   .box-shadow(2px 2px 4px, 0.4);
   .border-radius(2px);
   position: relative;
@@ -379,7 +380,7 @@
   }
   &:after {
     .cover;
-    @height: 3px;
+    @height: 2px;
     top: auto;
     bottom: @height * -1;
     height: @height * 2;
@@ -389,10 +390,10 @@
 }
 
 .traffic-light(@color) {
-  .radial-gradient(20px, 20px, @white, darken(@white, 50));
+  .radial-gradient(33%, 33%, @white, darken(@white, 50));
   position: relative;
   &:hover, &.on {
-    .radial-gradient(20px, 20px, lighten(@color, 2), saturate(darken(@color, 30), 10));
+    .radial-gradient(33%, 33%, lighten(@color, 2), saturate(darken(@color, 30), 10));
     &:after {
       opacity: 0.5;
       .box-shadow(0 0 30px fadeout(@color, 20));
@@ -403,10 +404,11 @@
 
 .traffic-light {
   .border-radius(50%);
-  .square(60px);
+  .square(30px);
   .box-shadow(2px 2px 4px, 0.4, inset);
-  margin: 10px;
+    margin: 4px;
   .traffic-light(@white);
+  display: inline-block;
 }
 
 @lighteColor: lighten(red, 30);

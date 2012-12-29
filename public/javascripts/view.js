@@ -336,11 +336,11 @@ var CS = {};
             return elm;
         },
         /* ダイアログ */
-        dialog:function () {
+        popupDialog:function () {
             return $(this).each(function () {
                 var dialog = $(this).hide().addClass('dialog'),
                     opener = $(dialog.data('opener')),
-                    closer = dialog.findByRole('closer');
+                    closer = $(dialog.data('closer'));
                 opener.click(function () {
                     opener.fadeOut();
                     dialog.fadeIn();

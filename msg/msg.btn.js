@@ -15,6 +15,8 @@ exports = module.exports = {
         shuffle_stop:'stop!'
     },
     settings:{
-        new_sprint:'save'
+        new_sprint:'new sprint',
+        new_sprint_save:'save',
+        new_sprint_cancel:'cancel'
     }
 };

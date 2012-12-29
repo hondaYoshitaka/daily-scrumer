@@ -111,5 +111,6 @@
 
         $('#head-nav').nav('setting');
 
+        $('#new-sprint-input-dialog').popupDialog();
     });
 })(jQuery);

@@ -1,2 +1,17 @@
 @import 'bakery';
 @import 'color';
+
+@brown:#4D2C0E;
+@board: #80501C;
+.board{
+  background-color: @board;
+  padding:8px;
+  .border-radius(2px);
+  .box-shadow(2px 2px 4px, 0.4);
+}
+.board-content{
+  @sepia:#CEBD98;
+  .border-radius(2px);
+  border: 3px solid @sepia;
+  padding:10px;
+}

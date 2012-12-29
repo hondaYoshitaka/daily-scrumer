@@ -16,37 +16,43 @@ block content
     .etched-line#top-line
     h2.etched
         | #{label.sprints}
-    section#sprint-section
-        ul#sprint-list.positioned.no-style-list
+    section#sprint-section.board
+        .board-content
+            ul#sprint-list.positioned.no-style-list
 
-            - each sprint in sprints
-                li.sprint-list-item(data-data=sprint)
+                - each sprint in sprints
+                    li.sprint-list-item(data-data=sprint)
+            br.clear
+            #new-sprint-input-dialog.card(
+                data-role='dialog',
+                data-opener='#sprint-add-btn',
+                data-closer='#new-sprint-cancel-btn')
+                .card-content
+                    form#new-sprint-form.inline(
+                        action='/sprint/new',
+                        method='POST')
+                        input(type='hidden', name='team_name', value=team.name)
+                        fieldset.no-border
+                            legend #{label.sprint.caption_new}
+                            span #{msg.label.sprint}
+                            input.shortest#sprint-number-input(
+                                type='number',
+                                value= (sprints.length && sprints[0].number || 0)+1,
+                                name='number'
+                            )
+                            input#sprint-name-input(
+                                type='text',
+                                name='name',
+                                placeholder=placeholder.sprint_name)
 
-            li.inline.float-left
-                form#new-sprint-form.inline(
-                    action='/sprint/new',
-                    method='POST')
-                    input(type='hidden', name='team_name', value=team.name)
-                    fieldset
-                        legend #{label.sprint.caption_new}
-                        span #{msg.label.sprint}
-                        input.shortest#sprint-number-input(
-                            type='number',
-                            value= (sprints.length && sprints[0].number || 0)+1,
-                            name='number'
-                        )
-                        input#sprint-name-input(
-                            type='text',
-                            name='name',
-                            placeholder=placeholder.sprint_name)
+                            input.btn(type='submit', value=btn.new_sprint_save)
+                            input#new-sprint-cancel-btn.btn(type='button', value=btn.new_sprint_cancel)
 
-                        input.btn.block-btn(type='submit', value=btn.new_sprint)
-
-            a#sprint-add-btn
+            a.btn#sprint-add-btn
                 i.icon
                     span.add-icon-bar-v
                     span.add-icon-bar-h
-
+                | #{btn.new_sprint}
     br.clear
     br
     .etched-line

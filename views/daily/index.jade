@@ -32,14 +32,17 @@ block content
             br
         - if(sprint)
             | sprint#{sprint.number}
+
+        section#traffic-light-section.inline-section
+            .traffic-light-box
+                // TODO 日本とイギリス以外は緑が右？
+                .traffic-light.traffic-light-green(data-role='traffic-light')
+                .traffic-light.traffic-light-yellow(data-role='traffic-light')
+                .traffic-light.traffic-light-red.on(data-role='traffic-light')
     .etched-line#top-line
     br
 
-    section#traffic-light-section.float-left
-            .traffic-light-box
-                .traffic-light.traffic-light-red.on(data-role='traffic-light')
-                .traffic-light.traffic-light-yellow(data-role='traffic-light')
-                .traffic-light.traffic-light-green(data-role='traffic-light')
+
 
     section#task-section.paper.float-left
         .paper-content
