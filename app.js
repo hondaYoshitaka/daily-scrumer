@@ -104,3 +104,28 @@ http.createServer(app).listen(app.get('port'), function () {
     launch.load();
 })(require('./db/data/launch'));
 
+var RedmineAgent = require('./agent')['Redmine'];
+(function (conf) {
+    var admin = new RedmineAgent();
+    admin.auth = conf.auth;
+
+    setInterval(function () {
+        login(function(){
+            login();//try twice
+        });
+    }, 10 * 60 * 1000);
+
+    function login(fail){
+        admin.login(admin.auth, function (success) {
+            if (success) {
+                console.log('[redmine] did login to redmine at', conf.url.base);
+            } else {
+                console.error('[redmine] failed to login redmine');
+                fail && fail();
+            }
+        });
+    }
+    login();
+
+    RedmineAgent.admin = admin;
+})(require('./conf'));

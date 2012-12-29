@@ -95,6 +95,3 @@ RedmineAgent.prototype.getIssue = function(condition, callback){
 
 };
 
-//new RedmineAgent().login(conf.auth, function (success) {
-//
-//});
