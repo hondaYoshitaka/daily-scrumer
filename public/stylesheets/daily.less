@@ -365,28 +365,11 @@
   background-color: @black;
   .linear-gradient(180deg, lighten(@black, 7), darken(@black, 6));
   display: inline-block;
-  padding: 6px 6px 3px;
+  padding: 6px 8px 2px;
   margin:0 20px;
-  .box-shadow(2px 2px 4px, 0.4);
-  .border-radius(2px);
+  .box-shadow(2px 2px 6px, 0.9, inset);
+  .border-radius(4px);
   position: relative;
-  &:before {
-    .cover;
-    @height: 1px;
-    height: @height * 2;
-    .border-radius(50%);
-    top: @height * -1;
-    background-color: @black;
-  }
-  &:after {
-    .cover;
-    @height: 2px;
-    top: auto;
-    bottom: @height * -1;
-    height: @height * 2;
-    background-color: @black;
-    .border-radius(50%);
-  }
 }
 
 .traffic-light(@color) {

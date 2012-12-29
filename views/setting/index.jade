@@ -14,9 +14,10 @@ block content
 
     br
     .etched-line#top-line
-    h2.etched
+    h2.etched.block-title
         | #{label.sprints}
     section#sprint-section.black-board
+        include prt.eraser.jade
         .black-board-frame.black-board-frame-bottom
         .black-board-content
             ul#sprint-list.positioned.no-style-list
@@ -57,18 +58,17 @@ block content
     br
     .etched-line
     br
-    h2.etched
+    h2.etched.block-title
         | #{label.members}
-    section#member-section.paper.inline.float-left
-        .paper-content
-            h3.paper-title
-            ul#mebmer-list.positioned.no-style-list
-                - each member in team.members
-                    li.member-list-item(data-data=member)
-                li.list-item-add-btn#member-add-btn
-                    i.icon
-                        span.add-icon-bar-v
-                        span.add-icon-bar-h
+    section#member-section.inline
+        ul#mebmer-list.positioned.no-style-list
+            - each member in team.members
+                li.float-left.member-list-item(data-data=member)
+            li.list-item-add-btn#member-add-btn
+                i.icon
+                    span.add-icon-bar-v
+                    span.add-icon-bar-h
+        br.clear
     br.clear
 
 
