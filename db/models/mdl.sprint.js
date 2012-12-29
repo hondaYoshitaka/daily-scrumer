@@ -10,6 +10,7 @@ var Sprint = exports = module.exports = function(data){
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
     s.number = parseInt(s.number || 0, 10);
+    if(!s.redmine_versions) s.redmine_versions = [];
 };
 
 Sprint.prototype.defaultValue = {
@@ -22,6 +23,9 @@ Sprint.prototype.defaultValue = {
 
     /* スプリント番号 */
     number:null,
+
+    /* */
+    redmine_versions:[],
 
     /* スプリントでの心がけ */
     keep_in_mind_0:null,

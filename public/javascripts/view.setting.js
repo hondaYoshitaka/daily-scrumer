@@ -57,15 +57,13 @@
             return section;
         },
         sprintListItem:function () {
-            var template = Handlebars.templates['tmpl.sprint-list-item'];
+            var tmpl = Handlebars.templates['tmpl.sprint-list-item'];
             return $(this).each(function () {
                 var li = $(this),
                     data = li.data('data');
                 li.addClass('inline float-left sprint-list-item');
                 if (!data) return;
-                var html = template({
-                    member:data
-                });
+                var html = tmpl(data);
                 li.html(html);
 
                 var form = $('form', li).ajaxForm(function () {
