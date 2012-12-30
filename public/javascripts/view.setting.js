@@ -210,6 +210,22 @@
 
             return pane;
         },
+        redmineBugStatusTableRow:function(){
+            var tr = $(this);
+            var form = $('form', tr).ajaxForm(function(data){
+                if(data.success){
+                    CS.team = data.team;
+                } else {
+                    console.error('failed to update issue status');
+                }
+            });
+            $('select', form)
+                .selectableLabel()
+                .change(function(){
+                    form.submit();
+                });
+            return tr;
+        },
         redmineBugStatusPane:function(){
             var pane = $(this);
 
@@ -217,17 +233,36 @@
             var table = $('#bug-status-table', pane),
                 tbody = $('tbody', table);
 
+            var tmpl = Handlebars.templates['tmpl.redmine-bug-status-table-row'];
+
+            var issue_statuses = tbody.data('issue_statuses');
+
+            if(issue_statuses){
+                Object.keys(issue_statuses).forEach(function(id){
+                    var data = issue_statuses[id];
+                    console.log('data', data);
+                    data.team = CS.team._id;
+                    var tr = $(tmpl(data)).appendTo(tbody)
+                        .redmineBugStatusTableRow();
+                    tr.findByName('report_as')
+                        .val(data.report_as)
+                        .trigger('change');
+                });
+            }
             table.showSpin();
             $.get('/setting/get_issue_statuses', function(data){
-                table.removeSpin();
-                var tmpl = Handlebars.templates['tmpl.redmine-bug-status-table-row'];
+                    table.removeSpin();
                 if(!data.success){
                     console.error('failed to get_issue_statuses');
                     return;
                 }
                 data.issue_statuses.forEach(function(data){
-                    var tr = $(tmpl(data)).appendTo(tbody);
-                    $('select', tr).selectableLabel();
+                    var exists = !!tbody.find('tr[data-id=' + data.id + ']').size();
+                    if(exists) return;
+                    data.team = CS.team._id;
+                    $(tmpl(data)).appendTo(tbody)
+                        .redmineBugStatusTableRow()
+                        .find('select').trigger('change');
                 });
             });
             return pane;

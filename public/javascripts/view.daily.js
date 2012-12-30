@@ -51,7 +51,11 @@
 
             if (!sprint) return section;
 
-            var data = {sprint:sprint};
+            var data = {
+                sprint:sprint,
+                team_id:CS.team._id
+
+            };
             $.getJSON('/sprint/count_bugs', data, function (data) {
                 if (!data.success) {
                     console.error('failed to get bug_count');
@@ -60,7 +64,6 @@
                 section.dataDisplay(data);
                 var rate = data.done / data.total;
                 doneRate.text((rate * 100).toFixed(1));
-
                 rateCircle.rateCircle(rate);
             });
             return section;

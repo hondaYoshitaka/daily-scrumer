@@ -11,6 +11,7 @@ var Team = exports = module.exports = function(data){
     util.obj.deepCopy(data, s);
     if(!s.members) s.members = [];
     if(!s.redmine_projects) s.redmine_projects = [];
+    if(!s.issue_statuses) s.issue_statuses = {};
 };
 
 Team.prototype.defaultvalue = {
@@ -19,7 +20,12 @@ Team.prototype.defaultvalue = {
     /* メンバー */
     members:[],
     /* project identifier of redmine */
-    redmine_projects:[]
+    redmine_projects:[],
+
+    /* issue status settings */
+    issue_statuses:{
+
+    }
 };
 (function(Prototype){
     Team.prototype = new Prototype();
@@ -62,4 +68,17 @@ Team.prototype.addMember = function(member, callback){
 Team.prototype.isValid = function(){
     var s = this;
     return !!(s.name && s.name.match(/^[a-zA-Z0-9_]*$/));
+};
+
+
+
+Team.IssueStatus = function(data){
+    var s = this;
+    util.obj.deepCopy(Team.IssueStatus.defaultValue, s);
+    util.obj.deepCopy(data, s);
+};
+Team.IssueStatus.defaultValue = {
+    id:null,
+    name:null,
+    report_as:null
 };

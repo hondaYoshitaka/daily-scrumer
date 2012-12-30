@@ -5,7 +5,11 @@
 var db = require('../db'),
     Team = db.models['Team'];
 
-
+function fail(res) {
+    res.json({
+        success:false
+    });
+}
 
 /* /team下のrouteを全て受け取る */
 exports.all = function (req, res, next) {
@@ -33,20 +37,13 @@ exports.new = function (req, res) {
     var team = new Team({
         name:data.name
     });
-
-    function fail() {
-        res.json({
-            success:false
-        });
-    }
-
     if (!team.isValid()) {
-        fail();
+        fail(res);
         return;
     }
     Team.findByName(team.name, function (data) {
         if (data) {
-            fail();
+            fail(res);
             return;
         }
         team.save(function () {
@@ -60,6 +57,10 @@ exports.new = function (req, res) {
 
 exports.remove = function (req, res) {
     var name = req.body.name;
+    if (!name) {
+        fail(res);
+        return;
+    }
     Team.findByName(name, function (team) {
         if (team) {
             team.remove(function () {
@@ -77,26 +78,18 @@ exports.remove = function (req, res) {
 };
 
 
-
-
-exports.update = function(req, res){};
+exports.update = function (req, res) {
+};
 
 exports.update.redmine_projects = function (req, res) {
     var body = req.body;
-
-    function fail() {
-        res.json({
-            success:false
-        });
-    }
-
     if (!body._id) {
-        fail();
+        fail(res);
         return;
     }
     Team.findById(body._id, function (team) {
         if (!team) {
-            fail();
+            fail(res);
             return;
         }
         team.redmine_projects = body.redmine_projects;
@@ -110,3 +103,30 @@ exports.update.redmine_projects = function (req, res) {
     });
 };
 
+
+exports.update.issue_statuses = function (req, res) {
+    var body = req.body;
+    if (!body.team_id) {
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function (team) {
+        if(!team) {
+            fail(res);
+            return;
+        }
+        var status_id = body.issue_status_id;
+        team.issue_statuses[status_id] = new Team.IssueStatus({
+            id:status_id,
+            name:body.name,
+            report_as:body.report_as
+        });
+        team.update(function(){
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};

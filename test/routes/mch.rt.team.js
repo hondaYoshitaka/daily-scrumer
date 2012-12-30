@@ -12,19 +12,19 @@ var should = require('should'),
 describe('rt.team', function () {
     require('../check_env.js')();
 
-    before(function(done){
+    before(function (done) {
         new Team({
             name:'team01'
-        }).save(function(){
+        }).save(function () {
                 done();
             });
     });
-    after(function(done){
-        Team.prototype.connector.remove(function(){
+    after(function (done) {
+        Team.prototype.connector.remove(function () {
             done();
         });
     });
-    it('all (same team)', function(done){
+    it('all (same team)', function (done) {
         var req = new Req({
             session:{
                 team:{
@@ -32,33 +32,31 @@ describe('rt.team', function () {
                 }
             },
             params:{
-                team:{
-                    name:'team01'
-                }
+                name:'team01'
             }
         });
         var res = new Res({});
-        route.all(req, res, function(){
+        route.all(req, res, function () {
             req.session.team.should.have.property('name', 'team01');
             done();
         });
     });
-    it('all (invalid team name)', function(done){
+    it('all (invalid team name)', function (done) {
         route.all(new Req({
             session:{
 
             },
             params:{
-                team:'some_invalid_name'
+                name:'some_invalid_name'
             }
         }), new Res({
-            redirect:function(path){
+            redirect:function (path) {
                 path.should.equal('/');
                 done();
             }
         }));
     });
-    it('all (change team name', function(done){
+    it('all (change team name', function (done) {
         var req = new Req({
             session:{
                 team:{
@@ -66,13 +64,15 @@ describe('rt.team', function () {
                 }
             },
             params:{
-                team:{
-                    name:'team01'
-                }
+                name:'team01'
             }
         });
-        var res = new Res({});
-        route.all(req, res, function(){
+        var res = new Res({
+            locals:function(){
+
+            }
+        });
+        route.all(req, res, function () {
             req.session.team.should.have.property('name', 'team01');
             done();
         });

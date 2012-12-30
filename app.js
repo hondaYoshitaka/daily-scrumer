@@ -84,6 +84,7 @@ app.configure('development', function () {
     app.post('/new_team', r.team.new);
     app.post('/remove_team', r.team.remove);
     app.post('/update_team/redmine_projects', r.team.update.redmine_projects);
+    app.post('/update_team/issue_statuses', r.team.update.issue_statuses);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);

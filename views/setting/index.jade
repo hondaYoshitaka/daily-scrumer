@@ -42,7 +42,7 @@ block content
                         tr
                             th #{label.redmine_bug_status_table.issue_status}
                             th #{label.redmine_bug_status_table.report_as}
-                    tbody
+                    tbody(data-issue_statuses=team.issue_statuses)
         br.clear
 
     br

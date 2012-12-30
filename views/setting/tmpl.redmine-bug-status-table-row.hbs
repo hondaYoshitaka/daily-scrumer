@@ -1,9 +1,10 @@
-<tr>
+<tr data-id="{{id}}">
     <th>{{name}}</th>
     <td>
-        <form class="no-style-form">
-            <input type="hidden" name="team" value="{{team}}"/>
-            <input type="hidden" name="id" value="{{id}}"/>
+        <form class="no-style-form" action="/update_team/issue_statuses" method="POST">
+            <input type="hidden" name="team_id" value="{{team}}"/>
+            <input type="hidden" name="issue_status_id" value="{{id}}"/>
+            <input type="hidden" name="name" value="{{name}}"/>
             <select name="report_as">
                 <option value="open">open</option>
                 <option value="modified">modified</option>

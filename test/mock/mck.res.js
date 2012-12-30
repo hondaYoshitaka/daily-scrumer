@@ -10,20 +10,25 @@ var defaultValue = {
     },
     render:function () {
     },
-    send:function(){
+    send:function () {
 
     },
-    json:function(){
+    json:function () {
 
     },
-    locals:{
-        lang:'ja'
-    }
+    locals:(function () {
+        var locals = function (data) {
+            var s = this;
+            util.obj.deepCopy(data, s);
+        };
+        locals.lang = 'ja';
+        return locals;
+    })()
 };
 
 // new して使う
 exports = module.exports = function (data) {
     var s = this;
     util.obj.deepCopy(defaultValue, s);
-    if(data)util.obj.deepCopy(data, s);
+    if (data)util.obj.deepCopy(data, s);
 };

@@ -26,6 +26,7 @@ exports = module.exports = {
         },
         bug_count:{
             total:'total',
+            open:'open',
             modified:'modified',
             done:'done'
         },

@@ -17,7 +17,7 @@ describe('rt.daily.js', function(){
 
        }), new Res({
            render:function(view){
-               view.should.equal('daily.index.jade');
+               view.should.equal('daily/index.jade');
                done();
            }
        }))

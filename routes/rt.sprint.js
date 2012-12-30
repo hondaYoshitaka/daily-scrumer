@@ -5,11 +5,14 @@
 var RedmineAgent = require('../agent')['Redmine'],
     util = require('../util'),
     db = require('../db'),
+    Team = db.models['Team'],
     Sprint = db.models['Sprint'];
+
 
 /* 不具合数を取得する */
 exports.count_bugs = function (req, res) {
     var sprint = req.query.sprint,
+        team_id = req.query.team_id,
         versions = sprint.redmine_versions;
     function fail(){
         res.json({
@@ -20,35 +23,50 @@ exports.count_bugs = function (req, res) {
         fail();
         return;
     }
-    var data = {
+    Team.findById(team_id, function(team){
+        var data = {
             total:0,
+            open:0,
             modified:0,
             done:0
         };
-    var agentReqCount = 0;
-    versions.forEach(function(version){
-        agentReqCount ++;
-        RedmineAgent.admin.getIssue({
-            project_id:version.project,
-            fixed_version_id:version.id
-        }, function(sucess, bugs){
-            if(!sucess){
-                fail && fail();
-                fail = null;
-                return;
-            }
-            bugs.forEach(function(bug){
-                data.total ++;
-                console.log(bug.status_id, bug.subject);
+        var agentReqCount = 0;
+        versions.forEach(function(version){
+            agentReqCount ++;
+            RedmineAgent.admin.getIssue({
+                project_id:version.project,
+                fixed_version_id:version.id,
+                status_id:'*'
+            }, function(sucess, bugs){
+                if(!sucess){
+                    fail && fail();
+                    fail = null;
+                    return;
+                }
+                bugs.forEach(function(bug){
+                    data.total ++;
+                    var status = team.issue_statuses[String(bug.status_id)];
+                    switch(status.report_as){
+                        case 'done':
+                            data.done ++;
+                            break;
+                        case 'modified':
+                            data.modified++;
+                            break;
+                        default:
+                            data.open++;
+                            break;
+                    }
+                });
+                agentReqCount--;
+                if(agentReqCount == 0){
+                    data.success = true;
+                    res.json(data);
+                }
             });
-            agentReqCount--;
-            console.log('agentReqCount', agentReqCount);
-            if(agentReqCount == 0){
-                data.success = true;
-                res.json(data);
-            }
         });
     });
+
 };
 
 /* タスク時間の状況を取得する */
