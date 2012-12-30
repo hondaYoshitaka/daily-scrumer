@@ -21,19 +21,21 @@ exports.getRedmineProjects = function (req, res) {
     });
 };
 
-exports.getRedmineVersions = function(req, res){
+exports.getRedmineVersions = function (req, res) {
     var project = req.query.project;
-    function fail(){
+
+    function fail() {
         res.json({
             success:false
         });
     }
-    if(!project){
+
+    if (!project) {
         fail();
         return;
     }
-    RedmineAgent.admin.getVersions(project, function(success, data){
-        if(!success){
+    RedmineAgent.admin.getVersions(project, function (success, data) {
+        if (!success) {
             fail();
             return;
         }
@@ -43,4 +45,20 @@ exports.getRedmineVersions = function(req, res){
         });
     });
 
+};
+
+/* get issues statuses of redmine */
+exports.getIssueStatuses = function (req, res) {
+    RedmineAgent.admin.issue_statuses(function (success, data) {
+        if (success) {
+            res.json({
+                success:true,
+                issue_statuses:data
+            });
+        } else {
+            res.json({
+                success:false
+            });
+        }
+    });
 };

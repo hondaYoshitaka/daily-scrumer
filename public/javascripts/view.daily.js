@@ -44,26 +44,25 @@
             });
             return display;
         },
-        issueSection:function (sprint) {
+        bugsSection:function (sprint) {
             var section = $(this),
-                doneRate = $('#issue-done-rate', section),
-                rateCircle = $('#issue-done-rate-circle', section);
+                doneRate = $('#bug-done-rate', section),
+                rateCircle = $('#bug-done-rate-circle', section);
 
-            sprint = true;//TODO remove
-            if (sprint) {
-                var data = {sprint_id:sprint};
-                $.getJSON('/sprint/issue_count', data, function (data) {
-                    if (!data.success) {
-                        console.error('failed to get issue_count');
-                        return;
-                    }
-                    section.dataDisplay(data);
-                    var rate = data.done / data.total;
-                    doneRate.text((rate * 100).toFixed(1))
+            if (!sprint) return section;
 
-                    rateCircle.rateCircle(rate);
-                });
-            }
+            var data = {sprint:sprint};
+            $.getJSON('/sprint/count_bugs', data, function (data) {
+                if (!data.success) {
+                    console.error('failed to get bug_count');
+                    return;
+                }
+                section.dataDisplay(data);
+                var rate = data.done / data.total;
+                doneRate.text((rate * 100).toFixed(1));
+
+                rateCircle.rateCircle(rate);
+            });
             return section;
         },
         taskSection:function (sprint) {
@@ -71,17 +70,16 @@
                 doneRate = $('#task-done-rate', section),
                 rateCircle = $('#task-done-rate-circle', section);
 
-            sprint = true; //TODO remove
             if (sprint) {
-                var data = {sprint_id:sprint};
-                $.getJSON('/sprint/task_time', data, function (data) {
+                var data = {sprint:sprint};
+                $.getJSON('/sprint/get_task_times', data, function (data) {
                     if (!data.success) {
                         console.error('failed to get task time');
                         return;
                     }
                     section.dataDisplay(data);
                     var rate = (data.estimated - data.remain) / data.estimated;
-                    doneRate.text((rate * 100).toFixed(1))
+                    doneRate.text((rate * 100).toFixed(1));
 
                     rateCircle.rateCircle(rate);
                 });
@@ -191,7 +189,7 @@
             }
 
             (function (members) {
-                var tmpl = Handlebars.templates['tmple.grouping-roulette-item'];
+                var tmpl = Handlebars.templates['tmpl.grouping-roulette-item'];
                 $('.grouping-group', roulette).remove();
                 var group = newGroup();
                 if (members && members.length) {
@@ -310,8 +308,8 @@
         $('#head-nav', body).nav('daily');
 
 
-        $('#issue-section', body).issueSection();
-        $('#task-section', body).taskSection();
+        $('#bugs-section', body).bugsSection(CS.sprint);
+        $('#task-section', body).taskSection(CS.sprint);
 
 
         $('#keep-in-mind-section', body).keepInMindSection();

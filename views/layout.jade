@@ -8,12 +8,14 @@ html
     block stylesheet
 
     script(src='/javascripts/jquery.js')
+    script(src='/javascripts/jquery-ui.custom.js')
     script(src='/javascripts/revalidator.js')
     script(src='/javascripts/revalidator.msg.js')
     script(src='/javascripts/revalidator.schema.js')
 
     script(src='/javascripts/spin.js')
     script(src='/javascripts/view.js')
+    script(src='/javascripts/handlebars.runtime.min.js')
 
     script
         CS.team = !{team && JSON.stringify(team) || 'null'};

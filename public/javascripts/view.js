@@ -229,6 +229,10 @@ var CS = {};
             spin.show();
             return elm;
         },
+        removeSpin:function(){
+            $('.spin', this).remove();
+            return $(this);
+        },
         /* フォーム */
         form:function () {
             return $(this).each(function () {

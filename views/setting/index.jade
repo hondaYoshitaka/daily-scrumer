@@ -3,8 +3,6 @@ extends ../layout
 block stylesheet
     link(rel='stylesheet', href='/stylesheets/setting.css')
 block javascript
-    script(src='/javascripts/jquery-ui.custom.js')
-    script(src='/javascripts/handlebars.runtime.min.js')
     script(src='/javascripts/handlebars.template.setting.js')
     script(src='/javascripts/view.setting.js')
 
@@ -23,7 +21,11 @@ block content
     section#redmine-section
         #redmine-project-list-pane.paper.float-left
             .paper-content
-                .paper-title #{label.redmine_projects}
+                .paper-title
+                    i #{label.redmine_projects}
+                    small.paper-title-lead.hidden
+                        | #{label.redmine_projects_lead}
+
                 form#redmine-projects-form(
                         action='/update_team/redmine_projects',
                         method='POST',
@@ -31,6 +33,16 @@ block content
                     input(type='hidden', name='_id', value=team._id)
                     ul#redmine-project-list.no-style-list
 
+        #redmine-bug-status-pane.paper.float-left
+            .paper-content
+                .paper-title
+                    i #{label.redmine_bug_status}
+                table#bug-status-table.positioned
+                    thead
+                        tr
+                            th #{label.redmine_bug_status_table.issue_status}
+                            th #{label.redmine_bug_status_table.report_as}
+                    tbody
         br.clear
 
     br
@@ -65,15 +77,16 @@ block content
     h2.etched.block-title
         | #{label.members}
     section#member-section.inline
-        ul#mebmer-list.positioned.no-style-list
-            - each member in team.members
-                li.float-left.member-list-item(data-data=member)
-        a.btn#member-add-btn
-            i.icon.icon-small
-                span.add-icon-bar-v
-                span.add-icon-bar-h
-            | #{btn.new_member}
-        br.clear
+        .positioned
+            ul#mebmer-list.positioned.no-style-list
+                - each member in team.members
+                    li.float-left.member-list-item(data-data=member)
+            a.btn#member-add-btn.stick-right.stick-top
+                i.icon.icon-small
+                    span.add-icon-bar-v
+                    span.add-icon-bar-h
+                | #{btn.new_member}
+            br.clear
     br.clear
 
 

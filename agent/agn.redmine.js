@@ -90,9 +90,34 @@ RedmineAgent.prototype.getIssue = function (condition, callback) {
         url = conf.url.base + '/issues.json',
         query = new RedmineAgent.Query(condition).toQueryString();
     s.get([url, query].join('?'), function (res, body) {
-        console.log('body', body);
-        var json = {};//TODO
+        var json = JSON.parse(body);
         callback.call(s, true, json);
+    });
+};
+
+RedmineAgent.prototype.issue_statuses = function(callback){
+    var s = this,
+        url = conf.url.base + '/issue_statuses';
+    s.get(url, function(res, body, $){
+        try{
+            var data = [];
+            $('#content').find('table.list').find('tbody').find('tr').each(function(){
+                var tr = $(this);
+                var a = tr.find('a');
+                var id = a.eq(0).attr('href')
+                    .replace('/redmine/issue_statuses/edit/', '');
+                data.push({
+                    id:id,
+                    name:a.eq(0).text(),
+                    closed:!!tr.find('td').eq(2).find('img').length
+                });
+            });
+            callback && callback.call(s, true, data);
+        } catch(e){
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+
     });
 };
 
@@ -140,11 +165,3 @@ RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
     });
 };
 
-//
-//new RedmineAgent().login(conf.admin, function () {
-//    var s = this;
-//    s.getVersions('project00', function (success, data) {
-//        console.log(success, data);
-//    });
-//
-//});

@@ -5,12 +5,11 @@ block stylesheet
     link(rel='stylesheet', href='/stylesheets/daily.css')
 
 block javascript
-    script(src='/javascripts/handlebars.runtime.min.js')
     script(src='/javascripts/handlebars.template.daily.js')
-    script(src='/javascripts/jquery-ui.custom.js')
-    script(src='/javascripts/highcharts.js')
     script(src='/javascripts/jquery.rate-circle.js')
     script(src='/javascripts/view.daily.js')
+    script
+        CS.sprint = !{JSON.stringify(sprint)};
 
 
 block content
@@ -69,24 +68,24 @@ block content
 
 
 
-    section#issue-section.paper.float-left
+    section#bugs-section.paper.float-left
         .paper-content
             h3.paper-title.blue
-                | #{label.issues}
+                | #{label.bugs}
             span.rate-box.float-right.positioned
-                #issue-done-rate-circle.rate-circle
-                span#issue-done-rate.suffix-rate.rate-number
+                #bug-done-rate-circle.rate-circle
+                span#bug-done-rate.suffix-rate.rate-number
             table
                 tr
-                    th #{label.issue_count.total}
+                    th #{label.bug_count.total}
                     td.number-data
                         span(data-key='total').suffix-ticket
                 tr
-                    th #{label.issue_count.modified}
+                    th #{label.bug_count.modified}
                     td.number-data
                         span(data-key='modified').suffix-ticket
                 tr
-                    th #{label.issue_count.done}
+                    th #{label.bug_count.done}
                     td.number-data
                         span(data-key='done').suffix-ticket
 

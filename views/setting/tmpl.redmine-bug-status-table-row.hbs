@@ -1,0 +1,18 @@
+<tr>
+    <td>{{name}}</td>
+    <td>
+        <form>
+            <input type="hidden" name="team" value="{{team}}"/>
+            <input type="hidden" name="id" value="{{id}}"/>
+            <select name="report_as">
+                <option value="open">open</option>
+                <option value="modified">modified</option>
+                {{#if closed}}
+                    <option value="done" selected="selected">done</option>
+                {{else}}
+                    <option value="done">done</option>
+                {{/if}}
+            </select>
+        </form>
+    </td>
+</tr>

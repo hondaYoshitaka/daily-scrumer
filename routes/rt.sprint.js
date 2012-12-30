@@ -8,19 +8,51 @@ var RedmineAgent = require('../agent')['Redmine'],
     Sprint = db.models['Sprint'];
 
 /* 不具合数を取得する */
-exports.issue_count = function (req, res) {
-
-    res.json({
-        success:true,
-        total:80,
-        modified:30,
-        done:50
+exports.count_bugs = function (req, res) {
+    var sprint = req.query.sprint,
+        versions = sprint.redmine_versions;
+    function fail(){
+        res.json({
+            success:false
+        });
+    }
+    if(!versions){
+        fail();
+        return;
+    }
+    var data = {
+            total:0,
+            modified:0,
+            done:0
+        };
+    var agentReqCount = 0;
+    versions.forEach(function(version){
+        agentReqCount ++;
+        RedmineAgent.admin.getIssue({
+            project_id:version.project,
+            fixed_version_id:version.id
+        }, function(sucess, bugs){
+            if(!sucess){
+                fail && fail();
+                fail = null;
+                return;
+            }
+            bugs.forEach(function(bug){
+                data.total ++;
+                console.log(bug.status_id, bug.subject);
+            });
+            agentReqCount--;
+            console.log('agentReqCount', agentReqCount);
+            if(agentReqCount == 0){
+                data.success = true;
+                res.json(data);
+            }
+        });
     });
 };
 
 /* タスク時間の状況を取得する */
 exports.task_time = function (req, res) {
-
     //TODO
     res.json({
         success:true,
@@ -37,6 +69,7 @@ exports.new = function (req, res) {
     (function(versions){
         var length = versions.length;
         for(var i=0;i<length;i++){
+            console.log('versions[i]', versions[i]);
            versions[i] = JSON.parse(versions[i]);
        }
     })(body.redmine_versions);

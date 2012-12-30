@@ -14,7 +14,7 @@ exports = module.exports = {
         teams:'select your team'
     },
     daily:{
-        issues:'issues',
+        bugs:'bugs',
         tasks:'task time',
         grouping:'grouping',
         events:'events',
@@ -24,7 +24,7 @@ exports = module.exports = {
             remain:'remain',
             consumed:'consumed'
         },
-        issue_count:{
+        bug_count:{
             total:'total',
             modified:'modified',
             done:'done'
@@ -37,7 +37,13 @@ exports = module.exports = {
         teams:'teams',
         sprints:'sprints',
         redmine:'redmine',
-        redmine_projects:'projects',
+        redmine_projects:'proceeding projects',
+        redmine_projects_lead:'Select projects proceeded by this team.',
+        redmine_bug_status:'bug status',
+        redmine_bug_status_table:{
+            issue_status:'issue status',
+            report_as:'report as'
+        },
         members:'members',
         sprint:{
             caption_new:'new sprint',
@@ -46,5 +52,6 @@ exports = module.exports = {
             duration:'duration',
             redmine_sprint:'redmine sprint'
         }
+
     }
 };

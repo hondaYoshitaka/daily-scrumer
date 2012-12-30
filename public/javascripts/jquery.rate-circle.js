@@ -66,7 +66,6 @@
                 startAngle + PI * 2 * s.rate * s.step.getRate(),
                 false);
             ctx.stroke();
-            console.log('s.step.getRate()', s.step.getRate());
         };
         var Root = function (radius, rate) {
             var s = this;

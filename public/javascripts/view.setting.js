@@ -209,6 +209,27 @@
             });
 
             return pane;
+        },
+        redmineBugStatusPane:function(){
+            var pane = $(this);
+
+
+            var table = $('#bug-status-table', pane),
+                tbody = $('tbody', table);
+
+            table.showSpin();
+            $.get('/setting/get_issue_statuses', function(data){
+                table.removeSpin();
+                var tmpl = Handlebars.templates['tmpl.redmine-bug-status-table-row'];
+                if(!data.success){
+                    console.error('failed to get_issue_statuses');
+                    return;
+                }
+                data.issue_statuses.forEach(function(data){
+                    var tr = $(tmpl(data)).appendTo(tbody);
+                });
+            });
+            return pane;
         }
     });
     $(function () {
@@ -222,5 +243,7 @@
 
 
         $('#redmine-project-list-pane', body).redmineProjectListPane();
+
+        $('#redmine-bug-status-pane', body).redmineBugStatusPane();
     });
 })(jQuery);
