@@ -294,6 +294,9 @@ input{
     border: 1px solid @red;
     background-color: lighten(@red, 60);
   }
+  &.short{
+    width:80px;
+  }
   &.shorter{
     width:60px;
   }
@@ -597,4 +600,86 @@ form{
 }
 .no-margin{
   margin: 0;
+}
+
+.arrow {
+  content: '';
+  display: inline-block;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 6px;
+  margin: 0 2px;
+}
+.ui-datepicker-header{
+  color: @white;
+}
+.ui-datepicker.ui-widget-content{
+  .box-shadow(5px 5px 10px, 0.4);
+  .black-back(0.65);
+  border:1px solid darken(@black, 5);
+  .border-radius(2px);
+  padding: 10px;
+}
+.ui-datepicker-prev {
+  float: left;
+  color: @orange;
+  .unselectable;
+  &:before {
+    .arrow;
+    border-left-width: 0;
+    border-right-color: @orange;
+  }
+}
+.ui-datepicker-next {
+  float: right;
+  color: @orange;
+  .unselectable;
+  &:after {
+    .arrow;
+    border-right-width: 0;
+    border-left-color: @orange;
+  }
+}
+.ui-datepicker-calendar {
+  margin: 0 auto;
+  text-align: right;
+  @color:lighten(@yellow, 30);
+  border-collapse: collapse;
+  th{
+    color:@white;
+  }
+  td{
+    border: 1px solid @color;
+    &:hover{
+      background-color: @color;
+      .ui-state-default{
+        color:fadeout(@black, 10);
+      }
+    }
+  }
+  .ui-state-default{
+    color:@color;
+  }
+}
+
+.ui-widget-content {
+  padding: 5px 5px 2px;
+}
+
+.ui-state-default {
+
+  font-weight: bolder;
+}
+
+.ui-datepicker-title {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.ui-datepicker-today {
+  text-decoration: underline;
+}
+
+.block-select{
+  width:100%;
 }

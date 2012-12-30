@@ -93,6 +93,7 @@ app.configure('development', function () {
     app.post('/sprint/remove', r.sprint.remove);
 
     app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);
+    app.get('/setting/get_redmine_versions', r.setting.getRedmineVersions);
 
 
 })(require('./routes'));

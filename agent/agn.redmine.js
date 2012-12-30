@@ -35,7 +35,7 @@ RedmineAgent.prototype.login = function (auth, callback) {
             authenticity_token:token
         };
         s.post(conf.url.login,function (res, body, $) {
-            if(res.statusCode == '411'){
+            if (res.statusCode == '411') {
                 console.error('failed to login');
                 callback.call(s, false);
                 return;
@@ -65,12 +65,13 @@ RedmineAgent.prototype.login = function (auth, callback) {
                 data.projects = projects;
                 callback && callback.call(s, success, data);
             }
-            if(res.headers.location){
+
+            if (res.headers.location) {
                 s.get(res.headers.location, loginDone);
             } else {
                 callback.apply(s, arguments);
             }
-        },{
+        }, {
             "Content-Length":JSON.stringify(form).length
         }).form(form);
     });
@@ -84,29 +85,66 @@ RedmineAgent.prototype.logout = function (callback) {
     });
 };
 
-RedmineAgent.prototype.getIssue = function(condition, callback){
+RedmineAgent.prototype.getIssue = function (condition, callback) {
     var s = this,
         url = conf.url.base + '/issues.json',
         query = new RedmineAgent.Query(condition).toQueryString();
-    s.get([url, query].join('?'), function(res, body){
+    s.get([url, query].join('?'), function (res, body) {
         console.log('body', body);
         var json = {};//TODO
         callback.call(s, true, json);
     });
 };
 
-RedmineAgent.prototype.getProjects = function(callback){
+RedmineAgent.prototype.getProjects = function (callback) {
     var s = this,
         url = conf.url.base + '/projects.xml';
-    s.get(url, function(res, body){
-        try{
+    s.get(url, function (res, body) {
+        try {
+            if (res.statusCode === 404) throw new Error(404);
             var data = JSON.parse(XML.toJson(body));
             var success = true;
             callback && callback.call(s, success, data['projects']['project']);
-        } catch(e){
+        } catch (e) {
             console.error(e);
             callback && callback.call(s, false);
         }
     });
 };
 
+RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
+    var s = this,
+        url = [conf.url.base, 'projects', project_identifier, 'roadmap'].join('/');
+    s.get(url, function (res, body, $) {
+        try {
+            if (res.statusCode === 404) throw new Error(404);
+
+            var data = [];
+            $('h3.version').each(function () {
+                $(this).find('a[href]').each(function () {
+                    var a = $(this),
+                        href = a.attr('href'),
+                        text = a.text();
+                    var id = href.replace('/redmine/versions/show/', '');
+                    data.push({
+                        id:id,
+                        name:text
+                    });
+                });
+            });
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
+
+//
+//new RedmineAgent().login(conf.admin, function () {
+//    var s = this;
+//    s.getVersions('project00', function (success, data) {
+//        console.log(success, data);
+//    });
+//
+//});

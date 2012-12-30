@@ -46,7 +46,15 @@ var CS = {};
                     }
                     return dst;
                 })();
-                dst[key] = value;
+                if (dst[key]) {
+                    var isArray = dst[key] instanceof Array;
+                    if(!isArray){
+                        dst[key] = [dst[key]];
+                    }
+                    dst[key].push(value);
+                } else {
+                    dst[key] = value;
+                }
             }
             return result;
         },
@@ -337,7 +345,7 @@ var CS = {};
             return elm;
         },
         /* ダイアログ */
-        popupDialog:function () {
+        popupDialog:function (open, close) {
             return $(this).each(function () {
                 var dialog = $(this).hide().addClass('dialog'),
                     opener = $(dialog.data('opener')),
@@ -345,10 +353,12 @@ var CS = {};
                 opener.click(function () {
                     opener.fadeOut();
                     dialog.fadeIn();
+                    open && open.call(dialog);
                 });
                 closer.click(function () {
                     opener.fadeIn();
                     dialog.fadeOut();
+                    close && close.call(dialog);
                 });
             });
         },
@@ -430,7 +440,7 @@ var CS = {};
                     menu.toggleClass('hidden');
                 });
         },
-        labeledCheckbox:function(change){
+        labeledCheckbox:function (change) {
             return $(this).change(function () {
                 var checkbox = $(this),
                     checked = checkbox.is(':checked'),
@@ -442,6 +452,12 @@ var CS = {};
                 }
                 change && change.call(checkbox);
             });
+        },
+        dateInput:function (datePickerOptions) {
+            var option = $.extend({
+                dateFormat:'yy/mm/dd'
+            }, datePickerOptions);
+            return $(this).datepicker(option);
         }
     });
     $(function () {

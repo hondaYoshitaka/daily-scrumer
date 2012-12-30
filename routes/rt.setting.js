@@ -20,3 +20,27 @@ exports.getRedmineProjects = function (req, res) {
         });
     });
 };
+
+exports.getRedmineVersions = function(req, res){
+    var project = req.query.project;
+    function fail(){
+        res.json({
+            success:false
+        });
+    }
+    if(!project){
+        fail();
+        return;
+    }
+    RedmineAgent.admin.getVersions(project, function(success, data){
+        if(!success){
+            fail();
+            return;
+        }
+        res.json({
+            success:success,
+            versions:data
+        });
+    });
+
+};

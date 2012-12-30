@@ -16,11 +16,11 @@
             elm.height(0)
                 .animate({
                     height:height
-                },function(){
+                }, function () {
                     elm.removeAttr('style');
                 });
         },
-        open:function(){
+        open:function () {
             var elm = $(this);
             var w = elm.width(),
                 h = elm.height();
@@ -97,26 +97,54 @@
                 });
             });
         },
-        sprintSection:function () {
-            var tmpl = Handlebars.templates['tmpl.sprint-list-item'];
-
-            var section = $(this);
-            var form = $('#new-sprint-form', section)
+        sprintInputDialog:function (create) {
+            var tmpl = {
+                option:Handlebars.templates['tmpl.redmine-sprint-select-option']
+            };
+            var dialog = $(this);
+            var form = $('#new-sprint-form', dialog)
                 .validationForm('new_sprint')
                 .ajaxForm(function (data) {
                     form.emptyForm();
-                    $(tmpl(data.sprint))
-                        .prependTo(sprintList)
-                        .sprintListItem()
-                        .open();
-
+                    create.call(dialog, data);
                     $('#new-sprint-cancel-btn').trigger('click');
                 });
+            form.findByRole('date-input').dateInput({
+
+            });
+            return dialog.popupDialog(function () {
+                var dialog = $(this),
+                    sprintSelect = $('#redmine-sprint-select', dialog);
+                sprintSelect.empty();
+                sprintSelect.parent('li').showSpin();
+                CS.team.redmine_projects.forEach(function(project){
+                    $.get('/setting/get_redmine_versions', {
+                        project:project
+                    }, function(data){
+                        sprintSelect.siblings('.spin').remove();
+                        data.versions.reverse().forEach(function(data){
+                            data.project = project;
+                            sprintSelect.append(tmpl.option(data));
+                        });
+                    });
+                });
+            });
+        },
+        sprintSection:function () {
+            var tmpl = Handlebars.templates['tmpl.sprint-list-item'];
+            var section = $(this);
 
             var sprintList = $('#sprint-list', section);
-            sprintList.data('data').forEach(function(data){
+            sprintList.data('data').forEach(function (data) {
                 $(tmpl(data)).appendTo(sprintList)
                     .sprintListItem();
+            });
+
+            $('#new-sprint-input-dialog', section).sprintInputDialog(function (data) {
+                $(tmpl(data.sprint))
+                    .prependTo(sprintList)
+                    .sprintListItem()
+                    .open();
             });
             return section;
         },
@@ -182,7 +210,6 @@
 
         $('#head-nav', body).nav('setting');
 
-        $('#new-sprint-input-dialog', body).popupDialog();
 
         $('#redmine-project-list-pane', body).redmineProjectListPane();
     });

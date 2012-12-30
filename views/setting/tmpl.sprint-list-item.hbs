@@ -15,7 +15,7 @@
             <br/>
             <ul>
                 {{#each redmine_versions}}
-                <li>{{this}}</li>
+                <li>{{this.project}}/{{this.name}}</li>
                 {{/each}}
             </ul>
         </form>

@@ -34,6 +34,12 @@ exports.task_time = function (req, res) {
 exports.new = function (req, res) {
     //TODO バリデーション
     var body = req.body;
+    (function(versions){
+        var length = versions.length;
+        for(var i=0;i<length;i++){
+           versions[i] = JSON.parse(versions[i]);
+       }
+    })(body.redmine_versions);
     var sprint = new Sprint(body);
     sprint.save(function () {
         res.json({
