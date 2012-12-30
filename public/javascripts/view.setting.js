@@ -115,6 +115,16 @@
             return dialog.popupDialog(function () {
                 var dialog = $(this),
                     sprintSelect = $('#redmine-sprint-select', dialog);
+
+                (function(today){
+                    var begin = today,
+                        end = new Date(today);
+                    end.setDate(end.getDate() + 14);
+                    $('#sprint-begin-input', dialog).dateInputVal(begin);
+                    $('#sprint-end-input', dialog).dateInputVal(end);
+                })(new Date());
+
+
                 sprintSelect.empty();
                 sprintSelect.parent('li').showSpin();
                 CS.team.redmine_projects.forEach(function(project){

@@ -458,6 +458,14 @@ var CS = {};
                 dateFormat:'yy/mm/dd'
             }, datePickerOptions);
             return $(this).datepicker(option);
+        },
+        dateInputVal:function(date){
+            var string = [
+                date.getFullYear(),
+                date.getMonth() + 1,
+                date.getDate()
+            ].join('/');
+            return $(this).val(string);
         }
     });
     $(function () {
