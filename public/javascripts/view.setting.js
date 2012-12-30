@@ -227,6 +227,7 @@
                 }
                 data.issue_statuses.forEach(function(data){
                     var tr = $(tmpl(data)).appendTo(tbody);
+                    $('select', tr).selectableLabel();
                 });
             });
             return pane;

@@ -705,3 +705,45 @@ form{
 #ui-datepicker-div{
   display: none;
 }
+
+.selectable-label(@spin){
+  @color:spin(lighten(desaturate(@red,2), 20), @spin);
+  background-color: @color;
+  border:1px solid darken(@color, 10);
+  .border-radius(2px);
+  font-size: 0.75em;
+  display: inline-block;
+  padding: 2px 4px;
+  color:@white;
+  cursor: pointer;
+  .text-shadow(0 -1px 0, 0.5);
+  .box-shadow(1px 1px 2px, 0.3);
+  .unselectable;
+  &:hover{
+    color:lighten(@white, 5);
+    background-color: lighten(@color, 4);
+    .box-shadow(1px 1px 1px, 0.3);
+  }
+  &:active{
+    color:darken(@white, 10);
+    background-color: darken(@color, 10);
+  }
+}
+.selectable-label[data-color="1"]{
+  .selectable-label(0);
+}
+.selectable-label[data-color="2"]{
+  .selectable-label(60);
+}
+.selectable-label[data-color="3"]{
+  .selectable-label(120);
+}
+.selectable-label[data-color="4"]{
+  .selectable-label(180);
+}
+.selectable-label[data-color="5"]{
+  .selectable-label(240);
+}
+.selectable-label[data-color="0"]{
+  .selectable-label(300);
+}

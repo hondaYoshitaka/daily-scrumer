@@ -48,7 +48,7 @@ var CS = {};
                 })();
                 if (dst[key]) {
                     var isArray = dst[key] instanceof Array;
-                    if(!isArray){
+                    if (!isArray) {
                         dst[key] = [dst[key]];
                     }
                     dst[key].push(value);
@@ -229,7 +229,7 @@ var CS = {};
             spin.show();
             return elm;
         },
-        removeSpin:function(){
+        removeSpin:function () {
             $('.spin', this).remove();
             return $(this);
         },
@@ -463,13 +463,41 @@ var CS = {};
             }, datePickerOptions);
             return $(this).datepicker(option);
         },
-        dateInputVal:function(date){
+        dateInputVal:function (date) {
             var string = [
                 date.getFullYear(),
                 date.getMonth() + 1,
                 date.getDate()
             ].join('/');
             return $(this).val(string);
+        },
+        selectableLabel:function () {
+            var select = $(this);
+            var label = $('<span/>')
+                .addClass('selectable-label')
+                .insertAfter(select);
+            label
+                .click(function () {
+                    select.show()
+                        .trigger('click');
+                    label.hide();
+                });
+            var option = $('option', select),
+                size = option.size();
+            option.each(function (i) {
+                var index = (parseInt(6 / size, 10) * i) % 6;
+                $(this).data('color', index);
+            });
+            select.change(function () {
+                var selected = $('option:selected', select);
+                var text = selected.text();
+                if (!text) return;
+                label.text(text)
+                    .attr('data-color', selected.data('color'))
+                    .show();
+                select.hide();
+            }).trigger('change');
+            return select;
         }
     });
     $(function () {
