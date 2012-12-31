@@ -46,6 +46,32 @@ Team.findByName = function(name, callback){
     });
 };
 
+Team.prototype.getBugTrackerIds = function(){
+    var s = this,
+        result = [];
+    for(var id in s.trackers){
+        if(!s.trackers.hasOwnProperty(id)) continue;
+        var tracker = s.trackers[id];
+        var isBug = tracker.report_as === 'bug';
+        if(isBug){
+            result.push(id);
+        }
+    }
+    return result;
+};
+Team.prototype.getTaskTrackerIds = function(){
+    var s = this,
+        result = [];
+    for(var id in s.trackers){
+        if(!s.trackers.hasOwnProperty(id)) continue;
+        var tracker = s.trackers[id];
+        var isBug = tracker.report_as == 'task';
+        if(isBug){
+            result.push(id);
+        }
+    }
+    return result;
+};
 
 var Member = exports.Member = function(data){
     var s = this;

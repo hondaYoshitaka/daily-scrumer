@@ -67,4 +67,30 @@ describe('mdl.team', function () {
         team.isValid().should.be.false;
         done();
     });
+
+    it('getBugTrackerIds', function(done){
+        var team = new Team();
+        team.trackers = {
+            "1":{report_as:'bug'},
+            "2":{report_as:'bug'},
+            "3":{report_as:'task'}
+        };
+        var ids = team.getBugTrackerIds();
+        should.exist(ids);
+        ids.should.be.lengthOf(2);
+        done();
+    });
+
+    it('getTaskTrackerIds', function(done){
+        var team = new Team();
+        team.trackers = {
+            "1":{report_as:'bug'},
+            "2":{report_as:'bug'},
+            "3":{report_as:'task'}
+        };
+        var ids = team.getTaskTrackerIds();
+        should.exist(ids);
+        ids.should.be.lengthOf(1);
+        done();
+    });
 });
