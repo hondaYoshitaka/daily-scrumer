@@ -116,7 +116,7 @@
                 var dialog = $(this),
                     sprintSelect = $('#redmine-sprint-select', dialog);
 
-                (function(today){
+                (function (today) {
                     var end = new Date(today);
                     end.setDate(end.getDate() + 14);
                     $('#sprint-begin-input', dialog).dateInputVal(today);
@@ -126,12 +126,12 @@
 
                 sprintSelect.empty();
                 sprintSelect.parent('li').showSpin();
-                CS.team.redmine_projects.forEach(function(project){
+                CS.team.redmine_projects.forEach(function (project) {
                     $.get('/setting/get_redmine_versions', {
                         project:project
-                    }, function(data){
+                    }, function (data) {
                         sprintSelect.siblings('.spin').remove();
-                        data.versions.reverse().forEach(function(data){
+                        data.versions.reverse().forEach(function (data) {
                             data.project = project;
                             sprintSelect.append(tmpl.option(data));
                         });
@@ -209,10 +209,10 @@
 
             return pane;
         },
-        redmineBugStatusTableRow:function(){
+        redmineBugStatusTableRow:function () {
             var tr = $(this);
-            var form = $('form', tr).ajaxForm(function(data){
-                if(data.success){
+            var form = $('form', tr).ajaxForm(function (data) {
+                if (data.success) {
                     CS.team = data.team;
                 } else {
                     console.error('failed to update issue status');
@@ -220,24 +220,21 @@
             });
             $('select', form)
                 .selectableLabel()
-                .change(function(){
+                .change(function () {
                     form.submit();
                 });
             return tr;
         },
-        redmineBugStatusPane:function(){
-            var pane = $(this);
-
-
-            var table = $('#bug-status-table', pane),
+        redmineBugStatusPane:function () {
+            var pane = $(this),
+                table = $('#bug-status-table', pane),
                 tbody = $('tbody', table);
 
             var tmpl = Handlebars.templates['tmpl.redmine-bug-status-table-row'];
-
             var issue_statuses = tbody.data('issue_statuses');
 
-            if(issue_statuses){
-                Object.keys(issue_statuses).forEach(function(id){
+            if (issue_statuses) {
+                Object.keys(issue_statuses).forEach(function (id) {
                     var data = issue_statuses[id];
                     data.team = CS.team._id;
                     var tr = $(tmpl(data)).appendTo(tbody)
@@ -248,15 +245,15 @@
                 });
             }
             table.showSpin();
-            $.get('/setting/get_issue_statuses', function(data){
-                    table.removeSpin();
-                if(!data.success){
+            $.get('/setting/get_issue_statuses', function (data) {
+                table.removeSpin();
+                if (!data.success) {
                     console.error('failed to get_issue_statuses');
                     return;
                 }
-                data.issue_statuses.forEach(function(data){
+                data.issue_statuses.forEach(function (data) {
                     var exists = !!tbody.find('tr[data-id=' + data.id + ']').size();
-                    if(exists) return;
+                    if (exists) return;
                     data.team = CS.team._id;
                     $(tmpl(data)).appendTo(tbody)
                         .redmineBugStatusTableRow()
@@ -265,10 +262,10 @@
             });
             return pane;
         },
-        redmineTrackersTableRow:function(){
+        redmineTrackersTableRow:function () {
             var tr = $(this);
-            var form = $('form', tr).ajaxForm(function(data){
-                if(data.success){
+            var form = $('form', tr).ajaxForm(function (data) {
+                if (data.success) {
                     CS.team = data.team;
                 } else {
                     console.error('failed to update tracker');
@@ -276,27 +273,39 @@
             });
             $('select', form)
                 .selectableLabel()
-                .change(function(){
+                .change(function () {
                     form.submit();
                 });
             return tr;
         },
-        redmineTrackersPane:function(){
-            var pane = $(this);
-
-            var table = $('#trackers-table', pane),
+        redmineTrackersPane:function () {
+            var pane = $(this),
+                table = $('#trackers-table', pane),
                 tbody = $('tbody', table);
 
             var tmpl = Handlebars.templates['tmpl.redmine-trackers-table-row'];
-
+            var trackers = tbody.data('trackers');
+            if(trackers){
+                Object.keys(trackers).forEach(function(id){
+                    var data = trackers[id];
+                    data.team = CS.team._id;
+                    var tr = $(tmpl(data)).appendTo(tbody)
+                        .redmineTrackersTableRow();
+                    tr.findByName('report_as')
+                        .val(data.report_as)
+                        .trigger('change');
+                });
+            }
             table.showSpin();
-            $.get('/setting/get_trackers', function(data){
+            $.get('/setting/get_trackers', function (data) {
                 table.removeSpin();
-                if(!data.success){
+                if (!data.success) {
                     console.error('failed to get_trackers');
                     return;
                 }
-                data.trackers.forEach(function(data){
+                data.trackers.forEach(function (data) {
+                    var exists = !!tbody.find('tr[data-id=' + data.id + ']').size();
+                    if (exists) return;
                     data.team = CS.team._id;
                     $(tmpl(data))
                         .appendTo(tbody)

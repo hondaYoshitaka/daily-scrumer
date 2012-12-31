@@ -707,7 +707,7 @@ form{
 }
 
 .selectable-label(@spin){
-  @color:spin(lighten(desaturate(@red,2), 20), @spin);
+  @color:spin(lighten(desaturate(@red,2), 10), @spin);
   background-color: @color;
   border:1px solid darken(@color, 10);
   .border-radius(2px);
@@ -771,4 +771,5 @@ form{
 .selectable-label[data-color="11"]{
   .selectable-label(330);
 }
+
 
