@@ -13,6 +13,9 @@ function getIssues(trackers, versions, callback) {
     var result = [];
     var agentReqCount = 0,
         abort = false;
+    if(!versions.length || !trackers.length){
+        callback(true, result);
+    }
     trackers.forEach(function (tracker_id) {
         versions.forEach(function (version) {
             agentReqCount++;
@@ -69,7 +72,6 @@ function getTasks(team_id, sprint, callback) {
         });
     });
 }
-
 function failJson(res) {
     res.json({
         success:false

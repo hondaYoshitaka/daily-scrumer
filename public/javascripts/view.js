@@ -506,8 +506,10 @@ var CS = {};
         var body = $(document.body);
 
         body.ajaxError(function (e, req, setting, err) {
-            alert('something is wrong!');
-            console.error('[ajax err]', req.statusCode, err);
+            if(req.status){
+                alert(req.statusCode() + 'something is wrong!');
+                console.error('[ajax err]', req.statusCode, err);
+            }
         });
     });
 })(jQuery);
