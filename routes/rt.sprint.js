@@ -8,6 +8,43 @@ var RedmineAgent = require('../agent')['Redmine'],
     Team = db.models['Team'],
     Sprint = db.models['Sprint'];
 
+function getBugs(team_id, sprint, callback) {
+    var versions = sprint.redmine_versions;
+    if (!versions) {
+        callback(false);
+        return;
+    }
+    Team.findById(team_id, function (team) {
+        var result = [];
+        var agentReqCount = 0,
+            abort = false;
+        team.getBugTrackerIds().forEach(function (tracker_id) {
+            versions.forEach(function (version) {
+                agentReqCount++;
+                RedmineAgent.admin.getIssue({
+                    project_id:version.project,
+                    fixed_version_id:version.id,
+                    status_id:'*',
+                    tracker_id:tracker_id
+                }, function (sucess, bugs) {
+                    if (abort) return;
+                    if (!sucess) {
+                        abort = true;
+                        callback(false);
+                        return;
+                    }
+                    bugs.forEach(function (bug) {
+                        result.push(bug);
+                    });
+                    agentReqCount--;
+                    if (agentReqCount == 0) {
+                        callback(true, result, team);
+                    }
+                });
+            });
+        });
+    });
+}
 function failJson(res) {
     res.json({
         success:false
@@ -17,69 +54,90 @@ function failJson(res) {
 /* 不具合数を取得する */
 exports.count_bugs = function (req, res) {
     var sprint = req.query.sprint,
-        team_id = req.query.team_id,
-        versions = sprint.redmine_versions;
-    if (!versions) {
-        failJson(res);
-        return;
-    }
+        team_id = req.query.team_id;
     var data = {
         total:0,
         open:0,
         modified:0,
         done:0
     };
-    Team.findById(team_id, function (team) {
-        var agentReqCount = 0;
-        var tracker_ids = (function () {
-
-        })();
-        versions.forEach(function (version) {
-            agentReqCount++;
-            RedmineAgent.admin.getIssue({
-                project_id:version.project,
-                fixed_version_id:version.id,
-                status_id:'*'
-            }, function (sucess, bugs) {
-                if (!sucess) {
-                    fail && fail();
-                    fail = null;
-                    return;
-                }
-                bugs.forEach(function (bug) {
-                    data.total++;
-                    var status = team.issue_statuses[String(bug.status_id)];
-                    switch (status.report_as) {
-                        case 'done':
-                            data.done++;
-                            break;
-                        case 'modified':
-                            data.modified++;
-                            break;
-                        default:
-                            data.open++;
-                            break;
-                    }
-                });
-                agentReqCount--;
-                if (agentReqCount == 0) {
-                    data.success = true;
-                    res.json(data);
-                }
-            });
+    getBugs(team_id, sprint, function (sucess, bugs, team) {
+        console.log(bugs, sucess);
+        if (!sucess) {
+            failJson(res);
+            return;
+        }
+        bugs.forEach(function (bug) {
+            data.total++;
+            var status = team.issue_statuses[String(bug.status_id)];
+            switch (status.report_as) {
+                case 'done':
+                    data.done++;
+                    break;
+                case 'modified':
+                    data.modified++;
+                    break;
+                default:
+                    data.open++;
+                    break;
+            }
         });
+        data.success = true;
+        res.json(data);
     });
-
 };
 
 /* タスク時間の状況を取得する */
 exports.task_time = function (req, res) {
-    //TODO
-    res.json({
-        success:true,
-        estimated:130,
-        remain:80,
-        consumed:80
+    var sprint = req.query.sprint,
+        team_id = req.query.team_id,
+        versions = sprint.redmine_versions;
+
+    function fail() {
+        res.json({
+            success:false
+        });
+    }
+
+    if (!versions) {
+        fail();
+        return;
+    }
+    var data = {
+        estimated:0,
+        remain:0,
+        consumed:0
+    };
+    Team.findById(team_id, function (team) {
+        var agentReqCount = 0;
+        var taskTrackerIds = team.getTaskTrackerIds();
+        taskTrackerIds.forEach(function (tracker_id) {
+            versions.forEach(function (version) {
+                agentReqCount++;
+                RedmineAgent.admin.getIssue({
+                    project_id:version.project,
+                    fixed_version_id:version.id,
+                    status_id:'*',
+                    tracker_id:tracker_id
+                }, function (sucess, tasks) {
+                    if (!sucess) {
+                        fail && fail();
+                        fail = null;
+                        return;
+                    }
+                    tasks.forEach(function (task) {
+//                        console.log('task', task);
+                    });
+                });
+            });
+            //TODO
+            res.json({
+                success:true,
+                estimated:130,
+                remain:80,
+                consumed:80
+            });
+        });
     });
 };
 

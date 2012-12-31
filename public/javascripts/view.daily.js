@@ -54,7 +54,6 @@
             var data = {
                 sprint:sprint,
                 team_id:CS.team._id
-
             };
             $.getJSON('/sprint/count_bugs', data, function (data) {
                 if (!data.success) {
@@ -74,7 +73,10 @@
                 rateCircle = $('#task-done-rate-circle', section);
 
             if (sprint) {
-                var data = {sprint:sprint};
+                var data = {
+                    sprint:sprint,
+                    team_id:CS.team._id
+                };
                 $.getJSON('/sprint/get_task_times', data, function (data) {
                     if (!data.success) {
                         console.error('failed to get task time');
