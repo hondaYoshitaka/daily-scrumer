@@ -8,6 +8,39 @@ var RedmineAgent = require('../agent')['Redmine'],
     Team = db.models['Team'],
     Sprint = db.models['Sprint'];
 
+/* get issues from redmine */
+function getIssues(trackers, versions, callback) {
+    var result = [];
+    var agentReqCount = 0,
+        abort = false;
+    trackers.forEach(function (tracker_id) {
+        versions.forEach(function (version) {
+            agentReqCount++;
+            RedmineAgent.admin.getIssue({
+                project_id:version.project,
+                fixed_version_id:version.id,
+                status_id:'*',
+                tracker_id:tracker_id
+            }, function (sucess, issues) {
+                if (abort) return;
+                if (!sucess) {
+                    abort = true;
+                    callback(false);
+                    return;
+                }
+                issues.forEach(function (bug) {
+                    result.push(bug);
+                });
+                agentReqCount--;
+                if (agentReqCount == 0) {
+                    callback(true, result);
+                }
+            });
+        });
+    });
+}
+
+/* get bugs from redmine */
 function getBugs(team_id, sprint, callback) {
     var versions = sprint.redmine_versions;
     if (!versions) {
@@ -15,36 +48,28 @@ function getBugs(team_id, sprint, callback) {
         return;
     }
     Team.findById(team_id, function (team) {
-        var result = [];
-        var agentReqCount = 0,
-            abort = false;
-        team.getBugTrackerIds().forEach(function (tracker_id) {
-            versions.forEach(function (version) {
-                agentReqCount++;
-                RedmineAgent.admin.getIssue({
-                    project_id:version.project,
-                    fixed_version_id:version.id,
-                    status_id:'*',
-                    tracker_id:tracker_id
-                }, function (sucess, bugs) {
-                    if (abort) return;
-                    if (!sucess) {
-                        abort = true;
-                        callback(false);
-                        return;
-                    }
-                    bugs.forEach(function (bug) {
-                        result.push(bug);
-                    });
-                    agentReqCount--;
-                    if (agentReqCount == 0) {
-                        callback(true, result, team);
-                    }
-                });
-            });
+        var trackers = team.getBugTrackerIds();
+        getIssues(trackers, versions, function (success, data) {
+            callback(success, data, team);
         });
     });
 }
+
+/* get tasks from redmine */
+function getTasks(team_id, sprint, callback) {
+    var versions = sprint.redmine_versions;
+    if (!versions) {
+        callback(false);
+        return;
+    }
+    Team.findById(team_id, function (team) {
+        var trackers = team.getTaskTrackerIds();
+        getIssues(trackers, versions, function (success, data) {
+            callback(success, data, team);
+        });
+    });
+}
+
 function failJson(res) {
     res.json({
         success:false
@@ -62,7 +87,6 @@ exports.count_bugs = function (req, res) {
         done:0
     };
     getBugs(team_id, sprint, function (sucess, bugs, team) {
-        console.log(bugs, sucess);
         if (!sucess) {
             failJson(res);
             return;
@@ -108,35 +132,19 @@ exports.task_time = function (req, res) {
         remain:0,
         consumed:0
     };
-    Team.findById(team_id, function (team) {
-        var agentReqCount = 0;
-        var taskTrackerIds = team.getTaskTrackerIds();
-        taskTrackerIds.forEach(function (tracker_id) {
-            versions.forEach(function (version) {
-                agentReqCount++;
-                RedmineAgent.admin.getIssue({
-                    project_id:version.project,
-                    fixed_version_id:version.id,
-                    status_id:'*',
-                    tracker_id:tracker_id
-                }, function (sucess, tasks) {
-                    if (!sucess) {
-                        fail && fail();
-                        fail = null;
-                        return;
-                    }
-                    tasks.forEach(function (task) {
-//                        console.log('task', task);
-                    });
-                });
-            });
-            //TODO
-            res.json({
-                success:true,
-                estimated:130,
-                remain:80,
-                consumed:80
-            });
+    getTasks(team_id, sprint, function (sucess, tasks, team) {
+        if (!sucess) {
+            failJson(res);
+            return;
+        }
+        tasks.forEach(function (task) {
+            data.estimated += (task.estimated_hours || 0);
+        });
+        res.json({
+            success:true,
+            estimated:130,
+            remain:80,
+            consumed:80
         });
     });
 };
