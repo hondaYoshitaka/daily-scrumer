@@ -95,13 +95,13 @@ RedmineAgent.prototype.getIssue = function (condition, callback) {
     });
 };
 
-RedmineAgent.prototype.issue_statuses = function(callback){
+RedmineAgent.prototype.getIssueStatuses = function (callback) {
     var s = this,
         url = conf.url.base + '/issue_statuses';
-    s.get(url, function(res, body, $){
-        try{
+    s.get(url, function (res, body, $) {
+        try {
             var data = [];
-            $('#content').find('table.list').find('tbody').find('tr').each(function(){
+            $('#content').find('table.list').find('tbody').find('tr').each(function () {
                 var tr = $(this);
                 var a = tr.find('a');
                 var id = a.eq(0).attr('href')
@@ -113,11 +113,34 @@ RedmineAgent.prototype.issue_statuses = function(callback){
                 });
             });
             callback && callback.call(s, true, data);
-        } catch(e){
+        } catch (e) {
             console.error(e);
             callback && callback.call(s, false);
         }
 
+    });
+};
+RedmineAgent.prototype.getTrackers = function (callback) {
+    var s = this,
+        url = conf.url.base + '/trackers';
+    s.get(url, function (res, body, $) {
+        try {
+            var data = [];
+            $('#content').find('table.list').find('tbody').find('tr').each(function () {
+                var tr = $(this);
+                var a = tr.find('a');
+                var id = a.eq(0).attr('href')
+                    .replace('/redmine/trackers/edit/', '');
+                data.push({
+                    id:id,
+                    name:a.eq(0).text()
+                });
+            });
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callbac && callback.call(s, false);
+        }
     });
 };
 
@@ -165,3 +188,10 @@ RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
     });
 };
 
+
+//new RedmineAgent().login(conf.admin, function(){
+//    var s = this;
+//    s.getTrackers(function(){
+//        console.log(arguments);
+//    });
+//});

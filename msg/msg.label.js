@@ -40,9 +40,14 @@ exports = module.exports = {
         redmine:'redmine',
         redmine_projects:'proceeding projects',
         redmine_projects_lead:'Select projects proceeded by this team.',
-        redmine_bug_status:'bug status',
+        redmine_bug_status:'bug report',
         redmine_bug_status_table:{
             issue_status:'issue status',
+            report_as:'report as'
+        },
+        redmine_tracker:'tracker report',
+        redmine_tracker_table:{
+            tracker:'tracker',
             report_as:'report as'
         },
         members:'members',

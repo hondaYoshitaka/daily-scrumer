@@ -117,10 +117,9 @@
                     sprintSelect = $('#redmine-sprint-select', dialog);
 
                 (function(today){
-                    var begin = today,
-                        end = new Date(today);
+                    var end = new Date(today);
                     end.setDate(end.getDate() + 14);
-                    $('#sprint-begin-input', dialog).dateInputVal(begin);
+                    $('#sprint-begin-input', dialog).dateInputVal(today);
                     $('#sprint-end-input', dialog).dateInputVal(end);
                 })(new Date());
 
@@ -240,7 +239,6 @@
             if(issue_statuses){
                 Object.keys(issue_statuses).forEach(function(id){
                     var data = issue_statuses[id];
-                    console.log('data', data);
                     data.team = CS.team._id;
                     var tr = $(tmpl(data)).appendTo(tbody)
                         .redmineBugStatusTableRow();
@@ -266,6 +264,47 @@
                 });
             });
             return pane;
+        },
+        redmineTrackersTableRow:function(){
+            var tr = $(this);
+            var form = $('form', tr).ajaxForm(function(data){
+                if(data.success){
+                    CS.team = data.team;
+                } else {
+                    console.error('failed to update tracker');
+                }
+            });
+            $('select', form)
+                .selectableLabel()
+                .change(function(){
+                    form.submit();
+                });
+            return tr;
+        },
+        redmineTrackersPane:function(){
+            var pane = $(this);
+
+            var table = $('#trackers-table', pane),
+                tbody = $('tbody', table);
+
+            var tmpl = Handlebars.templates['tmpl.redmine-trackers-table-row'];
+
+            table.showSpin();
+            $.get('/setting/get_trackers', function(data){
+                table.removeSpin();
+                if(!data.success){
+                    console.error('failed to get_trackers');
+                    return;
+                }
+                data.trackers.forEach(function(data){
+                    data.team = CS.team._id;
+                    $(tmpl(data))
+                        .appendTo(tbody)
+                        .redmineTrackersTableRow();
+                });
+            });
+
+            return pane;
         }
     });
     $(function () {
@@ -281,5 +320,6 @@
         $('#redmine-project-list-pane', body).redmineProjectListPane();
 
         $('#redmine-bug-status-pane', body).redmineBugStatusPane();
+        $('#redmine-trackers-pane', body).redmineTrackersPane();
     });
 })(jQuery);

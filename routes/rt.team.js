@@ -130,3 +130,30 @@ exports.update.issue_statuses = function (req, res) {
         });
     });
 };
+
+exports.update.trackers = function(req, res){
+    var body = req.body;
+    if (!body.team_id) {
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function (team) {
+        if(!team) {
+            fail(res);
+            return;
+        }
+        var tracker_id = body.tracker_id;
+        team.trackers[tracker_id] = new Team.Tracker({
+            id:tracker_id,
+            name:body.name,
+            report_as:body.report_as
+        });
+        team.update(function(){
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};

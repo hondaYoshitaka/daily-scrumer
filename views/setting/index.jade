@@ -32,6 +32,16 @@ block content
                         data-projects=team.redmine_projects && team.redmine_projects.join(','))
                     input(type='hidden', name='_id', value=team._id)
                     ul#redmine-project-list.no-style-list
+        #redmine-trackers-pane.paper.float-left
+            .paper-content
+                .paper-title
+                    i #{label.redmine_tracker}
+                table#trackers-table.positioned
+                    thead
+                        tr
+                            th #{label.redmine_tracker_table.tracker}
+                            th #{label.redmine_tracker_table.report_as}
+                    tbody(data-trackers=team.trackers)
 
         #redmine-bug-status-pane.paper.float-left
             .paper-content
@@ -43,6 +53,9 @@ block content
                             th #{label.redmine_bug_status_table.issue_status}
                             th #{label.redmine_bug_status_table.report_as}
                     tbody(data-issue_statuses=team.issue_statuses)
+
+
+
         br.clear
 
     br

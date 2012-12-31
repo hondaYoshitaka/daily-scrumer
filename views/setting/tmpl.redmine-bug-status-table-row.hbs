@@ -6,12 +6,12 @@
             <input type="hidden" name="issue_status_id" value="{{id}}"/>
             <input type="hidden" name="name" value="{{name}}"/>
             <select name="report_as">
-                <option value="open">open</option>
-                <option value="modified">modified</option>
+                <option value="open" data-color="1">open</option>
+                <option value="modified" data-color="3">modified</option>
                 {{#if closed}}
-                    <option value="done" selected="selected">done</option>
+                    <option value="done" data-color="5" selected="selected">done</option>
                 {{else}}
-                    <option value="done">done</option>
+                    <option value="done" data-color="5" >done</option>
                 {{/if}}
             </select>
         </form>

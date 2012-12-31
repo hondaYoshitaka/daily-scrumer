@@ -1,0 +1,16 @@
+<tr data-id="{{id}}">
+
+    <th>{{name}}</th>
+    <td>
+        <form class="no-style-form" action="/update_team/trackers" method="POST">
+            <input type="hidden" name="team_id" value="{{team}}"/>
+            <input type="hidden" name="tracker_id" value="{{id}}"/>
+            <input type="hidden" name="name" value="{{name}}"/>
+            <select name="report_as">
+                <option value="task" data-color="7">task</option>
+                <option value="bug" data-color="9">bug</option>
+            </select>
+        </form>
+    </td>
+
+</tr>

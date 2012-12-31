@@ -85,6 +85,7 @@ app.configure('development', function () {
     app.post('/remove_team', r.team.remove);
     app.post('/update_team/redmine_projects', r.team.update.redmine_projects);
     app.post('/update_team/issue_statuses', r.team.update.issue_statuses);
+    app.post('/update_team/trackers', r.team.update.trackers);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);
@@ -96,6 +97,7 @@ app.configure('development', function () {
     app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);
     app.get('/setting/get_redmine_versions', r.setting.getRedmineVersions);
     app.get('/setting/get_issue_statuses', r.setting.getIssueStatuses);
+    app.get('/setting/get_trackers', r.setting.getTrackers);
 
 
 })(require('./routes'));

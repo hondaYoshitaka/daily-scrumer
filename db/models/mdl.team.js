@@ -12,6 +12,7 @@ var Team = exports = module.exports = function(data){
     if(!s.members) s.members = [];
     if(!s.redmine_projects) s.redmine_projects = [];
     if(!s.issue_statuses) s.issue_statuses = {};
+    if(!s.trackers) s.trackers = {};
 };
 
 Team.prototype.defaultvalue = {
@@ -81,4 +82,15 @@ Team.IssueStatus.defaultValue = {
     id:null,
     name:null,
     report_as:null
+};
+
+Team.Tracker = function(data){
+    var s = this;
+    util.obj.deepCopy(Team.Tracker.defaultValue, s);
+    util.obj.deepCopy(data, s);
+};
+Team.Tracker.defaultValue = {
+    id:null,
+    name:null,
+    as_task:false
 };

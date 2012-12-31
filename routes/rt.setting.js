@@ -47,18 +47,36 @@ exports.getRedmineVersions = function (req, res) {
 
 };
 
+function failJson(res){
+    res.json({
+        success:false
+    });
+}
+
 /* get issues statuses of redmine */
 exports.getIssueStatuses = function (req, res) {
-    RedmineAgent.admin.issue_statuses(function (success, data) {
+    RedmineAgent.admin.getIssueStatuses(function (success, data) {
         if (success) {
             res.json({
                 success:true,
                 issue_statuses:data
             });
         } else {
+            failJson(res);
+        }
+    });
+};
+
+/* get redmine trackers */
+exports.getTrackers = function(req, res){
+    RedmineAgent.admin.getTrackers(function(success, data){
+        if (success) {
             res.json({
-                success:false
+                success:true,
+                trackers:data
             });
+        } else {
+            failJson(res);
         }
     });
 };

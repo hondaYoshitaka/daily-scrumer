@@ -485,8 +485,10 @@ var CS = {};
             var option = $('option', select),
                 size = option.size();
             option.each(function (i) {
+                var option = $(this);
+                if(option.data('color')) return;
                 var index = (parseInt(6 / size, 10) * i) % 6;
-                $(this).data('color', index);
+                option.data('color', index);
             });
             select.change(function () {
                 var selected = $('option:selected', select);
