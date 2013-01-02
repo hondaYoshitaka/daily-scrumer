@@ -198,7 +198,6 @@ exports.new = function (req, res) {
     (function (versions) {
         var length = versions.length;
         for (var i = 0; i < length; i++) {
-            console.log('versions[i]', versions[i]);
             versions[i] = JSON.parse(versions[i]);
         }
     })(body.redmine_versions);

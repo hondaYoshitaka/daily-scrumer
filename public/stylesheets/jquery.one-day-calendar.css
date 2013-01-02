@@ -28,11 +28,11 @@
     margin: 0 8px;
 
     padding: 2px;
-    -webki-tbox-shadow: 2px 2px 8px #090909;
-    -moz-box-shadow: 2px 2px 8px #090909;
-    -o-box-shadow: 2px 2px 8px #090909;
-    -ms-box-shadow: 2px 2px 8px #090909;
-    box-shadow: 2px 2px 8px #090909;
+    -webki-tbox-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    -o-box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    -ms-box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     background-color: #EEE;
     background-image: -webkit-linear-gradient(215deg, white, #EEE, #CECECE);
     background-image: -moz-linear-gradient(215deg, white, #EEE, #CECECE);

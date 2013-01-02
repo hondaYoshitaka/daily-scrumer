@@ -132,8 +132,9 @@
 
             var dateDisplay = section.findByRole('date-display').oneDayCalendar(new Date());
             dateDisplay.click(function () {
-                dateDisplay.hide();
-                calendar.show();
+                dateDisplay.fadeOut(function(){
+                    calendar.fadeIn();
+                });
             });
 
             return section;
