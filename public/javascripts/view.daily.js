@@ -6,6 +6,16 @@
             return Math.random() > 0.5;
         });
     };
+
+    Number.prototype.toDigitString = function(digit){
+        var s = this,
+            string = s.toString();
+        while(string.length < digit){
+            string = "0" + string;
+        }
+        return string;
+    };
+
     $.extend({
     });
 
@@ -110,8 +120,8 @@
             var display = $(this);
 
             var html = template({
-                month:date.getMonth() + 1,
-                date:date.getDate()
+                month:(date.getMonth() + 1).toDigitString(2),
+                date:(date.getDate()).toDigitString(2)
             });
 
             display.html(html);

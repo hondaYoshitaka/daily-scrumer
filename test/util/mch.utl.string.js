@@ -33,8 +33,20 @@ describe('utl.string', function(){
     });
 
     it('escapeRegex', function(done){
-        console.log(util.escapeRegex("http://example.com/"));
         util.escapeRegex("http://example.com/").should.equal("http:\/\/example\\\.com\/");
+        done();
+    });
+
+    it('extractNumber', function(done){
+        util.extractNumber("123").should.equal(123);
+        util.extractNumber("abc123").should.equal(123);
+        util.extractNumber("abc123def").should.equal(123);
+        util.extractNumber("123def").should.equal(123);
+        should.not.exist(util.extractNumber("abc"));
+        should.not.exist(util.extractNumber(""));
+        should.not.exist(util.extractNumber(null));
+        should.not.exist(util.extractNumber(undefined));
+
         done();
     });
 });

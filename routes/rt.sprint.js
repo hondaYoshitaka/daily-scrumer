@@ -8,6 +8,36 @@ var RedmineAgent = require('../agent')['Redmine'],
     Team = db.models['Team'],
     Sprint = db.models['Sprint'];
 
+function getTimeTracks(versions, callback){
+    var result = {
+        consumed:0,
+        spent:0
+    };
+    var agentReqCount = 0,
+        abort = false;
+    if(!versions.length){
+        callback(true, result);
+    }
+    versions.forEach(function(version){
+        agentReqCount++;
+        RedmineAgent.admin.getTimeTrack(version.id, function(success, data){
+            if (abort) return;
+            if (!success) {
+                abort = true;
+                callback(false);
+                return;
+            }
+            result.consumed += data.consumed;
+            result.spent += data.spent;
+            agentReqCount--;
+            if (agentReqCount == 0) {
+                callback(true, result);
+            }
+        });
+    });
+
+}
+
 /* get issues from redmine */
 function getIssues(trackers, versions, callback) {
     var result = [];
@@ -24,9 +54,9 @@ function getIssues(trackers, versions, callback) {
                 fixed_version_id:version.id,
                 status_id:'*',
                 tracker_id:tracker_id
-            }, function (sucess, issues) {
+            }, function (success, issues) {
                 if (abort) return;
-                if (!sucess) {
+                if (!success) {
                     abort = true;
                     callback(false);
                     return;
@@ -131,8 +161,8 @@ exports.task_time = function (req, res) {
     }
     var data = {
         estimated:0,
-        remain:0,
-        consumed:0
+        consumed:0,
+        remain:0
     };
     getTasks(team_id, sprint, function (sucess, tasks, team) {
         if (!sucess) {
@@ -142,12 +172,18 @@ exports.task_time = function (req, res) {
         tasks.forEach(function (task) {
             data.estimated += (task.estimated_hours || 0);
         });
-        res.json({
-            success:true,
-            estimated:130,
-            remain:80,
-            consumed:80
+
+        getTimeTracks(versions, function(success, timeTrack){
+            if(!success){
+                failJson(res);
+                return;
+            }
+            data.consumed = timeTrack.spent;
+            data.success = true;
+            data.remain = data.estimated; //TODO
+            res.json(data);
         });
+
     });
 };
 

@@ -188,10 +188,32 @@ RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
     });
 };
 
+RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
+    var s = this,
+        url = [conf.url.base, 'versions/show', version_id].join('/');
+    s.get(url, function (res, body, $) {
+        try {
+            if (res.statusCode === 404) throw new Error(404);
+            var table = $('#version-summary').find('fieldset').eq(0).find('table'),
+                tr = table.find('tr');
 
+            var extractNumber = util.string.extractNumber;
+            var data = {
+                estimated:extractNumber(tr.eq(0).find('td').eq(1).text()) || 0,
+                spent:extractNumber(tr.eq(1).find('td').eq(1).text()) || 0
+            };
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
+//
+//
 //new RedmineAgent().login(conf.admin, function(){
 //    var s = this;
-//    s.getTrackers(function(){
+//    s.getTimeTrack(1, function(){
 //        console.log(arguments);
 //    });
 //});

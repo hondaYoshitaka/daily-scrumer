@@ -29,3 +29,10 @@ exports.underscore2Camel = function(str){
 exports.escapeRegex = function(str){
     return str && str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1") || '';
 };
+
+/* 数字を抜き出す */
+exports.extractNumber = function(str){
+    if(!str) return null;
+    var match = str.match(/\d+/);
+    return match?parseInt(match[0], 10):null;
+};
