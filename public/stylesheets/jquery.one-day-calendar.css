@@ -1,0 +1,74 @@
+.odc-board{
+    background: #444;
+    color:#333;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    padding: 2px 2px 10px;
+    position: relative;
+    width:105px;
+    -webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    -moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    -o-box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    -ms-box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+.odc-title{
+    margin: 15px 0 2px;
+    color: #707070;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+.odc-month{
+    font-style: italic;
+}
+.odc-paper-content{
+    margin: 0 8px;
+
+    padding: 2px;
+    -webki-tbox-shadow: 2px 2px 8px #090909;
+    -moz-box-shadow: 2px 2px 8px #090909;
+    -o-box-shadow: 2px 2px 8px #090909;
+    -ms-box-shadow: 2px 2px 8px #090909;
+    box-shadow: 2px 2px 8px #090909;
+    background-color: #EEE;
+    background-image: -webkit-linear-gradient(215deg, white, #EEE, #CECECE);
+    background-image: -moz-linear-gradient(215deg, white, #EEE, #CECECE);
+    background-image: -o-linear-gradient(215deg, white, #EEE, #CECECE);
+    background-image: -ms-linear-gradient(215deg, white, #EEE, #CECECE);
+    background-image: linear-gradient(215deg, white, #EEE, #CECECE);
+    border:1px solid #E0E0E0;
+    -webki-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+}
+.odc-date{
+    font-size: 3em;
+    font-weight: bold;
+    border-top: 1px solid #CCC;
+    margin-top: 2px;
+}
+.odc-hole{
+    position: absolute;
+    top:0;
+    width:100%;
+    height: 10px;
+    text-align: center;
+    padding: 0;
+}
+.odc-hole-inner{
+    width:7px;
+    height: 7px;
+    background: #EEE;
+    border-radius: 50%;
+    display: inline-block;
+    -webki-tbox-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+    -o-box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+    -ms-box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.4) inset;
+}

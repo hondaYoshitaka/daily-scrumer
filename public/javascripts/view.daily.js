@@ -7,14 +7,6 @@
         });
     };
 
-    Number.prototype.toDigitString = function(digit){
-        var s = this,
-            string = s.toString();
-        while(string.length < digit){
-            string = "0" + string;
-        }
-        return string;
-    };
 
     $.extend({
     });
@@ -114,21 +106,6 @@
                 });
             return section;
         },
-        dateDisplay:function (date) {
-            var template = Handlebars.templates['tmpl.date-display'];
-
-            var display = $(this);
-
-            var html = template({
-                month:(date.getMonth() + 1).toDigitString(2),
-                date:(date.getDate()).toDigitString(2)
-            });
-
-            display.html(html);
-
-
-            return display;
-        },
         calendarSection:function () {
             var section = $(this);
             var calendar = $('#calendar', section).datepicker({
@@ -149,7 +126,7 @@
             });
 
 
-            var dateDisplay = section.findByRole('date-display').dateDisplay(new Date());
+            var dateDisplay = section.findByRole('date-display').oneDayCalendar(new Date());
             dateDisplay.click(function () {
                 dateDisplay.hide();
                 calendar.show();

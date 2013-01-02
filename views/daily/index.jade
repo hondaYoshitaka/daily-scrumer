@@ -3,10 +3,12 @@ extends ../layout
 
 block stylesheet
     link(rel='stylesheet', href='/stylesheets/daily.css')
+    link(rel='stylesheet', href='/stylesheets/jquery.one-day-calendar.css')
 
 block javascript
     script(src='/javascripts/handlebars.template.daily.js')
     script(src='/javascripts/jquery.rate-circle.js')
+    script(src='/javascripts/jquery.one-day-calendar.js')
     script(src='/javascripts/view.daily.js')
     script
         CS.sprint = !{JSON.stringify(sprint)};
@@ -19,9 +21,7 @@ block content
     - var btn = msg.btn.daily;
 
     section#calendar-section.float-right.positioned
-        .tucked-corners-top
-            .tucked-corners-bottom#daite-display-wrapper
-                #calendar-cover.cover(data-role='date-display')
+        #calendar-cover.cover(data-role='date-display')
         #calendar.calendar
 
 
