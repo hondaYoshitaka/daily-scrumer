@@ -57,7 +57,9 @@
                 sprint:sprint,
                 team_id:CS.team._id
             };
+            section.showSpin();
             $.getJSON('/sprint/count_bugs', data, function (data) {
+                section.removeSpin();
                 if (!data.success) {
                     console.error('failed to get bug_count');
                     return;
@@ -79,7 +81,9 @@
                     sprint:sprint,
                     team_id:CS.team._id
                 };
+                section.showSpin();
                 $.getJSON('/sprint/get_task_times', data, function (data) {
+                    section.removeSpin();
                     if (!data.success) {
                         console.error('failed to get task time');
                         return;

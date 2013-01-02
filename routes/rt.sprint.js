@@ -170,7 +170,12 @@ exports.task_time = function (req, res) {
             return;
         }
         tasks.forEach(function (task) {
-            data.estimated += (task.estimated_hours || 0);
+            var time = (task.estimated_hours || 0);
+            data.estimated += time;
+            var status = team.issue_statuses[String(task.status_id)];
+            if(status.report_as != 'done'){
+                data.remain  += time;
+            }
         });
 
         getTimeTracks(versions, function(success, timeTrack){
@@ -180,7 +185,6 @@ exports.task_time = function (req, res) {
             }
             data.consumed = timeTrack.spent;
             data.success = true;
-            data.remain = data.estimated; //TODO
             res.json(data);
         });
 
