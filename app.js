@@ -89,6 +89,7 @@ app.configure('development', function () {
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);
+    app.get('/sprint/in_hurry_bugs', r.sprint.in_hurry_bugs);
     app.post('/sprint/new', r.sprint.new);
     app.post('/sprint/update', r.sprint.update);
     app.post('/sprint/update_keep_in_mind', r.sprint.update_keep_in_mind);
@@ -119,14 +120,14 @@ var RedmineAgent = require('./agent')['Redmine'];
     admin.auth = conf.admin;
 
     setInterval(function () {
-        login(function () {
+        prepare(function () {
             setTimeout(function () {
-                login();//try twice
+                prepare();//try twice
             }, 3 * 1000);
         });
     }, 10 * 60 * 1000);
 
-    function login(fail) {
+    function prepare(fail) {
         admin.login(admin.auth, function (success) {
             if (success) {
                 console.log('[redmine] did login to redmine at', conf.url.base);
@@ -134,10 +135,20 @@ var RedmineAgent = require('./agent')['Redmine'];
                 console.error('[redmine] failed to login redmine');
                 fail && fail();
             }
+            if(!admin.enumerations){
+                admin.enumerations = {};
+                admin.getIssuePriorities(function(sucess, data){
+                    if(sucess){
+                        admin.enumerations.issuePriorities = data;
+                    } else {
+                        console.error('failed to get issue priorities');
+                    }
+                });
+            }
         });
     }
 
-    login();
+    prepare();
 
     RedmineAgent.admin = admin;
 })(require('./conf').redmine);

@@ -449,5 +449,41 @@
   color: darken(@lighteYellow, 30);
 }
 .paper-title{
+//  font-style: italic;
+}
+
+.label-priority(@spin){
+  @color:spin(@yellow, @spin);
+  background-color:@color;
+  border:1px solid darken(@color, 10);
+  .box-shadow(1px 1px 2px, 0.4);
+  .border-radius(2px);
+  display: inline-block;
+  padding: 1px 2px;
+  margin: 0 1px;
+  color: @white;
+  .text-shadow(1px 1px 2px, 0.2);
+  font-size:10px;
+  .rotate(-3deg);
+  .hidden;
+}
+.label-priority-1{.label-priority(10deg)};
+.label-priority-2{.label-priority(30deg)};
+.label-priority-3{.label-priority(50deg)};
+.label-priority-4{.label-priority(70deg)};
+.label-priority-5{.label-priority(90deg)};
+.label-priority-6{.label-priority(110deg)};
+.label-priority-7{.label-priority(130deg)};
+.label-priority-8{.label-priority(150deg)};
+.label-priority-9{.label-priority(170deg)};
+
+#bug-to-hurry-see-more-btn{
+  z-index: 100;
+  color:darken(@sky, 10);
   font-style: italic;
+  .unselectable;
+  cursor: pointer;
+  &:after{
+    content: '>>';
+  }
 }

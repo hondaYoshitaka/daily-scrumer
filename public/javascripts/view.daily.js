@@ -297,6 +297,35 @@
                     .removeClass('on');
             });
             return section;
+        },
+        bugToHurrySection:function(sprint){
+            var section = $(this);
+            if (sprint) {
+                var data = {
+                    sprint:sprint,
+                    team_id:CS.team._id
+                };
+                section.showSpin();
+                $.getJSON('/sprint/in_hurry_bugs', data, function(data){
+                    section.removeSpin();
+                    var ul = $('#bug-to-hurry-list').empty();
+
+                    var tmpl = {
+                        li:Handlebars.templates['tmpl.bug_list_item']
+                    };
+                    if(!data.success){
+                        console.error('failed to get bugs to hurry');
+                        return;
+                    }
+                    data.in_hurry_bugs.forEach(function(bug){
+                        $(tmpl.li(bug)).appendTo(ul);
+                    });
+                    $('#bug-to-hurry-see-more-btn', section)
+                        .attr('href', data.urls && data.urls[0])
+                });
+            }
+
+            return section;
         }
     });
     $(function () {
@@ -307,7 +336,7 @@
 
         $('#bugs-section', body).bugsSection(CS.sprint);
         $('#task-section', body).taskSection(CS.sprint);
-
+        $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
 
         $('#keep-in-mind-section', body).keepInMindSection();
         $('#calendar-section', body).calendarSection();

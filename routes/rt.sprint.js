@@ -8,19 +8,19 @@ var RedmineAgent = require('../agent')['Redmine'],
     Team = db.models['Team'],
     Sprint = db.models['Sprint'];
 
-function getTimeTracks(versions, callback){
+function getTimeTracks(versions, callback) {
     var result = {
         consumed:0,
         spent:0
     };
     var agentReqCount = 0,
         abort = false;
-    if(!versions.length){
+    if (!versions.length) {
         callback(true, result);
     }
-    versions.forEach(function(version){
+    versions.forEach(function (version) {
         agentReqCount++;
-        RedmineAgent.admin.getTimeTrack(version.id, function(success, data){
+        RedmineAgent.admin.getTimeTrack(version.id, function (success, data) {
             if (abort) return;
             if (!success) {
                 abort = true;
@@ -43,7 +43,7 @@ function getIssues(trackers, versions, callback) {
     var result = [];
     var agentReqCount = 0,
         abort = false;
-    if(!versions.length || !trackers.length){
+    if (!versions.length || !trackers.length) {
         callback(true, result);
     }
     trackers.forEach(function (tracker_id) {
@@ -53,7 +53,8 @@ function getIssues(trackers, versions, callback) {
                 project_id:version.project,
                 fixed_version_id:version.id,
                 status_id:'*',
-                tracker_id:tracker_id
+                tracker_id:tracker_id,
+                sort:'priority:desc'
             }, function (success, issues) {
                 if (abort) return;
                 if (!success) {
@@ -173,13 +174,13 @@ exports.task_time = function (req, res) {
             var time = (task.estimated_hours || 0);
             data.estimated += time;
             var status = team.issue_statuses[String(task.status_id)];
-            if(status.report_as != 'done'){
-                data.remain  += time;
+            if (status.report_as != 'done') {
+                data.remain += time;
             }
         });
 
-        getTimeTracks(versions, function(success, timeTrack){
-            if(!success){
+        getTimeTracks(versions, function (success, timeTrack) {
+            if (!success) {
                 failJson(res);
                 return;
             }
@@ -265,3 +266,47 @@ exports.remove = function (req, res) {
 };
 
 
+exports.in_hurry_bugs = function (req, res) {
+    var sprint = req.query.sprint,
+        team_id = req.query.team_id;
+    var limit = 3, in_hurry_bugs = [];
+    getBugs(team_id, sprint, function (sucess, bugs, team) {
+        if (!sucess) {
+            failJson(res);
+            return;
+        }
+        var i = 0;
+        while (in_hurry_bugs.length < limit) {
+            var bug = bugs[i];
+            var status = team.issue_statuses[String(bug.status_id)];
+            switch (status.report_as) {
+                case 'done':
+                case 'modified':
+                    break;
+                default :
+                    bug.url = [RedmineAgent.conf.url.base, 'issues', bug.id].join('/');
+                    var enums = RedmineAgent.admin.enumerations;
+                    if (enums && enums.issuePriorities) {
+                        bug.priority = enums.issuePriorities[bug['priority_id']];
+                    }
+                    in_hurry_bugs.push(bug);
+                    break;
+            }
+            i++;
+        }
+        var urls = (function (base) {
+            var urls = [];
+            team.redmine_projects.forEach(function (project) {
+
+                var url = [base, 'projects', project, 'issues'].join('/');
+                urls.push(url);
+            });
+            return urls;
+        })(RedmineAgent.conf.url.base);
+        res.json({
+            success:true,
+            in_hurry_bugs:in_hurry_bugs,
+            urls:urls
+        });
+    });
+};

@@ -70,7 +70,7 @@ block content
 
     section#bugs-section.paper.float-left
         .paper-content
-            h3.paper-title.blue
+            h3.paper-title
                 | #{label.bugs}
             span.rate-box.float-right.positioned
                 #bug-done-rate-circle.rate-circle
@@ -89,6 +89,16 @@ block content
                     td.number-data
                         span(data-key='done').suffix-ticket
 
+    section#bug-to-hurry-section.paper.float-left
+        .paper-content
+            h3.paper-title
+                | #{label.bug_to_hurry}
+            ul#bug-to-hurry-list
+            br
+            a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
+                    target='_blank'
+                )
+                | #{btn.bugs_to_hurry.see_more}
     br.clear
 
 

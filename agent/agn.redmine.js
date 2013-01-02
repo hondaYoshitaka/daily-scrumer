@@ -17,6 +17,8 @@ var RedmineAgent = exports = module.exports = function (data) {
     }
 };
 
+RedmineAgent.conf = conf;
+
 (function (Prototype) {
     RedmineAgent.prototype = new Prototype();
     for (var name in Prototype) {
@@ -209,11 +211,40 @@ RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
         }
     });
 };
+
+RedmineAgent.prototype.getIssuePriorities = function (callback) {
+    var s = this,
+        url = [conf.url.base, 'enumerations'].join('/');
+    s.get(url, function (res, body, $) {
+        try {
+            if (res.statusCode === 404) throw new Error(404);
+            var data = {};
+
+            var table = $('#content').find('table').eq(1);
+            table.find('tr').each(function () {
+                var tr = $(this),
+                    td = tr.find('td');
+                if (!td.length) return;
+                var id = td.eq(0).find('a').eq(0).attr('href').replace('/redmine/enumerations/edit/', '');
+                data[id] = {
+                    id:id,
+                    name:td.eq(0).find('a').eq(0).text(),
+                    isDefault:!!td.eq(1).find('img').length,
+                    active:!!td.eq(2).find('img').length,
+                };
+            });
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
 //
 //
-//new RedmineAgent().login(conf.admin, function(){
+//new RedmineAgent().login(conf.admin, function () {
 //    var s = this;
-//    s.getTimeTrack(1, function(){
+//    s.getIssuePriorities(function () {
 //        console.log(arguments);
 //    });
 //});

@@ -13,7 +13,10 @@ exports = module.exports = {
     },
     daily:{
         shuffle:'shuffle!',
-        shuffle_stop:'stop!'
+        shuffle_stop:'stop!',
+        bugs_to_hurry:{
+            see_more:'see more'
+        }
     },
     settings:{
         new_sprint:'new sprint',
