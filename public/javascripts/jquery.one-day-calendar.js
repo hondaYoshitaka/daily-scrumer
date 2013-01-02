@@ -32,6 +32,7 @@
                         '<span class="odc-month">{{month}}</span>' +
                         '<div class="odc-date">{{date}}</div>' +
                     '</div>' +
+                    '<div class="odc-day">{{day}}</div>' +
                 '</div>' +
             '</div>'
     };
@@ -48,13 +49,15 @@
 
         });
         return {
-            oneDayCalendar:function (date) {
+            oneDayCalendar:function (date, opt) {
+                $.extend(settings, opt);
                 return $(this).each(function () {
                     var root = $(this).empty().addClass('odc-root');
                     date = new Date(date);
                     var html = applyTmpl(settings.tmpl, {
                         date:date.getDate(),
-                        month:settings.monthLabel[date.getMonth()]
+                        month:settings.monthLabel[date.getMonth()],
+                        day:settings.dayLabel[date.getDay()]
                     });
                     root.html(html);
                 });
