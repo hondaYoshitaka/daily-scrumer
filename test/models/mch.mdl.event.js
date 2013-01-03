@@ -8,14 +8,14 @@ var db = require('../../db'),
 describe('mdl.event.js', function () {
     before(function (done) {
         new Event({
-            team_id:'001'
+            team_name:'001'
         }).save(function(){
                done();
             });
     });
     before(function (done) {
         new Event({
-            team_id:'001'
+            team_name:'001'
         }).save(function(){
                 done();
             });
@@ -26,8 +26,8 @@ describe('mdl.event.js', function () {
         });
     });
 
-    it('findByTeamId', function(done){
-        Event.findByTeamId('001', function(data){
+    it('findByTeamName', function(done){
+        Event.findByTeamName('001', function(data){
             should.exist(data);
             data.should.be.lengthOf(2);
             done();
