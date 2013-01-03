@@ -1,9 +1,9 @@
 /*
- * test of rt.event
+ * test of rt.calendar
  */
 var db = require('../../db'),
     should = require('should');
 
-describe('rt.event', function(){
+describe('rt.calendar', function(){
 
 });

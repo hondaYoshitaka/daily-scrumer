@@ -100,11 +100,9 @@ app.configure('development', function () {
     app.get('/setting/get_issue_statuses', r.setting.getIssueStatuses);
     app.get('/setting/get_trackers', r.setting.getTrackers);
 
-    app.get('/event/list', r.event.list);
-    app.post('/event/new', r.event.new);
-    app.post('/event/update', r.event.update);
-    app.post('/event/remove', r.event.remove);
-
+    app.get('/calendar', r.calendar.index);
+    app.post('/calendar/update_holiday', r.calendar.add_holiday);
+    app.post('/calendar/remove_holiday', r.calendar.remove_holiday);
 
 })(require('./routes'));
 

@@ -58,8 +58,8 @@ exports.UTC.truncateHours = function (date) {
     if (typeof date === 'string') {
         date = new Date(date);
     }
-    var days = exports.truncateHours(date);
-    return exports.UTC(days);
+    var day = exports.truncateHours(date);
+    return exports.UTC(day);
 };
 
 

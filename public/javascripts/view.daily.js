@@ -173,6 +173,9 @@
                 });
             });
 
+            $.getJSON('/calendar', {team_name:CS.team.name}, function(data){
+                console.log('calendar', data);
+            });
             return section;
         },
         groupingRouletteItem:function (data) {
@@ -393,6 +396,8 @@
         $('#traffic-light-section', body).trafficLightSection();
 
         $('.odc-board').trigger('click');//TODO remove
+
+
         $.contextMenu({
             selector:'.selectable-date',
             items:{
@@ -409,6 +414,6 @@
                     console.log('date', date);
                 }
             }
-        })
+        });
     });
 })(jQuery);
