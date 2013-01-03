@@ -14,8 +14,17 @@ var CS = {};
 
     $.fn.extend({
         findByAttr:function (key, val) {
-            var condition = ['[', key, '="', val, '"]'].join('');
-            return $(this).find(condition);
+            var condition = {};
+            if(arguments.length === 1){
+                condition = arguments[0]
+            } else {
+                condition[key] = val;
+            }
+            var selector = '';
+            Object.keys(condition).forEach(function(key){
+                selector += ['[', key, '="', condition[key], '"]'].join('')
+            });
+            return $(this).find(selector);
         },
         /* name属性で子要素を検索する。*/
         findByName:function (name) {

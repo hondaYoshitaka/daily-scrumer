@@ -12,7 +12,7 @@ function fail(res) {
 }
 
 exports.index = function (req, res) {
-    Calendar.findByCondition(req.query, function (data) {
+    Calendar.findByTeamName(req.query.team_name, function (data) {
         res.json(data);
     });
 };
@@ -20,7 +20,8 @@ exports.index = function (req, res) {
 exports.add_holiday = function (req, res) {
     var body = req.body,
         team_name = body.team_name;
-    if (!team_name || !body.date) {
+    var valid = team_name && body.date;
+    if (!valid) {
         fail(res);
         return;
     }
@@ -41,7 +42,8 @@ exports.add_holiday = function (req, res) {
 exports.remove_holiday = function (req, res) {
     var body = req.body,
         team_name = body.team_name;
-    if (!team_name) {
+    var valid = team_name && body.date;
+    if (!valid) {
         fail(res);
         return;
     }

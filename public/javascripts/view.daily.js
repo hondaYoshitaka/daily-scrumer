@@ -174,35 +174,69 @@
             });
 
             $.getJSON('/calendar', {team_name:CS.team.name}, function (data) {
-                console.log('calendar', data);
+                CS.holidays = data.holidays;
+                section
+                    .trigger('refresh-holiday');
             });
 
-            $('#calendar-context-menu', section).calendarContextMenu('.selectable-date');
+            $('#calendar-context-menu', section)
+                .calendarContextMenu('.selectable-date');
+
+            section
+                .on('refresh-holiday', function () {
+                    $('.holiday', section).removeClass('holiday');
+                    Object.keys(CS.holidays).forEach(function(holiday){
+                        holiday = new Date(Number(holiday));
+                        section.findByAttr({
+                            'data-year':holiday.getFullYear(),
+                            'data-month':holiday.getMonth()
+                        }).each(function(i){
+                                var td = $(this);
+                                var hit = Number(td.text()) == holiday.getDate();
+                                if(hit){
+                                    td.addClass('holiday');
+                                    return false;
+                                }
+                                return true;
+                            });
+                    });
+                });
 
             return section;
         },
-        calendarContextMenu:function(opener){
+        calendarContextMenu:function (opener) {
             var menu = $(this);
 
 
             $('command', menu).click(function () {
                 var command = $(this).data('command'),
                     date = menu.data('date');
-                switch(command){
+                switch (command) {
                     case 'mark_as_holiday':
                         $.post('/calendar/add_holiday', {
                             date:date,
                             team_name:CS.team.name
-                        }, function(data){
-                            if(data.success){
-
+                        }, function (data) {
+                            if (data.success) {
+                                CS.holidays = data.calendar.holidays;
+                                menu.trigger('refresh-holiday');
                             } else {
                                 console.error('failed to add holiday');
                             }
                         });
                         break;
                     case 'demark_as_holiday':
-
+                        $.post('/calendar/remove_holiday', {
+                            date:date,
+                            team_name:CS.team.name
+                        }, function (data) {
+                            if (data.success) {
+                                CS.holidays = data.calendar.holidays;
+                                menu.trigger('refresh-holiday');
+                            } else {
+                                console.error('failed to remove holiday');
+                            }
+                        });
                         break;
                     case 'new_event':
 
@@ -439,7 +473,6 @@
         $('#traffic-light-section', body).trafficLightSection();
 
         $('.odc-board').trigger('click');//TODO remove
-
 
 
     });

@@ -178,14 +178,6 @@
 }
 
 
-.sunday a {
-  color: fadeout(@red, 30);
-}
-
-.saturday a {
-  color: fadeout(@blue, 30);
-}
-
 .report-chart-section {
   width: 800px;
   max-width: none;
@@ -355,6 +347,19 @@
         text-decoration: none;
       }
     }
+    &.holiday{
+      .ui-state-default {
+        color:darken(@red, 10);
+      }
+    }
+    &.sunday .ui-state-default {
+      color:darken(@red, 10);
+    }
+
+    &.saturday .ui-state-default {
+      color:darken(@blue, 10);
+    }
+
   }
   .ui-state-default {
     color: @darkBrown;
