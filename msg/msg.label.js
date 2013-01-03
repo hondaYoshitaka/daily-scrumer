@@ -41,7 +41,10 @@ exports = module.exports = {
             }
         },
         event:{
-            caption_new:'new event'
+            caption_new:'new event',
+            title:'title',
+            time:'time',
+            detail:'detail'
         }
     },
     settings:{

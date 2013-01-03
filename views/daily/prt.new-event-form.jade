@@ -1,22 +1,26 @@
 form#new-event-form(
     action='/calendar/add_event',
     method='post')
-    input(type='hidden', name='team_ame', value=team.nam)
+    input(type='hidden', name='team_name', value=team.name, data-empty-form-ignore='true')
     table
         tbody
             tr
                 th
-                    label
-                td
-                    select
+                    label(for='new-event-time-select') #{label.event.time}
+                td#new-event-time-select-td
+
             tr
                 th
+                    label(for='new-event-title-input') #{label.event.title}
                 td
-                    input
+                    input#new-event-title-input(
+                        type='text',
+                        name='title')
             tr
                 th
+                    label(for='new-event-detail-input') #{label.event.detail}
                 td
-                    textarea
+                    textarea#new-event-detail-input(name='detail')
     .btn-area
-        input#new-evnet-cancel-btn.btn(type='button', value=btn.new_event_cancel)
+        input#new-event-cancel-btn.btn(type='button', value=btn.new_event_cancel)
         input.btn(type='submit', value=btn.new_event_save).primary

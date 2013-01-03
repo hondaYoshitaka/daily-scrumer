@@ -1,0 +1,7 @@
+<select name="time" id="{{id}}">
+    <option value="">all day</option>
+    {{#each times}}
+        <option value="{{this.value}}">{{this.text}}:00</option>
+    {{/each}}
+</select>
+        

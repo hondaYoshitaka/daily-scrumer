@@ -146,16 +146,38 @@
                 });
             return section;
         },
-        eventInputDialog:function(){
+        eventInputDialog:function () {
             var dialog = $(this),
-                form = $('#new-event-form', dialog);
-            form.ajaxForm(function(data){
+              form = $('#new-event-form', dialog);
+            form
+                .ajaxForm(function (data) {
 
+                })
+                .validationForm('new_event');
+
+            var tmpl = {
+                timeSelect:Handlebars.templates['tmpl.event-time-select']
+            }
+            $('#new-event-time-select-td').append(tmpl.timeSelect({
+                id:'#new-event-time-select',
+                times:(function(){
+                    var times = [];
+                    for(var i=8; i<20; i++){
+                        times.push({
+                            value:i,
+                            text:i
+                        })
+                    }
+                    return times;
+                })()
+            }));
+
+            $('#new-event-cancel-btn', dialog).click(function () {
+                form.emptyForm();
+                dialog.fadeOut();
             });
 
-            return dialog.popupDialog(function(){
-
-            });
+            return dialog.hide();
         },
         calendarSection:function () {
             var section = $(this);
@@ -172,10 +194,11 @@
                 },
                 onSelect:function (date) {
                     date = new Date(date);
+                    eventInputDialog.fadeIn();
 //                    console.log('day selected:', date); //TODO
                 }
             });
-            $('#new-event-input-dialog', section).eventInputDialog(function(data){
+            var eventInputDialog = $('#new-event-input-dialog', section).eventInputDialog(function (data) {
 
             });
 
@@ -263,16 +286,16 @@
                     var date = $trigger.selectableDateDate();
                     menu.data('date', date);
                     var items = $.contextMenu.fromMenu(menu);
-                    Object.keys(items).forEach(function(key){
+                    Object.keys(items).forEach(function (key) {
                         var holiday = $trigger.hasClass('holiday'),
                             index = Number(key.replace('key', '')) - 1,
                             command = menu.children().eq(index).data('command');
                         switch (command) {
                             case 'mark_as_holiday':
-                                if(holiday) delete items[key];
+                                if (holiday) delete items[key];
                                 break;
                             case 'demark_as_holiday':
-                                if(!holiday) delete items[key];
+                                if (!holiday) delete items[key];
                                 break;
                         }
                     });
