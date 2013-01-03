@@ -13,6 +13,14 @@ var Sprint = exports = module.exports = function(data){
     if(!s.redmine_versions) s.redmine_versions = [];
 };
 
+(function(Prototype){
+    Sprint.prototype = new Prototype();
+    for(var name in Prototype){
+        if (!Prototype.hasOwnProperty(name)) continue;
+        Sprint[name] = Prototype[name];
+    }
+})(Model);
+
 Sprint.prototype.defaultValue = {
 
     /* team名*/
@@ -35,13 +43,7 @@ Sprint.prototype.defaultValue = {
     keep_in_mind_2:null
 };
 
-(function(Prototype){
-    Sprint.prototype = new Prototype();
-    for(var name in Prototype){
-        if (!Prototype.hasOwnProperty(name)) continue;
-        Sprint[name] = Prototype[name];
-    }
-})(Model);
+
 
 
 /* チーム名での検索 */

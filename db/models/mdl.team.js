@@ -15,6 +15,15 @@ var Team = exports = module.exports = function(data){
     if(!s.trackers) s.trackers = {};
 };
 
+(function(Prototype){
+    Team.prototype = new Prototype();
+    for(var name in Prototype){
+        if (!Prototype.hasOwnProperty(name)) continue;
+        Team[name] = Prototype[name];
+    }
+})(Model);
+
+
 Team.prototype.defaultvalue = {
     /* チーム名 */
     name:null,
@@ -28,13 +37,6 @@ Team.prototype.defaultvalue = {
 
     }
 };
-(function(Prototype){
-    Team.prototype = new Prototype();
-    for(var name in Prototype){
-        if (!Prototype.hasOwnProperty(name)) continue;
-        Team[name] = Prototype[name];
-    }
-})(Model);
 
 /* 名称による検索 */
 Team.findByName = function(name, callback){

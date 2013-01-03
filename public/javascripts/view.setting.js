@@ -309,7 +309,9 @@
                     data.team = CS.team._id;
                     $(tmpl(data))
                         .appendTo(tbody)
-                        .redmineTrackersTableRow();
+                        .redmineTrackersTableRow()
+                        .find('form').trigger('submit');
+
                 });
             });
 

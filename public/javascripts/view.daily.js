@@ -1,5 +1,16 @@
 ;
 (function ($) {
+    var msg = {
+        err:{
+            bugs:{
+                no_tracker:'[err]please set bug trackers'
+            },
+            tasks:{
+                no_tracker:'[err]please set task trackers'
+            }
+        }
+    };
+
     Array.prototype.shuffle = function () {
         var s = this;
         return s.sort(function () {
@@ -48,7 +59,19 @@
         },
         bugsSection:function (sprint) {
             var section = $(this),
-                doneRate = $('#bug-done-rate', section),
+                trackers = section.data('trackers');
+
+            if(!trackers.length){
+                var tmpl = Handlebars.templates['tmpl.err_msg'],
+                    err = msg.err.bugs.no_tracker;
+                var title = $('.paper-title', section);
+                title.siblings().remove();
+                title.after(tmpl({msg:err}));
+                return section;
+            }
+
+
+            var doneRate = $('#bug-done-rate', section),
                 rateCircle = $('#bug-done-rate-circle', section);
 
             if (!sprint) return section;
@@ -57,6 +80,7 @@
                 sprint:sprint,
                 team_id:CS.team._id
             };
+
             section.showSpin();
             $.getJSON('/sprint/count_bugs', data, function (data) {
                 section.removeSpin();
@@ -73,6 +97,18 @@
         },
         taskSection:function (sprint) {
             var section = $(this),
+                trackers = section.data('trackers');
+
+            if(!trackers.length){
+                var tmpl = Handlebars.templates['tmpl.err_msg'],
+                    err = msg.err.tasks.no_tracker;
+                var title = $('.paper-title', section);
+                title.siblings().remove();
+                title.after(tmpl({msg:err}));
+                return section;
+            }
+
+            var
                 doneRate = $('#task-done-rate', section),
                 rateCircle = $('#task-done-rate-circle', section);
 

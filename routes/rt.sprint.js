@@ -278,6 +278,7 @@ exports.in_hurry_bugs = function (req, res) {
         var i = 0;
         while (in_hurry_bugs.length < limit) {
             var bug = bugs[i];
+            if(!bug) break;
             var status = team.issue_statuses[String(bug.status_id)];
             switch (status.report_as) {
                 case 'done':

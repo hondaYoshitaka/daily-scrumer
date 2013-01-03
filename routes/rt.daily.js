@@ -3,13 +3,22 @@
  */
 
 var db = require('../db'),
-    Sprint = db.models['Sprint'];
+    Sprint = db.models['Sprint'],
+    Team = db.models['Team'];
 
 exports.index = function (req, res) {
-    var team_name = res.locals.team && res.locals.team.name;
-    Sprint.findLatestByTeam(team_name, function (sprint) {
+    if(!res.locals.team){
+        res.redirect('/');
+        return;
+    }
+    var team = new Team(res.locals.team);
+    Sprint.findLatestByTeam(team.name, function (sprint) {
         res.render('daily/index.jade', {
-            sprint:sprint
+            sprint:sprint,
+            trackers:{
+                task:team.getTaskTrackerIds(),
+                bug:team.getBugTrackerIds()
+            }
         });
     });
 };
