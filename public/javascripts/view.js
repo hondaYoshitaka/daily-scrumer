@@ -255,10 +255,15 @@ var CS = {};
         emptyForm:function () {
             return $(this).each(function () {
                 var form = $(this);
-                $('textarea', form).text('');
+                $('textarea', form).each(function(){
+                    var textarea = $(this);
+                    if(textarea.data('empty-form-ignore')) return;
+                    textarea.text('');
+                });
                 $('input', form).each(function () {
                     var input = $(this),
                         type = input.attr('type');
+                    if(input.data('empty-form-ignore')) return;
                     switch (type) {
                         case 'checkbox':
                         case 'radio':

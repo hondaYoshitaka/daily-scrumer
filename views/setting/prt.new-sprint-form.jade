@@ -1,7 +1,7 @@
 form#new-sprint-form.inline(
     action='/sprint/new',
     method='POST')
-    input(type='hidden', name='team_name', value=team.name)
+    input(type='hidden', name='team_name', value=team.name, data-empty-form-ignore='true')
     fieldset.no-border
         ul.no-style-list
             li

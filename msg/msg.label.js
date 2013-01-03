@@ -36,9 +36,12 @@ exports = module.exports = {
         calendar:{
             menu:{
                 mark_as_holiday:'mark as holiday',
-                remove_mark_as_holiday:'remove mark as holiday',
+                remove_mark_as_holiday:'remove holiday mark',
                 new_event:'add new event'
             }
+        },
+        event:{
+            caption_new:'new event'
         }
     },
     settings:{

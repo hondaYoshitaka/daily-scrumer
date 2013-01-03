@@ -103,6 +103,8 @@ app.configure('development', function () {
     app.get('/calendar', r.calendar.index);
     app.post('/calendar/add_holiday', r.calendar.add_holiday);
     app.post('/calendar/remove_holiday', r.calendar.remove_holiday);
+    app.post('/calendar/add_event', r.calendar.add_event);
+    app.post('/calendar/update_events', r.calendar.update_events);
 
 })(require('./routes'));
 

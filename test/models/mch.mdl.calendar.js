@@ -64,4 +64,29 @@ describe('mdl.calendar.js', function () {
         Object.keys(calendar1.holidays).should.be.lengthOf(0);
         done();
     });
+
+    it('addEvent', function(done){
+        var calendar = new Calendar();
+        calendar.save(function(){
+            calendar.addEvent({
+                name:'event1'
+            }, function(){
+                calendar.events.should.be.lengthOf(1);
+                done();
+            });
+        });
+    });
+
+    it('updateEvents', function(done){
+        var calendar = new Calendar();
+        calendar.save(function(){
+            calendar.updateEvents([
+                {name:'event1'},
+                {name:'event2'}
+            ], function(){
+                calendar.events.should.be.lengthOf(2);
+                done();
+            });
+        });
+    });
 });

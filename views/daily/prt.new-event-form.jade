@@ -1,0 +1,22 @@
+form#new-event-form(
+    action='/calendar/add_event',
+    method='post')
+    input(type='hidden', name='team_ame', value=team.nam)
+    table
+        tbody
+            tr
+                th
+                    label
+                td
+                    select
+            tr
+                th
+                td
+                    input
+            tr
+                th
+                td
+                    textarea
+    .btn-area
+        input#new-evnet-cancel-btn.btn(type='button', value=btn.new_event_cancel)
+        input.btn(type='submit', value=btn.new_event_save).primary

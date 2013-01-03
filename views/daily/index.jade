@@ -35,7 +35,16 @@ block content
             command(
                 label=label.calendar.menu.new_event,
                 data-command='new_event')
+
+        #new-event-input-dialog.card.stick-right.stick-top(
+            data-role='dialog',
+            data-opener='.selectable-dialog',
+            data-closer='#new-event-cancel-btn')
+            .card-title.large #{label.event.caption_new}
+            .card-content
+                include prt.new-event-form.jade
         ul#event-list
+
 
 
     h2#current-sprint-title.etched

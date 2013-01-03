@@ -34,12 +34,11 @@ Calendar.findByTeamName = function (team_name, callback) {
 
 
 Calendar.Event = function (data) {
+    var s = this;
     util.obj.deepCopy(Calendar.Event.defaultValue, s);
     util.obj.deepCopy(data, s);
 };
 Calendar.Event.defaultValue = {
-    /* date of event */
-    date:null,
     /* time of event */
     time:null,
     /* title of event */
@@ -67,3 +66,15 @@ Calendar.prototype.removeHoliday = function(date){
     delete s.holidays[utc];
     return s;
 };
+
+Calendar.prototype.addEvent = function(event, callback){
+    var s = this;
+    s.events.push(event);
+    s.update(callback);
+};
+
+Calendar.prototype.updateEvents = function(events, callback){
+    var s = this;
+    s.events = events;
+    s.update(callback);
+}

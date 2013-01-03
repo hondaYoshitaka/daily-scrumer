@@ -146,6 +146,17 @@
                 });
             return section;
         },
+        eventInputDialog:function(){
+            var dialog = $(this),
+                form = $('#new-event-form', dialog);
+            form.ajaxForm(function(data){
+
+            });
+
+            return dialog.popupDialog(function(){
+
+            });
+        },
         calendarSection:function () {
             var section = $(this);
             var calendar = $('#calendar', section).datepicker({
@@ -164,7 +175,9 @@
 //                    console.log('day selected:', date); //TODO
                 }
             });
+            $('#new-event-input-dialog', section).eventInputDialog(function(data){
 
+            });
 
             var dateDisplay = section.findByRole('date-display').oneDayCalendar(new Date());
             dateDisplay.click(function () {

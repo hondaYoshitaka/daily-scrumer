@@ -16,7 +16,9 @@ exports = module.exports = {
         shuffle_stop:'stop!',
         bugs_to_hurry:{
             see_more:'see more'
-        }
+        },
+        new_event_cancel:'cancel',
+        new_event_save:'save'
     },
     settings:{
         new_sprint:'new sprint',
