@@ -63,7 +63,7 @@ Model.findByCondition = function(condition, callback){
 /* 条件付き検索で一件目だけ持ってくる */
 Model.findOneByCondition = function(condition, callback){
     var s = this;
-    s.findByCondition(condition, function(result){
+    return s.findByCondition(condition, function(result){
         callback && callback.call(s, result.length && result[0] || null);
     });
 };

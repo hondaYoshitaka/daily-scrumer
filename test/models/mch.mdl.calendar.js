@@ -16,7 +16,7 @@ describe('mdl.calendar.js', function () {
     });
     before(function (done) {
         new Calendar({
-            team_name:'001'
+            team_name:'002'
         }).save(function(){
                 done();
             });
@@ -27,10 +27,12 @@ describe('mdl.calendar.js', function () {
         });
     });
 
+
     it('findByTeamName', function(done){
         Calendar.findByTeamName('001', function(data){
+            console.log('findByTeamName callback')
             should.exist(data);
-            data.should.be.lengthOf(2);
+            data.should.have.property('team_name', '001');
             done();
         });
     });

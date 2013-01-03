@@ -101,7 +101,7 @@ app.configure('development', function () {
     app.get('/setting/get_trackers', r.setting.getTrackers);
 
     app.get('/calendar', r.calendar.index);
-    app.post('/calendar/update_holiday', r.calendar.add_holiday);
+    app.post('/calendar/add_holiday', r.calendar.add_holiday);
     app.post('/calendar/remove_holiday', r.calendar.remove_holiday);
 
 })(require('./routes'));

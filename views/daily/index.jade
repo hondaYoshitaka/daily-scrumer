@@ -25,6 +25,16 @@ block content
     section#calendar-section.float-right.positioned
         #one-day-calendar.cover(data-role='date-display')
         #calendar.calendar
+        menu#calendar-context-menu.hidden(type='context')
+            command(
+                label=label.calendar.menu.mark_as_holiday,
+                data-command='mark_as_holiday')
+            command(
+                label=label.calendar.menu.remove_mark_as_holiday,
+                data-command='demark_as_holiday)
+            command(
+                label=label.calendar.menu.new_event,
+                data-command='new_event')
         ul#event-list
 
 

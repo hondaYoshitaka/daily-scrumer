@@ -340,15 +340,19 @@
 .ui-datepicker-calendar{
   .etched(0.4);
   color: @darkBrown;
+  border-spacing: 0px;
+  border-collapse: separate;
   th{
     color: @darkBrown;
   }
   td{
-    border:none;
+    border:1px solid transparent;
     &:hover{
-      background-color: transparent;
+      border-color:@darkBrown;
+      background-color:transparent;
       .ui-state-default {
         color: @darkBrown;
+        text-decoration: none;
       }
     }
   }
@@ -493,4 +497,8 @@
 }
 .sprint-name{
   color: @darkBrown;
+}
+
+.selectable-date{
+  .unselectable;
 }

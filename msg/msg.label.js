@@ -32,7 +32,14 @@ exports = module.exports = {
             done:'done'
         },
         grouping_absentee:'absentee',
-        available_group:'available'
+        available_group:'available',
+        calendar:{
+            menu:{
+                mark_as_holiday:'mark as holiday',
+                remove_mark_as_holiday:'remove mark as holiday',
+                new_event:'add new event'
+            }
+        }
     },
     settings:{
         selected_team:'team',

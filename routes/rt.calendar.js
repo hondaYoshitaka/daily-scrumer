@@ -20,7 +20,7 @@ exports.index = function (req, res) {
 exports.add_holiday = function (req, res) {
     var body = req.body,
         team_name = body.team_name;
-    if (!team_name) {
+    if (!team_name || !body.date) {
         fail(res);
         return;
     }
@@ -29,7 +29,7 @@ exports.add_holiday = function (req, res) {
             fail(res);
             return;
         }
-        calendar.addHoliday(body.holiday);
+        calendar.addHoliday(body.date);
         calendar.update(function () {
             res.json({
                 success:true,
@@ -50,7 +50,7 @@ exports.remove_holiday = function (req, res) {
             fail(res);
             return;
         }
-        calendar.removeHoliday(body.holiday);
+        calendar.removeHoliday(body.date);
         calendar.update(function () {
             res.json({
                 success:true,

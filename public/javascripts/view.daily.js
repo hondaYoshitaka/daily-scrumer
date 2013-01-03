@@ -3,10 +3,10 @@
     var msg = {
         err:{
             bugs:{
-                no_tracker:'[err]please set bug trackers'
+                no_tracker:'setting required.'
             },
             tasks:{
-                no_tracker:'[err]please set task trackers'
+                no_tracker:'setting required.'
             }
         }
     };
@@ -161,7 +161,7 @@
                 },
                 onSelect:function (date) {
                     date = new Date(date);
-                    console.log('day selected:', date); //TODO
+//                    console.log('day selected:', date); //TODO
                 }
             });
 
@@ -173,10 +173,53 @@
                 });
             });
 
-            $.getJSON('/calendar', {team_name:CS.team.name}, function(data){
+            $.getJSON('/calendar', {team_name:CS.team.name}, function (data) {
                 console.log('calendar', data);
             });
+
+            $('#calendar-context-menu', section).calendarContextMenu('.selectable-date');
+
             return section;
+        },
+        calendarContextMenu:function(opener){
+            var menu = $(this);
+
+
+            $('command', menu).click(function () {
+                var command = $(this).data('command'),
+                    date = menu.data('date');
+                switch(command){
+                    case 'mark_as_holiday':
+                        $.post('/calendar/add_holiday', {
+                            date:date,
+                            team_name:CS.team.name
+                        }, function(data){
+                            if(data.success){
+
+                            } else {
+                                console.error('failed to add holiday');
+                            }
+                        });
+                        break;
+                    case 'demark_as_holiday':
+
+                        break;
+                    case 'new_event':
+
+                        break;
+                }
+            });
+
+            $.contextMenu({
+                selector:opener,
+                build:function ($trigger, e) {
+                    var date = $trigger.selectableDateDate();
+                    menu.data('date', date);
+                    return {
+                        items:$.contextMenu.fromMenu(menu)
+                    }
+                }
+            });
         },
         groupingRouletteItem:function (data) {
             return $(this)
@@ -366,7 +409,7 @@
 
             return section;
         },
-        selectableDateDate:function(){
+        selectableDateDate:function () {
             var elm = $(this),
                 y = elm.data('year'),
                 m = elm.data('month'),
@@ -398,22 +441,6 @@
         $('.odc-board').trigger('click');//TODO remove
 
 
-        $.contextMenu({
-            selector:'.selectable-date',
-            items:{
-                mark_as_holiday:{
-                    name:'mark as holiday'
-                },
-                new_event:{
-                    name:'new event'
-                }
-            },
-            events:{
-                show:function () {
-                    var date = $(this).selectableDateDate();
-                    console.log('date', date);
-                }
-            }
-        });
+
     });
 })(jQuery);

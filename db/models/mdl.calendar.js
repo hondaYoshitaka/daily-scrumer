@@ -27,10 +27,11 @@ Calendar.prototype.defaultValue = {
 
 Calendar.findByTeamName = function (team_name, callback) {
     var s = this;
-    return s.findByCondition({
+    return s.findOneByCondition({
         team_name:team_name
-    }, callback).sort({date:-1});
+    }, callback);
 };
+
 
 Calendar.Event = function (data) {
     util.obj.deepCopy(Calendar.Event.defaultValue, s);
