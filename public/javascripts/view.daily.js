@@ -185,15 +185,15 @@
             section
                 .on('refresh-holiday', function () {
                     $('.holiday', section).removeClass('holiday');
-                    Object.keys(CS.holidays).forEach(function(holiday){
+                    Object.keys(CS.holidays).forEach(function (holiday) {
                         holiday = new Date(Number(holiday));
                         section.findByAttr({
                             'data-year':holiday.getFullYear(),
                             'data-month':holiday.getMonth()
-                        }).each(function(i){
+                        }).each(function () {
                                 var td = $(this);
                                 var hit = Number(td.text()) == holiday.getDate();
-                                if(hit){
+                                if (hit) {
                                     td.addClass('holiday');
                                     return false;
                                 }
@@ -246,11 +246,25 @@
 
             $.contextMenu({
                 selector:opener,
-                build:function ($trigger, e) {
+                build:function ($trigger) {
                     var date = $trigger.selectableDateDate();
                     menu.data('date', date);
+                    var items = $.contextMenu.fromMenu(menu);
+                    Object.keys(items).forEach(function(key){
+                        var holiday = $trigger.hasClass('holiday'),
+                            index = Number(key.replace('key', '')) - 1,
+                            command = menu.children().eq(index).data('command');
+                        switch (command) {
+                            case 'mark_as_holiday':
+                                if(holiday) delete items[key];
+                                break;
+                            case 'demark_as_holiday':
+                                if(!holiday) delete items[key];
+                                break;
+                        }
+                    });
                     return {
-                        items:$.contextMenu.fromMenu(menu)
+                        items:items
                     }
                 }
             });
