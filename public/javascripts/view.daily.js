@@ -61,7 +61,7 @@
             var section = $(this),
                 trackers = section.data('trackers');
 
-            if(!trackers.length){
+            if (!trackers.length) {
                 var tmpl = Handlebars.templates['tmpl.err_msg'],
                     err = msg.err.bugs.no_tracker;
                 var title = $('.paper-title', section);
@@ -99,7 +99,7 @@
             var section = $(this),
                 trackers = section.data('trackers');
 
-            if(!trackers.length){
+            if (!trackers.length) {
                 var tmpl = Handlebars.templates['tmpl.err_msg'],
                     err = msg.err.tasks.no_tracker;
                 var title = $('.paper-title', section);
@@ -152,12 +152,12 @@
                 beforeShowDay:function (date) {
                     switch (date.getDay()) {
                         case 0:
-                            return [true, 'sunday'];
+                            return [true, 'selectable-date sunday'];
                         case 6:
-                            return [true, 'saturday'];
+                            return [true, 'selectable-date saturday'];
                     }
 
-                    return [true, ''];
+                    return [true, 'selectable-date'];
                 },
                 onSelect:function (date) {
                     date = new Date(date);
@@ -168,8 +168,8 @@
 
             var dateDisplay = section.findByRole('date-display').oneDayCalendar(new Date());
             dateDisplay.click(function () {
-                dateDisplay.fadeOut(function(){
-                    calendar.fadeIn();
+                dateDisplay.fadeOut(300, function () {
+                    calendar.fadeIn(300);
                 });
             });
 
@@ -334,7 +334,7 @@
             });
             return section;
         },
-        bugToHurrySection:function(sprint){
+        bugToHurrySection:function (sprint) {
             var section = $(this);
             if (sprint) {
                 var data = {
@@ -342,18 +342,18 @@
                     team_id:CS.team._id
                 };
                 section.showSpin();
-                $.getJSON('/sprint/in_hurry_bugs', data, function(data){
+                $.getJSON('/sprint/in_hurry_bugs', data, function (data) {
                     section.removeSpin();
                     var ul = $('#bug-to-hurry-list').empty();
 
                     var tmpl = {
                         li:Handlebars.templates['tmpl.bug_list_item']
                     };
-                    if(!data.success){
+                    if (!data.success) {
                         console.error('failed to get bugs to hurry');
                         return;
                     }
-                    data.in_hurry_bugs.forEach(function(bug){
+                    data.in_hurry_bugs.forEach(function (bug) {
                         $(tmpl.li(bug)).appendTo(ul);
                     });
                     $('#bug-to-hurry-see-more-btn', section)
@@ -362,6 +362,18 @@
             }
 
             return section;
+        },
+        selectableDateDate:function(){
+            var elm = $(this),
+                y = elm.data('year'),
+                m = elm.data('month'),
+                d = Number(elm.text());
+            var date = new Date(0);
+            date.setYear(y);
+            date.setMonth(m);
+            date.setDate(d);
+            date.setHours(0);
+            return date;
         }
     });
     $(function () {
@@ -379,5 +391,24 @@
         $('#grouping-section', body).groupingSection();
 
         $('#traffic-light-section', body).trafficLightSection();
+
+        $('.odc-board').trigger('click');//TODO remove
+        $.contextMenu({
+            selector:'.selectable-date',
+            items:{
+                mark_as_holiday:{
+                    name:'mark as holiday'
+                },
+                new_event:{
+                    name:'new event'
+                }
+            },
+            events:{
+                show:function () {
+                    var date = $(this).selectableDateDate();
+                    console.log('date', date);
+                }
+            }
+        })
     });
 })(jQuery);

@@ -6,6 +6,7 @@ var should = require('should'),
     Team = db.models['Team'],
     Member = Team.Member;
 
+
 describe('mdl.team', function () {
 
     require('../check_env.js')();

@@ -80,4 +80,20 @@ describe('utl.obj', function(){
 
         done();
     });
+
+    it('copy', function(done){
+        var obj1 = {
+            key1:1,
+            key2:2
+        };
+        var obj2 = {
+            key1:0,
+            key3:3
+        };
+        util.copy(obj1, obj2);
+        obj2.should.have.property('key1', 1);
+        obj2.should.have.property('key2', 2);
+        obj2.should.have.property('key3', 3);
+        done();
+    });
 });

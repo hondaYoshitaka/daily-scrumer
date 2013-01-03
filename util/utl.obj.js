@@ -1,5 +1,13 @@
 /* objectのutil */
 
+/* copy object properties */
+exports.copy = function(src, dst){
+    for(var name in src){
+        if (!src.hasOwnProperty(name)) continue;
+        dst[name] = src[name];
+    }
+};
+
 /* 再帰的コピー。プロトタイプは無視する。functionは複製せずそのまま渡す。 */
 exports.deepCopy = function (src, dest) {
     if (!src) return dest;
