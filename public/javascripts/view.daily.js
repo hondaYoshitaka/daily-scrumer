@@ -277,7 +277,8 @@
 
                     toolTipEventList.empty();
                     events.forEach(function (data) {
-                        $(tmpl.eventItem(data)).appendTo(toolTipEventList);
+                        $(tmpl.eventItem(data))
+                            .appendTo(toolTipEventList);
                     });
 
                     tooltip
