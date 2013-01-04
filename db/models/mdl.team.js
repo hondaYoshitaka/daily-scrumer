@@ -91,7 +91,11 @@ var Member = exports.Member = function (data) {
 };
 Member.prototype.defaultValue = {
     /* メンバ名 */
-    name:null
+    name:null,
+
+    group:null,
+    
+    absent:false
 };
 
 /* メンバーを追加する */

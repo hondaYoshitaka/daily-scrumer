@@ -3,7 +3,8 @@
  */
 
 var db = require('../db'),
-    Team = db.models['Team'];
+    Team = db.models['Team'],
+    Member = Team.Member;
 
 function fail(res) {
     res.json({
@@ -147,6 +148,32 @@ exports.update.trackers = function(req, res){
             id:tracker_id,
             name:body.name,
             report_as:body.report_as
+        });
+        team.update(function(){
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};
+
+exports.update.members = function(req, res){
+    var body = req.body;
+    var valid = body.team_id && body.members;
+    if(!valid){
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function(team){
+        if(!team){
+            fail(res);
+            return;
+        }
+        team.members = [];
+        body.members.forEach(function(data){
+            team.members.push(new Member(data));
         });
         team.update(function(){
             req.session.team = team;

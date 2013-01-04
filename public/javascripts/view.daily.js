@@ -560,7 +560,6 @@
                 stopBtn.addClass('active');
                 clearTimeout(roulette.shuffleTimer);
                 var times = [200, 300, 400, 500, 800];
-
                 function tick() {
                     shuffle();
                     var time = times.shift();

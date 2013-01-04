@@ -90,6 +90,7 @@ app.configure('development', function () {
     app.post('/update_team/redmine_projects', r.team.update.redmine_projects);
     app.post('/update_team/issue_statuses', r.team.update.issue_statuses);
     app.post('/update_team/trackers', r.team.update.trackers);
+    app.post('/update_team/members', r.team.update.members);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);
