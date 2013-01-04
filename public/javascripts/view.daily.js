@@ -262,20 +262,20 @@
             $('.selectable-date', calendar).mouseenter(function () {
 
                 var tipped = tooltip.data('tipped') == this;
-                if(tipped) return;
+                if (tipped) return;
                 tooltip.data('tipped', this);
 
                 var hovered = $(this),
                     position = hovered.position(),
                     events = hovered.data('events');
-                if(hovered.data('busy'))return;
+                if (hovered.data('busy'))return;
                 hovered.busy(300);
 
                 if (events) {
                     var upper = position.top < (calendar.height() / 2);
                     tooltip
                         .hide()
-                        .attr('data-dir', upper?'up':'down')
+                        .attr('data-dir', upper ? 'up' : 'down')
                         .fadeIn(200);
                     toolTipEventList.empty();
                     events.forEach(function (data) {
@@ -491,14 +491,39 @@
                             .clone()
                             .appendTo(ul)
                             .groupingRouletteItem(data)
-                            .removeClass('grouping-roulette-item-absent');
+                            .removeClass('grouping-roulette-item-absent')
+                            .findByName('absent').val(false);
+                        ul.trigger('roulette-group.change');
                     }
                 });
                 ul.trigger('roulette-group.change');
             }).addClass('grouping-group');
         },
+        groupingAbsenteeArea:function () {
+            var area = $(this);
+            area.droppable({
+                hoverClass:'absentee-area-active',
+                accept:'.grouping-roulette-item',
+                drop:function (e, ui) {
+                    var item = $(ui.draggable.get(0)),
+                        data = item.data('data');
+                    item
+                        .remove()
+                        .clone()
+                        .appendTo(area)
+                        .groupingRouletteItem(data)
+                        .addClass('grouping-roulette-item-absent')
+                        .findByName('absent').val(true);
+                    area.trigger('roulette-group.change');
+                }
+            });
+            return area;
+        },
         groupingRoulette:function () {
-            var roulette = $(this).addClass('grouping-roulette');
+            var roulette = $(this).addClass('grouping-roulette'),
+                absenteeArea = $('#grouping-absentee-area', roulette);
+
+            absenteeArea.groupingAbsenteeArea();
 
             function newGroup() {
                 return $('<ul/>').prependTo(roulette)
@@ -518,8 +543,14 @@
                         if (isGroupFull(group)) {
                             group = newGroup();
                         }
-                        $(tmpl(data)).appendTo(group)
+                        var item = $(tmpl(data)).appendTo(group)
                             .groupingRouletteItem(data);
+
+                        if (data.absent) {
+                            item
+                                .addClass('grouping-roulette-item-absent')
+                                .appendTo(absenteeArea);
+                        }
                     });
                     roulette.removeClass('no-member-roulette');
                 } else {
@@ -560,6 +591,7 @@
                 stopBtn.addClass('active');
                 clearTimeout(roulette.shuffleTimer);
                 var times = [200, 300, 400, 500, 800];
+
                 function tick() {
                     shuffle();
                     var time = times.shift();
@@ -567,7 +599,7 @@
                         setTimeout(tick, time);
                     } else {
                         $('.grouping-roulette-item', roulette).removeClass('highlight');
-                        $('.grouping-group').blink(800, function () {
+                        $('.grouping-group', roulette).blink(800, function () {
                             stopBtn.hide()
                                 .removeClass('active');
                             startBtn.show();
@@ -580,27 +612,29 @@
                 tick();
             }).hide();
 
-            var absenteeArea = $('#grouping-absentee-area', roulette).droppable({
-                hoverClass:'absentee-area-active',
-                accept:'.grouping-roulette-item',
-                drop:function (e, ui) {
-                    var item = $(ui.draggable.get(0)),
-                        data = item.data('data');
-                    item
-                        .remove()
-                        .clone()
-                        .appendTo(absenteeArea)
-                        .groupingRouletteItem(data)
-                        .addClass('grouping-roulette-item-absent');
-                    absenteeArea.trigger('roulette-group.change');
-                }
-            });
 
             var availableCount = $('#availabel-group-count');
-            roulette.on('roulette-group.change', function () {
-                var count = $('.grouping-group').not(':empty').size();
-                availableCount.text(count);
-            });
+            roulette
+                .on('roulette-group.change', function () {
+                    console.log('roulette-group.change');
+                    var count = $('.grouping-group').not(':empty').size();
+                    availableCount.text(count);
+
+                    var data = {};
+                    data.team_id = CS.team._id;
+                    data.members = [];
+                    roulette.find('form').each(function () {
+                        var form = $(this);
+                        data.members.push(form.serializeObj());
+                    });
+                    $.post('/update_team/members', data, function (data) {
+                        if (data.success) {
+                            CS.team = data.team;
+                        } else {
+                            console.error('failed to update roulette-group');
+                        }
+                    });
+                });
             return roulette;
         },
         groupingSection:function () {

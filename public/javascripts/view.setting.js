@@ -56,7 +56,7 @@
                 li.removableListItem(function () {
                     form.remove();
                     li.trigger('member-list-change');
-                });
+                }, msg.sure);
             });
         },
         memberSection:function () {

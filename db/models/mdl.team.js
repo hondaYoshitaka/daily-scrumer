@@ -88,13 +88,14 @@ var Member = exports.Member = function (data) {
     var s = this;
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
+    s.absent = eval(s.absent);
 };
 Member.prototype.defaultValue = {
     /* メンバ名 */
     name:null,
 
     group:null,
-    
+
     absent:false
 };
 

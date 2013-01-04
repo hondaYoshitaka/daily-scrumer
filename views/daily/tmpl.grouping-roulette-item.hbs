@@ -6,6 +6,11 @@
                 <span class="part-body part"></span>
             </i>
         </div>
-        <span class="name">{{name}}</span>
+        <form class="inline-form">
+            <span class="name">{{name}}</span>
+            <input type="hidden" name="name" value="{{name}}"/>
+            <input type="hidden" name="absent" value="{{absent}}"/>
+            <input type="hidden" name="group" value="{{group}}"/>
+        </form>
     </div>
 </li>
