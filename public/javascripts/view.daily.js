@@ -174,6 +174,8 @@
             }
             var timeSelect = tmpl.timeSelect({times:CS.eventTimeSelectTimes});
             data && data.forEach(function (data) {
+                var hit = (CS.today - new Date(data.date) == 0);
+                if(!hit) return;
                 var li = $(tmpl.li(data)).appendTo(list),
                     form = $('form', li);
                 $(timeSelect)
