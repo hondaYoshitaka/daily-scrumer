@@ -518,6 +518,15 @@
 
 .selectable-date{
   .unselectable;
+  &.has-event{
+    position:relative;
+    &:before{
+      .cover;
+      left: 2px;
+      top:2px;
+      .circle(2px, @red);
+    }
+  }
 }
 
 #new-event-input-dialog{

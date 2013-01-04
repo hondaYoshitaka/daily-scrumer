@@ -173,6 +173,14 @@
   width: @length;
   height: @length;
 }
+.circle(@radius){
+  .border-radius(50%);
+  .square(@radius * 2);
+}
+.circle(@radius, @color){
+  .circle(@radius);
+  background-color: @color;
+}
 
 .rotate(@deg) {
   -webkit-transform: rotate(@deg);

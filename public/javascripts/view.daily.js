@@ -295,6 +295,17 @@
             section
                 .on('refresh-calendar.events', function () {
                     eventList.eventList(CS.events);
+                    $('.selectable-date', calendar).each(function(){
+                        var elm = $(this),
+                            date = elm.selectableDateDate();
+                        elm.removeClass('has-event');
+                        CS.events.forEach(function(event){
+                            var hit = (date - new Date(event.date) == 0);
+                            if(hit){
+                                elm.addClass('has-event');
+                            }
+                        });
+                    });
                 })
                 .on('refresh-calendar.holiday', function () {
                     $('.holiday', section).removeClass('holiday');
