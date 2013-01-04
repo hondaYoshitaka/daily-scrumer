@@ -16,13 +16,10 @@ app.locals({
     app:{
         title:package.name
     },
-    msg:msg
+    msg:msg,
+    url:logic.url
 });
-(function (url) {
-    //リリース時はクライアントスクリプトをすべてmin化する
-    url.use_min = (app.get('env') == 'production');
-    app.locals.url = url;
-})(logic.url);
+
 
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
@@ -47,7 +44,7 @@ app.configure('development', function () {
             var watchDir = [__dirname, "views", key].join('/');
             if (!util.file.exists(watchDir)) return;
 
-            var outFileName = ["handlebars.template", key, "js"].join('.'),
+            var outFileName = ["handlebars.template", key, "min", "js"].join('.'),
                 outFile = [__dirname, "public/javascripts", outFileName].join('/');
 
             precompiler.do(watchDir, outFile);
@@ -186,14 +183,14 @@ switch (app.get('env')) {
         break;
     case 'production':
 
-        //なんかthrowされたときは、一律共通エラー画面へ
         app.use(function (err, req, res, next) {
             console.error(err);
             res.redirect('/err');
         });
 
-        //リリース時は全てのクライアントスプリクトをmin化する。
-        (function (publisher) {
+        (function (publisher, url) {
+            //リリース時はクライアントスクリプトをすべてmin化する
             publisher.uglifyAllClientScripts();
-        })(logic['publish_script']);
+            url.use_min = true;
+        })(logic['publish_script'], logic['url']);
 }
