@@ -273,8 +273,10 @@
 
                 if (events) {
                     var upper = position.top < (calendar.height() / 2);
-                    tooltip.hide().fadeIn(200);
-
+                    tooltip
+                        .hide()
+                        .attr('data-dir', upper?'up':'down')
+                        .fadeIn(200);
                     toolTipEventList.empty();
                     events.forEach(function (data) {
                         $(tmpl.eventItem(data))

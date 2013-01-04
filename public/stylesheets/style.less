@@ -801,4 +801,23 @@ form{
   .box-shadow(5px 5px 10px, 0.3);
   color:@white;
   position: absolute;
+  @arrowSize:8px;
+  &:after{
+    content: "";
+    position: absolute;
+    border:@arrowSize solid transparent;
+    z-index: 1;
+  }
+  &[data-dir=up]:after{
+    right:10px;
+    bottom:@arrowSize * -1;
+    border-top-color:@black;
+    border-bottom-width:0;
+  }
+  &[data-dir=down]:after{
+    right:5px;
+    top:@arrowSize * -1;
+    border-bottom-color:@black;
+    border-top-width:0;
+  }
 }
