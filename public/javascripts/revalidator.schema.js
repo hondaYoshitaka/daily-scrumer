@@ -26,6 +26,12 @@
                 label:'redmine sprint',
                 required:true
             }
+        },
+        new_member:{
+            name:{
+                label:'member name',
+                required:true
+            }
         }
     };
     if(isServer){

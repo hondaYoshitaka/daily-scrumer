@@ -35,40 +35,66 @@
                 });
         },
         memberListItem:function () {
-            var template = Handlebars.templates['tmpl.member-list-item'];
             return $(this).each(function () {
-                var li = $(this)
-                        .addClass('positioned'),
-                    data = li.data('data');
-
-                var html = template({
-                    value:data && data.name,
-                    placeholder:msg.placeholder.member_name
-                });
-
-
-                li.html(html);
-
-                $(':text', li)
+                var li = $(this),
+                    form = $('form', li);
+                form
+                    .validationForm('new_member')
+                    .submit(function (e) {
+                        e.preventDefault();
+                        var valid = form.data('form.valid');
+                        if (valid) {
+                            li.trigger('member-list-change');
+                        }
+                    });
+                $(':text', form)
                     .editableText()
                     .change(function () {
-
+                        form.submit();
                     });
+
                 li.removableListItem(function () {
-                    //TODO
+                    form.remove();
+                    li.trigger('member-list-change');
                 });
             });
         },
         memberSection:function () {
             var section = $(this),
                 memberList = $('#mebmer-list', section);
-            $('.member-list-item', memberList).memberListItem();
+
+            var tmpl = {
+                li:Handlebars.templates['tmpl.member-list-item']
+            };
+            memberList.data('members').forEach(function (data) {
+                $(tmpl.li(data)).appendTo(memberList)
+                    .memberListItem();
+            });
 
             $('#member-add-btn', section).click(function () {
                 var btn = $(this);
-                $('<li/>').insertBefore(btn)
+                if (btn.data('busy')) return;
+                btn.busy();
+                $(tmpl.li({})).appendTo(memberList)
                     .memberListItem()
                     .openUp();
+            });
+
+            section.on('member-list-change', function () {
+                var data = {};
+                data.team_id = CS.team._id;
+                data.members = [];
+                memberList.find('form').each(function () {
+                    var form = $(this);
+                    data.members.push(form.serializeObj());
+                });
+                $.post('/update_team/members', data, function (data) {
+                    if (data.success) {
+
+                    } else {
+                        console.error('failed to update members');
+                    }
+                });
             });
             return section;
         },
@@ -285,8 +311,8 @@
 
             var tmpl = Handlebars.templates['tmpl.redmine-trackers-table-row'];
             var trackers = tbody.data('trackers');
-            if(trackers){
-                Object.keys(trackers).forEach(function(id){
+            if (trackers) {
+                Object.keys(trackers).forEach(function (id) {
                     var data = trackers[id];
                     data.team = CS.team._id;
                     var tr = $(tmpl(data)).appendTo(tbody)

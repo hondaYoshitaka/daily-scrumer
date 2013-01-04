@@ -1,11 +1,18 @@
-<div class="paper member-list-item-content">
-    <div class="paper-content">
-        <i class="icon human icon-large">
-            <span class="part-head"></span>
-            <span class="part-body"></span>
-        </i>
-        <input type="text" placeholder="{{placeholder}}"
-             value="{{value}}"/>
-        <br class="clear"/>
+<li class="float-left member-list-item positioned">
+    <div class="paper member-list-item-content">
+        <form class="inline-form paper-content">
+            <i class="icon human icon-large">
+                <span class="part-head"></span>
+                <span class="part-body"></span>
+            </i>
+            <input type="text"
+                   placeholder="member name"
+                   value="{{name}}"
+                   name="name"
+                    />
+            <input type="hidden" name="absent"/>
+            <input type="hidden" name="group"/>
+            <br class="clear"/>
+        </form>
     </div>
-</div>
+</li>

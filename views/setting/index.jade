@@ -91,9 +91,7 @@ block content
         | #{label.members}
     section#member-section.inline
         .positioned
-            ul#mebmer-list.positioned.no-style-list
-                - each member in team.members
-                    li.float-left.member-list-item(data-data=member)
+            ul#mebmer-list.positioned.no-style-list(data-members=team.members)
             a.btn#member-add-btn.stick-right.stick-top
                 i.icon.icon-small
                     span.add-icon-bar-v
