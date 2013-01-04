@@ -222,7 +222,7 @@
                 });
 
             var tmpl = {
-                timeSelect:Handlebars.templates['tmpl.event-time-select'],
+                timeSelect:Handlebars.templates['tmpl.event-time-select']
             }
             $('#new-event-time-select-wrapper')
                 .empty()
@@ -678,7 +678,7 @@
 
         $('#traffic-light-section', body).trafficLightSection();
 
-        $('.odc-board').trigger('click');//TODO remove
+        //$('.odc-board').trigger('click');//TODO remove
 
 
     });
