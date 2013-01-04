@@ -17,7 +17,7 @@
             times.push({
                 value:i,
                 text:i
-            })
+            });
         }
         return times;
     })(8, 20);
@@ -225,9 +225,8 @@
 
             return dialog.hide();
         },
-        calendarSection:function () {
-            var section = $(this);
-            var calendar = $('#calendar', section).datepicker({
+        calendar:function (onSelect) {
+            return $(this).datepicker({
                 beforeShowDay:function (date) {
                     switch (date.getDay()) {
                         case 0:
@@ -238,15 +237,20 @@
 
                     return [true, 'selectable-date'];
                 },
-                onSelect:function (date) {
-                    date = new Date(date);
-                    eventInputDialog.fadeIn();
-//                    console.log('day selected:', date); //TODO
-                }
+                onSelect:onSelect
             });
-            var eventInputDialog = $('#new-event-input-dialog', section).eventInputDialog(function (data) {
+        },
+        calendarSection:function () {
+            var section = $(this),
+                calendar = $('#calendar', section);
 
+            calendar.calendar(function (date) {
+                date = new Date(date);
+                eventInputDialog.findByName('date').val(date);
+                eventInputDialog.fadeIn();
             });
+
+            var eventInputDialog = $('#new-event-input-dialog', section).eventInputDialog();
 
             var dateDisplay = section.findByRole('date-display').oneDayCalendar(new Date());
             dateDisplay.click(function () {

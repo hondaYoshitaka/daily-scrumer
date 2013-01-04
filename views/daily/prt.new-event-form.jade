@@ -2,6 +2,7 @@ form#new-event-form(
     action='/calendar/add_event',
     method='post')
     input(type='hidden', name='team_name', value=team.name, data-empty-form-ignore='true')
+    input(type='hidden', name='date', data-empty-form-ignore='true')
     table
         tbody
             tr

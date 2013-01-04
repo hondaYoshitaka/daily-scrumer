@@ -6,9 +6,14 @@ exports.getNow = function () {
     return new Date();
 };
 
-
+/* ミリ秒以下のを切り捨てる */
+exports.truncateMilliSeconds = function (date) {
+    date.setMilliseconds(0);
+    return date;
+};
 /* 秒以下のを切り捨てる */
 exports.truncateSeconds = function (date) {
+    date = exports.truncateMilliSeconds(date);
     date.setSeconds(0);
     return date;
 };

@@ -37,8 +37,11 @@ Calendar.Event = function (data) {
     var s = this;
     util.obj.deepCopy(Calendar.Event.defaultValue, s);
     util.obj.deepCopy(data, s);
+    s.date = util.date.truncateHours(new Date(data.date));
 };
 Calendar.Event.defaultValue = {
+    /* date of event */
+    date:null,
     /* time of event */
     time:null,
     /* title of event */

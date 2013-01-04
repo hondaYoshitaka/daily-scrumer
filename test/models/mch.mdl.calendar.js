@@ -30,7 +30,6 @@ describe('mdl.calendar.js', function () {
 
     it('findByTeamName', function(done){
         Calendar.findByTeamName('001', function(data){
-            console.log('findByTeamName callback')
             should.exist(data);
             data.should.have.property('team_name', '001');
             done();
@@ -88,5 +87,16 @@ describe('mdl.calendar.js', function () {
                 done();
             });
         });
+    });
+
+    it('Event', function(done){
+        var event = new Event({
+            date:new Date().toJSON()
+        });
+        event.date.getHours().should.equal(0);
+        event.date.getMinutes().should.equal(0);
+        event.date.getSeconds().should.equal(0);
+        event.date.getMilliseconds().should.equal(0);
+        done();
     });
 });
