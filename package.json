@@ -6,18 +6,18 @@
         "start":"node app"
     },
     "dependencies":{
+        "cheerio":"0.10.5",
         "express":"3.0.4",
-        "jade":"*",
-        "less-middleware":"*",
+        "handlebars":"1.0.7",
+        "handlebars-precompiler":"1.0.2",
+        "jade":"0.27.7",
+        "less-middleware":"0.1.9",
+        "mocha":"1.7.4",
+        "mongojs":"0.4.6",
+        "node-uuid":"1.4.0",
+        "request":"2.12.0",
+        "should":"1.2.1",
         "uglify-js":"1.3.4",
-        "mongojs":"*",
-        "mocha":"*",
-        "should":"*",
-        "node-uuid":"*",
-        "cheerio":"*",
-        "request":"*",
-        "handlebars":"*",
-        "handlebars-precompiler":"*",
-        "xml2json":"*"
+        "xml2json":"0.3.2"
     }
 }
