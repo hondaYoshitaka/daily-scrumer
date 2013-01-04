@@ -514,6 +514,14 @@ var CS = {};
                 select.hide();
             }).trigger('change');
             return select;
+        },
+        busy:function(duration){
+            var elm = $(this);
+            elm.data('busy', true);
+            setTimeout(function(){
+                elm.data('busy', false);
+            }, duration || 300);
+            return elm;
         }
     });
     $(function () {

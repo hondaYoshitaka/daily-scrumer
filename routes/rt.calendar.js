@@ -4,7 +4,7 @@
 
 var db = require('../db'),
     Calendar = db.models['Calendar'],
-    Event = db.models['Event'];
+    Event = Calendar.Event;
 
 function fail(res) {
     res.json({
@@ -66,7 +66,7 @@ exports.remove_holiday = function (req, res) {
 exports.add_event = function(req, res){
     var body = req.body,
         team_name = body.team_name;
-    var valid = team_name && body.name;
+    var valid = team_name && body.title;
     if (!valid) {
         fail(res);
         return;
@@ -90,7 +90,7 @@ exports.add_event = function(req, res){
 exports.update_events = function(req, res){
     var body = req.body,
         team_name = body.team_name;
-    var valid = team_name && body.events;
+    var valid = team_name;
     if (!valid) {
         fail(res);
         return;
@@ -100,7 +100,7 @@ exports.update_events = function(req, res){
             fail(res);
             return;
         }
-        calendar.updateEvents(body.events, function(calendar){
+        calendar.updateEvents(body.events || [], function(){
             res.json({
                 success:true,
                 calendar:calendar

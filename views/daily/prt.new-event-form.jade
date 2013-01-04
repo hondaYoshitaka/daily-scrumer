@@ -13,14 +13,14 @@ form#new-event-form(
                 th
                     label(for='new-event-title-input') #{label.event.title}
                 td
-                    input#new-event-title-input(
+                    input#new-event-title-input.longer(
                         type='text',
                         name='title')
             tr
                 th
                     label(for='new-event-detail-input') #{label.event.detail}
                 td
-                    textarea#new-event-detail-input(name='detail')
+                    textarea#new-event-detail-input.longer(name='detail', rows="4")
     .btn-area
         input#new-event-cancel-btn.btn(type='button', value=btn.new_event_cancel)
         input.btn(type='submit', value=btn.new_event_save).primary

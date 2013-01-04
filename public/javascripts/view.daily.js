@@ -11,6 +11,17 @@
         }
     };
 
+    CS.eventTimeSelectTimes = (function (min, max) {
+        var times = [];
+        for (var i = min; i < max + 1; i++) {
+            times.push({
+                value:i,
+                text:i
+            })
+        }
+        return times;
+    })(8, 20);
+
     Array.prototype.shuffle = function () {
         var s = this;
         return s.sort(function () {
@@ -146,33 +157,67 @@
                 });
             return section;
         },
+        eventList:function (data) {
+            var list = $(this).empty();
+            var tmpl = {
+                li:Handlebars.templates['tmpl.event_list_item'],
+                timeSelect:Handlebars.templates['tmpl.event-time-select']
+            }
+            var timeSelect = tmpl.timeSelect({times:CS.eventTimeSelectTimes});
+            data.forEach(function (data) {
+                var li = $(tmpl.li(data)).appendTo(list),
+                    form = $('form', li);
+                $(timeSelect)
+                    .prependTo(form)
+                    .val(data.time)
+                    .selectableLabel()
+                    .siblings('.selectable-label')
+                    .removeClass('selectable-label')
+                    .hide();
+
+                li.findByRole('editable-text').editableText();
+                li.findByRole('selectable-label').selectableLabel();
+                li.removableListItem(function () {
+                    form.remove();
+                    list.trigger('refresh-calendar.events.list');
+                });
+                $(':text', form).change(function () {
+                    form.submit();
+                });
+                form
+                    .validationForm('update_event')
+                    .submit(function (e) {
+                        e.preventDefault();
+                        if(form.data('busy')) return;
+                        form.busy(500);
+                        var valid = form.data('form.valid');
+                        if (valid) {
+                            list.trigger('refresh-calendar.events.list');
+                        }
+                    });
+            });
+            return list;
+        },
         eventInputDialog:function () {
             var dialog = $(this),
-              form = $('#new-event-form', dialog);
+                form = $('#new-event-form', dialog);
             form
+                .validationForm('new_event')
                 .ajaxForm(function (data) {
-
-                })
-                .validationForm('new_event');
+                    CS.events = data.events;
+                    form.emptyForm();
+                    cancelBtn.trigger('click');
+                });
 
             var tmpl = {
                 timeSelect:Handlebars.templates['tmpl.event-time-select']
             }
             $('#new-event-time-select-td').append(tmpl.timeSelect({
                 id:'#new-event-time-select',
-                times:(function(){
-                    var times = [];
-                    for(var i=8; i<20; i++){
-                        times.push({
-                            value:i,
-                            text:i
-                        })
-                    }
-                    return times;
-                })()
+                times:CS.eventTimeSelectTimes
             }));
 
-            $('#new-event-cancel-btn', dialog).click(function () {
+            var cancelBtn = $('#new-event-cancel-btn', dialog).click(function () {
                 form.emptyForm();
                 dialog.fadeOut();
             });
@@ -211,15 +256,42 @@
 
             $.getJSON('/calendar', {team_name:CS.team.name}, function (data) {
                 CS.holidays = data.holidays;
+                CS.events = data.events;
                 section
-                    .trigger('refresh-holiday');
+                    .trigger('refresh-calendar');
             });
 
             $('#calendar-context-menu', section)
                 .calendarContextMenu('.selectable-date');
 
+
+            var eventList = $('#event-list')
+                .on('refresh-calendar.events.list', function (e) {
+                    e.stopPropagation();
+                    var data = {};
+                    data.events = (function (form) {
+                        var events = [];
+                        form.each(function () {
+                            events.push(form.serializeObj());
+                        });
+                        return events;
+                    })(eventList.find('form'));
+                    data.team_name = CS.team.name;
+                    $.post('/calendar/update_events', data, function (data) {
+                        if (data.success) {
+                            CS.events = data.calendar.events;
+                            section.trigger('refresh-calendar.events');
+                        } else {
+                            console.error('failed to update  events');
+                        }
+                    });
+                });
+
             section
-                .on('refresh-holiday', function () {
+                .on('refresh-calendar.events', function () {
+                    eventList.eventList(CS.events);
+                })
+                .on('refresh-calendar.holiday', function () {
                     $('.holiday', section).removeClass('holiday');
                     Object.keys(CS.holidays).forEach(function (holiday) {
                         holiday = new Date(Number(holiday));
@@ -255,7 +327,7 @@
                         }, function (data) {
                             if (data.success) {
                                 CS.holidays = data.calendar.holidays;
-                                menu.trigger('refresh-holiday');
+                                menu.trigger('refresh-calendar.holiday');
                             } else {
                                 console.error('failed to add holiday');
                             }
@@ -268,7 +340,7 @@
                         }, function (data) {
                             if (data.success) {
                                 CS.holidays = data.calendar.holidays;
-                                menu.trigger('refresh-holiday');
+                                menu.trigger('refresh-calendar.holiday');
                             } else {
                                 console.error('failed to remove holiday');
                             }

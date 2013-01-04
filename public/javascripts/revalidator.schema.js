@@ -11,6 +11,12 @@
                 required:true
             }
         },
+        update_event:{
+            title:{
+                label:'title',
+                required:true
+            }
+        },
         new_sprint:{
             name:{
                 label:'sprint name',
