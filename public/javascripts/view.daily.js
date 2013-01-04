@@ -164,7 +164,7 @@
                 timeSelect:Handlebars.templates['tmpl.event-time-select']
             }
             var timeSelect = tmpl.timeSelect({times:CS.eventTimeSelectTimes});
-            data.forEach(function (data) {
+            data && data.forEach(function (data) {
                 var li = $(tmpl.li(data)).appendTo(list),
                     form = $('form', li);
                 $(timeSelect)
@@ -188,7 +188,7 @@
                     .validationForm('update_event')
                     .submit(function (e) {
                         e.preventDefault();
-                        if(form.data('busy')) return;
+                        if (form.data('busy')) return;
                         form.busy(500);
                         var valid = form.data('form.valid');
                         if (valid) {
@@ -204,8 +204,9 @@
             form
                 .validationForm('new_event')
                 .ajaxForm(function (data) {
-                    CS.events = data.events;
+                    CS.events = data.calendar.events;
                     form.emptyForm();
+                    dialog.trigger('refresh-calendar.events');
                     cancelBtn.trigger('click');
                 });
 
