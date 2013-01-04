@@ -18,11 +18,11 @@ app.locals({
     },
     msg:msg
 });
-(function(url){
+(function (url) {
     //リリース時はクライアントスクリプトをすべてmin化する
     url.use_min = (app.get('env') == 'production');
     app.locals.url = url;
-})(logic.url)
+})(logic.url);
 
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
@@ -113,6 +113,10 @@ app.configure('development', function () {
     app.post('/calendar/add_event', r.calendar.add_event);
     app.post('/calendar/update_events', r.calendar.update_events);
 
+
+    app.get('/err', function (req, res) {
+        res.render('err.jade');
+    });
 })(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function () {
@@ -147,10 +151,10 @@ var RedmineAgent = require('./agent')['Redmine'];
                 console.error('[redmine] failed to login redmine');
                 fail && fail();
             }
-            if(!admin.enumerations){
+            if (!admin.enumerations) {
                 admin.enumerations = {};
-                admin.getIssuePriorities(function(sucess, data){
-                    if(sucess){
+                admin.getIssuePriorities(function (sucess, data) {
+                    if (sucess) {
                         admin.enumerations.issuePriorities = data;
                     } else {
                         console.error('failed to get issue priorities');
@@ -164,3 +168,32 @@ var RedmineAgent = require('./agent')['Redmine'];
 
     RedmineAgent.admin = admin;
 })(require('./conf').redmine);
+
+
+switch (app.get('env')) {
+    case 'development':
+
+        app.use(express.errorHandler());
+
+        (function (publisher) {
+            /*
+             //productionモードで吐かれたminファイルが鬱陶しいので全削除する。
+             publisher.removeAllClientMinScript();
+             console.log('public下のminファイルを全削除しました。')
+             */
+        })(logic['publish_script']);
+
+        break;
+    case 'production':
+
+        //なんかthrowされたときは、一律共通エラー画面へ
+        app.use(function (err, req, res, next) {
+            console.error(err);
+            res.redirect('/err');
+        });
+
+        //リリース時は全てのクライアントスプリクトをmin化する。
+        (function (publisher) {
+            publisher.uglifyAllClientScripts();
+        })(logic['publish_script']);
+}
