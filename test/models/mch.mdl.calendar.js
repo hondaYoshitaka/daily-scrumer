@@ -93,10 +93,10 @@ describe('mdl.calendar.js', function () {
         var event = new Event({
             date:new Date().toJSON()
         });
-        event.date.getHours().should.equal(0);
-        event.date.getMinutes().should.equal(0);
-        event.date.getSeconds().should.equal(0);
-        event.date.getMilliseconds().should.equal(0);
+        new Date(event.date).getHours().should.equal(0);
+        new Date(event.date).getMinutes().should.equal(0);
+        new Date(event.date).getSeconds().should.equal(0);
+        new Date(event.date).getMilliseconds().should.equal(0);
         done();
     });
 });

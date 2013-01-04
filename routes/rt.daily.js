@@ -3,6 +3,7 @@
  */
 
 var db = require('../db'),
+    util = require('../util'),
     Sprint = db.models['Sprint'],
     Team = db.models['Team'];
 
@@ -18,7 +19,8 @@ exports.index = function (req, res) {
             trackers:{
                 task:team.getTaskTrackerIds(),
                 bug:team.getBugTrackerIds()
-            }
+            },
+            today:util.date.truncateHours(util.date.getNow())
         });
     });
 };

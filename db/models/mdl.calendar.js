@@ -51,22 +51,22 @@ Calendar.Event.defaultValue = {
 };
 
 Calendar.prototype.isHoliday = function(date){
-    var utc = util.date.UTC.truncateHours(date);
+    var json = util.date.truncateHours(new Date(date)).toJSON();
     var s = this;
-    return !!s.holidays[utc];
+    return !!s.holidays[json];
 };
 
 Calendar.prototype.addHoliday = function(date){
-    var utc = util.date.UTC.truncateHours(date);
+    var json = util.date.truncateHours(new Date(date)).toJSON();
     var s = this;
-    s.holidays[utc] = true;
+    s.holidays[json] = true;
     return s;
 };
 
 Calendar.prototype.removeHoliday = function(date){
-    var utc = util.date.UTC.truncateHours(date);
+    var json = util.date.truncateHours(new Date(date)).toJSON();
     var s = this;
-    delete s.holidays[utc];
+    delete s.holidays[json];
     return s;
 };
 

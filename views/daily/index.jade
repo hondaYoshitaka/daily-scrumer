@@ -14,6 +14,7 @@ block javascript
     script(src=url.js('view.daily.js'))
     script
         CS.sprint = !{JSON.stringify(sprint)};
+        CS.today = new Date(!{JSON.stringify(today)});
 
 
 block content

@@ -22,6 +22,7 @@
         return times;
     })(8, 20);
 
+
     Array.prototype.shuffle = function () {
         var s = this;
         return s.sort(function () {
@@ -29,6 +30,14 @@
         });
     };
 
+    Number.prototype.toDigitString = function(digit){
+        var s = this,
+            string = s.toString();
+        while(string.length < digit){
+            string = "0" + string;
+        }
+        return string;
+    }
 
     $.extend({
     });
@@ -211,15 +220,18 @@
                 });
 
             var tmpl = {
-                timeSelect:Handlebars.templates['tmpl.event-time-select']
+                timeSelect:Handlebars.templates['tmpl.event-time-select'],
             }
-            $('#new-event-time-select-td').append(tmpl.timeSelect({
+            $('#new-event-time-select-wrapper')
+                .empty()
+                .append(tmpl.timeSelect({
                 id:'#new-event-time-select',
                 times:CS.eventTimeSelectTimes
             }));
 
             var cancelBtn = $('#new-event-cancel-btn', dialog).click(function () {
                 form.emptyForm();
+                dialog.trigger('refresh-calendar.events');
                 dialog.fadeOut();
             });
 
@@ -247,6 +259,17 @@
             calendar.calendar(function (date) {
                 date = new Date(date);
                 eventInputDialog.findByName('date').val(date);
+                var tmpl = {
+                    dateLabel:Handlebars.templates['tmpl.date-label']
+                };
+                var dateLabel = tmpl.dateLabel({
+                    year:date.getFullYear(),
+                    month:(date.getMonth() + 1).toDigitString(2),
+                    date:date.getDate().toDigitString(2)
+                });
+                $('#date-label-wrapper', eventInputDialog)
+                    .html(dateLabel);
+
                 eventInputDialog.fadeIn();
             });
 
@@ -295,13 +318,13 @@
             section
                 .on('refresh-calendar.events', function () {
                     eventList.eventList(CS.events);
-                    $('.selectable-date', calendar).each(function(){
+                    $('.selectable-date', calendar).each(function () {
                         var elm = $(this),
                             date = elm.selectableDateDate();
                         elm.removeClass('has-event');
-                        CS.events.forEach(function(event){
+                        CS.events.forEach(function (event) {
                             var hit = (date - new Date(event.date) == 0);
-                            if(hit){
+                            if (hit) {
                                 elm.addClass('has-event');
                             }
                         });
