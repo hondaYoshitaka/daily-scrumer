@@ -18,6 +18,12 @@ app.locals({
     },
     msg:msg
 });
+(function(url){
+    //リリース時はクライアントスクリプトをすべてmin化する
+    url.use_min = (app.get('env') == 'production');
+    app.locals.url = url;
+})(logic.url)
+
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/views');
@@ -28,6 +34,7 @@ app.configure(function () {
     app.use(express.methodOverride());
     app.use(express.cookieParser('your secret here'));
     app.use(express.session());
+    app.use(express.compress());
     app.use(app.router);
     app.use(require('less-middleware')({ src:__dirname + '/public' }));
     app.use(express.static(path.join(__dirname, 'public')));

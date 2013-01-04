@@ -3,19 +3,19 @@ html
   head
     meta(charset='utf-8')
     title #{app.title}
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href=url.css('style.css'))
     link(rel='shortcut icon', href='/fav.ico')
     block stylesheet
 
-    script(src='/javascripts/jquery.js')
-    script(src='/javascripts/jquery-ui.custom.js')
-    script(src='/javascripts/revalidator.js')
-    script(src='/javascripts/revalidator.msg.js')
-    script(src='/javascripts/revalidator.schema.js')
+    script(src=url.js('jquery.js'))
+    script(src=url.js('jquery-ui.custom.js'))
+    script(src=url.js('revalidator.js'))
+    script(src=url.js('revalidator.msg.js'))
+    script(src=url.js('revalidator.schema.js'))
 
-    script(src='/javascripts/spin.js')
-    script(src='/javascripts/view.js')
-    script(src='/javascripts/handlebars.runtime.min.js')
+    script(src=url.js('spin.js'))
+    script(src=url.js('view.js'))
+    script(src=url.js('handlebars.runtime.min.js'))
 
     script
         CS.team = !{team && JSON.stringify(team) || 'null'};
