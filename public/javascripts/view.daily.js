@@ -30,10 +30,10 @@
         });
     };
 
-    Number.prototype.toDigitString = function(digit){
+    Number.prototype.toDigitString = function (digit) {
         var s = this,
             string = s.toString();
-        while(string.length < digit){
+        while (string.length < digit) {
             string = "0" + string;
         }
         return string;
@@ -175,7 +175,7 @@
             var timeSelect = tmpl.timeSelect({times:CS.eventTimeSelectTimes});
             data && data.forEach(function (data) {
                 var hit = (CS.today - new Date(data.date) == 0);
-                if(!hit) return;
+                if (!hit) return;
                 var li = $(tmpl.li(data)).appendTo(list),
                     form = $('form', li);
                 $(timeSelect)
@@ -240,7 +240,7 @@
             return dialog.hide();
         },
         calendar:function (onSelect) {
-            return $(this).datepicker({
+            var calendar = $(this).datepicker({
                 beforeShowDay:function (date) {
                     switch (date.getDay()) {
                         case 0:
@@ -253,6 +253,44 @@
                 },
                 onSelect:onSelect
             });
+            var tmpl = {
+                tooltip:Handlebars.templates['tmpl.calendar-tooltip'],
+                eventItem:Handlebars.templates['tmpl.calendar-tooltip-event-item']
+            };
+            var tooltip = $(tmpl.tooltip()).appendTo(calendar),
+                toolTipEventList = $('#calendar-tooltip-event-list', tooltip);
+            $('.selectable-date', calendar).mouseenter(function () {
+
+                var tipped = tooltip.data('tipped') == this;
+                if(tipped) return;
+                tooltip.data('tipped', this);
+
+                var hovered = $(this),
+                    position = hovered.position(),
+                    events = hovered.data('events');
+                if(hovered.data('busy'))return;
+                hovered.busy(300);
+
+                if (events) {
+                    var upper = position.top < (calendar.height() / 2);
+                    tooltip.hide().fadeIn(200);
+
+                    toolTipEventList.empty();
+                    events.forEach(function (data) {
+                        $(tmpl.eventItem(data)).appendTo(toolTipEventList);
+                    });
+
+                    tooltip
+                        .css({
+                            top:position.top + (upper ? -(tooltip.outerHeight()) : 30),
+                            left:position.left - 20
+                        });
+                }
+            });
+            calendar.mouseleave(function () {
+                tooltip.fadeOut(200);
+            });
+            return calendar;
         },
         calendarSection:function () {
             var section = $(this),
@@ -328,6 +366,10 @@
                             var hit = (date - new Date(event.date) == 0);
                             if (hit) {
                                 elm.addClass('has-event');
+                                var events = elm.data('events');
+                                if (!events) events = [];
+                                events.push(event);
+                                elm.data('events', events);
                             }
                         });
                     });
