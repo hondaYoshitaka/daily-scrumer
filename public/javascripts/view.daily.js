@@ -565,6 +565,22 @@
                     roulette.addClass('no-member-roulette');
                 }
                 roulette.trigger('roulette-group.change');
+                $('#grouping-group-add-btn', roulette).show().click(function(){
+                    var btn =$(this).hide(),
+                        group = $('<ul/>').appendTo(groupArea)
+                        .groupingRouletteGroup();
+                    var w = group.width();
+                    group.css({
+                        'min-width':'auto',
+                        width:0
+                    }).animate({
+                            width:w
+                        }, 300,function(){
+                            group.removeAttr('style');
+                            btn.show();
+                        })
+
+                });
             })(CS.team.members);
 
             var shuffle = function () {

@@ -16,7 +16,6 @@
 @frameWidth: 20px;
 .photo-panel-container {
   position: relative;
-  margin-top: 50px;
   text-align: center;
 }
 
@@ -197,9 +196,6 @@
 .colored-group(@deg){
   @base:@blue;
   @color: spin(@base, @deg);
-  @back:lighten(@color, 30);
-  border-color:@color;
-  background-color:@back;
   .grouping-roulette-item {
     @item:darken(@color, 15);
     color:@white;
@@ -215,29 +211,78 @@
     }
   }
 }
+#grouping-section{
+  @corner:72px;
+  .border-radius(@corner);
+  .box-shadow(4px 4px 8px, 0.5);
+  #grouping-section-content{
+    border:20px solid @darkBrown;
+    .border-radius(@corner);
+    @back:darken(@green, 24);
+    background-color: @back;
+    .linear-gradient(310deg, @back, darken(@back,6));
+    padding: 20px;
+    color: @white;
+    .box-shadow(2px 2px 4px, 0.8, inset);
+  }
+  #grouping-section-title{
+    padding: 0 25px;
+    margin: 10px 0;
+  }
+  .round-btn{
+    right:10px;
+    top:10px;
+  }
+  #grouping-group-add-btn{
+    padding: 40px 5px;
+    .white-back(0.4);
+    .box-shadow(1px 1px 2px, 0.4);
+    .border-radius(2px);
+    color:fadeout(@black, 60);
 
+    font-size:1.5em;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    &:hover{
+      opacity: 1;
+      text-decoration: none;
+    }
+    &:active{
+      .box-shadow(none);
+      .white-back(0.3);
+    }
+    margin-top:5px;
+  }
+}
 
 .grouping-group {
   position: relative;
   padding: 5px 0;
   float: left;
-  margin: 0;
-  border:10px solid transparent;
+  margin: 5px;
+  border:5px solid @white;
   min-width:80px;
   min-height:80px;
-  .border-radius(2px);
-  .box-shadow(2px 2px 4px, 0.5, inset);
-  &:nth-child(4n) {
+  .border-radius(4px);
+  .box-shadow(1px 1px 2px, 0.2, inset);
+  &:nth-child(6n) {
     .colored-group(0);
   }
-  &:nth-child(4n+1) {
+  &:nth-child(6n+1) {
     .colored-group(60);
   }
-  &:nth-child(4n+2) {
+  &:nth-child(6n+2) {
     .colored-group(120);
   }
-  &:nth-child(4n+3) {
+  &:nth-child(6n+3) {
     .colored-group(180);
+  }
+  &:nth-child(6n+4) {
+    .colored-group(240);
+  }
+  &:nth-child(6n+5) {
+    .colored-group(300);
   }
 }
 
@@ -301,17 +346,17 @@
 }
 
 #grouping-absentee-area {
-  @back:lighten(@gray, 25);
-  margin-top: 10px;
+  @back:#423434;
+  margin: 10px 5px;
   padding: 10px 10px;
   background-color: @back;
-  border:1px solid darken(@white, 5);
+  border:1px solid darken(@green, 25);
   position:relative;
   min-height:30px;
   .box-shadow(5px 5px 10px, 0.8, inset);
-  .border-radius(4px);
+  .border-radius(8px);
   &.absentee-area-active {
-    background-color: lighten(@back, 50);
+    background-color: lighten(@back, 10);
   }
   &:after{
     .cover;

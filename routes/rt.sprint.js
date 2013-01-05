@@ -260,7 +260,7 @@ exports.update_days = function(req, res){
     if(!body._id){
         failJson(res);
         return;
-    };
+    }
     Sprint.findById(body._id, function(sprint){
         if (!sprint) {
             failJson(res);

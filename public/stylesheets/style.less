@@ -840,3 +840,38 @@ form{
   z-index: 2;
   top:0px;
 }
+
+.round-btn(@color){
+  @radius:30px;
+  .circle(@radius);
+  line-height: @radius * 2;
+  .box-shadow(1px 1px 2px, 0.4);
+  text-align:center;
+  padding: 0;
+  .radial-gradient(33%, 33%, @color, darken(@color, 20));
+  border-color:darken(@color, 33);
+  &:hover{
+    .box-shadow(2px 2px 3px, 0.5);
+    .radial-gradient(33%, 33%, lighten(@color, 4), darken(@color, 10));
+  }
+  &:active{
+    background-image:none;
+    background-color: darken(@color, 12);
+    color:@gray;
+    .box-shadow(none);
+    opacity: 1;
+  }
+  &.active,
+  &.active:hover,
+  &.active:active{
+    background-image: none;
+    .box-shadow(none);
+    background-color: darken(@color, 12);
+  }
+}
+.round-btn{
+  .round-btn(@white);
+  &.primary{
+    .round-btn(@yellow);
+  }
+}

@@ -183,15 +183,16 @@ block content
                 .name-plate
                     | #{label.keep_in_mind}
 
-    section#grouping-section.paper.inline.float-left
-        .paper-content.unselectable
-            h3.paper-title #{label.grouping}
+    section#grouping-section.inline.float-left
+        #grouping-section-content.unselectable.positioned
+            h1#grouping-section-title #{label.grouping}
             #grouping-roulette
-                #grouping-group-area
+                #grouping-group-area.float-left
+                a#grouping-group-add-btn.float-left +
                 br.clear
-                a.btn.stick-right.stick-top#grouping-shuffle-btn
+                a.btn.stick-right.stick-top#grouping-shuffle-btn.round-btn
                     | #{btn.shuffle}
-                a.btn.stick-right.stick-top#grouping-stop-btn.primary
+                a.btn.stick-right.stick-top#grouping-stop-btn.primary.round-btn
                     | #{btn.shuffle_stop}
                 #grouping-absentee-area
             .float-right
