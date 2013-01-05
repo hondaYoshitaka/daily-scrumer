@@ -112,7 +112,7 @@ exports.update.issue_statuses = function (req, res) {
         return;
     }
     Team.findById(body.team_id, function (team) {
-        if(!team) {
+        if (!team) {
             fail(res);
             return;
         }
@@ -122,7 +122,7 @@ exports.update.issue_statuses = function (req, res) {
             name:body.name,
             report_as:body.report_as
         });
-        team.update(function(){
+        team.update(function () {
             req.session.team = team;
             res.json({
                 success:true,
@@ -132,14 +132,14 @@ exports.update.issue_statuses = function (req, res) {
     });
 };
 
-exports.update.trackers = function(req, res){
+exports.update.trackers = function (req, res) {
     var body = req.body;
     if (!body.team_id) {
         fail(res);
         return;
     }
     Team.findById(body.team_id, function (team) {
-        if(!team) {
+        if (!team) {
             fail(res);
             return;
         }
@@ -149,7 +149,7 @@ exports.update.trackers = function(req, res){
             name:body.name,
             report_as:body.report_as
         });
-        team.update(function(){
+        team.update(function () {
             req.session.team = team;
             res.json({
                 success:true,
@@ -159,23 +159,23 @@ exports.update.trackers = function(req, res){
     });
 };
 
-exports.update.members = function(req, res){
+exports.update.members = function (req, res) {
     var body = req.body;
     var valid = body.team_id && body.members;
-    if(!valid){
+    if (!valid) {
         fail(res);
         return;
     }
-    Team.findById(body.team_id, function(team){
-        if(!team){
+    Team.findById(body.team_id, function (team) {
+        if (!team) {
             fail(res);
             return;
         }
         team.members = [];
-        body.members.forEach(function(data){
+        body.members.forEach(function (data) {
             team.members.push(new Member(data));
         });
-        team.update(function(){
+        team.update(function () {
             req.session.team = team;
             res.json({
                 success:true,

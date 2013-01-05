@@ -25,6 +25,28 @@
             'redmine_versions[]':{
                 label:'redmine sprint',
                 required:true
+            },
+            begin:{
+                label:'begin date',
+                required:true
+            },
+            end:{
+                label:'end date',
+                require:true
+            }
+        },
+        update_sprint_days:{
+            _id:{
+                label:'_id',
+                required:true
+            },
+            begin:{
+                label:'begin date',
+                required:true
+            },
+            end:{
+                label:'end date',
+                require:true
             }
         },
         new_member:{

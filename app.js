@@ -98,6 +98,7 @@ app.configure('development', function () {
     app.post('/sprint/new', r.sprint.new);
     app.post('/sprint/update', r.sprint.update);
     app.post('/sprint/update_keep_in_mind', r.sprint.update_keep_in_mind);
+    app.post('/sprint/update_days', r.sprint.update_days);
     app.post('/sprint/remove', r.sprint.remove);
 
     app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);

@@ -126,8 +126,30 @@ block content
                 | #{btn.bugs_to_hurry.see_more}
     br.clear
 
+    - if(sprint)
+        section#days-section.positioned
+            form(method='post', action='/sprint/update_days')
+                input(type='hidden',
+                    value=sprint._id,
+                    name='_id')
+                small.progress-bar-tip.stick-left
+                    input.short(type='text',
+                        name='begin',
+                        value=sprint.begin,
+                        data-role='date-input')
 
-    .etched-line
+                small.progress-bar-tip.stick-right
+                    input.short(value=sprint.end,
+                        name='end',
+                        value=sprint.end,
+                        data-role='date-input')
+
+            br.clear
+            small(data-role='progress-bar-tip').progress-bar-tip
+                | #{label.days.today}
+
+            #days-line
+
 
     section#keep-in-mind-section.inline.float-left
         .photo-panel-container

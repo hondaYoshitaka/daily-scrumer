@@ -822,3 +822,21 @@ form{
     border-top-width:0;
   }
 }
+
+@progressBarCorner:6px;
+.progress-bar{
+  .border-radius(@progressBarCorner);
+  height:14px;
+  .box-shadow(2px 2px 4px, 0.5, inset);
+}
+.progress-bar-filled{
+  .border-radius(@progressBarCorner);
+  @back:darken(@blue, 10);
+  .linear-gradient(@back, darken(@back, 10));
+  height: 100%;
+}
+.progress-bar-tip{
+  position: absolute;
+  z-index: 2;
+  top:0px;
+}

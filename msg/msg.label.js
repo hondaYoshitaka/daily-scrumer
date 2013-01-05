@@ -45,7 +45,13 @@ exports = module.exports = {
             title:'title',
             time:'time',
             detail:'detail'
+        },
+        days:{
+            begin:'begin',
+            today:'today',
+            end:'end'
         }
+
     },
     settings:{
         selected_team:'team',
@@ -72,6 +78,5 @@ exports = module.exports = {
             duration:'duration',
             redmine_sprint:'redmine sprint'
         }
-
     }
 };

@@ -234,16 +234,40 @@ exports.update = function (req, res) {
 /* スプリントの心がけを更新する */
 exports.update_keep_in_mind = function (req, res) {
     var body = req.body;
+    if(body._id){
+        failJson(res);
+        return;
+    }
     Sprint.findById(body._id, function (sprint) {
         if (!sprint) {
-            res.json({
-                success:false
-            });
+            failJson(res);
             return;
         }
         sprint.keep_in_mind_0 = body.keep_in_mind_0;
         sprint.keep_in_mind_1 = body.keep_in_mind_1;
         sprint.keep_in_mind_2 = body.keep_in_mind_2;
+        sprint.update(function () {
+            res.json({
+                success:true,
+                sprint:sprint
+            });
+        });
+    });
+};
+
+exports.update_days = function(req, res){
+    var body = req.body;
+    if(!body._id){
+        failJson(res);
+        return;
+    };
+    Sprint.findById(body._id, function(sprint){
+        if (!sprint) {
+            failJson(res);
+            return;
+        }
+        sprint.begin = body.begin;
+        sprint.end = body.end;
         sprint.update(function () {
             res.json({
                 success:true,

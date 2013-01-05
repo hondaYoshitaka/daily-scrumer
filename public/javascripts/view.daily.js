@@ -534,30 +534,29 @@
                 var tmpl = Handlebars.templates['tmpl.grouping-roulette-item'];
                 var groupArea = $('#grouping-group-area', roulette).empty();
                 if (members && members.length) {
-                    members.sort(function(a, b){
+                    members.sort(function (a, b) {
                         return Number(a.group) - Number(b.group);
                     }).forEach(function (data) {
-                        var group = $('.grouping-group:last', groupArea);
-                        var acceptable = group.size() && group.children().size() < 2;
-                        if (!acceptable) {
-                            group = $('<ul/>').appendTo(groupArea)
-                                .groupingRouletteGroup();
-                        }
-                        var item = $(tmpl(data)).appendTo(group)
-                            .groupingRouletteItem(data);
+                            var group = $('.grouping-group:last', groupArea);
+                            var acceptable = group.size() && group.children().size() < 2;
+                            if (!acceptable) {
+                                group = $('<ul/>').appendTo(groupArea)
+                                    .groupingRouletteGroup();
+                            }
+                            var item = $(tmpl(data)).appendTo(group)
+                                .groupingRouletteItem(data);
 
-                            console.log(data.absent, 'data.absent');
-                        if (data.absent) {
-                            item
-                                .addClass('grouping-roulette-item-absent')
-                                .appendTo(absenteeArea);
-                        }
-                    });
+                            if (data.absent) {
+                                item
+                                    .addClass('grouping-roulette-item-absent')
+                                    .appendTo(absenteeArea);
+                            }
+                        });
                     var group = $('.grouping-group', groupArea);
-                    $('.grouping-roulette-item', groupArea).each(function(){
+                    $('.grouping-roulette-item', groupArea).each(function () {
                         var item = $(this),
                             groupIndex = $('form', item).findByName('group').val();
-                        if(groupIndex){
+                        if (groupIndex) {
                             group.eq(Number(groupIndex) - 1).append(item);
                         }
                     });
@@ -633,7 +632,7 @@
                     var data = {};
                     data.team_id = CS.team._id;
                     data.members = [];
-                    group.each(function(){
+                    group.each(function () {
                         var group = $(this),
                             index = group.data('index');
                         $('form', group).findByName('group').val(index);
@@ -710,6 +709,50 @@
             date.setDate(d);
             date.setHours(0);
             return date;
+        },
+        progressBar:function (rate) {
+            var bar = $(this).addClass('progress-bar'),
+                width = bar.width();
+            bar.empty();
+            $('<div/>')
+                .addClass('progress-bar-filled')
+                .appendTo(bar)
+                .width(0)
+                .animate({
+                    width:width * rate
+                });
+            return bar;
+        },
+        daysSection:function () {
+            var section = $(this);
+            var rate = (function(sprint){
+                var begin = new Date(sprint.begin),
+                    today = CS.today,
+                    end = new Date(sprint.end);
+                if((end - begin) == 0) return 1;
+                return (today - begin) / (end - begin);
+            })(CS.sprint);
+            var progressBar = $('#days-line', section).progressBar(rate);
+            var form = $('form', section);
+            form
+                .findByRole('date-input')
+                .dateInput()
+                .editableText()
+                .change(function(){
+                    form.submit();
+                });
+            form
+                .ajaxForm(function(data){
+
+                })
+                .submit(function(e){
+                e.preventDefault();
+            });
+            section.findByRole('progress-bar-tip')
+                .css({
+                    left:progressBar.width() * rate
+                })
+            return section;
         }
     });
     $(function () {
@@ -728,7 +771,8 @@
 
         $('#traffic-light-section', body).trafficLightSection();
 
-        //$('.odc-board').trigger('click');//TODO remove
+
+        $('#days-section', body).daysSection();
 
 
     });

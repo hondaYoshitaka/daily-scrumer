@@ -560,3 +560,15 @@
 #new-event-input-dialog{
 
 }
+
+#days-section{
+  padding:10px 0;
+}
+#days-line{
+  background-color: fadeout(@darkBrown, 80);
+  .box-shadow(3px 3px 6px, 0.8, inset);
+  .progress-bar-filled{
+    @back:@brown;
+    .linear-gradient(@back, darken(@back, 10));
+  }
+}
