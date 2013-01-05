@@ -194,62 +194,54 @@
   padding: 20px;
 }
 
-.colored-item(@deg) {
-  @base: spin(@blue, @deg);
-  @back: @base;
-  @border: fadeout(@base, 80);
-  @color: @white;
-  background-color: @back;
-  .linear-gradient(@back, darken(@back, 15));
-  color: @color;
-  border-color: @border;
-  &.highlight {
-    .blink; //    background-color: fadeout(@color, 40);
-  //    color:@white;
-  //    border-color:@border;
-  }
-  .inner {
-    background-color: lighten(@back, 5);
-  }
-  .part {
-    background-color: lighten(@back, 25);
+.colored-group(@deg){
+  @color: spin(@blue, @deg);
+  @back:lighten(@color, 30);
+  border-color:@color;
+  background-color:@back;
+  .grouping-roulette-item {
+    @item:darken(@color, 15);
+    color:@white;
+    .linear-gradient(@item, darken(@item, 15));
+    .inner {
+      background-color: darken(@item, 2);
+    }
+    .part {
+      background-color: @white;
+    }
+    &.highlight{
+      .blink;
+    }
   }
 }
+
 
 .grouping-group {
   position: relative;
-  padding: 0;
+  padding: 5px 0;
   float: left;
   margin: 0;
-}
-
-.grouping-group-grouped {
+  border:10px solid transparent;
+  min-width:80px;
+  min-height:80px;
+  .border-radius(2px);
+  .box-shadow(2px 2px 4px, 0.5, inset);
   &:nth-child(4n) {
-    .grouping-roulette-item {
-      .colored-item(0);
-    }
+    .colored-group(0);
   }
   &:nth-child(4n+1) {
-    .grouping-roulette-item {
-      .colored-item(45);
-    }
+    .colored-group(60);
   }
   &:nth-child(4n+2) {
-    .grouping-roulette-item {
-      .colored-item(90);
-    }
+    .colored-group(120);
   }
   &:nth-child(4n+3) {
-    .grouping-roulette-item {
-      .colored-item(135);
-    }
+    .colored-group(180);
   }
 }
 
 .grouping-group-active {
-  .grouping-roulette-item {
-    .blink;
-  }
+  .blink;
 }
 
 .grouping-roulette-item {
@@ -308,19 +300,38 @@
 }
 
 #grouping-absentee-area {
+  @back:lighten(@gray, 25);
   margin-top: 10px;
-  padding: 5px 10px;
-  border: 1px solid @gray;
+  padding: 10px 10px;
+  background-color: @back;
+  border:1px solid darken(@white, 5);
+  position:relative;
+  min-height:30px;
+  .box-shadow(5px 5px 10px, 0.8, inset);
+  .border-radius(4px);
+  &.absentee-area-active {
+    background-color: lighten(@back, 50);
+  }
+  &:after{
+    .cover;
+    content: "absentee";
+    font-size: 3em;
+    text-align: center;
+    z-index: 0;
+    font-weight: bold;
+    opacity: 0.15;
+    font-style: italic;
+  }
 }
 
 .grouping-roulette-item-absent {
   display: inline-block;
   text-decoration: line-through;
+  position: relative;
+  z-index: 2;
 }
 
-.absentee-area-active {
-  background-color: lighten(@yellow, 40);
-}
+
 .ui-datepicker.ui-widget-content{
   .box-shadow(none);
   background-color: transparent;

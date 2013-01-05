@@ -478,24 +478,28 @@
         groupingRouletteGroup:function () {
             return $(this).each(function () {
                 var ul = $(this);
-                ul.droppable({
-                    hoverClass:'grouping-group-active',
-                    accept:'.grouping-roulette-item',
-                    drop:function (e, ui) {
-                        var item = $(ui.draggable.get(0));
-                        var isSelf = item.parent().is(ul);
-                        if (isSelf) return;
-                        var data = item.data('data');
-                        item
-                            .remove()
-                            .clone()
-                            .appendTo(ul)
-                            .groupingRouletteItem(data)
-                            .removeClass('grouping-roulette-item-absent')
-                            .findByName('absent').val(false);
-                        ul.trigger('roulette-group.change');
-                    }
-                });
+                var index = ul.siblings('.grouping-group').size() + 1;
+                ul
+                    .attr('data-index', index)
+                    .droppable({
+                        hoverClass:'grouping-group-active',
+                        accept:'.grouping-roulette-item',
+                        drop:function (e, ui) {
+                            var item = $(ui.draggable.get(0));
+                            var isSelf = item.parent().is(ul);
+                            if (isSelf) return;
+                            var data = item.data('data');
+                            item = item
+                                .remove()
+                                .clone()
+                                .appendTo(ul)
+                                .groupingRouletteItem(data)
+                                .removeClass('grouping-roulette-item-absent');
+                            item.findByName('absent').val('false');
+                            item.findByName('group').val(index);
+                            ul.trigger('roulette-group.change');
+                        }
+                    });
                 ul.trigger('roulette-group.change');
             }).addClass('grouping-group');
         },
@@ -507,13 +511,14 @@
                 drop:function (e, ui) {
                     var item = $(ui.draggable.get(0)),
                         data = item.data('data');
-                    item
+                    item = item
                         .remove()
                         .clone()
                         .appendTo(area)
                         .groupingRouletteItem(data)
-                        .addClass('grouping-roulette-item-absent')
-                        .findByName('absent').val(true);
+                        .addClass('grouping-roulette-item-absent');
+                    item.findByName('absent').val('true');
+                    item.findByName('group').val('');
                     area.trigger('roulette-group.change');
                 }
             });
@@ -525,31 +530,35 @@
 
             absenteeArea.groupingAbsenteeArea();
 
-            function newGroup() {
-                return $('<ul/>').prependTo(roulette)
-                    .groupingRouletteGroup();
-            }
-
-            function isGroupFull(group) {
-                return group.children().size() >= 2;
-            }
-
             (function (members) {
                 var tmpl = Handlebars.templates['tmpl.grouping-roulette-item'];
-                $('.grouping-group', roulette).remove();
-                var group = newGroup();
+                var groupArea = $('#grouping-group-area', roulette).empty();
                 if (members && members.length) {
-                    members.forEach(function (data) {
-                        if (isGroupFull(group)) {
-                            group = newGroup();
+                    members.sort(function(a, b){
+                        return Number(a.group) - Number(b.group);
+                    }).forEach(function (data) {
+                        var group = $('.grouping-group:last', groupArea);
+                        var acceptable = group.size() && group.children().size() < 2;
+                        if (!acceptable) {
+                            group = $('<ul/>').appendTo(groupArea)
+                                .groupingRouletteGroup();
                         }
                         var item = $(tmpl(data)).appendTo(group)
                             .groupingRouletteItem(data);
 
+                            console.log(data.absent, 'data.absent');
                         if (data.absent) {
                             item
                                 .addClass('grouping-roulette-item-absent')
                                 .appendTo(absenteeArea);
+                        }
+                    });
+                    var group = $('.grouping-group', groupArea);
+                    $('.grouping-roulette-item', groupArea).each(function(){
+                        var item = $(this),
+                            groupIndex = $('form', item).findByName('group').val();
+                        if(groupIndex){
+                            group.eq(Number(groupIndex) - 1).append(item);
                         }
                     });
                     roulette.removeClass('no-member-roulette');
@@ -567,7 +576,7 @@
                 item.appendTo(roulette);
                 var index = 0;
                 item.randomEach(function (i, item) {
-                    var isFull = isGroupFull(group.eq(index));
+                    var isFull = group.eq(index).children().size() >= 2;
                     if (isFull) {
                         index++;
                     }
@@ -616,13 +625,19 @@
             var availableCount = $('#availabel-group-count');
             roulette
                 .on('roulette-group.change', function () {
-                    console.log('roulette-group.change');
-                    var count = $('.grouping-group').not(':empty').size();
+
+                    var group = $('.grouping-group').not(':empty');
+                    var count = group.size();
                     availableCount.text(count);
 
                     var data = {};
                     data.team_id = CS.team._id;
                     data.members = [];
+                    group.each(function(){
+                        var group = $(this),
+                            index = group.data('index');
+                        $('form', group).findByName('group').val(index);
+                    });
                     roulette.find('form').each(function () {
                         var form = $(this);
                         data.members.push(form.serializeObj());
