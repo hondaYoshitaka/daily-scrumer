@@ -289,6 +289,29 @@ exports.remove = function (req, res) {
     });
 };
 
+exports.update_work_hours = function(req, res){
+    var body = req.body;
+    var valid = body._id && body.day && body.work_hours;
+    if(!valid){
+        failJson(res);
+        return;
+    }
+    Sprint.findById(body._id, function(sprint){
+        if (!sprint) {
+            failJson(res);
+            return;
+        }
+        var day = util.date.UTC.truncateHours(new Date(body.day));
+        sprint.work_hours[day] = body.work_hours;
+        sprint.update(function () {
+            res.json({
+                success:true,
+                sprint:sprint
+            });
+        });
+    });
+};
+
 
 exports.in_hurry_bugs = function (req, res) {
     var sprint = req.query.sprint,

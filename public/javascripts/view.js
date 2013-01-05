@@ -529,8 +529,9 @@ var CS = {};
 
         body.ajaxError(function (e, req, setting, err) {
             if(req.status){
-                alert(req.statusCode() + 'something is wrong!');
-                console.error('[ajax err]', req.statusCode, err);
+                var statusCode = req.statusCode();
+                alert(statusCode + 'something is wrong!');
+                console.error('[ajax err]', statusCode, err);
             }
         });
     });

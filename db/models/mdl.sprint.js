@@ -5,17 +5,17 @@
 var util = require('../../util'),
     Model = require('./mdl.prototype.js');
 
-var Sprint = exports = module.exports = function(data){
+var Sprint = exports = module.exports = function (data) {
     var s = this;
     util.obj.deepCopy(s.defaultValue, s);
     util.obj.deepCopy(data, s);
     s.number = parseInt(s.number || 0, 10);
-    if(!s.redmine_versions) s.redmine_versions = [];
+    if (!s.redmine_versions) s.redmine_versions = [];
 };
 
-(function(Prototype){
+(function (Prototype) {
     Sprint.prototype = new Prototype();
-    for(var name in Prototype){
+    for (var name in Prototype) {
         if (!Prototype.hasOwnProperty(name)) continue;
         Sprint[name] = Prototype[name];
     }
@@ -40,14 +40,17 @@ Sprint.prototype.defaultValue = {
     /* スプリントでの心がけ */
     keep_in_mind_1:null,
     /* スプリントでの心がけ */
-    keep_in_mind_2:null
+    keep_in_mind_2:null,
+
+    /* 労働実績 日付がキー、労働時間が値に入る */
+    work_hours:{
+
+    }
 };
 
 
-
-
 /* チーム名での検索 */
-Sprint.findByTeamName = function(team_name, callback){
+Sprint.findByTeamName = function (team_name, callback) {
     var s = this;
     return s.findByCondition({
         team_name:team_name
@@ -55,9 +58,9 @@ Sprint.findByTeamName = function(team_name, callback){
 };
 
 /* チーム名検索で、最新のものを取得する */
-Sprint.findLatestByTeam = function(team_name, callback){
+Sprint.findLatestByTeam = function (team_name, callback) {
     var s = this;
-    return s.findByTeamName(team_name, function(data){
+    return s.findByTeamName(team_name,function (data) {
         callback.call(s, data && data.length && data[0] || null);
     }).sort({number:-1}).limit(1);
 

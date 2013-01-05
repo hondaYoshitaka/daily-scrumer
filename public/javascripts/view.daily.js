@@ -565,17 +565,17 @@
                     roulette.addClass('no-member-roulette');
                 }
                 roulette.trigger('roulette-group.change');
-                $('#grouping-group-add-btn', roulette).show().click(function(){
-                    var btn =$(this).hide(),
+                $('#grouping-group-add-btn', roulette).show().click(function () {
+                    var btn = $(this).hide(),
                         group = $('<ul/>').appendTo(groupArea)
-                        .groupingRouletteGroup();
+                            .groupingRouletteGroup();
                     var w = group.width();
                     group.css({
                         'min-width':'auto',
                         width:0
                     }).animate({
                             width:w
-                        }, 300,function(){
+                        }, 300, function () {
                             group.removeAttr('style');
                             btn.show();
                         })
@@ -637,13 +637,24 @@
             }).hide();
 
 
-            var availableCount = $('#availabel-group-count')
-                .text($('.grouping-group').not(':empty').size());
+
+
+            return roulette;
+        },
+        groupingSection:function () {
+            var section = $(this);
+
+            var roulette = $('#grouping-roulette', section)
+                .groupingRoulette();
+
+
+            var availableCount = $('#availabel-group-count', workHourForm)
+                .text($('.grouping-group', roulette).not(':empty').size());
             roulette
                 .on('roulette-group.change', function () {
-
-                    var group = $('.grouping-group').not(':empty');
-                    availableCount.text(group.size());
+                    var group = $('.grouping-group', roulette).not(':empty'),
+                        groupCount = group.size();
+                    availableCount.text(groupCount);
 
                     var data = {};
                     data.team_id = CS.team._id;
@@ -664,14 +675,28 @@
                             console.error('failed to update roulette-group');
                         }
                     });
+                    workHourForm.submit();
                 });
-            return roulette;
-        },
-        groupingSection:function () {
-            var section = $(this);
-
-            var roulette = $('#grouping-roulette', section)
-                .groupingRoulette();
+            var workHourForm = $('#work-hour-form', section).submit(function (e) {
+                var form = $(this),
+                    hour = form.findByName('hour').val(),
+                    group = $('.grouping-group', roulette).not(':empty'),
+                    groupCount = group.size();
+                $.post('/sprint/update_work_hours', {
+                    _id:CS.sprint._id,
+                    day:CS.today,
+                    work_hours:groupCount * Number(hour)
+                }, function(data){
+                    if(data.success){
+                        CS.sprint = data.sprint;
+                    } else {
+                        console.error('failed to update work hours');
+                    }
+                });
+                e.preventDefault();
+            }).find('input').change(function () {
+                    workHourForm && workHourForm.submit();
+                });
             return section;
         },
         trafficLightSection:function () {
@@ -741,11 +766,11 @@
         },
         daysSection:function () {
             var section = $(this);
-            var rate = (function(sprint){
+            var rate = (function (sprint) {
                 var begin = new Date(sprint.begin),
                     today = CS.today,
                     end = new Date(sprint.end);
-                if((end - begin) == 0) return 1;
+                if ((end - begin) == 0) return 1;
                 return (today - begin) / (end - begin);
             })(CS.sprint);
             var progressBar = $('#days-line', section).progressBar(rate);
@@ -754,16 +779,16 @@
                 .findByRole('date-input')
                 .dateInput()
                 .editableText()
-                .change(function(){
+                .change(function () {
                     form.submit();
                 });
             form
-                .ajaxForm(function(data){
+                .ajaxForm(function () {
 
                 })
-                .submit(function(e){
-                e.preventDefault();
-            });
+                .submit(function (e) {
+                    e.preventDefault();
+                });
             section.findByRole('progress-bar-tip')
                 .css({
                     left:progressBar.width() * rate
@@ -775,21 +800,14 @@
         var body = $(document.body);
 
         $('#head-nav', body).nav('daily');
-
-
         $('#bugs-section', body).bugsSection(CS.sprint);
         $('#task-section', body).taskSection(CS.sprint);
         $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
-
         $('#keep-in-mind-section', body).keepInMindSection();
         $('#calendar-section', body).calendarSection();
         $('#grouping-section', body).groupingSection();
-
         $('#traffic-light-section', body).trafficLightSection();
-
-
         $('#days-section', body).daysSection();
-
 
     });
 })(jQuery);
