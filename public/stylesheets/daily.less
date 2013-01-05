@@ -617,3 +617,29 @@
     .linear-gradient(@back, darken(@back, 10));
   }
 }
+
+#sandglass-section{
+  padding: 20px 20px 0;
+  .box-shadow(5px 5px 10px, 0.4, inset);
+  @back:fadeout(#FEFEFD, 70);
+  @dark:darken(@back, 60);
+  .linear-gradient(0deg, @dark, @dark, darken(@back, 20));
+  .border-radius(2px);
+  position: relative;
+  overflow:hidden;
+  &:after{
+    .cover;
+    top:auto;
+    bottom:-1px;
+    height: 1px;
+    .box-shadow(-4px 0 10px, 0.89);
+    z-index: 101;
+  }
+  &:before{
+    .cover;
+    width:1px;
+    left:auto;
+    right:-1px;
+    .box-shadow(0 -4px 10px, 0.9);
+  }
+}
