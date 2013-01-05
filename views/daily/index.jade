@@ -4,6 +4,7 @@ extends ../layout
 block stylesheet
     link(rel='stylesheet', href=url.css('jquery.one-day-calendar.css'))
     link(rel='stylesheet', href=url.css('jquery.contextMenu.css'))
+    link(rel='stylesheet', href=url.css('jquery.sandglass.css'))
     link(rel='stylesheet', href=url.css('daily.css'))
 
 block javascript
@@ -11,6 +12,7 @@ block javascript
     script(src=url.js('jquery.rate-circle.js'))
     script(src=url.js('jquery.one-day-calendar.js'))
     script(src=url.js('jquery.contextMenu.js'))
+    script(src=url.js('jquery.sandglass.js'))
     script(src=url.js('view.daily.js'))
     script
         CS.sprint = !{JSON.stringify(sprint)};
@@ -124,6 +126,9 @@ block content
                     target='_blank'
                 )
                 | #{btn.bugs_to_hurry.see_more}
+
+    section#sandglass-section.float-left
+
     br.clear
 
     - if(sprint)

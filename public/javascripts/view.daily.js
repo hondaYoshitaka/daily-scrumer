@@ -829,5 +829,7 @@
         $('#traffic-light-section', body).trafficLightSection();
         $('#days-section', body).daysSection();
 
+        $('#sandglass-section', body).sandglass();
+
     });
 })(jQuery);
