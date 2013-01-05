@@ -195,12 +195,8 @@ block content
                 a.btn.stick-right.stick-top#grouping-stop-btn.primary.round-btn
                     | #{btn.shuffle_stop}
                 #grouping-absentee-area
-            .float-right
-    section#availabel-group-section.paper.inline.float-left
-        .paper-content
-            h3.paper-title #{label.available_group}
-            .number-data
-                span#availabel-group-count.extra-large.italic.suffix-group
+            #available-group-from.float-right
+                span#availabel-group-count.italic.suffix-group
                 | ×
                 span.suffix-hour
                     input.shortest(
@@ -210,6 +206,7 @@ block content
                         max='8',
                         min='0'
                     )
+            br.clear
     br.clear
     br
     .etched-line

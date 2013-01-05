@@ -637,13 +637,13 @@
             }).hide();
 
 
-            var availableCount = $('#availabel-group-count');
+            var availableCount = $('#availabel-group-count')
+                .text($('.grouping-group').not(':empty').size());
             roulette
                 .on('roulette-group.change', function () {
 
                     var group = $('.grouping-group').not(':empty');
-                    var count = group.size();
-                    availableCount.text(count);
+                    availableCount.text(group.size());
 
                     var data = {};
                     data.team_id = CS.team._id;
