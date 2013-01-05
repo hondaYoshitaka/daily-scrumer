@@ -22,6 +22,11 @@
         return times;
     })(8, 20);
 
+    CS.isSameDay = function (day1, day2) {
+        return  day1.getYear() === day2.getYear()
+            && day1.getMonth() === day2.getMonth()
+            && day1.getDate() === day2.getDate();
+    }
 
     Array.prototype.shuffle = function () {
         var s = this;
@@ -637,8 +642,6 @@
             }).hide();
 
 
-
-
             return roulette;
         },
         groupingSection:function () {
@@ -685,18 +688,35 @@
                 $.post('/sprint/update_work_hours', {
                     _id:CS.sprint._id,
                     day:CS.today,
-                    work_hours:groupCount * Number(hour)
-                }, function(data){
-                    if(data.success){
+                    work_hours:{
+                        group:groupCount,
+                        hour:Number(hour),
+                        total:groupCount * Number(hour)
+                    }
+                }, function (data) {
+                    if (data.success) {
                         CS.sprint = data.sprint;
                     } else {
                         console.error('failed to update work hours');
                     }
                 });
                 e.preventDefault();
-            }).find('input').change(function () {
-                    workHourForm && workHourForm.submit();
+            });
+            workHourForm.find('input').change(function () {
+                workHourForm && workHourForm.submit();
+            });
+
+            (function (work_hours) {
+                if (!work_hours) return;
+                Object.keys(work_hours).forEach(function (utc) {
+                    var date = new Date(Number(utc));
+                    var isSameDay = CS.isSameDay(CS.today, date);
+                    if (isSameDay) {
+                        var hour = work_hours[utc].hour;
+                        workHourForm.findByName('hour').val(hour);
+                    }
                 });
+            })(CS.sprint.work_hours)
             return section;
         },
         trafficLightSection:function () {
