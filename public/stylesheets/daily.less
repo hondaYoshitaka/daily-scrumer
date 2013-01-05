@@ -195,7 +195,8 @@
 }
 
 .colored-group(@deg){
-  @color: spin(@blue, @deg);
+  @base:@blue;
+  @color: spin(@base, @deg);
   @back:lighten(@color, 30);
   border-color:@color;
   background-color:@back;
