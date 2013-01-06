@@ -182,7 +182,7 @@
   max-width: none;
 }
 
-#top-line {
+#top-line,#days-section {
   margin-right: 300px;
 }
 
@@ -365,7 +365,7 @@
     text-align: center;
     z-index: 0;
     font-weight: bold;
-    opacity: 0.15;
+    opacity: 0.1;
     font-style: italic;
   }
 }
@@ -605,17 +605,85 @@
 #new-event-input-dialog{
 
 }
-
+#current-sprint-title{
+  margin-bottom: 0;
+}
 #days-section{
-  padding:10px 0;
+  padding:5px 0 30px;
+  margin-top:0;
+  margin-bottom:0;
+  margin-left:5px;
+  .progress-bar-tip{
+    top:20px;
+    text-align: center;
+  }
+  .progress-bar-tip-arrow{
+    @size:8px;
+    @color:fadeout(@black, 10);
+    border-style: solid;
+    border-width:0 @size @size;
+    border-color: transparent transparent @color;
+    display: block;
+    .square(0);
+    margin: 0 auto;
+  }
+  .progress-bar-tip-start,
+  .progress-bar-tip-end{
+    top: 22px;
+//    opacity: 0;
+  }
+  &:hover{
+    .progress-bar-tip-start,
+    .progress-bar-tip-end{
+      opacity: 1;
+    }
+  }
+  .progress-bar-tip-start{
+    left: -30px;
+  }
+  .progress-bar-tip-end{
+    right: -30px;
+  }
 }
 #days-line{
-  background-color: fadeout(@darkBrown, 80);
-  .box-shadow(3px 3px 6px, 0.8, inset);
   .progress-bar-filled{
     @back:@brown;
     .linear-gradient(@back, darken(@back, 10));
+    height: 2px;
   }
+  height: 1px;
+  background-color: darken(@brown, 5);
+  .box-shadow(0 1px 0 rgba(255,255,255,0.6));
+  position: relative;
+  &:before,&:after{
+    .cover;
+    width: 1px;
+    @height:12px;
+    height: @height;
+    top: @height / 2 * -1 + 1;
+    background-color: darken(@brown, 5);
+  }
+  &:before{
+    width:2px;
+  }
+  &:after{
+    .box-shadow(1px 0 0 rgba(255,255,255,0.6));
+    left: auto;
+    right: 0;
+  }
+}
+#days-line-head-arrow{
+  float: right;
+  margin-top: 5px;
+  z-index: 200;
+  position: relative;
+  @size:6px;
+  @color:fadeout(@black, 3);
+  border-style: solid;
+  border-width:@size 0 @size @size;
+  border-color: transparent transparent transparent @color;
+  display: block;
+  .square(0);
 }
 
 #sandglass-section{
@@ -641,5 +709,13 @@
     left:auto;
     right:-1px;
     .box-shadow(0 -4px 10px, 0.9);
+  }
+}
+#bug-to-hurry-list{
+  padding-left:20px;
+  margin:0;
+  a{
+    color:@white;
+    .text-shadow(1px 1px 2px, 0.5);
   }
 }

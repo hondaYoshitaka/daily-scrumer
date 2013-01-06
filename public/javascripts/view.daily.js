@@ -809,9 +809,11 @@
                 .submit(function (e) {
                     e.preventDefault();
                 });
-            section.findByRole('progress-bar-tip')
+
+            var tip = section.findByRole('progress-bar-tip');
+            tip
                 .css({
-                    left:progressBar.width() * rate
+                    left:progressBar.width() * rate - (tip.width() / 2)
                 })
             return section;
         }

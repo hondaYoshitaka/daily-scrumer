@@ -23,7 +23,7 @@ block content
     - var label = msg.label.daily;
     - var btn = msg.btn.daily;
 
-    section#calendar-section.float-right.positioned
+    section#calendar-section.float-right.positioned.no-margin
         #one-day-calendar.cover(data-role='date-display')
         #calendar.calendar.positioned
         menu#calendar-context-menu.hidden(type='context')
@@ -63,95 +63,98 @@ block content
                 .traffic-light.traffic-light-green(data-role='traffic-light')
                 .traffic-light.traffic-light-yellow(data-role='traffic-light')
                 .traffic-light.traffic-light-red.on(data-role='traffic-light')
-    .etched-line#top-line
-    br
-
-
-    section#task-section.paper.float-left(data-trackers=trackers.task)
-        .paper-content
-            h3.paper-title
-                | #{label.tasks}
-            span.rate-box.float-right.positioned
-                #task-done-rate-circle.rate-circle
-                span#task-done-rate.suffix-rate.rate-number
-            table
-                tr
-                    th #{label.task_time.estimated}
-                    td.number-data
-                        span(data-key='estimated').suffix-hour
-                tr
-                    th #{label.task_time.remain}
-                    td.number-data
-                        span(data-key='remain').suffix-hour
-                tr
-                    th #{label.task_time.consumed}
-                    td.number-data
-                        span(data-key='consumed').suffix-hour
-
-
-
-
-
-    section#bugs-section.paper.float-left(data-trackers=trackers.bug)
-        .paper-content
-            h3.paper-title
-                | #{label.bugs}
-            span.rate-box.float-right.positioned
-                #bug-done-rate-circle.rate-circle
-                span#bug-done-rate.suffix-rate.rate-number
-            table
-                tr
-                    th #{label.bug_count.open}
-                    td.number-data
-                        span(data-key='open').suffix-ticket
-                tr
-                    th #{label.bug_count.modified}
-                    td.number-data
-                        span(data-key='modified').suffix-ticket
-                tr
-                    th #{label.bug_count.done}
-                    td.number-data
-                        span(data-key='done').suffix-ticket
-
-    section#bug-to-hurry-section.paper.float-left
-        .paper-content
-            h3.paper-title
-                | #{label.bug_to_hurry}
-            ul#bug-to-hurry-list
-            br
-            a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
-                    target='_blank'
-                )
-                | #{btn.bugs_to_hurry.see_more}
-
-
-
-    br.clear
-
     - if(sprint)
         section#days-section.positioned
+            #days-line-head-arrow
             form(method='post', action='/sprint/update_days')
                 input(type='hidden',
                     value=sprint._id,
                     name='_id')
-                small.progress-bar-tip.stick-left
+                small.progress-bar-tip.stick-left.progress-bar-tip-start.etched
+                    | #{label.days.begin}
+                    br
                     input.short(type='text',
                         name='begin',
                         value=sprint.begin,
                         data-role='date-input')
 
-                small.progress-bar-tip.stick-right
+                small.progress-bar-tip.stick-right.progress-bar-tip-end.etched
+                    | #{label.days.end}
+                    br
                     input.short(value=sprint.end,
                         name='end',
                         value=sprint.end,
                         data-role='date-input')
 
-            br.clear
+            span.clear
             small(data-role='progress-bar-tip').progress-bar-tip
+                .progress-bar-tip-arrow
                 | #{label.days.today}
 
             #days-line
 
+        br
+    - else
+        .etched-line#top-line
+
+    br.clear
+
+    fieldset.inline-fieldset.float-left
+        legend #{label.report}
+        section#task-section.paper.float-left(data-trackers=trackers.task)
+            .paper-content
+                h3.paper-title
+                    | #{label.tasks}
+                span.rate-box.float-right.positioned
+                    #task-done-rate-circle.rate-circle
+                    span#task-done-rate.suffix-rate.rate-number
+                table
+                    tr
+                        th #{label.task_time.estimated}
+                        td.number-data
+                            span(data-key='estimated').suffix-hour
+                    tr
+                        th #{label.task_time.remain}
+                        td.number-data
+                            span(data-key='remain').suffix-hour
+                    tr
+                        th #{label.task_time.consumed}
+                        td.number-data
+                            span(data-key='consumed').suffix-hour
+
+        section#bugs-section.paper.float-left(data-trackers=trackers.bug)
+            .paper-content
+                h3.paper-title
+                    | #{label.bugs}
+                span.rate-box.float-right.positioned
+                    #bug-done-rate-circle.rate-circle
+                    span#bug-done-rate.suffix-rate.rate-number
+                table
+                    tr
+                        th #{label.bug_count.open}
+                        td.number-data
+                            span(data-key='open').suffix-ticket
+                    tr
+                        th #{label.bug_count.modified}
+                        td.number-data
+                            span(data-key='modified').suffix-ticket
+                    tr
+                        th #{label.bug_count.done}
+                        td.number-data
+                            span(data-key='done').suffix-ticket
+        br.clear
+
+
+    fieldset.positioned.float-left
+        legend.etched
+            | #{label.bug_to_hurry}
+        section#bug-to-hurry-section.float-left
+                ul#bug-to-hurry-list
+                br
+                a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
+                target='_blank'
+                )
+                    | #{btn.bugs_to_hurry.see_more}
 
     section#keep-in-mind-section.inline.float-left
         .photo-panel-container

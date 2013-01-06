@@ -15,9 +15,10 @@ exports = module.exports = {
     },
     daily:{
         bugs:'bugs',
+        report:'report',
         tasks:'task time',
         grouping:'grouping',
-        bug_to_hurry:'bug to hurry',
+        bug_to_hurry:'hot bugs',
         events:'events',
         keep_in_mind:'Trial for this sprint',
         task_time:{
@@ -47,7 +48,7 @@ exports = module.exports = {
             detail:'detail'
         },
         days:{
-            begin:'begin',
+            begin:'start',
             today:'today',
             end:'end'
         }
