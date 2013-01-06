@@ -391,7 +391,7 @@
                         CS.team = data.team;
                         form.emptyForm();
                         $('#new-routine-cancel-btn').trigger('click');
-                        create && create.call(dialog, CS.team);
+                        create && create.call(dialog, data.routine);
                     } else {
                         console.error('failed to save new routine')
                     }
@@ -417,8 +417,11 @@
                 }));
                 daySelectWrapper.append(daySelect);
                 daySelect
-                    .val(daySelect.data('value'))
-                    .selectableLabel();
+                    .val(daySelectWrapper.data('value'))
+                    .selectableLabel()
+                    .change(function () {
+                        form.submit();
+                    });
 
                 form.submit(function (e) {
                     e.preventDefault();
@@ -438,6 +441,9 @@
                 listItem:Handlebars.templates['tmpl.routine-list-item']
             }
             $('#new-routine-input-dialog').routineInputDialog(function (data) {
+                $(tmpl.listItem(data))
+                    .appendTo(routineList)
+                    .routineListItem();
             });
 
             var routineList = $('#routine-list', section);

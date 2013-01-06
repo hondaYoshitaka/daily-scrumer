@@ -233,7 +233,8 @@ exports.update.routine.add = function (req, res) {
             req.session.team = team;
             res.json({
                 success:true,
-                team:team
+                team:team,
+                routine:routine
             });
         });
     });
