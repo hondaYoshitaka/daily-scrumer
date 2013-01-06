@@ -371,7 +371,7 @@
 
             return pane;
         },
-        routineInputDialog:function(create){
+        routineInputDialog:function (create) {
             var dialog = $(this),
                 form = $('#new-routine-form', dialog);
 
@@ -387,17 +387,34 @@
             form
                 .validationForm('new_routine')
                 .ajaxForm(function (data) {
-                    if(data.success){
+                    if (data.success) {
                         CS.team = data.team;
                         form.emptyForm();
                         $('#new-routine-cancel-btn').trigger('click');
-                        create && create.call(dialog);
+                        create && create.call(dialog, CS.team);
                     } else {
                         console.error('failed to save new routine')
                     }
                 });
-            return dialog.popupDialog(function(){
+            return dialog.popupDialog(function () {
 
+            });
+        },
+        routineListItem:function () {
+            return $(this).each(function () {
+                var li = $(this),
+                    form = $('form', li);
+
+                form.findByRole('editable-text')
+                    .editableText();
+                form.submit(function (e) {
+                    e.preventDefault();
+                    form.trigger('update-routine-list');
+                });
+                li.removableListItem(function () {
+                    form.remove();
+                    li.trigger('update-routine-list');
+                });
             });
         },
         routineSection:function () {
@@ -406,13 +423,33 @@
             var tmpl = {
                 listItem:Handlebars.templates['tmpl.routine-list-item']
             }
-            $('#new-routine-input-dialog').routineInputDialog(function(){
+            $('#new-routine-input-dialog').routineInputDialog(function (data) {
             });
 
             var routineList = $('#routine-list', section);
-            routineList.data('routines').forEach(function(data){
-                $(tmpl.listItem(data)).appendTo(routineList);
-            });
+            routineList
+                .data('routines').forEach(function (data) {
+                    $(tmpl.listItem(data))
+                        .appendTo(routineList)
+                        .routineListItem();
+                });
+            routineList
+                .on('update-routine-list', function () {
+                    var data = {};
+                    data.team_id = CS.team._id;
+                    data.routines = [];
+                    $('form', routineList).each(function () {
+                        var form = $(this)
+                        data.routines.push(form.serializeObj());
+                    });
+                    $.post('/update_team/routine', data, function (data) {
+                        if (data.success) {
+                            CS.team = data.team;
+                        } else {
+                            console.error('failed to update routine');
+                        }
+                    });
+                });
 
 
             return section;

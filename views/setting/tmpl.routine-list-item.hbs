@@ -1,6 +1,14 @@
-<li class="routine-list-item">
+<li class="routine-list-item positioned">
+    <form class="inline-form">
     <small>each {{day}}</small>
-    {{title}}
-
-    {{detail}}
+    <input type="text"
+           data-role='editable-text'
+           name="title"
+           value="{{title}}"
+            />
+    <textarea name="detail"
+              rows="3"
+              data-role='editable-text'
+            >{{detail}}</textarea>
+    </form>
 </li>
