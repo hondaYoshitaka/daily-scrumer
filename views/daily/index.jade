@@ -59,9 +59,9 @@ block content
         section#traffic-light-section.inline-section
             .traffic-light-box
                 // TODO 日本とイギリス以外は緑が右？
-                .traffic-light.traffic-light-green(data-role='traffic-light')
+                .traffic-light.traffic-light-green.on(data-role='traffic-light')
                 .traffic-light.traffic-light-yellow(data-role='traffic-light')
-                .traffic-light.traffic-light-red.on(data-role='traffic-light')
+                .traffic-light.traffic-light-red(data-role='traffic-light')
     - if(sprint)
         section#days-section.positioned
             #days-line-head-arrow
