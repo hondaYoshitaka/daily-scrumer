@@ -212,6 +212,7 @@
                         }
                     });
             });
+            list.trigger('events-update');
             return list;
         },
         eventInputDialog:function () {
@@ -244,6 +245,23 @@
 
             return dialog.hide();
         },
+        eventInputDialogPresent:function (date) {
+            var dialog = $(this);
+            date = new Date(date);
+            dialog.findByName('date').val(date);
+            var tmpl = {
+                dateLabel:Handlebars.templates['tmpl.date-label']
+            };
+            var dateLabel = tmpl.dateLabel({
+                year:date.getFullYear(),
+                month:(date.getMonth() + 1).toDigitString(2),
+                date:date.getDate().toDigitString(2)
+            });
+            $('#date-label-wrapper', dialog)
+                .html(dateLabel);
+
+            dialog.fadeIn();
+        },
         calendar:function (onSelect) {
             var calendar = $(this).datepicker({
                 beforeShowDay:function (date) {
@@ -264,19 +282,19 @@
             };
             var tooltip = $(tmpl.tooltip()).appendTo(calendar),
                 toolTipEventList = $('#calendar-tooltip-event-list', tooltip);
-            $('.selectable-date', calendar).mouseenter(function () {
+            $(document).on('mouseenter', '.selectable-date', function () {
+                var hovered = $(this);
+                if (hovered.data('busy'))return;
+                hovered.busy(300);
 
                 var tipped = tooltip.data('tipped') == this;
                 if (tipped) return;
                 tooltip.data('tipped', this);
 
-                var hovered = $(this),
-                    position = hovered.position(),
+                var position = hovered.position(),
                     events = hovered.data('events');
-                if (hovered.data('busy'))return;
-                hovered.busy(300);
 
-                if (events) {
+                if (events && events.length) {
                     var upper = position.top < (calendar.height() / 2);
                     tooltip
                         .hide()
@@ -300,25 +318,27 @@
             });
             return calendar;
         },
+        eventSection:function () {
+            var section = $(this),
+                fieldset = section.parent('fieldset'),
+                routineList = $('#routine-list', section),
+                eventList = $('#event-list', section);
+            section.on('events-update', function () {
+                var isEmpty = routineList.is(':empty') && eventList.is(':empty');
+                if (isEmpty) {
+                    fieldset.hide();
+                } else {
+                    fieldset.show();
+                }
+            });
+            return section;
+        },
         calendarSection:function () {
             var section = $(this),
                 calendar = $('#calendar', section);
 
             calendar.calendar(function (date) {
-                date = new Date(date);
-                eventInputDialog.findByName('date').val(date);
-                var tmpl = {
-                    dateLabel:Handlebars.templates['tmpl.date-label']
-                };
-                var dateLabel = tmpl.dateLabel({
-                    year:date.getFullYear(),
-                    month:(date.getMonth() + 1).toDigitString(2),
-                    date:date.getDate().toDigitString(2)
-                });
-                $('#date-label-wrapper', eventInputDialog)
-                    .html(dateLabel);
-
-                eventInputDialog.fadeIn();
+                eventInputDialog.eventInputDialogPresent(date);
             });
 
             var eventInputDialog = $('#new-event-input-dialog', section).eventInputDialog();
@@ -370,16 +390,15 @@
                         var elm = $(this),
                             date = elm.selectableDateDate();
                         elm.removeClass('has-event');
+                        var events = [];
                         CS.events.forEach(function (event) {
                             var hit = (date - new Date(event.date) == 0);
                             if (hit) {
                                 elm.addClass('has-event');
-                                var events = elm.data('events');
-                                if (!events) events = [];
                                 events.push(event);
-                                elm.data('events', events);
                             }
                         });
+                        elm.data('events', events);
                     });
                 })
                 .on('refresh-calendar.holiday', function () {
@@ -438,7 +457,7 @@
                         });
                         break;
                     case 'new_event':
-
+                        $('#new-event-input-dialog').eventInputDialogPresent(date);
                         break;
                 }
             });
@@ -830,5 +849,6 @@
         $('#grouping-section', body).groupingSection();
         $('#traffic-light-section', body).trafficLightSection();
         $('#days-section', body).daysSection();
+        $('#events-section', body).eventSection();
     });
 })(jQuery);

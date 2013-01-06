@@ -160,8 +160,8 @@ block content
             | #{label.events}
         section#events-section.float-left
             ul#event-list.fieldset-ul
-            - if(team.routines)
-                ul#routine-list.fieldset-ul
+            ul#routine-list.fieldset-ul
+                - if(team.routines)
                     - for routine in team.routines
                         - var isToday = (today.getDay() === Number(routine.day));
                         - if(isToday)
