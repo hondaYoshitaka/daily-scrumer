@@ -91,6 +91,8 @@ app.configure('development', function () {
     app.post('/update_team/issue_statuses', r.team.update.issue_statuses);
     app.post('/update_team/trackers', r.team.update.trackers);
     app.post('/update_team/members', r.team.update.members);
+    app.post('/update_team/routine', r.team.update.routine);
+    app.post('/update_team/new_routine', r.team.update.routine.add);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);

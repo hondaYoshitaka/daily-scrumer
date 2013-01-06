@@ -215,7 +215,7 @@
             var ul = $(this);
             $.get('/setting/get_redmine_projects', function (data) {
                 var tmpl = Handlebars.templates['tmpl.redmine-project-list-item'];
-                data.projects.forEach(function (data) {
+                data.projects && data.projects.forEach(function (data) {
                     $(tmpl(data)).appendTo(ul);
                 });
                 callback.call(ul);
@@ -370,6 +370,50 @@
             });
 
             return pane;
+        },
+        routineInputDialog:function(create){
+            var dialog = $(this),
+                form = $('#new-routine-form', dialog);
+
+            var tmpl = {
+                weekDaySelect:Handlebars.templates['tmpl.week-day-select']
+            };
+
+            (function (selector) {
+                var wrapper = $(selector);
+                wrapper.html(tmpl.weekDaySelect(wrapper.data()));
+            })('#routine-day-select-wrapper');
+
+            form
+                .validationForm('new_routine')
+                .ajaxForm(function (data) {
+                    if(data.success){
+                        CS.team = data.team;
+                        form.emptyForm();
+                        $('#new-routine-cancel-btn').trigger('click');
+                        create && create.call(dialog);
+                    } else {
+                        console.error('failed to save new routine')
+                    }
+                });
+            return dialog.popupDialog(function(){
+
+            });
+        },
+        routineSection:function () {
+            var section = $(this);
+
+            $('#new-routine-input-dialog').routineInputDialog(function(){
+
+            });
+
+            var routineList = $('#routine-list', section);
+            routineList.data('routines').forEach(function(data){
+                console.log('data', data);
+            });
+
+
+            return section;
         }
     });
     $(function () {
@@ -386,5 +430,7 @@
 
         $('#redmine-bug-status-pane', body).redmineBugStatusPane();
         $('#redmine-trackers-pane', body).redmineTrackersPane();
+
+        $('#routine-section', body).routineSection();
     });
 })(jQuery);

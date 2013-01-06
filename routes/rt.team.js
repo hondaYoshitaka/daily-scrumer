@@ -184,3 +184,57 @@ exports.update.members = function (req, res) {
         });
     });
 };
+
+exports.update.routine = function (req, res) {
+    var body = req.body;
+    var valid = body.team_id && body.routines;
+    if (!valid) {
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function (team) {
+        if (!team) {
+            fail(res);
+            return;
+        }
+        team.routines = [];
+        body.routines.forEach(function(data){
+            team.routines.push(new Team.Routine(data));
+        });
+        team.update(function () {
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};
+
+exports.update.routine.add = function (req, res) {
+    var body = req.body;
+    var valid = body.team_id && body.title;
+    if (!valid) {
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function (team) {
+        if (!team) {
+            fail(res);
+            return;
+        }
+        var routine = new Team.Routine({
+            title:body.title,
+            detail:body.detail,
+            day:body.day
+        });
+        team.routines.push(routine);
+        team.update(function () {
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team
+            });
+        });
+    });
+};

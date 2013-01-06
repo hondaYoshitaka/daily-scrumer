@@ -479,12 +479,17 @@ form{
 .extra-large{
   font-size: 4em;
 }
-.suffix{
+
+.preffix,.suffix{
   font-size: 12px;
   font-style: normal;
   display: inline-block;
   margin: 0 2px;
   opacity: 0.8;
+}
+.preffix-each:before{
+  content:'each';
+  .preffix;
 }
 .suffix-rate:after{
   content: "%";
@@ -786,6 +791,10 @@ form{
 }
 
 .block-textarea{
+  width:100%;
+}
+.block-input{
+  display: block;
   width:100%;
 }
 

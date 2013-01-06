@@ -1,0 +1,26 @@
+form#new-routine-form.inline(
+    action='/update_team/new_routine',
+    method='post')
+    input(type='hidden', name='team_id', value=team._id, data-empty-form-ignore='true')
+    fieldset.no-border
+    ul.no-style-list
+        li
+            span.preffix-each#routine-day-select-wrapper(
+                data-name='day',
+                data-id='routine-day-select'
+            )
+        li
+            input.block-input#routine-title-input(
+                type='text',
+                name='title',
+                placeholder=placeholder.routine_title
+            )
+        li
+            textarea.block-textarea#routine-detail-input(
+                naem='detail',
+                placeholder=placeholder.routine_detail,
+                rows='4'
+            )
+    .btn-area
+        input#new-routine-cancel-btn.btn(type='button', value=btn.new_routine_cancel)
+        input.btn(type='submit', value=btn.new_routine_save).primary

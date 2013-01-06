@@ -103,17 +103,36 @@ block content
     fieldset.float-left.positioned
         legend #{label.routine.caption}
         section#routine-section
+            ul#routine-list(data-routines=team.routines)
 
-            ul#routine-list
+            #new-routine-input-dialog.card.stick-right.input-dialog.stick-top(
+                data-role='dialog',
+                data-opener='#routine-add-btn',
+                data-closer='#new-routine-cancel-btn'
+            )
+                .card-title.large #{label.routine.caption_new}
+                .card-content
+                    include prt.new-routine-form.jade
         a#routine-add-btn.stick-right.stick-top.fieldset-btn
             | #{btn.new_routine}
 
 
     fieldset.float-left
         legend #{label.alert_line.caption}
-        section#alert-line.paper.float-left
-            .paper-content
-                .paper-title
+        section#alert-line-section.float-left
+            table
+                tr
+                    th.traffic-light-box.no-margin
+                        span.traffic-light-green.traffic-light.on
+                    td
+                tr
+                    th.traffic-light-box.no-margin
+                        span.traffic-light-yellow.traffic-light.on
+                    td
+                tr
+                    th.traffic-light-box.no-margin
+                        span.traffic-light-red.traffic-light.on
+                    td
 
     br.clear
     br

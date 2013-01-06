@@ -17,6 +17,16 @@
                 required:true
             }
         },
+        new_routine:{
+            team_id:{
+                label:'team id',
+                required:true
+            },
+            title:{
+                label:'title',
+                required:true
+            }
+        },
         new_sprint:{
             name:{
                 label:'sprint name',

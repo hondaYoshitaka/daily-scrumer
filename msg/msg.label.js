@@ -81,7 +81,10 @@ exports = module.exports = {
         },
         team:'team',
         routine:{
-            caption:'routine'
+            caption:'routine',
+            caption_new:'new routine',
+            day:'day'
+
         },
         alert_line:{
             caption:'alert line'

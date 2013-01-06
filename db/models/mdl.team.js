@@ -14,6 +14,7 @@ var Team = exports = module.exports = function (data) {
     if (!s.redmine_projects) s.redmine_projects = [];
     if (!s.issue_statuses) s.issue_statuses = {};
     if (!s.trackers) s.trackers = {};
+    if(!s.routines) s.routines = [];
 };
 
 (function (Prototype) {
@@ -44,7 +45,9 @@ Team.prototype.defaultvalue = {
     /* project identifier of redmine */
     redmine_projects:[],
     /* issue status settings */
-    issue_statuses:{}
+    issue_statuses:{},
+
+    routines:[]
 };
 
 /* 名称による検索 */
@@ -134,4 +137,17 @@ Team.Tracker.defaultValue = {
     id:null,
     name:null,
     as_task:false
+};
+
+Team.Routine = function(data){
+    var s = this;
+    util.obj.deepCopy(Team.Routine.defaultValue, s);
+    util.obj.deepCopy(data, s);
+};
+
+Team.Routine.defaultValue = {
+    title:null,
+    detail:null,
+    day:null
+
 };

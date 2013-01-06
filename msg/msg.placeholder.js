@@ -17,6 +17,8 @@ exports = module.exports = {
     settings:{
         sprint_name:'sprint name',
         sprint_begin:'begin date',
-        sprint_end:'end date'
+        sprint_end:'end date',
+        routine_title:'routine name',
+        routine_detail:'routine detail'
     }
 };
