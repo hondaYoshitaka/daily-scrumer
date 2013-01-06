@@ -841,11 +841,17 @@
         var body = $(document.body);
 
         $('#head-nav', body).nav('daily');
-        $('#bugs-section', body).bugsSection(CS.sprint);
-        $('#task-section', body).taskSection(CS.sprint);
-        $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
+
+        setTimeout(function(){
+            //初期表示を早めるために重い処理を後回しにしている。
+            $('#bugs-section', body).bugsSection(CS.sprint);
+            $('#task-section', body).taskSection(CS.sprint);
+            $('#calendar-section', body).calendarSection();
+            $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
+        }, 100);
+
+
         $('#keep-in-mind-section', body).keepInMindSection();
-        $('#calendar-section', body).calendarSection();
         $('#grouping-section', body).groupingSection();
         $('#traffic-light-section', body).trafficLightSection();
         $('#days-section', body).daysSection();
