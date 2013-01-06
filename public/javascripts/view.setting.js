@@ -99,7 +99,7 @@
                     .memberListItem();
             });
 
-            $('#member-add-btn', section).click(function () {
+            $('#member-add-btn').click(function () {
                 var btn = $(this);
                 if (btn.data('busy')) return;
                 btn.busy();

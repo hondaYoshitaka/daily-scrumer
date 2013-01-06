@@ -78,6 +78,13 @@ exports = module.exports = {
             name:'name',
             duration:'duration',
             redmine_sprint:'redmine sprint'
+        },
+        team:'team',
+        routine:{
+            caption:'routine'
+        },
+        alert_line:{
+            caption:'alert line'
         }
     }
 };

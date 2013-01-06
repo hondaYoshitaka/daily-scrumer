@@ -88,16 +88,34 @@ block content
     .etched-line
     br
     h2.etched.block-title
-        | #{label.members}
-    section#member-section.inline
-        .positioned
+        | #{label.team}
+
+    fieldset.float-left.positioned
+        legend #{label.members}
+        section#member-section.inline
             ul#mebmer-list.positioned.no-style-list(data-members=team.members)
-            a.btn#member-add-btn.stick-right.stick-top
-                i.icon.icon-small
-                    span.add-icon-bar-v
-                    span.add-icon-bar-h
-                | #{btn.new_member}
-            br.clear
+        a#member-add-btn.stick-right.stick-top.fieldset-btn
+            | #{btn.new_member}
+        br.clear
+        br.clear
+
+
+    fieldset.float-left.positioned
+        legend #{label.routine.caption}
+        section#routine-section
+
+            ul#routine-list
+        a#routine-add-btn.stick-right.stick-top.fieldset-btn
+            | #{btn.new_routine}
+
+
+    fieldset.float-left
+        legend #{label.alert_line.caption}
+        section#alert-line.paper.float-left
+            .paper-content
+                .paper-title
+
     br.clear
-
-
+    br
+    .etched-line
+    br

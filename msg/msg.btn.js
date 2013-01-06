@@ -24,6 +24,7 @@ exports = module.exports = {
         new_sprint:'new sprint',
         new_sprint_save:'save',
         new_sprint_cancel:'cancel',
-        new_member:'new member'
+        new_member:'+ new member',
+        new_routine:'+ new routine'
     }
 };
