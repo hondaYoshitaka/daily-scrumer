@@ -522,6 +522,16 @@ var CS = {};
                 elm.data('busy', false);
             }, duration || 300);
             return elm;
+        },
+        drawingCanvas:function(drawable){
+            return $(this).each(function(){
+                var s = this,
+                    canvas = $(s);
+                var ctx = s.getContext('2d');
+                s.width = canvas.width();
+                s.height = canvas.height();
+                drawable.draw && drawable.draw(ctx, s.width, s.height);
+            });
         }
     });
     $(function () {

@@ -1,7 +1,7 @@
 <li class="float-left member-list-item positioned">
     <div class="paper member-list-item-content">
         <form class="inline-form paper-content">
-            <i class="icon human icon-large">
+            <i class="icon human icon-large positioned">
                 <span class="part-head"></span>
                 <span class="part-body"></span>
             </i>
@@ -10,6 +10,14 @@
                    value="{{name}}"
                    name="name"
                     />
+            <br/>
+            <small data-role='input-field'>
+                <label class="unselectable">
+                    <input type="checkbox" name="master" value="true"
+                           class="labeled-checkbox" data-value="{{master}}"/>
+                    master
+                </label>
+            </small>
             <input type="hidden" name="absent" value="{{absent}}"/>
             <input type="hidden" name="group"  value="{{group}}"/>
             <br class="clear"/>

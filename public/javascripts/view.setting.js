@@ -6,6 +6,7 @@
         },
         sure:'Are you sure?'
     };
+
     $.extend({
 
     });
@@ -47,16 +48,43 @@
                             li.trigger('member-list-change');
                         }
                     });
+                var inputField = form.findByRole('input-field').hide();
                 $(':text', form)
                     .editableText()
                     .change(function () {
+                        inputField.hide();
                         form.submit();
+                    });
+                $('.editable', form).click(function () {
+                    inputField.show();
+                });
+
+                var masterCheck = form.findByName('master'),
+                    human = $('.human', form);
+                masterCheck.get(0).checked = !!masterCheck.data('value');
+
+
+                human
+                    .on('update-human', function () {
+                        var checked = masterCheck.get(0).checked;
+                        if (checked) {
+                            human.addClass('icon-master');
+                        } else {
+                            human.removeClass('icon-master');
+                        }
+                    })
+                    .trigger('update-human');
+                masterCheck
+                    .change(function () {
+                        form.submit();
+                        human.trigger('update-human');
                     });
 
                 li.removableListItem(function () {
                     form.remove();
                     li.trigger('member-list-change');
                 }, msg.sure);
+
             });
         },
         memberSection:function () {
