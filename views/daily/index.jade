@@ -44,7 +44,6 @@ block content
             .card-title.large #{label.event.caption_new}
             .card-content
                 include prt.new-event-form.jade
-        ul#event-list
 
 
 
@@ -149,12 +148,26 @@ block content
         legend.etched
             | #{label.bug_to_hurry}
         section#bug-to-hurry-section.float-left
-                ul#bug-to-hurry-list
-                br
-                a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
-                target='_blank'
-                )
-                    | #{btn.bugs_to_hurry.see_more}
+            ul#bug-to-hurry-list.fieldset-ul
+            br
+            a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
+            target='_blank'
+            )
+                | #{btn.bugs_to_hurry.see_more}
+
+    fieldset.positioned.float-left
+        legend.etched
+            | #{label.events}
+        section#events-section.float-left
+            ul#event-list.fieldset-ul
+            - if(team.routines)
+                ul#routine-list.fieldset-ul
+                    - for routine in team.routines
+                        - var isToday = (today.getDay() === Number(routine.day));
+                        - if(isToday)
+                            li
+                                | #{routine.title}
+
 
     section#keep-in-mind-section.inline.float-left
         .photo-panel-container

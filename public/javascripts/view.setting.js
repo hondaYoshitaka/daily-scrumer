@@ -381,7 +381,8 @@
 
             (function (selector) {
                 var wrapper = $(selector);
-                wrapper.html(tmpl.weekDaySelect(wrapper.data()));
+                var data = wrapper.data();
+                wrapper.html(tmpl.weekDaySelect(data));
             })('#routine-day-select-wrapper');
 
             form

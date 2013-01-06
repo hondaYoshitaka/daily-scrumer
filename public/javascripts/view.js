@@ -42,8 +42,11 @@ var CS = {};
             for (var i = 0; i < array.length; i++) {
                 var obj = array[i];
                 var value = obj.value;
-                if (value.match(/^[\d\.]*$/)) value = parseFloat(value);
-                if (!value) value = undefined;
+                if (value.match(/^[\d\.]*$/)) {
+                    value = parseFloat(value);
+                } else {
+                    if (!value) value = undefined;
+                }
                 var key = obj.name;
                 var dst = (function () {
                     var dst = result;

@@ -187,7 +187,7 @@ exports.update.members = function (req, res) {
 
 exports.update.routine = function (req, res) {
     var body = req.body;
-    var valid = body.team_id && body.routines;
+    var valid = body.team_id;
     if (!valid) {
         fail(res);
         return;
@@ -198,7 +198,7 @@ exports.update.routine = function (req, res) {
             return;
         }
         team.routines = [];
-        body.routines.forEach(function(data){
+        body.routines && body.routines.forEach(function(data){
             team.routines.push(new Team.Routine(data));
         });
         team.update(function () {
