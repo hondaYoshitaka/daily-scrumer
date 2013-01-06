@@ -828,8 +828,5 @@
         $('#grouping-section', body).groupingSection();
         $('#traffic-light-section', body).trafficLightSection();
         $('#days-section', body).daysSection();
-
-        $('#sandglass-section', body).find('#sandglass').sandglass();
-
     });
 })(jQuery);
