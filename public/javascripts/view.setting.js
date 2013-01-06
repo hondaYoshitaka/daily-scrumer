@@ -401,16 +401,30 @@
             });
         },
         routineListItem:function () {
+            var tmpl = {
+                weekDaySelect:Handlebars.templates['tmpl.week-day-select']
+            }
             return $(this).each(function () {
                 var li = $(this),
                     form = $('form', li);
 
                 form.findByRole('editable-text')
                     .editableText();
+
+                var daySelectWrapper = form.findByRole('day-select-wrapper');
+                var daySelect = $(tmpl.weekDaySelect({
+                    name:daySelectWrapper.data('name')
+                }));
+                daySelectWrapper.append(daySelect);
+                daySelect
+                    .val(daySelect.data('value'))
+                    .selectableLabel();
+
                 form.submit(function (e) {
                     e.preventDefault();
                     form.trigger('update-routine-list');
                 });
+
                 li.removableListItem(function () {
                     form.remove();
                     li.trigger('update-routine-list');
