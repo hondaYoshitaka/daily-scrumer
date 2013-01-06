@@ -403,13 +403,15 @@
         routineSection:function () {
             var section = $(this);
 
+            var tmpl = {
+                listItem:Handlebars.templates['tmpl.routine-list-item']
+            }
             $('#new-routine-input-dialog').routineInputDialog(function(){
-
             });
 
             var routineList = $('#routine-list', section);
             routineList.data('routines').forEach(function(data){
-                console.log('data', data);
+                $(tmpl.listItem(data)).appendTo(routineList);
             });
 
 
