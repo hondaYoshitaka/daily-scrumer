@@ -891,3 +891,51 @@ legend{
   position: relative;
   top:2px;
 }
+
+
+.traffic-light-box {
+  background-color: @black;
+  .linear-gradient(315deg, lighten(@black, 7), darken(@black, 6));
+  display: inline-block;
+  padding: 6px 8px 2px;
+  margin: 0 20px;
+  .box-shadow(2px 2px 6px, 0.9, inset);
+  .border-radius(4px);
+  position: relative;
+  border: 1px solid darken(@black, 0);
+}
+
+.traffic-light(@color) {
+  .radial-gradient(33%, 33%, @white, darken(@white, 50));
+  position: relative;
+  &:hover, &.on {
+    .radial-gradient(33%, 33%, lighten(@color, 2), saturate(darken(@color, 30), 10));
+    &:after {
+      opacity: 0.5;
+      .box-shadow(0 0 30px fadeout(@color, 20));
+      background-color: transparent;
+    }
+  }
+}
+
+.traffic-light {
+  .border-radius(50%);
+  .square(30px);
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  margin: 4px;
+  .traffic-light(@white);
+  display: inline-block;
+}
+
+@lighteColor: lighten(red, 30);
+.traffic-light-red {
+  .traffic-light(@lighteColor);
+}
+
+.traffic-light-yellow {
+  .traffic-light(spin(@lighteColor, 60));
+}
+
+.traffic-light-green {
+  .traffic-light(spin(@lighteColor, 120));
+}
