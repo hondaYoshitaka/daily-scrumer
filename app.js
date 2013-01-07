@@ -93,6 +93,7 @@ app.configure('development', function () {
     app.post('/update_team/members', r.team.update.members);
     app.post('/update_team/routine', r.team.update.routine);
     app.post('/update_team/new_routine', r.team.update.routine.add);
+    app.post('/update_team/alert_line', r.team.update.alert_line);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);

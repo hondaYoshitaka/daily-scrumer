@@ -15,6 +15,7 @@ var Team = exports = module.exports = function (data) {
     if (!s.issue_statuses) s.issue_statuses = {};
     if (!s.trackers) s.trackers = {};
     if(!s.routines) s.routines = [];
+    if(!s.alert_lines) s.alert_lines = [];
 };
 
 (function (Prototype) {
@@ -47,7 +48,9 @@ Team.prototype.defaultvalue = {
     /* issue status settings */
     issue_statuses:{},
 
-    routines:[]
+    routines:[],
+
+    alert_lines:[]
 };
 
 /* 名称による検索 */
@@ -150,4 +153,15 @@ Team.Routine.defaultValue = {
     detail:null,
     day:null
 
+};
+
+
+Team.AlertLine = function(data){
+    var s = this;
+    util.obj.deepCopy(Team.AlertLine.defaultValue, s);
+    util.obj.deepCopy(data, s);
+};
+
+Team.AlertLine.defaultValue = {
+    color:null
 };

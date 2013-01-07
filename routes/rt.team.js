@@ -239,3 +239,30 @@ exports.update.routine.add = function (req, res) {
         });
     });
 };
+
+exports.update.alert_line = function(req, res){
+    var body = req.body;
+    var valid = body.team_id && body.aliert_lines;
+    if (!valid) {
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function (team) {
+        if (!team) {
+            fail(res);
+            return;
+        }
+        var aelrt_line = new Team.AlertLine({
+            color:body.color
+        });
+        team.alert_lines.push(aelrt_line);
+        team.update(function () {
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team,
+                aelrt_line:aelrt_line
+            });
+        });
+    });
+};
