@@ -166,6 +166,7 @@
             form.findByRole('date-input').dateInput({
 
             });
+            dialog.draggableDialog();
             return dialog.popupDialog(function () {
                 var dialog = $(this),
                     sprintSelect = $('#redmine-sprint-select', dialog);
@@ -176,6 +177,10 @@
                     $('#sprint-begin-input', dialog).dateInputVal(today);
                     $('#sprint-end-input', dialog).dateInputVal(end);
                 })(new Date());
+
+                dialog.css({
+                    left:dialog.parent().width() - dialog.width()
+                });
 
 
                 sprintSelect.empty();

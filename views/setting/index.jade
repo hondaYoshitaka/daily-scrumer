@@ -70,11 +70,11 @@ block content
         .black-board-content
             ul#sprint-list.positioned.no-style-list(data-data=sprints)
             br.clear
-            #new-sprint-input-dialog.card.stick-right.input-dialog.stick-top(
+            #new-sprint-input-dialog.card.input-dialog.stick-top(
                 data-role='dialog',
                 data-opener='#sprint-add-btn',
                 data-closer='#new-sprint-cancel-btn')
-                .card-title.large #{label.sprint.caption_new}
+                .card-title.large(data-role='drag-handle') #{label.sprint.caption_new}
                 .card-content
                     include prt.new-sprint-form.jade
 
