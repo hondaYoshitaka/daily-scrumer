@@ -179,7 +179,7 @@ exports.task_time = function (req, res) {
         tasks.forEach(function (task) {
             var time = (task.estimated_hours || 0);
             data.estimated += time;
-            var status = team.team.getStatus(task);
+            var status = team.getStatus(task);
             if(!status){
                 console.error('status not found for id', task);
                 return;
