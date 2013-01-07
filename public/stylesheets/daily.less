@@ -4,8 +4,7 @@
 @darkRed: rgba(255, 131, 131, 0.6);
 
 .frame-shadow(@inStyle, @inDense, @outSytle, @outDense) {
-  @shadow: @inStyle rgba(0, 0, 0, @inDense) inset,
-    @outSytle rgba(0, 0, 0, @outDense);
+  @shadow: @inStyle rgba(0, 0, 0, @inDense) inset, @outSytle rgba(0, 0, 0, @outDense);
   -webkit-box-shadow: @shadow;
   -moz-box-shadow: @shadow;
   -o-box-shadow: @shadow;
@@ -581,12 +580,11 @@
     display: block;
     .square(0);
     margin: 0 auto;
-    display: none; //TODO
+    display: none;
   }
   .progress-bar-tip-start,
   .progress-bar-tip-end{
     top: 22px;
-//    opacity: 0;
   }
   &:hover{
     .progress-bar-tip-start,
