@@ -101,6 +101,10 @@ RedmineAgent.prototype.getIssueStatuses = function (callback) {
         url = conf.url.base + '/issue_statuses';
     s.get(url, function (res, body, $) {
         try {
+            if (conf.issue_statuses) {
+                callback && callback.call(s, true, conf.issue_statuses);
+                return;
+            }
             var data = [];
             $('#content').find('table.list').find('tbody').find('tr').each(function () {
                 var tr = $(this);
@@ -126,6 +130,10 @@ RedmineAgent.prototype.getTrackers = function (callback) {
         url = conf.url.base + '/trackers';
     s.get(url, function (res, body, $) {
         try {
+            if(conf.trackers){
+                callback && callback.call(s, true, conf.trackers);
+                return;
+            }
             var data = [];
             $('#content').find('table.list').find('tbody').find('tr').each(function () {
                 var tr = $(this);
@@ -151,7 +159,7 @@ RedmineAgent.prototype.getProjects = function (callback) {
     s.get(url, function (res, body) {
         try {
             if (res.statusCode === 404) throw new Error(404);
-            var data =util.xml.xml2Obj(body);
+            var data = util.xml.xml2Obj(body);
             var success = true;
             callback && callback.call(s, success, data['projects']['project']);
         } catch (e) {
@@ -216,9 +224,15 @@ RedmineAgent.prototype.getIssuePriorities = function (callback) {
         url = [conf.url.base, 'enumerations'].join('/');
     s.get(url, function (res, body, $) {
         try {
+
+            if(conf.issue_priorities){
+                callback && callback.call(s, true, conf.issue_priorities);
+                return;
+            }
+
+
             if (res.statusCode === 404) throw new Error(404);
             var data = {};
-
             var table = $('#content').find('table').eq(1);
             table.find('tr').each(function () {
                 var tr = $(this),
@@ -229,7 +243,7 @@ RedmineAgent.prototype.getIssuePriorities = function (callback) {
                     id:id,
                     name:td.eq(0).find('a').eq(0).text(),
                     isDefault:!!td.eq(1).find('img').length,
-                    active:!!td.eq(2).find('img').length,
+                    active:!!td.eq(2).find('img').length
                 };
             });
             callback && callback.call(s, true, data);
