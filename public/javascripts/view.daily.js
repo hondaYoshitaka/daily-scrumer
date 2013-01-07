@@ -336,7 +336,7 @@
                     tooltip
                         .css({
                             top:position.top + (upper ? -(tooltip.outerHeight()) : 30),
-                            left:position.left - 20
+                            left:position.left - 4
                         });
                 }
             });
