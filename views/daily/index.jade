@@ -177,29 +177,31 @@ block content
                 .frame-bar-bottom.photo-frame-bar
                 .frame-bar-left.photo-frame-bar
                 .frame-bar-right.photo-frame-bar
-                .photo-inner-frame
-                    form#keep-in-mind-form(action='/sprint/update_keep_in_mind', method='POST')
-                        input(type='hidden', name='_id', value=sprint&&sprint._id)
-                        ol.keep-in-mind-list
-                            - var keepInMindMaxLength = 120;
-                            - var trialDefault = '(none)';
-                            li.keep-in-mind-list-item
-                                input(name='keep_in_mind_0',
-                                    maxlength = keepInMindMaxLength,
-                                    value=sprint.keep_in_mind_0 || trialDefault,
-                                    placeholder=placeholder.keep_in_mind[0])
-                            li.keep-in-mind-list-item
-                                input(name='keep_in_mind_1',
-                                    maxlength = keepInMindMaxLength,
-                                    value=sprint.keep_in_mind_1 || trialDefault,
-                                    placeholder=placeholder.keep_in_mind[1])
-                            li.keep-in-mind-list-item
-                                input(name='keep_in_mind_2',
-                                    maxlength =keepInMindMaxLength,
-                                    value=sprint.keep_in_mind_2 || trialDefault,
-                                    placeholder=placeholder.keep_in_mind[2])
+                .photo-inner-frame.positioned
+                    .photo-inner-frame-content-front.positioned
+                        form#keep-in-mind-form(action='/sprint/update_keep_in_mind', method='POST')
+                            input(type='hidden', name='_id', value=sprint&&sprint._id)
+                            ol.keep-in-mind-list
+                                - var keepInMindMaxLength = 120;
+                                - var trialDefault = '(none)';
+                                li.keep-in-mind-list-item
+                                    input(name='keep_in_mind_0',
+                                        maxlength = keepInMindMaxLength,
+                                        value=sprint.keep_in_mind_0 || trialDefault,
+                                        placeholder=placeholder.keep_in_mind[0])
+                                li.keep-in-mind-list-item
+                                    input(name='keep_in_mind_1',
+                                        maxlength = keepInMindMaxLength,
+                                        value=sprint.keep_in_mind_1 || trialDefault,
+                                        placeholder=placeholder.keep_in_mind[1])
+                                li.keep-in-mind-list-item
+                                    input(name='keep_in_mind_2',
+                                        maxlength =keepInMindMaxLength,
+                                        value=sprint.keep_in_mind_2 || trialDefault,
+                                        placeholder=placeholder.keep_in_mind[2])
+                    .photo-inner-frame-content-back.hidden
             .name-plate-container
-                .name-plate
+                .name-plate#keep-in-mind-name-plate.unselectable
                     | #{label.keep_in_mind}
 
     section#grouping-section.inline.float-left

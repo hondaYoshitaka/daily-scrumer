@@ -169,6 +169,26 @@
                 .change(function () {
                     form.submit();
                 });
+            var backContent = $('.photo-inner-frame-content-back', section);
+            $('#keep-in-mind-name-plate', section)
+                .mousedown(function () {
+                    backContent
+                        .show()
+                        .stop()
+                        .css({
+                            top:backContent.parent().height()
+                        })
+                        .animate({top:0});
+                })
+                .mouseup(function () {
+                    backContent
+                        .stop()
+                        .animate({
+                            top:backContent.parent().height()
+                        }, function(){
+                            backContent.hide();
+                        });
+                });
             return section;
         },
         eventList:function (data) {
