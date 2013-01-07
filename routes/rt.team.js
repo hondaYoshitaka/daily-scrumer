@@ -252,16 +252,19 @@ exports.update.alert_line = function(req, res){
             fail(res);
             return;
         }
-        var aelrt_line = new Team.AlertLine({
-            color:body.color
+
+
+        var alert_lines = [];
+        body.aliert_lines.forEach(function(data){
+            alert_lines.push(new Team.AlertLine(data));
         });
-        team.alert_lines.push(aelrt_line);
+        team.alert_lines = alert_lines;
         team.update(function () {
             req.session.team = team;
             res.json({
                 success:true,
                 team:team,
-                aelrt_line:aelrt_line
+                alert_lines:alert_lines
             });
         });
     });
