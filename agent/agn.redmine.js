@@ -182,7 +182,9 @@ RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
                     var a = $(this),
                         href = a.attr('href'),
                         text = a.text();
-                    var id = href.replace('/redmine/versions/show/', '');
+                    var id = href
+                        .replace('/redmine/versions/show/', '')
+                        .replace('/redmine/versions/', '');
                     data.push({
                         id:id,
                         name:text
