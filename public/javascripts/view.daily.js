@@ -242,7 +242,7 @@
                 dialog.trigger('refresh-calendar.events');
                 dialog.fadeOut();
             });
-
+            dialog.draggableDialog();
             return dialog.hide();
         },
         eventInputDialogPresent:function (date) {
@@ -259,7 +259,7 @@
             });
             $('#date-label-wrapper', dialog)
                 .html(dateLabel);
-
+            $('form', dialog).emptyForm();
             dialog.fadeIn();
         },
         calendar:function (onSelect) {
@@ -842,7 +842,7 @@
 
         $('#head-nav', body).nav('daily');
 
-        setTimeout(function(){
+        setTimeout(function () {
             //初期表示を早めるために重い処理を後回しにしている。
             $('#bugs-section', body).bugsSection(CS.sprint);
             $('#task-section', body).taskSection(CS.sprint);

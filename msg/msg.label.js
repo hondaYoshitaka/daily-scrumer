@@ -18,7 +18,7 @@ exports = module.exports = {
         report:'report',
         tasks:'task time',
         grouping:'grouping',
-        bug_to_hurry:'hot bugs',
+        bug_to_hurry:'HOT bugs',
         events:'events',
         keep_in_mind:'Trial for this sprint',
         task_time:{

@@ -261,7 +261,7 @@ var CS = {};
                 $('textarea', form).each(function(){
                     var textarea = $(this);
                     if(textarea.data('empty-form-ignore')) return;
-                    textarea.text('');
+                    textarea.val('').text('');
                 });
                 $('input', form).each(function () {
                     var input = $(this),
@@ -534,6 +534,16 @@ var CS = {};
                 s.width = canvas.width();
                 s.height = canvas.height();
                 drawable.draw && drawable.draw(ctx, s.width, s.height);
+            });
+        },
+        draggableDialog:function(){
+            var dialog = $(this),
+                handle = dialog.findByRole('drag-handle');
+            handle.addClass('drag-handle');
+            return dialog.draggable({
+                revert:true,
+                distance:10,
+                handle:handle
             });
         }
     });

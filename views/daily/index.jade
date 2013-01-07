@@ -37,11 +37,11 @@ block content
                 label=label.calendar.menu.new_event,
                 data-command='new_event')
 
-        #new-event-input-dialog.input-dialog.card.stick-right.stick-top.hidden(
+        #new-event-input-dialog.input-dialog.card.stick-top.hidden(
             data-role='dialog',
             data-opener='.selectable-date',
             data-closer='#new-event-cancel-btn')
-            .card-title.large #{label.event.caption_new}
+            .card-title.large(data-role='drag-handle') #{label.event.caption_new}
             .card-content
                 include prt.new-event-form.jade
 
@@ -164,9 +164,8 @@ block content
                 - if(team.routines)
                     - for routine in team.routines
                         - var isToday = (today.getDay() === Number(routine.day));
-                        - if(isToday)
-                            li
-                                | #{routine.title}
+                        li(class="#{isToday?'':'hidden'}")
+                            | #{routine.title}
 
 
     section#keep-in-mind-section.inline.float-left
