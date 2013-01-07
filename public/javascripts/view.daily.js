@@ -178,9 +178,14 @@
                 timeSelect:Handlebars.templates['tmpl.event-time-select']
             }
             var timeSelect = tmpl.timeSelect({times:CS.eventTimeSelectTimes});
+
+            var otherDayEvents = [];
             data && data.forEach(function (data) {
                 var hit = (CS.today - new Date(data.date) == 0);
-                if (!hit) return;
+                if (!hit){
+                    otherDayEvents.push(data);
+                    return;
+                }
                 var li = $(tmpl.li(data)).appendTo(list),
                     form = $('form', li);
                 $(timeSelect)
@@ -212,6 +217,7 @@
                         }
                     });
             });
+            list.data('other-day-events', otherDayEvents);
             list.trigger('events-update');
             return list;
         },
@@ -369,6 +375,9 @@
                         var events = [];
                         form.each(function () {
                             events.push(form.serializeObj());
+                        });
+                        eventList.data('other-day-events').forEach(function(data){
+                            events.push(data);
                         });
                         return events;
                     })(eventList.find('form'));
