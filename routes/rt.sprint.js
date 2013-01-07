@@ -127,16 +127,20 @@ exports.count_bugs = function (req, res) {
         bugs.forEach(function (bug) {
             data.total++;
             var status = team.issue_statuses[String(bug.status_id)];
-            switch (status.report_as) {
-                case 'done':
-                    data.done++;
-                    break;
-                case 'modified':
-                    data.modified++;
-                    break;
-                default:
-                    data.open++;
-                    break;
+            if(status){
+                switch (status.report_as) {
+                    case 'done':
+                        data.done++;
+                        break;
+                    case 'modified':
+                        data.modified++;
+                        break;
+                    default:
+                        data.open++;
+                        break;
+                }
+            } else {
+                console.error('status not find', bug.status_id);
             }
         });
         data.success = true;
