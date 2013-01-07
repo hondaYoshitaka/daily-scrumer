@@ -4,7 +4,6 @@
 
 var Agent = require('./agn.prototype.js'),
     util = require('../util'),
-    XML = require('xml2json'),
     conf = require('../conf').redmine;
 
 var RedmineAgent = exports = module.exports = function (data) {
@@ -141,7 +140,7 @@ RedmineAgent.prototype.getTrackers = function (callback) {
             callback && callback.call(s, true, data);
         } catch (e) {
             console.error(e);
-            callbac && callback.call(s, false);
+            callback && callback.call(s, false);
         }
     });
 };
@@ -152,7 +151,7 @@ RedmineAgent.prototype.getProjects = function (callback) {
     s.get(url, function (res, body) {
         try {
             if (res.statusCode === 404) throw new Error(404);
-            var data = JSON.parse(XML.toJson(body));
+            var data =util.xml.xml2Obj(body);
             var success = true;
             callback && callback.call(s, success, data['projects']['project']);
         } catch (e) {
