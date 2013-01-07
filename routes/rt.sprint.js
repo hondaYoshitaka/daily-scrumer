@@ -244,7 +244,7 @@ exports.update = function (req, res) {
 /* スプリントの心がけを更新する */
 exports.update_keep_in_mind = function (req, res) {
     var body = req.body;
-    if(body._id){
+    if(!body._id){
         failJson(res);
         return;
     }
