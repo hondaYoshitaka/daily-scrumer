@@ -26,6 +26,8 @@ block content
     section#calendar-section.float-right.positioned.no-margin
         #one-day-calendar.cover(data-role='date-display')
         #calendar.calendar.positioned
+            a#calnedar-close-btn.stick-right.stick-bottom.plain-btn
+                small #{btn.close_calendar}
         menu#calendar-context-menu.hidden(type='context')
             command(
                 label=label.calendar.menu.mark_as_holiday,
@@ -150,7 +152,7 @@ block content
         section#bug-to-hurry-section.float-left
             ul#bug-to-hurry-list.fieldset-ul
             br
-            a.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
+            a.plain-btn.stick-right.stick-bottom#bug-to-hurry-see-more-btn(
             target='_blank'
             )
                 | #{btn.bugs_to_hurry.see_more}

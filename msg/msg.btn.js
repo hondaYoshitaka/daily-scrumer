@@ -18,7 +18,8 @@ exports = module.exports = {
             see_more:'see more'
         },
         new_event_cancel:'cancel',
-        new_event_save:'save'
+        new_event_save:'save',
+        close_calendar:'close'
     },
     settings:{
         new_sprint:'new sprint',

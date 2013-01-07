@@ -182,7 +182,7 @@
             var otherDayEvents = [];
             data && data.forEach(function (data) {
                 var hit = (CS.today - new Date(data.date) == 0);
-                if (!hit){
+                if (!hit) {
                     otherDayEvents.push(data);
                     return;
                 }
@@ -286,6 +286,7 @@
                 tooltip:Handlebars.templates['tmpl.calendar-tooltip'],
                 eventItem:Handlebars.templates['tmpl.calendar-tooltip-event-item']
             };
+
             var tooltip = $(tmpl.tooltip()).appendTo(calendar),
                 toolTipEventList = $('#calendar-tooltip-event-list', tooltip);
             $(document).on('mouseenter', '.selectable-date', function () {
@@ -356,6 +357,12 @@
                 });
             });
 
+            $('#calnedar-close-btn', calendar).click(function () {
+                calendar.fadeOut(300, function () {
+                    dateDisplay.fadeIn(300);
+                });
+            });
+
             $.getJSON('/calendar', {team_name:CS.team.name}, function (data) {
                 CS.holidays = data.holidays;
                 CS.events = data.events;
@@ -376,7 +383,7 @@
                         form.each(function () {
                             events.push(form.serializeObj());
                         });
-                        eventList.data('other-day-events').forEach(function(data){
+                        eventList.data('other-day-events').forEach(function (data) {
                             events.push(data);
                         });
                         return events;
