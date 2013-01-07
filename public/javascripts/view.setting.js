@@ -280,6 +280,8 @@
             $('select', form)
                 .selectableLabel()
                 .change(function () {
+                    if(form.data('busy')) return;
+                    form.busy(400);
                     form.submit();
                 });
             return tr;
