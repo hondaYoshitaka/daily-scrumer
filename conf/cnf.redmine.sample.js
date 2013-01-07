@@ -7,6 +7,10 @@ exports.url = (function () {
     var base = url.base = "http://techbakery.net/redmine";
     url.login = base + "/login";
     url.logout = base + '/logout';
+
+    url.versions = base + '/versions/show';
+//    url.versions = base + '/versions';
+
     return url;
 })();
 

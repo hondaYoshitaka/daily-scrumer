@@ -201,7 +201,7 @@ RedmineAgent.prototype.getVersions = function (project_identifier, callback) {
 
 RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
     var s = this,
-        url = [conf.url.base, 'versions/show', version_id].join('/');
+        url = [conf.url.versions, version_id].join('/');
     s.get(url, function (res, body, $) {
         try {
             if (res.statusCode === 404) throw new Error(404);
