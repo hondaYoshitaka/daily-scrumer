@@ -259,7 +259,7 @@
             });
             $('#date-label-wrapper', dialog)
                 .html(dateLabel);
-            $('form', dialog).emptyForm();
+            $('form')
             dialog.fadeIn();
         },
         calendar:function (onSelect) {
