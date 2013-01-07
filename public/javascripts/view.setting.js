@@ -280,7 +280,7 @@
             $('select', form)
                 .selectableLabel()
                 .change(function () {
-                    if(form.data('busy')) return;
+                    if (form.data('busy')) return;
                     form.busy(400);
                     form.submit();
                 });
@@ -482,35 +482,50 @@
 
             return section;
         },
-        alertLineSection:function(){
+        alertLineSection:function () {
             var section = $(this);
 
-            section.findByRole('alert-line-input-wrapper').each(function(){
+            var colorPercent = (function (data) {
+                var map = {};
+                data.forEach(function (data) {
+                    map[data.color] = data.percent;
+                })
+                return map;
+            })(CS.team.alert_lines);
+            section.findByRole('alert-line-input-wrapper').each(function () {
                 var wrapper = $(this)
                 var tmpl = {
                     form:Handlebars.templates['tmpl.alert-line-input-form']
                 };
-                var form = $(tmpl.form(wrapper.data())).appendTo(wrapper);
+                var data = (function (color) {
+                        percent = colorPercent[color];
+                    if (percent === undefined)percent = wrapper.data('percent-default');
+                    return {
+                        color:color,
+                        percent:percent
+                    }
+                })(wrapper.data('color'));
+                var form = $(tmpl.form(data)).appendTo(wrapper);
                 form.findByRole('editable-text')
                     .editableText()
-                    .change(function(){
+                    .change(function () {
                         form.submit();
                     });
-                form.submit(function(e){
+                form.submit(function (e) {
                     form.trigger('alert-line-change');
                     e.preventDefault();
                 });
             });
-            section.on('alert-line-change', function(){
+            section.on('alert-line-change', function () {
                 var data = {};
                 data.team_id = CS.team._id;
                 data.aliert_lines = [];
-                $('form', section).each(function(){
+                $('form', section).each(function () {
                     var form = $(this);
                     data.aliert_lines.push(form.serializeObj());
                 });
-                $.post('/update_team/alert_line', data, function(data){
-                    if(data.success){
+                $.post('/update_team/alert_line', data, function (data) {
+                    if (data.success) {
                         CS.team = data.team;
                     } else {
                         console.error('failed to update alert line');
