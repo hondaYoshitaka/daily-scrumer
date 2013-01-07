@@ -17,7 +17,7 @@ describe('rt.think_back', function () {
 
         }), new Res({
             render:function (view) {
-                view.should.equal('think_back.index.jade');
+                view.should.equal('think_back/index.jade');
                 done();
             }
         }));

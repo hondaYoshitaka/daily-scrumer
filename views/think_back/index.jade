@@ -1,0 +1,12 @@
+extends ../layout
+
+block stylesheet
+    link(rel='stylesheet', href=url.css('think_back.css'))
+
+block javascript
+    script(src=url.js('highcharts.js'))
+    script(src=url.js('handlebars.template.think_back.min.js'))
+    script(src=url.js('view.think_back.js'))
+
+block content
+    h1  think back!

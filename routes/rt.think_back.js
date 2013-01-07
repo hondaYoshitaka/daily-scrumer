@@ -4,5 +4,5 @@
 
 exports.index = function (req, res) {
 
-    res.render('think_back.index.jade');
+    res.render('think_back/index.jade');
 };
