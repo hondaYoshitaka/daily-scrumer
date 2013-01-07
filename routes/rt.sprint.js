@@ -62,7 +62,7 @@ function getIssues(trackers, versions, callback) {
                     callback(false);
                     return;
                 }
-                issues && issues.forEach(function (bug) {
+                (issues.issues || issues).forEach(function (bug) {
                     result.push(bug);
                 });
                 agentReqCount--;
