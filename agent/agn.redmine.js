@@ -91,8 +91,13 @@ RedmineAgent.prototype.getIssue = function (condition, callback) {
         url = conf.url.base + '/issues.json',
         query = new RedmineAgent.Query(condition).toQueryString();
     s.get([url, query].join('?'), function (res, body) {
-        var json = JSON.parse(body);
-        callback.call(s, true, json);
+        try{
+            var json = JSON.parse(body);
+            callback.call(s, true, json);
+        } catch(e){
+            console.error(e, body);
+            callback.call(s, false);
+        }
     });
 };
 
