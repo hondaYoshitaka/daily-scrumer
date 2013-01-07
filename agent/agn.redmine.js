@@ -223,7 +223,7 @@ RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
                         }
                         return{
                             estimated:getTime(tr.eq(0).find('.total-hours')),
-                            spent:getTime(tr.eq(0).find('.total-hours'))
+                            spent:getTime(tr.eq(1).find('.total-hours'))
                         }
                     }
                     var extractNumber = util.string.extractNumber;
