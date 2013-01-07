@@ -178,6 +178,10 @@ exports.task_time = function (req, res) {
             var time = (task.estimated_hours || 0);
             data.estimated += time;
             var status = team.issue_statuses[String(task.status_id)];
+            if(!status){
+                console.error('status not found for id', task.status_id);
+                return;
+            }
             if (status.report_as != 'done') {
                 data.remain += time;
             }
