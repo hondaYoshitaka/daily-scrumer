@@ -479,6 +479,44 @@
 
 
             return section;
+        },
+        alertLineSection:function(){
+            var section = $(this);
+
+            section.findByRole('alert-line-input-wrapper').each(function(){
+                var wrapper = $(this)
+                var tmpl = {
+                    form:Handlebars.templates['tmpl.alert-line-input-form']
+                };
+                var form = $(tmpl.form(wrapper.data())).appendTo(wrapper);
+                form.findByRole('editable-text')
+                    .editableText()
+                    .change(function(){
+                        form.submit();
+                    });
+                form.submit(function(e){
+                    form.trigger('alert-line-change');
+                    e.preventDefault();
+                });
+            });
+            section.on('alert-line-change', function(){
+                var data = {};
+                data.team_id = CS.team._id;
+                data.aliert_lines = [];
+                $('form', section).each(function(){
+                    var form = $(this);
+                    data.aliert_lines.push(form.serializeObj());
+                });
+                $.post('/update_team/alert_line', data, function(data){
+                    if(data.success){
+                        CS.team = data.team;
+                    } else {
+                        console.error('failed to update alert line');
+                    }
+                });
+            });
+
+            return section;
         }
     });
     $(function () {
@@ -497,5 +535,7 @@
         $('#redmine-trackers-pane', body).redmineTrackersPane();
 
         $('#routine-section', body).routineSection();
+
+        $('#alert-line-section', body).alertLineSection();
     });
 })(jQuery);
