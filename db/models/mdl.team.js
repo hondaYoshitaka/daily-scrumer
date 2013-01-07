@@ -8,7 +8,8 @@ var util = require('../../util'),
 
 var Team = exports = module.exports = function (data) {
     var s = this;
-    util.obj.deepCopy(s.defaultValue, s);
+    util.obj.deepCopy(s
+        .defaultValue, s);
     util.obj.deepCopy(data, s);
     if (!s.members) s.members = [];
     if (!s.redmine_projects) s.redmine_projects = [];
@@ -61,6 +62,12 @@ Team.findByName = function (name, callback) {
     }, function (data) {
         callback.call(s, data && data.length && data[0] || null);
     });
+};
+
+Team.prototype.getStatus = function(issue){
+    var s = this,
+        status_id = String(issue.status_id || issue.status && issue.status.id);
+    return status_id && s.issue_statuses[status_id];
 };
 
 Team.prototype.getBugTrackerIds = function () {

@@ -8,6 +8,8 @@ var RedmineAgent = require('../agent')['Redmine'],
     Team = db.models['Team'],
     Sprint = db.models['Sprint'];
 
+
+
 function getTimeTracks(versions, callback) {
     var result = {
         consumed:0,
@@ -126,7 +128,7 @@ exports.count_bugs = function (req, res) {
         }
         bugs.forEach(function (bug) {
             data.total++;
-            var status = team.issue_statuses[String(bug.status_id)];
+            var status = team.getStatus(bug);
             if(status){
                 switch (status.report_as) {
                     case 'done':
@@ -169,17 +171,17 @@ exports.task_time = function (req, res) {
         consumed:0,
         remain:0
     };
-    getTasks(team_id, sprint, function (sucess, tasks, team) {
-        if (!sucess) {
+    getTasks(team_id, sprint, function (success, tasks, team) {
+        if (!success) {
             failJson(res);
             return;
         }
         tasks.forEach(function (task) {
             var time = (task.estimated_hours || 0);
             data.estimated += time;
-            var status = team.issue_statuses[String(task.status_id)];
+            var status = team.team.getStatus(task);
             if(!status){
-                console.error('status not found for id', task.status_id);
+                console.error('status not found for id', task);
                 return;
             }
             if (status.report_as != 'done') {
@@ -334,7 +336,11 @@ exports.in_hurry_bugs = function (req, res) {
         while (in_hurry_bugs.length < limit) {
             var bug = bugs[i];
             if(!bug) break;
-            var status = team.issue_statuses[String(bug.status_id)];
+            var status = team.getStatus(bug);
+            if(!status){
+                console.error('status not found', bug);
+                continue;
+            }
             switch (status.report_as) {
                 case 'done':
                 case 'modified':
