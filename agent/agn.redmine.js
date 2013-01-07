@@ -91,10 +91,10 @@ RedmineAgent.prototype.getIssue = function (condition, callback) {
         url = conf.url.base + '/issues.json',
         query = new RedmineAgent.Query(condition).toQueryString();
     s.get([url, query].join('?'), function (res, body) {
-        try{
+        try {
             var json = JSON.parse(body);
             callback.call(s, true, json);
-        } catch(e){
+        } catch (e) {
             console.error(e, body);
             callback.call(s, false);
         }
@@ -135,7 +135,7 @@ RedmineAgent.prototype.getTrackers = function (callback) {
         url = conf.url.base + '/trackers';
     s.get(url, function (res, body, $) {
         try {
-            if(conf.trackers){
+            if (conf.trackers) {
                 callback && callback.call(s, true, conf.trackers);
                 return;
             }
@@ -208,22 +208,41 @@ RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
     var s = this,
         url = [conf.url.versions, version_id].join('/');
     s.get(url, function (res, body, $) {
-        try {
-            if (res.statusCode === 404) throw new Error(404);
-            var table = $('#version-summary').find('fieldset').eq(0).find('table'),
-                tr = table.find('tr');
+            try {
+                if (res.statusCode === 404) throw new Error(404);
+                var table = $('#version-summary').find('fieldset').eq(0).find('table'),
+                    tr = table.find('tr');
 
-            var extractNumber = util.string.extractNumber;
-            var data = {
-                estimated:extractNumber(tr.eq(0).find('td').eq(1).text()) || 0,
-                spent:extractNumber(tr.eq(1).find('td').eq(1).text()) || 0
-            };
-            callback && callback.call(s, true, data);
-        } catch (e) {
-            console.error(e);
-            callback && callback.call(s, false);
+
+                var data = (function () {
+                    var hasTh = !!tr.find('th').length;
+                    if (hasTh) {
+                        function getTime(td) {
+                            return parseInt(td.find('.hours-int').text(), 10)
+                                + parseFloat(td.find('.hours-dec').text());
+                        }
+                        return{
+                            estimated:getTime(tr.eq(0).find('.total-hours')),
+                            spent:getTime(tr.eq(0).find('.total-hours'))
+                        }
+                    }
+                    var extractNumber = util.string.extractNumber;
+                    return{
+                        estimated:extractNumber(tr.eq(0).find('td').eq(1).text()) || 0,
+                        spent:extractNumber(tr.eq(1).find('td').eq(1).text()) || 0
+                    };
+                })();
+
+                callback && callback.call(s, true, data);
+            }
+            catch
+                (e) {
+                console.error(e);
+                callback && callback.call(s, false);
+            }
         }
-    });
+    )
+    ;
 };
 
 RedmineAgent.prototype.getIssuePriorities = function (callback) {
@@ -232,7 +251,7 @@ RedmineAgent.prototype.getIssuePriorities = function (callback) {
     s.get(url, function (res, body, $) {
         try {
 
-            if(conf.issue_priorities){
+            if (conf.issue_priorities) {
                 callback && callback.call(s, true, conf.issue_priorities);
                 return;
             }
