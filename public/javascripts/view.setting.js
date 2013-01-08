@@ -142,6 +142,9 @@
                     .change(function () {
                         form.submit();
                     });
+                li.findByRole('date-input')
+                    .dateInput()
+                    .editableText();
                 li.removableListItem(function () {
                     if (confirm(msg.sure)) {
                         $.post('/sprint/remove', {

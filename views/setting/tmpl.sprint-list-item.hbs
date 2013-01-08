@@ -13,13 +13,27 @@
                 />
         </span>
             <br/>
+            <small>
+                <input type="text"
+                       data-role="date-input"
+                       name="begin"
+                       value="{{begin}}"
+                       class="short"/>
+                ~
+                <input type="text"
+                       data-role="date-input"
+                       name="end"
+                       value="{{end}}"
+                       class="short"/>
+            </small>
+            <br/>
             <ul>
                 {{#each redmine_versions}}
                 <li>{{this.project}}/{{this.name}}</li>
                 {{/each}}
             </ul>
             <br/>
-            {{begin}} ~ {{end}}
+
         </form>
     </div>
 </li>
