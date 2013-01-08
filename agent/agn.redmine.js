@@ -279,11 +279,34 @@ RedmineAgent.prototype.getIssuePriorities = function (callback) {
         }
     });
 };
+
+RedmineAgent.prototype.getUsers = function(project, callback){
+    var s = this,
+        url = [conf.url.base, 'projects', project].join('/');
+    s.get(url, function(res, body, $){
+        try{
+            if (res.statusCode === 404) throw new Error(404);
+            var members = {};
+            $('#content').find('.members.box').find('a').each(function(){
+                var a = $(this);
+                var member = {
+                    id:Number(a.attr('href').replace("/redmine/users/", "")),
+                    name:a.text()
+                };
+                members[member.id] = member;
+            });
+            callback && callback.call(s, true, members);
+        } catch(e){
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
 //
 //
 //new RedmineAgent().login(conf.admin, function () {
 //    var s = this;
-//    s.getIssuePriorities(function () {
-//        console.log(arguments);
+//    s.getUsers("project00", function (success, data) {
+//        console.log(success, data);
 //    });
 //});
