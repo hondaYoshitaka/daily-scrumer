@@ -132,19 +132,17 @@
                 var form = $('form', li).ajaxForm(function () {
 
                 });
-                li.findByName('number')
-                    .editableText()
-                    .change(function () {
-                        form.submit();
-                    });
-                li.findByName('name')
+                li.findByRole('editable-text')
                     .editableText()
                     .change(function () {
                         form.submit();
                     });
                 li.findByRole('date-input')
                     .dateInput()
-                    .editableText();
+                    .editableText()
+                    .change(function () {
+                        form.submit();
+                    });
                 li.removableListItem(function () {
                     if (confirm(msg.sure)) {
                         $.post('/sprint/remove', {
@@ -206,10 +204,14 @@
             var section = $(this);
 
             var sprintList = $('#sprint-list', section);
-            sprintList.data('data').forEach(function (data) {
-                $(tmpl(data)).appendTo(sprintList)
-                    .sprintListItem();
-            });
+            sprintList.data('data')
+                .sort(function (a, b) {
+                    return b.number - a.number
+                })
+                .forEach(function (data) {
+                    $(tmpl(data)).appendTo(sprintList)
+                        .sprintListItem();
+                });
 
             $('#new-sprint-input-dialog', section).sprintInputDialog(function (data) {
                 $(tmpl(data.sprint))
@@ -501,7 +503,7 @@
                     form:Handlebars.templates['tmpl.alert-line-input-form']
                 };
                 var data = (function (color) {
-                        percent = colorPercent[color];
+                    percent = colorPercent[color];
                     if (percent === undefined)percent = wrapper.data('percent-default');
                     return {
                         color:color,
