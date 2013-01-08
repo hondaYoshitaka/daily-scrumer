@@ -9,7 +9,6 @@ var RedmineAgent = require('../agent')['Redmine'],
     Sprint = db.models['Sprint'];
 
 
-
 function getTimeTracks(versions, callback) {
     var result = {
         consumed:0,
@@ -129,7 +128,7 @@ exports.count_bugs = function (req, res) {
         bugs.forEach(function (bug) {
             data.total++;
             var status = team.getStatus(bug);
-            if(status){
+            if (status) {
                 switch (status.report_as) {
                     case 'done':
                         data.done++;
@@ -180,12 +179,14 @@ exports.task_time = function (req, res) {
             var time = (task.estimated_hours || 0);
             data.estimated += time;
             var status = team.getStatus(task);
-            if(!status){
+            if (!status) {
                 console.error('status not found for id', task);
                 return;
             }
             if (status.report_as != 'done') {
-                data.remain += time;
+                var ratio = task.done_ratio === undefined ?
+                    1 : ((100 - Number(task.done_ratio)) / 100)
+                data.remain += time * ratio;
             }
         });
 
@@ -244,7 +245,7 @@ exports.update = function (req, res) {
 /* スプリントの心がけを更新する */
 exports.update_keep_in_mind = function (req, res) {
     var body = req.body;
-    if(!body._id){
+    if (!body._id) {
         failJson(res);
         return;
     }
@@ -265,13 +266,13 @@ exports.update_keep_in_mind = function (req, res) {
     });
 };
 
-exports.update_days = function(req, res){
+exports.update_days = function (req, res) {
     var body = req.body;
-    if(!body._id){
+    if (!body._id) {
         failJson(res);
         return;
     }
-    Sprint.findById(body._id, function(sprint){
+    Sprint.findById(body._id, function (sprint) {
         if (!sprint) {
             failJson(res);
             return;
@@ -299,14 +300,14 @@ exports.remove = function (req, res) {
     });
 };
 
-exports.update_work_hours = function(req, res){
+exports.update_work_hours = function (req, res) {
     var body = req.body;
     var valid = body._id && body.day && body.work_hours;
-    if(!valid){
+    if (!valid) {
         failJson(res);
         return;
     }
-    Sprint.findById(body._id, function(sprint){
+    Sprint.findById(body._id, function (sprint) {
         if (!sprint) {
             failJson(res);
             return;
@@ -335,9 +336,9 @@ exports.in_hurry_bugs = function (req, res) {
         var i = 0;
         while (in_hurry_bugs.length < limit) {
             var bug = bugs[i];
-            if(!bug) break;
+            if (!bug) break;
             var status = team.getStatus(bug);
-            if(!status){
+            if (!status) {
                 console.error('status not found', bug);
                 continue;
             }
