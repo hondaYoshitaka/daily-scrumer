@@ -8,8 +8,8 @@ var should = require('should'),
     Calendar = db.models['Calendar'];
 
 
-describe('lgc.alert_line.js', function(){
-    it('remainDays', function(done){
+describe('lgc.alert_line.js', function () {
+    it('remainDays', function (done) {
         var today = new Date('2013/01/14')
         var sprint = new Sprint({
             begin:"2013/01/4",
@@ -17,8 +17,8 @@ describe('lgc.alert_line.js', function(){
         });
 
         var calendar = new Calendar({
-            "holidays": {
-                "2013-01-15T15:00:00.000Z": true
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
             }
         });
         var remainDays = logic.remainDays(today, sprint, calendar);
@@ -26,14 +26,14 @@ describe('lgc.alert_line.js', function(){
         done();
     });
 
-    it('totalDays', function(done){
+    it('totalDays', function (done) {
         var sprint = new Sprint({
             begin:"2013/01/4",
             end:'2013/01/24'
         });
         var calendar = new Calendar({
-            "holidays": {
-                "2013-01-15T15:00:00.000Z": true
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
             }
         });
         var totalDays = logic.totalDays(sprint, calendar);
@@ -41,19 +41,83 @@ describe('lgc.alert_line.js', function(){
         done();
     });
 
-    it('passedDays', function(done){
+    it('passedDays', function (done) {
         var today = new Date('2013/01/14')
         var sprint = new Sprint({
             begin:"2013/01/4",
             end:'2013/01/24'
         });
         var calendar = new Calendar({
-            "holidays": {
-                "2013-01-15T15:00:00.000Z": true
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
             }
         });
         var passedDays = logic.passedDays(today, sprint, calendar);
-        passedDays.sould.equal(6);
+        passedDays.should.equal(6);
+        done();
+    });
+
+    it('assumeLeftOpenTask (will finish)', function (done) {
+        var today = new Date('2013/01/14')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/24'
+        });
+        var calendar = new Calendar({
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
+            }
+        });
+        var rate = logic.assumeLeftOpenTask(0.5, today, sprint, calendar);
+        rate.should.equal(0);
+        done();
+    });
+
+    it('assumeLeftOpenTask (will left)', function (done) {
+        var today = new Date('2013/01/14')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/24'
+        });
+        var calendar = new Calendar({
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
+            }
+        });
+        var rate = logic.assumeLeftOpenTask(0.25, today, sprint, calendar);
+        rate.should.equal(0.42);
+        done();
+    });
+
+    it('assumeLeftOpenTask (will left 2)', function (done) {
+        var today = new Date('2013/01/14')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/20'
+        });
+        var calendar = new Calendar({
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
+            }
+        });
+        var rate = logic.assumeLeftOpenTask(0.25, today, sprint, calendar);
+        rate.should.equal(0.58);
+        done();
+    });
+
+    it('assumeLeftOpenTask (start day)', function (done) {
+        var today = new Date('2013/01/4')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/24'
+        });
+        var calendar = new Calendar({
+            "holidays":{
+                "2013-01-15T15:00:00.000Z":true
+            }
+        });
+        var rate = logic.assumeLeftOpenTask(0.25, today, sprint, calendar);
+        rate.should.equal(0);
         done();
     });
 });

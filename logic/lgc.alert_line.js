@@ -15,8 +15,8 @@ function countDays(begin, end, calendar) {
     return remainDays;
 }
 
-exports.passedDays = function(today, sprint, calendar){
-    var yesterday = (function(date){
+exports.passedDays = function (today, sprint, calendar) {
+    var yesterday = (function (date) {
         date.setDate(date.getDate() - 1);
         return date;
     })(new Date(today));
@@ -32,6 +32,13 @@ exports.totalDays = function (sprint, calendar) {
 };
 
 
-exports.assumeLeftOpenTask = function(doneRate, today, sprint, calendar){
-
+exports.assumeLeftOpenTask = function (doneRate, today, sprint, calendar) {
+    var totalDays = exports.totalDays(sprint, calendar),
+        remainDays = exports.remainDays(today, sprint, calendar),
+        passedDays = exports.passedDays(today, sprint, calendar);
+    var velocity = doneRate / passedDays,
+        capable = remainDays * velocity;
+    var rate = doneRate + capable;
+    if(rate>1) return 0;
+    return Number((1 - rate).toFixed(2));
 };
