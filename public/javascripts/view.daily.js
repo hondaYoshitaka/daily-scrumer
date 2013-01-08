@@ -652,10 +652,12 @@
 
                 item.appendTo(roulette);
                 var index = 0;
+                var size = item.size();
                 item.randomEach(function (i, item) {
                     var isFull = group.eq(index).children().size() >= 2;
                     if (isFull) {
-                        index++;
+                        var last = (i === (size-1));
+                        if (!last) index++;
                     }
                     group.eq(index).append(item);
                 });

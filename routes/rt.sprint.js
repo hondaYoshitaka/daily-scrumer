@@ -393,11 +393,14 @@ exports.alert_line = function (req, res) {
         Calendar.findByTeamName(team.name, function (calendar) {
             var ratio = logic.alert_line.assumeLeftOpenTask(
                 done_rate, today, sprint, calendar);
-            var color = (function(alert_lines){
-                alert_lines.forEach(function(alert_line){
-
-                });
-                return "";
+            var color = (function (alert_lines) {
+                var color = '';
+                alert_lines.sort(function (a, b) {
+                    return Number(a.percent) - Number(b.percent);
+                }).forEach(function (alert_line) {
+                        console.log(alert_line, 'alert_line');
+                    });
+                return color;
             })(team.alert_lines)
             res.json({
                 success:true,
