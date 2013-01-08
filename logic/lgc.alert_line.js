@@ -15,9 +15,23 @@ function countDays(begin, end, calendar) {
     return remainDays;
 }
 
+exports.passedDays = function(today, sprint, calendar){
+    var yesterday = (function(date){
+        date.setDate(date.getDate() - 1);
+        return date;
+    })(new Date(today));
+    return countDays(new Date(sprint.begin), yesterday, calendar);
+};
+
 exports.remainDays = function (today, sprint, calendar) {
     return countDays(today, new Date(sprint.end), calendar);
 };
+
 exports.totalDays = function (sprint, calendar) {
     return countDays(new Date(sprint.begin), new Date(sprint.end), calendar);
+};
+
+
+exports.assumeLeftOpenTask = function(doneRate, today, sprint, calendar){
+
 };

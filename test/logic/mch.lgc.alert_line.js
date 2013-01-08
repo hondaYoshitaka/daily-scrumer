@@ -40,4 +40,20 @@ describe('lgc.alert_line.js', function(){
         totalDays.should.equal(14);
         done();
     });
+
+    it('passedDays', function(done){
+        var today = new Date('2013/01/14')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/24'
+        });
+        var calendar = new Calendar({
+            "holidays": {
+                "2013-01-15T15:00:00.000Z": true
+            }
+        });
+        var passedDays = logic.passedDays(today, sprint, calendar);
+        passedDays.sould.equal(6);
+        done();
+    });
 });
