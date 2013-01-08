@@ -154,6 +154,8 @@
                     doneRate.text((rate * 100).toFixed(1));
 
                     rateCircle.rateCircle(rate);
+
+                    section.trigger('task_times_changed', [rate]);
                 });
             }
             return section;
@@ -185,7 +187,7 @@
                         .stop()
                         .animate({
                             top:backContent.parent().height()
-                        }, function(){
+                        }, function () {
                             backContent.hide();
                         });
                 });
@@ -783,6 +785,22 @@
                     .siblings('.on')
                     .removeClass('on');
             });
+
+            $(document).on('task_times_changed', function (e, rate) {
+                var data = {
+                    sprint:CS.sprint,
+                    team_id:CS.team._id,
+                    done_rate:rate
+                };
+                $.get('/sprint/get_alert_line', data, function (data) {
+                    if (data.success) {
+                        console.log('get alert line', data);
+                    } else {
+                        console.error('failed to get alert line');
+                    }
+                });
+            });
+
             return section;
         },
         bugToHurrySection:function (sprint) {

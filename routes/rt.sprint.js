@@ -4,10 +4,11 @@
 
 var RedmineAgent = require('../agent')['Redmine'],
     util = require('../util'),
+    logic = require('../logic'),
     db = require('../db'),
     Team = db.models['Team'],
-    Sprint = db.models['Sprint'];
-
+    Sprint = db.models['Sprint'],
+    Calendar = db.models['Calendar'];
 
 function getTimeTracks(versions, callback) {
     var result = {
@@ -372,4 +373,38 @@ exports.in_hurry_bugs = function (req, res) {
             urls:urls
         });
     });
+};
+
+exports.alert_line = function (req, res) {
+    var sprint = req.query.sprint,
+        team_id = req.query.team_id,
+        done_rate = req.query.done_rate,
+        today = util.date.truncateHours(util.date.getNow());
+    var isValid = !!(sprint && team_id);
+    if (!isValid) {
+        failJson(res);
+        return;
+    }
+    Team.findById(team_id, function (team) {
+        if (!team) {
+            failJson(res);
+            return;
+        }
+        Calendar.findByTeamName(team.name, function (calendar) {
+            var ratio = logic.alert_line.assumeLeftOpenTask(
+                done_rate, today, sprint, calendar);
+            var color = (function(alert_lines){
+                alert_lines.forEach(function(alert_line){
+
+                });
+                return "";
+            })(team.alert_lines)
+            res.json({
+                success:true,
+                leftOpenTaskAssumeRatio:ratio,
+                color:color
+            });
+        });
+    });
+
 };
