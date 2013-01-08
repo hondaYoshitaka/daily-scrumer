@@ -8,6 +8,7 @@ describe('lgc.url', function () {
     it('url', function(){
         logic('/index').should.equal('/index');
     });
+
     it('url.js', function(){
         var use_min = logic.use_min;
         logic.use_min = false;
