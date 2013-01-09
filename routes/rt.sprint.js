@@ -198,6 +198,7 @@ exports.task_time = function (req, res) {
             }
             data.consumed = timeTrack.spent;
             data.success = true;
+            data.remain = Math.round(data.remain);
             res.json(data);
         });
 
