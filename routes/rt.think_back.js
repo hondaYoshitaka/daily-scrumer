@@ -2,7 +2,16 @@
  *  振り返りに関する画面
  */
 
-exports.index = function (req, res) {
+var db = require('../db'),
+    Sprint = db.models['Sprint'],
+    util = require('../util'),
+    Team = db.models['Team'];
 
-    res.render('think_back/index.jade');
+exports.index = function (req, res) {
+    var team_name = res.locals.team && res.locals.team.name;
+    Sprint.findByTeamName(team_name, function (sprints) {
+        res.render('think_back/index.jade', {
+            sprints:sprints
+        });
+    });
 };
