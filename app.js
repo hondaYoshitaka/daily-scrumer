@@ -40,7 +40,7 @@ app.configure(function () {
 app.configure('development', function () {
     app.use(express.errorHandler());
     (function (precompiler) {
-        ['setting', 'daily', 'think_back'].forEach(function (key) {
+        ['setting', 'daily', 'think_back', 'story'].forEach(function (key) {
             var watchDir = [__dirname, "views", key].join('/');
             if (!util.file.exists(watchDir)) return;
 
@@ -82,6 +82,7 @@ app.configure('development', function () {
     });
     app.get('/team/:name/', r.daily.index);
     app.get('/team/:name/daily', r.daily.index);
+    app.get('/team/:name/story', r.story.index);
     app.get('/team/:name/think_back', r.think_back.index);
     app.get('/team/:name/setting', r.setting.index);
 

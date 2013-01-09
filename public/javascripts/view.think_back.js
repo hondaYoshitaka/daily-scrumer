@@ -19,15 +19,22 @@
                 id = container.attr('id');
             return CS.chart.workHours(id, data);
         },
-        workHourSection:function (work_hours) {
+        workHourSection:function (beginDate, workHours) {
             var section = $(this);
 
-            var data = []
-            work_hours && Object.keys(work_hours).forEach(function (key) {
-                var utc = Number(key),
-                    date = new Date(utc),
-                    work_hour = work_hours[utc];
-            });
+            var data =(function(){
+                var data = []
+                if(!workHours) return data;
+                var last = new Date(beginDate);
+                console.log('last', last);
+                Object.keys(workHours).forEach(function (key) {
+                    var utc = Number(key),
+                        date = new Date(utc),
+                        work_hour = workHours[utc];
+                    console.log('work_hour', work_hour, work_hour.total);
+                });
+                return data;
+            })();
             //TODO
             data = [
                 0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
@@ -44,7 +51,7 @@
         $('#head-nav', body).nav('think_back');
         $('#sprint-select', body).sprintSelect(function (sprint) {
             CS.active_sprint = sprint;
-            $('#work-hour-section', body).workHourSection(sprint.work_hours);
+            $('#work-hour-section', body).workHourSection(sprint.begin, sprint.work_hours);
 
         });
     });
