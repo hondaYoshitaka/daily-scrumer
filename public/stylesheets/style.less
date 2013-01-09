@@ -957,3 +957,49 @@ legend{
 .drag-handle{
   cursor: default;
 }
+
+.book{
+  padding: 10px;
+  .box-shadow(3px 3px 6px, 0.4);
+  display: inline-block;
+  .book-color-0;
+  .border-radius(4px);
+}
+.book-color(@spin){
+  @color:spin(lighten(@red, 22), @spin + 5deg);
+  background-color: @color;
+};
+.book-color-0{.book-color(0deg)}
+.book-color-1{.book-color(30deg)}
+.book-color-2{.book-color(60deg)}
+.book-color-3{.book-color(90deg)}
+.book-color-4{.book-color(120deg)}
+.book-color-5{.book-color(150deg)}
+.book-color-6{.book-color(180deg)}
+.book-color-7{.book-color(210deg)}
+.book-color-8{.book-color(240deg)}
+
+
+.book-page-left,
+.book-page-right{
+    width:120px;
+  height: 200px;
+  padding:10px;
+  display: inline-block;
+  .box-shadow(2px 2px 4px, 0.4);
+  float: left;
+  .border-radius(2px);
+}
+.book-page(@deg){
+  @back:@white;
+  .linear-gradient(@deg, @back 50%, darken(@back, 2) 75%, darken(@back, 1));
+  border:1px solid darken(@back, 2);
+  .border-radius(2px);
+}
+.book-page-left{
+  .book-page(0deg);
+  border-right-color:darken(@white, 12);
+}
+.book-page-right{
+  .book-page(180deg);
+}
