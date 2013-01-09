@@ -781,12 +781,12 @@
         trafficLightSection:function () {
             var section = $(this);
 
-            var light = section.findByRole('traffic-light');
-            light.click(function () {
-                $(this).addClass('on')
-                    .siblings('.on')
-                    .removeClass('on');
-            });
+//            var light = section.findByRole('traffic-light');
+//            light.click(function () {
+//                $(this).addClass('on')
+//                    .siblings('.on')
+//                    .removeClass('on');
+//            });
 
             $(document).on('task_times_changed', function (e, rate) {
                 var data = {
@@ -796,7 +796,7 @@
                 };
                 $.get('/sprint/get_alert_line', data, function (data) {
                     if (data.success) {
-                        console.log('get alert line', data);
+                        $('.traffic-light-' + data.color).addClass('on');
                     } else {
                         console.error('failed to get alert line');
                     }

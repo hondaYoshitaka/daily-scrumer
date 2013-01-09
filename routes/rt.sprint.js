@@ -399,7 +399,12 @@ exports.alert_line = function (req, res) {
                 alert_lines.sort(function (a, b) {
                     return Number(a.percent) - Number(b.percent);
                 }).forEach(function (alert_line) {
-                        console.log(alert_line, 'alert_line');
+                        if(!color) {
+                            color = alert_line.color;
+                            return;
+                        }
+                        var over = ratio > Number(alert_line.percent);
+                        if(over) color = alert_line.color;
                     });
                 return color;
             })(team.alert_lines)
