@@ -16,5 +16,6 @@ block content
 
     select#sprint-select(name="sprint_id")
         - for sprint in sprints
-            option(value=sprint._id) #{sprint.name}
+            option(value=sprint._id, data-sprint=sprint)
+                | #{sprint.name}
     section#work-hour-section
