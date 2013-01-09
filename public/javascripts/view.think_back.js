@@ -1,5 +1,4 @@
-;
-(function ($) {
+;(function ($) {
 
     CS.active_sprint = null;//選択中のスプリント
 
@@ -18,54 +17,7 @@
         workHourChart:function (data) {
             var container = $(this),
                 id = container.attr('id');
-            new Highcharts.Chart({
-                chart:{
-                    renderTo:id,
-                    type:'line',
-                    marginRight:130,
-                    marginBottom:25
-                },
-                title:{
-                    text:'Work hours',
-                    x:-20 //center
-                },
-                subtitle:{
-                    text:'Sprint work hours',
-                    x:-20
-                },
-                xAxis:{
-                    type:'datetime',
-                    maxZoom:14 * 24 * 3600000, // fourteen days
-                    title:{
-                        text:null
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'hour'
-                    },
-                    showFirstLabel: false
-                },
-                tooltip:{
-                    shared:true
-                },
-                legend:{
-                    layout:'vertical',
-                    align:'right',
-                    verticalAlign:'top',
-                    x:-10,
-                    y:100,
-                    borderWidth:0
-                },
-                series:[{
-                    type: 'area',
-                    name: 'work hours',
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: Date.UTC(2006, 0, 01),
-                    data: data
-                }]
-            });
-
+            return CS.chart.workHours(id, data);
         },
         workHourSection:function (work_hours) {
             var section = $(this);

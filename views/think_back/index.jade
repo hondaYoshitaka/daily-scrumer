@@ -7,12 +7,12 @@ block javascript
     script(src=url.js('highcharts.js'))
     script(src=url.js('handlebars.template.think_back.min.js'))
     script(src=url.js('view.think_back.js'))
+    script(src=url.js('view.think_back.chart.js'))
     script
         CS.sprints = !{JSON.stringify(sprints)};
 
 block content
     h1  think back!
-
 
     select#sprint-select(name="sprint_id")
         - for sprint in sprints
