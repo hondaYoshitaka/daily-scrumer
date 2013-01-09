@@ -99,6 +99,7 @@ app.configure('development', function () {
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);
     app.get('/sprint/get_alert_line', r.sprint.alert_line);
+    app.get('/sprint/get_stories', r.sprint.stories);
     app.get('/sprint/in_hurry_bugs', r.sprint.in_hurry_bugs);
     app.post('/sprint/new', r.sprint.new);
     app.post('/sprint/update', r.sprint.update);

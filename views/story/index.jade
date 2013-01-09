@@ -6,6 +6,8 @@ block stylesheet
 block javascript
     script(src='/javascripts/handlebars.template.story.min.js')
     script(src='/javascripts/view.story.js')
+    script
+        CS.sprint = !{JSON.stringify(sprint)};
 
 block content
     h1 stories!

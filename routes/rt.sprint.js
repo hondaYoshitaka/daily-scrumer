@@ -156,14 +156,8 @@ exports.task_time = function (req, res) {
         team_id = req.query.team_id,
         versions = sprint.redmine_versions;
 
-    function fail() {
-        res.json({
-            success:false
-        });
-    }
-
     if (!versions) {
-        fail();
+        failJson(res);
         return;
     }
     var data = {
@@ -415,5 +409,24 @@ exports.alert_line = function (req, res) {
             });
         });
     });
+};
 
+exports.stories = function(req, res){
+    var sprint = req.query.sprint,
+        team_id = req.query.team_id,
+        versions = sprint.redmine_versions;
+    if (!versions) {
+        failJson(res);
+        return;
+    }
+    getTasks(team_id, sprint, function (success, data, team) {
+        if (!success) {
+            failJson(res);
+            return;
+        }
+        res.json({
+            success:true,
+            stories:data
+        });
+    });
 };
