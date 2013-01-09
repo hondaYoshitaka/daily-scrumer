@@ -6,7 +6,7 @@ var should = require('should'),
     mock = require('../mock'),
     Req = mock['Req'],
     Res = mock['Res'],
-    route = require('../../routes/rt.daily.js'),
+    route = require('../../routes/rt.story.js'),
     db = require('../../db'),
     Sprint = db.models['Sprint'];
 
@@ -48,9 +48,8 @@ describe('rt.story.js', function () {
                 }
             },
             render:function (view, vars) {
-                view.should.equal('daily/index.jade');
+                view.should.equal('story/index.jade');
                 vars.sprint.should.have.property('team_name', 'team01');
-                should.exist(vars.today);
                 done();
             }
         }));
