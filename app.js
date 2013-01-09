@@ -108,6 +108,7 @@ app.configure('development', function () {
 
     app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);
     app.get('/setting/get_redmine_versions', r.setting.getRedmineVersions);
+    app.get('/setting/get_redmine_members', r.setting.getRedmineMembers);
     app.get('/setting/get_issue_statuses', r.setting.getIssueStatuses);
     app.get('/setting/get_trackers', r.setting.getTrackers);
 

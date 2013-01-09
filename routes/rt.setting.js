@@ -1,5 +1,7 @@
 var db = require('../db'),
     Sprint = db.models['Sprint'],
+    util = require('../util'),
+    Team = db.models['Team'],
     RedmineAgent = require('../agent')['Redmine'];
 
 
@@ -47,7 +49,7 @@ exports.getRedmineVersions = function (req, res) {
 
 };
 
-function failJson(res){
+function failJson(res) {
     res.json({
         success:false
     });
@@ -68,8 +70,8 @@ exports.getIssueStatuses = function (req, res) {
 };
 
 /* get redmine trackers */
-exports.getTrackers = function(req, res){
-    RedmineAgent.admin.getTrackers(function(success, data){
+exports.getTrackers = function (req, res) {
+    RedmineAgent.admin.getTrackers(function (success, data) {
         if (success) {
             res.json({
                 success:true,
@@ -78,5 +80,53 @@ exports.getTrackers = function(req, res){
         } else {
             failJson(res);
         }
+    });
+};
+
+
+function getMembers(projects, callback) {
+    var agentReqCount = 0,
+        abort = false,
+        result = {};
+    projects.forEach(function (project) {
+        agentReqCount++;
+        RedmineAgent.admin.getUsers(project, function (success, data) {
+            if (abort)return;
+            if (!success) {
+                abort = true;
+                callback(false);
+                return;
+            }
+            agentReqCount--;
+            util.obj.deepCopy(data, result);
+            if (agentReqCount == 0) {
+                callback(true, result);
+            }
+        });
+    });
+}
+
+exports.getRedmineMembers = function (req, res) {
+    var query = req.query;
+    var valid = !!query.team_id;
+    if (!valid) {
+        failJson(res);
+        return;
+    }
+    Team.findById(query.team_id, function (team) {
+        if (!team) {
+            failJson(res);
+            return;
+        }
+        getMembers(team.redmine_projects, function (success, data) {
+            if (!success) {
+                failJson(res);
+                return;
+            }
+            res.json({
+                success:true,
+                members:data
+            });
+        });
     });
 };

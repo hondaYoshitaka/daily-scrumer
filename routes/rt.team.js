@@ -3,6 +3,7 @@
  */
 
 var db = require('../db'),
+    util = require('../util'),
     Team = db.models['Team'],
     Member = Team.Member;
 
@@ -198,7 +199,7 @@ exports.update.routine = function (req, res) {
             return;
         }
         team.routines = [];
-        body.routines && body.routines.forEach(function(data){
+        body.routines && body.routines.forEach(function (data) {
             team.routines.push(new Team.Routine(data));
         });
         team.update(function () {
@@ -240,7 +241,7 @@ exports.update.routine.add = function (req, res) {
     });
 };
 
-exports.update.alert_line = function(req, res){
+exports.update.alert_line = function (req, res) {
     var body = req.body;
     var valid = body.team_id && body.aliert_lines;
     if (!valid) {
@@ -255,7 +256,7 @@ exports.update.alert_line = function(req, res){
 
 
         var alert_lines = [];
-        body.aliert_lines.forEach(function(data){
+        body.aliert_lines.forEach(function (data) {
             alert_lines.push(new Team.AlertLine(data));
         });
         team.alert_lines = alert_lines;

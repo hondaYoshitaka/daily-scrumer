@@ -91,6 +91,17 @@
             var section = $(this),
                 memberList = $('#mebmer-list', section);
 
+            var data = {
+                team_id:CS.team._id
+            };
+            $.get('/setting/get_redmine_members', data, function (data) {
+                if (data.success) {
+                    console.log('redmine mmebers', data);
+                } else {
+                    console.error('failed to load redmine members');
+                }
+            });
+
             var tmpl = {
                 li:Handlebars.templates['tmpl.member-list-item']
             };
