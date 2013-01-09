@@ -8,6 +8,7 @@ var RedmineAgent = require('../agent')['Redmine'],
     db = require('../db'),
     Team = db.models['Team'],
     Sprint = db.models['Sprint'],
+    Story = db.models['Story'],
     Calendar = db.models['Calendar'];
 
 function getTimeTracks(versions, callback) {
@@ -393,12 +394,12 @@ exports.alert_line = function (req, res) {
                 alert_lines.sort(function (a, b) {
                     return Number(a.percent) - Number(b.percent);
                 }).forEach(function (alert_line) {
-                        if(!color) {
+                        if (!color) {
                             color = alert_line.color;
                             return;
                         }
                         var over = ratio > Number(alert_line.percent);
-                        if(over) color = alert_line.color;
+                        if (over) color = alert_line.color;
                     });
                 return color;
             })(team.alert_lines)
@@ -411,7 +412,7 @@ exports.alert_line = function (req, res) {
     });
 };
 
-exports.stories = function(req, res){
+exports.stories = function (req, res) {
     var sprint = req.query.sprint,
         team_id = req.query.team_id,
         versions = sprint.redmine_versions;
@@ -424,9 +425,24 @@ exports.stories = function(req, res){
             failJson(res);
             return;
         }
-        res.json({
-            success:true,
-            stories:data
+        Story.findBySprintId(sprint._id, function (saved) {
+            data.forEach(function (data) {
+                data.sprint_id = sprint._id;
+                data.redmine_id = data.id;
+                delete data.id;
+                for (var i = 0; i < saved.length; i++) {
+                    var story = saved[i];
+                    var hit = story.redmine_id == data.redmine_id;
+                    if (hit) {
+                        util.obj.deepCopy(story, data);
+                        break;
+                    }
+                }
+            });
+            res.json({
+                success:true,
+                stories:data
+            });
         });
     });
 };

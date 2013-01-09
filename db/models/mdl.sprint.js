@@ -45,7 +45,9 @@ Sprint.prototype.defaultValue = {
     /* 労働実績 日付がキー、労働時間が値に入る */
     work_hours:{
 
-    }
+    },
+
+
 };
 
 
