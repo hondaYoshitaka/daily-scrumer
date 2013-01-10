@@ -108,7 +108,7 @@ app.configure('development', function () {
     app.post('/sprint/update_work_hours', r.sprint.update_work_hours);
     app.post('/sprint/remove', r.sprint.remove);
 
-    app.post('/story/update_checkpoints', r.sroty.update.checkpoints);
+    app.post('/story/update_checkpoints', r.story.update.checkpoints);
 
     app.get('/setting/get_redmine_projects', r.setting.getRedmineProjects);
     app.get('/setting/get_redmine_versions', r.setting.getRedmineVersions);
