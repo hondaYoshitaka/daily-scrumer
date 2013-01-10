@@ -9,6 +9,26 @@ var should = require('should'),
 
 
 describe('lgc.alert_line.js', function () {
+
+    it('passedDays', function (done) {
+        var today = new Date('2013/01/14')
+        var sprint = new Sprint({
+            begin:"2013/01/4",
+            end:'2013/01/24'
+        });
+        var calendar = new Calendar({
+            "holidays":{
+                "2013-01-10T15:00:00.000Z":true
+            }
+        });
+        var passedDays = logic.passedDays(today, sprint, calendar);
+        passedDays.should.equal(5);
+        done();
+
+    });
+
+
+
     it('remainDays', function (done) {
         var today = new Date('2013/01/14')
         var sprint = new Sprint({
@@ -26,6 +46,7 @@ describe('lgc.alert_line.js', function () {
         done();
     });
 
+
     it('totalDays', function (done) {
         var sprint = new Sprint({
             begin:"2013/01/4",
@@ -41,21 +62,6 @@ describe('lgc.alert_line.js', function () {
         done();
     });
 
-    it('passedDays', function (done) {
-        var today = new Date('2013/01/14')
-        var sprint = new Sprint({
-            begin:"2013/01/4",
-            end:'2013/01/24'
-        });
-        var calendar = new Calendar({
-            "holidays":{
-                "2013-01-15T15:00:00.000Z":true
-            }
-        });
-        var passedDays = logic.passedDays(today, sprint, calendar);
-        passedDays.should.equal(6);
-        done();
-    });
 
     it('assumeLeftOpenTask (will finish)', function (done) {
         var today = new Date('2013/01/14')
@@ -68,7 +74,7 @@ describe('lgc.alert_line.js', function () {
                 "2013-01-15T15:00:00.000Z":true
             }
         });
-        var rate = logic.assumeLeftOpenTask(0.5, today, sprint, calendar);
+        var rate = logic.assumeLeftOpenTask(0.6, today, sprint, calendar);
         rate.should.equal(0);
         done();
     });
@@ -81,11 +87,11 @@ describe('lgc.alert_line.js', function () {
         });
         var calendar = new Calendar({
             "holidays":{
-                "2013-01-15T15:00:00.000Z":true
+                "2013-01-15T00:00:00.000Z":true
             }
         });
         var rate = logic.assumeLeftOpenTask(0.25, today, sprint, calendar);
-        rate.should.equal(0.42);
+        rate.should.equal(0.38);
         done();
     });
 

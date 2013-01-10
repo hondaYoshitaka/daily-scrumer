@@ -496,6 +496,7 @@
                 .on('refresh-calendar.holiday', function () {
                     $('.holiday', section).removeClass('holiday');
                     Object.keys(CS.holidays).forEach(function (holiday) {
+                        if(holiday.match(/^\d+$/)) holiday = Number(holiday);
                         holiday = new Date(holiday);
                         section.findByAttr({
                             'data-year':holiday.getFullYear(),
@@ -838,13 +839,9 @@
         trafficLightSection:function () {
             var section = $(this);
 
-//            var light = section.findByRole('traffic-light');
-//            light.click(function () {
-//                $(this).addClass('on')
-//                    .siblings('.on')
-//                    .removeClass('on');
-//            });
-
+            var tmpl = {
+                reportTable:Handlebars.templates['tmpl.velocity-report-table']
+            };
             $(document).on('task_times_changed', function (e, rate) {
                 var doc = $(this);
                 var data = {
@@ -858,6 +855,7 @@
                         $('.traffic-light-' + data.color).addClass('on');
                         CS.task_remain_assume = data.leftOpenTaskAssumeRatio;
                         doc.trigger('update-alert-line');
+                        $('#velocity-report').html(tmpl.reportTable(data));
                     } else {
                         console.error('failed to get alert line');
                     }

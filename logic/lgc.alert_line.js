@@ -1,34 +1,38 @@
+var util = require('../util');
+
 function countDays(begin, end, calendar) {
     var current = new Date(begin);
-    var remainDays = 0;
-    while (current <= end) {
+    var days = 0;
+
+    while (current.getDate() < end.getDate()) {
+        var isHoliday =(function(){
+            switch (current.getDay()) {
+                case 0:
+                case 6:
+                    return true;
+            }
+            return calendar.isHoliday(current);
+        })();
         current.setDate(current.getDate() + 1);
-        switch (current.getDay()) {
-            case 0:
-            case 1:
-                continue;
-        }
-        var isHoliday = calendar.isHoliday(current);
-        if (isHoliday) continue;
-        remainDays++;
+        if (!isHoliday) days++;
     }
-    return remainDays;
+    return days;
 }
 
 exports.passedDays = function (today, sprint, calendar) {
-    var yesterday = (function (date) {
-        date.setDate(date.getDate() - 1);
-        return date;
-    })(new Date(today));
-    return countDays(new Date(sprint.begin), yesterday, calendar);
+    return countDays(new Date(sprint.begin), new Date(today), calendar);
 };
 
 exports.remainDays = function (today, sprint, calendar) {
-    return countDays(today, new Date(sprint.end), calendar);
+    var endNext = new Date(sprint.end);
+    endNext.setDate(endNext.getDate() + 1);
+    return countDays(today, endNext, calendar);
 };
 
 exports.totalDays = function (sprint, calendar) {
-    return countDays(new Date(sprint.begin), new Date(sprint.end), calendar);
+    var endNext = new Date(sprint.end);
+    endNext.setDate(endNext.getDate() + 1);
+    return countDays(new Date(sprint.begin), endNext, calendar);
 };
 
 

@@ -920,7 +920,7 @@ legend{
 .traffic-light(@color) {
   .radial-gradient(33%, 33%, @white, darken(@white, 50));
   position: relative;
-  &:hover, &.on {
+  &.on {
     .radial-gradient(33%, 33%, lighten(@color, 2), saturate(darken(@color, 30), 10));
     &:after {
       opacity: 0.5;

@@ -448,11 +448,14 @@ exports.alert_line = function (req, res) {
                         });
                     return color;
                 })(team.alert_lines);
-                console.log('color', color);
+                var passed_days = logic.alert_line.passedDays(today, sprint, calendar),
+                    remain_days = logic.alert_line.remainDays(today, sprint, calendar);
                 res.json({
                     success:true,
                     leftOpenTaskAssumeRatio:ratio,
-                    color:color
+                    color:color,
+                    passed_days:passed_days,
+                    remain_days:remain_days
                 });
             });
         });
