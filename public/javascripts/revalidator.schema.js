@@ -64,6 +64,12 @@
                 label:'member name',
                 required:true
             }
+        },
+        update_story_checkpoints:{
+           text:{
+               label:'checkpoint title',
+               required:true
+           }
         }
     };
     if(isServer){

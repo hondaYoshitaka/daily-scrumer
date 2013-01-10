@@ -54,6 +54,9 @@ exports = module.exports = {
         }
 
     },
+    story:{
+        checkpoints:'checkpoints'
+    },
     settings:{
         selected_team:'team',
         teams:'teams',

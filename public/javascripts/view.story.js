@@ -1,18 +1,53 @@
 (function ($) {
     $.fn.extend({
         checkpointListItem:function(){
-            var item = $(this);
+            return $(this).each(function(){
+                var item = $(this),
+                    form = $('form', item);
+                item.removableListItem(function(){
+                    form.remove();
+                });
+                form
+                    .validationForm('update_story_checkpoints')
+                    .submit(function(e){
+                        var valid = form.data('form.valid');
+                        console.log('valid', valid);
+                        if(valid){
 
-            return item;
+                        }
+                        e.preventDefault();
+                    });
+                item.findByRole('editable-text')
+                    .editableText();
+            });
         },
         checkpointList:function(data){
-            var ul = $(this);
+            var ul = $(this),
+                addBtn = ul.findByRole('checkpoint-add-btn');
+            var tmpl = {
+                li:function(data){
+                    data.index = $('li', ul).not(addBtn).size();
+                    return Handlebars
+                        .templates['tmpl.checkpoint-list-item']
+                        (data);
+                }
+            };
 
+            data && data.forEach(function(data){
+                $(tmpl.li(data)).insertBefore(addBtn)
+                    .checkpointListItem();
+            });
+            addBtn.click(function(){
+                $(tmpl.li({})).insertBefore(addBtn)
+                    .checkpointListItem();
+            });
             return ul;
         },
-        storyListItem:function () {
+        storyListItem:function (data) {
             return $(this).each(function () {
-
+                var item = $(this).data(data);
+                item.findByRole('checkpoint-list')
+                    .checkpointList(data.checkpoints);
             });
         },
         storyList:function (data) {
@@ -21,7 +56,7 @@
             var tmpl = Handlebars.templates['tmpl.story-list-item'];
             data.forEach(function (data) {
                 $(tmpl(data)).appendTo(ul)
-                    .storyListItem();
+                    .storyListItem(data);
             });
             return ul;
         },
