@@ -1,5 +1,15 @@
 (function ($) {
     $.fn.extend({
+        checkpointListItem:function(){
+            var item = $(this);
+
+            return item;
+        },
+        checkpointList:function(data){
+            var ul = $(this);
+
+            return ul;
+        },
         storyListItem:function () {
             return $(this).each(function () {
 
