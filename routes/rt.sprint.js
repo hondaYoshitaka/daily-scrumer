@@ -346,51 +346,61 @@ exports.update_work_hours = function (req, res) {
 
 
 exports.in_hurry_bugs = function (req, res) {
-    var sprint = req.query.sprint,
+    var sprint_number = req.query.sprint_number,
+        team_name = req.query.team_name,
         team_id = req.query.team_id;
     var limit = 3, in_hurry_bugs = [];
-    getBugs(team_id, sprint, function (sucess, bugs, team) {
-        if (!sucess) {
+    Sprint.findOneByCondition({
+        team_name:team_name,
+        number:Number(sprint_number)
+    }, function (sprint) {
+        if (!sprint) {
             failJson(res);
             return;
         }
-        var i = 0;
-        while (in_hurry_bugs.length < limit) {
-            var bug = bugs[i];
-            if (!bug) break;
-            var status = team.getStatus(bug);
-            if (!status) {
-                console.error('status not found', bug);
-                continue;
+        getBugs(team_id, sprint, function (sucess, bugs, team) {
+            if (!sucess) {
+                failJson(res);
+                return;
             }
-            switch (status.report_as) {
-                case 'done':
-                case 'modified':
-                    break;
-                default :
-                    bug.url = [RedmineAgent.conf.url.base, 'issues', bug.id].join('/');
-                    var enums = RedmineAgent.admin.enumerations;
-                    if (enums && enums.issuePriorities) {
-                        bug.priority = enums.issuePriorities[bug['priority_id']];
-                    }
-                    in_hurry_bugs.push(bug);
-                    break;
+            var i = 0;
+            while (in_hurry_bugs.length < limit) {
+                var bug = bugs[i];
+                if (!bug) break;
+                var status = team.getStatus(bug);
+                if (!status) {
+                    console.error('status not found', bug);
+                    continue;
+                }
+                switch (status.report_as) {
+                    case 'done':
+                    case 'modified':
+                        break;
+                    default :
+                        bug.url = [RedmineAgent.conf.url.base, 'issues', bug.id].join('/');
+                        var enums = RedmineAgent.admin.enumerations;
+                        if (enums && enums.issuePriorities) {
+                            bug.priority = enums.issuePriorities[bug['priority_id']];
+                        }
+                        in_hurry_bugs.push(bug);
+                        break;
+                }
+                i++;
             }
-            i++;
-        }
-        var urls = (function (base) {
-            var urls = [];
-            team.redmine_projects.forEach(function (project) {
+            var urls = (function (base) {
+                var urls = [];
+                team.redmine_projects.forEach(function (project) {
 
-                var url = [base, 'projects', project, 'issues'].join('/');
-                urls.push(url);
+                    var url = [base, 'projects', project, 'issues'].join('/');
+                    urls.push(url);
+                });
+                return urls;
+            })(RedmineAgent.conf.url.base);
+            res.json({
+                success:true,
+                in_hurry_bugs:in_hurry_bugs,
+                urls:urls
             });
-            return urls;
-        })(RedmineAgent.conf.url.base);
-        res.json({
-            success:true,
-            in_hurry_bugs:in_hurry_bugs,
-            urls:urls
         });
     });
 };
