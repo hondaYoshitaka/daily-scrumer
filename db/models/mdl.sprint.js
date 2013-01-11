@@ -43,9 +43,11 @@ Sprint.prototype.defaultValue = {
     keep_in_mind_2:null,
 
     /* 労働実績 日付がキー、労働時間が値に入る */
-    work_hours:{
+    work_hours:{},
 
-    }
+    begin:null,
+
+    end:null
 };
 
 

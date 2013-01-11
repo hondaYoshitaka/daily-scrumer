@@ -418,8 +418,8 @@ exports.alert_line = function (req, res) {
         failJson(res);
         return;
     }
-    Sprint.findByCondition({
-        number:sprint_number,
+    Sprint.findOneByCondition({
+        number:Number(sprint_number),
         team_name:team_name
     }, function (sprint) {
         if (!sprint) {
