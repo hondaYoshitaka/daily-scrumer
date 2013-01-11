@@ -2,11 +2,10 @@
 @import 'color';
 
 
-@pageCornerOut:6px;
-@pageCornerIn:3px;
+@pageCornerOut:4px;
+@pageCornerIn:2px;
 .book-page-left,
 .book-page-right{
-  width:200px;
   position:relative;
   &:before{
     .cover;
@@ -43,11 +42,17 @@
   &:hover{
     background-color:lighten(@white, 2);
     border-color:darken(@white, 5);
-
+    color:darken(@black, 10);
     .list-remove-btn{
       opacity: 1;
       visibility: visible;
     }
   }
 
+}
+
+.story-title{
+  margin: 0;
+  font-size:1.5em;
+  line-height: 1.3em;
 }

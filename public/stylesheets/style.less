@@ -964,9 +964,9 @@ legend{
 
 .book-page-left,
 .book-page-right{
-  width:120px;
-  height: 200px;
-  padding:10px;
+  width:180px;
+  min-height: 270px;
+  padding:15px;
   display: inline-block;
   .box-shadow(2px 2px 4px, 0.4);
   float: left;
@@ -995,8 +995,16 @@ legend{
 }
 
 .book-color(@spin){
-  @color:spin(lighten(@red, 22), @spin + 5);
+  @color:spin(desaturate(@red, 10), @spin + 5);
   background-color: @color;
+}
+.book{
+  padding: 8px 10px;
+  .box-shadow(3px 3px 6px, 0.4);
+  display: inline-block;
+  .book-color(0);
+  .border-radius(6px);
+  margin:10px 20px;
 }
 
 .book-color-0{.book-color(0);}
@@ -1009,12 +1017,4 @@ legend{
 .book-color-7{.book-color(210);}
 .book-color-8{.book-color(240);}
 
-.book{
-  padding: 8px 10px;
-  .box-shadow(3px 3px 6px, 0.4);
-  display: inline-block;
-  .book-color-0;
-  .border-radius(6px);
-  margin:5px 10px;
-}
 

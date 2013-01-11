@@ -82,6 +82,9 @@
                 $(tmpl(data)).appendTo(ul)
                     .storyListItem(data);
             });
+            $('.book', ul).each(function(i){
+                $(this).addClass('book-color-' + i);
+            });
             return ul;
         },
         storyArticle:function () {
