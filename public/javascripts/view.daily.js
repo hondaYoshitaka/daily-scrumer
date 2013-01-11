@@ -140,8 +140,9 @@
 
             if (sprint) {
                 var data = {
-                    sprint:sprint,
-                    team_id:CS.team._id
+                    sprint_number:sprint.number,
+                    team_id:CS.team._id,
+                    team_name:CS.team.name
                 };
                 section.showSpin();
                 $.getJSON('/sprint/get_task_times', data, function (data) {

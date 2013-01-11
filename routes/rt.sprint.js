@@ -129,7 +129,7 @@ exports.count_bugs = function (req, res) {
         team_name:team_name,
         number:Number(sprint_number)
     }, function (sprint) {
-        if(!sprint){
+        if (!sprint) {
             failJson(res);
             return;
         }
@@ -168,50 +168,59 @@ exports.count_bugs = function (req, res) {
 
 /* タスク時間の状況を取得する */
 exports.task_time = function (req, res) {
-    var sprint = req.query.sprint,
-        team_id = req.query.team_id,
-        versions = sprint.redmine_versions;
+    var sprint_number = req.query.sprint_number,
+        team_name = req.query.team_name,
+        team_id = req.query.team_id;
 
-    if (!versions) {
-        failJson(res);
-        return;
-    }
     var data = {
         estimated:0,
         consumed:0,
         remain:0
     };
-    getTasks(team_id, sprint, function (success, tasks, team) {
-        if (!success) {
+    Sprint.findOneByCondition({
+        team_name:team_name,
+        number:Number(sprint_number)
+    }, function (sprint) {
+        if (!sprint) {
             failJson(res);
             return;
         }
-        tasks.forEach(function (task) {
-            var time = (task.estimated_hours || 0);
-            data.estimated += time;
-            var status = team.getStatus(task);
-            if (!status) {
-                console.error('status not found for id', task);
-                return;
-            }
-            if (status.report_as != 'done') {
-                var ratio = task.done_ratio === undefined ?
-                    1 : ((100 - Number(task.done_ratio)) / 100)
-                data.remain += time * ratio;
-            }
-        });
-
-        getTimeTracks(versions, function (success, timeTrack) {
+        var versions = sprint.redmine_versions;
+        if (!versions) {
+            failJson(res);
+            return;
+        }
+        getTasks(team_id, sprint, function (success, tasks, team) {
             if (!success) {
                 failJson(res);
                 return;
             }
-            data.consumed = timeTrack.spent;
-            data.success = true;
-            data.remain = Math.round(data.remain);
-            res.json(data);
-        });
+            tasks.forEach(function (task) {
+                var time = (task.estimated_hours || 0);
+                data.estimated += time;
+                var status = team.getStatus(task);
+                if (!status) {
+                    console.error('status not found for id', task);
+                    return;
+                }
+                if (status.report_as != 'done') {
+                    var ratio = task.done_ratio === undefined ?
+                        1 : ((100 - Number(task.done_ratio)) / 100)
+                    data.remain += time * ratio;
+                }
+            });
 
+            getTimeTracks(versions, function (success, timeTrack) {
+                if (!success) {
+                    failJson(res);
+                    return;
+                }
+                data.consumed = timeTrack.spent;
+                data.success = true;
+                data.remain = Math.round(data.remain);
+                res.json(data);
+            });
+        });
     });
 };
 
