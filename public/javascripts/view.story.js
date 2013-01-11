@@ -66,8 +66,9 @@
 
             article.showSpin();
             var data = {
-                sprint:CS.sprint,
-                team_id:CS.team._id
+                sprint_number:CS.sprint.number,
+                team_id:CS.team._id,
+                team_name:CS.team.name
             };
             $.get('/sprint/get_stories', data, function (data) {
                 article.removeSpin();

@@ -459,35 +459,45 @@ exports.alert_line = function (req, res) {
 };
 
 exports.stories = function (req, res) {
-    var sprint = req.query.sprint,
-        team_id = req.query.team_id,
-        versions = sprint.redmine_versions;
-    if (!versions) {
-        failJson(res);
-        return;
-    }
-    getTasks(team_id, sprint, function (success, data, team) {
-        if (!success) {
+    var sprint_number = req.query.sprint_number,
+        team_name = req.query.team_name,
+        team_id = req.query.team_id;
+    Sprint.findOneByCondition({
+        team_name:team_name,
+        number:Number(sprint_number)
+    }, function (sprint) {
+        if (!sprint) {
             failJson(res);
             return;
         }
-        Story.findBySprintId(sprint._id, function (saved) {
-            data.forEach(function (data) {
-                data.sprint_id = sprint._id;
-                data.redmine_id = data.id;
-                delete data.id;
-                for (var i = 0; i < saved.length; i++) {
-                    var story = saved[i];
-                    var hit = story.redmine_id == data.redmine_id;
-                    if (hit) {
-                        util.obj.deepCopy(story, data);
-                        break;
+        var versions = sprint.redmine_versions;
+        if (!versions) {
+            failJson(res);
+            return;
+        }
+        getTasks(team_id, sprint, function (success, data) {
+            if (!success) {
+                failJson(res);
+                return;
+            }
+            Story.findBySprintId(sprint._id, function (saved) {
+                data.forEach(function (data) {
+                    data.sprint_id = sprint._id;
+                    data.redmine_id = data.id;
+                    delete data.id;
+                    for (var i = 0; i < saved.length; i++) {
+                        var story = saved[i];
+                        var hit = story.redmine_id == data.redmine_id;
+                        if (hit) {
+                            util.obj.deepCopy(story, data);
+                            break;
+                        }
                     }
-                }
-            });
-            res.json({
-                success:true,
-                stories:data
+                });
+                res.json({
+                    success:true,
+                    stories:data
+                });
             });
         });
     });
