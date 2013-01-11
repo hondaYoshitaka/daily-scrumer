@@ -1,11 +1,11 @@
 extends ../layout
 
 block stylesheet
-    link(rel='stylesheet', href='/stylesheets/story.css')
+    link(rel='stylesheet', href=url.css('story.css'))
 
 block javascript
-    script(src='/javascripts/handlebars.template.story.min.js')
-    script(src='/javascripts/view.story.js')
+    script(src=url.js('template.story.min.js'))
+    script(src=url.js('/javascripts/view.story.js'))
     script
         CS.sprint = !{JSON.stringify(sprint)};
 
