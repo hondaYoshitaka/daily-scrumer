@@ -495,9 +495,13 @@ exports.stories = function (req, res) {
                         }
                     }
                 });
+                var stories = data.sort(function (a, b) {
+                    return Number(b.priority && b.priority.id || b.priority_id);
+                    -Number(a.priority && a.priority.id || a.priority_id);
+                });
                 res.json({
                     success:true,
-                    stories:data
+                    stories:stories
                 });
             });
         });
