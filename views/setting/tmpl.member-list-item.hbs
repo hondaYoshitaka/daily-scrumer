@@ -11,6 +11,8 @@
                    name="name"
                     />
             <br/>
+            <div class="redmine-member-select-wrapper" data-role='redmine-member-select-wrapper' data-redmine-id="{{redmine_id}}"></div>
+            <br/>
             <small data-role='input-field'>
                 <label class="unselectable">
                     <input type="checkbox" name="master" value="true"
@@ -20,9 +22,6 @@
             </small>
             <input type="hidden" name="absent" value="{{absent}}"/>
             <input type="hidden" name="group"  value="{{group}}"/>
-            <div data-role='redmine-member-select-wrapper' data-redmine-id="redmine_id">
-                {{redmine_id}}
-            </div>
             <br class="clear"/>
         </form>
     </div>

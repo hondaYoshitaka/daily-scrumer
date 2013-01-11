@@ -106,10 +106,16 @@
                         var wrapper = $(this),
                             selected = wrapper.data('redmine-id');
                         var select = $(tmpl.redmineMemberSelect({members:data.members}))
-                            .appendTo(wrapper);
+                            .appendTo(wrapper)
+                            .selectableLabel();
+
                         if(selected){
-                            select.val(selected);
+                            select.val(selected)
+                                .trigger('change');
                         }
+                        select.change(function(){
+                            wrapper.parent('form').submit();
+                        });
 
                     });
                 } else {
