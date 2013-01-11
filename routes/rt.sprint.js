@@ -120,7 +120,8 @@ exports.count_bugs = function (req, res) {
         total:0,
         open:0,
         modified:0,
-        done:0
+        done:0,
+        modified_assign:{}
     };
     getBugs(team_id, sprint, function (sucess, bugs, team) {
         if (!sucess) {
@@ -136,6 +137,9 @@ exports.count_bugs = function (req, res) {
                         data.done++;
                         break;
                     case 'modified':
+                        if(bug.assigned_to_id){
+                            data.modified_assign[bug.assigned_to_id] = true;
+                        }
                         data.modified++;
                         break;
                     default:
