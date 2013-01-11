@@ -147,8 +147,10 @@ exports.count_bugs = function (req, res) {
                             data.done++;
                             break;
                         case 'modified':
-                            if (bug.assigned_to_id) {
-                                data.modified_assign[bug.assigned_to_id] = true;
+
+                            var assigned_id = bug.assigned_to_id || bug.assigned_to && bug.assigned_to.id || null;
+                            if (assigned_id) {
+                                data.modified_assign[assigned_id] = true;
                             }
                             data.modified++;
                             break;
