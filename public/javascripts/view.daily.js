@@ -961,8 +961,10 @@
             //初期表示を早めるために重い処理を後回しにしている。
             $('#bugs-section', body).bugsSection(CS.sprint);
             $('#task-section', body).taskSection(CS.sprint);
-            $('#calendar-section', body).calendarSection();
-            $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
+            setTimeout(function(){
+                $('#calendar-section', body).calendarSection();
+                $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
+            }, 200);
         }, 100);
 
 
