@@ -23,3 +23,9 @@ Story.findBySprintId = function(sprint_id, callback){
         sprint_id:sprint_id
     }, callback);
 }
+Story.findByRedmineId = function(redmine_id, callback){
+    var s = this;
+    s.findOneByCondition({
+        redmine_id:redmine_id
+    }, callback);
+};

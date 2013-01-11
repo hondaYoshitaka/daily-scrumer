@@ -1,6 +1,7 @@
 var db = require('../db'),
     util = require('../util'),
     Sprint = db.models['Sprint'],
+    Story = db.models['Story'],
     Team = db.models['Team'];
 
 
@@ -33,23 +34,31 @@ exports.update = function () {
 
 exports.update.checkpoints = function (req, res) {
     var body = req.body,
-        id = body._id,
+        redmine_id = body.redmine_id,
         checkpoints = body.checkpoints;
-    var valid = !!(id && checkpoints);
+    var valid = !!(redmine_id && checkpoints);
     if (!valid) {
         failJson(res);
         return;
     }
-    Sprint.findById(id, function (story) {
-        if (!data) {
-            failJson(res);
-            return;
+    Story.findByRedmineId(redmine_id, function (story) {
+        if (story) {
+            story.checkpoints = checkpoints;
+            story.update(function () {
+                res.json({
+                    success:true,
+                    story:story
+                });
+            });
+        } else {
+            story = new Story(body);
+            story.save(function () {
+                res.json({
+                    success:true,
+                    story:story
+                });
+            });
         }
-        story.checkpoints = checkpoints;
-        res.json({
-            success:true,
-            story:story
-        });
     });
 
 };
