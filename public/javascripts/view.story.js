@@ -83,7 +83,13 @@
                     .storyListItem(data);
             });
             $('.book', ul).each(function(i){
-                $(this).addClass('book-color-' + i);
+                var book = $(this);
+                book.addClass('book-color-' + i);
+                var left = $('.book-page-left', book),
+                    right = $('.book-page-right', book);
+                if(right.height() > left.height()){
+                    left.height(right.height());
+                }
             });
             return ul;
         },
