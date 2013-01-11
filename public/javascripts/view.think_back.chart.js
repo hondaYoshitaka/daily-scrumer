@@ -1,3 +1,10 @@
+Date.prototype.toUTC = function(){
+    var s = this,
+        year = s.getFullYear(),
+        month = s.getMonth(),
+        date = s.getDate();
+    return Date.UTC(year, month, date);
+};
 CS.chart = (function () {
     var chart = {};
     chart.workHours = function (renderTo, data) {
@@ -45,7 +52,7 @@ CS.chart = (function () {
                     type:'area',
                     name:'work hours',
                     pointInterval:24 * 3600 * 1000,
-                    pointStart:Date.UTC(2006, 0, 1),
+                    pointStart: data[0],
                     data:data
                 }
             ]

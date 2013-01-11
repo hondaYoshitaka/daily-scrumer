@@ -19,29 +19,25 @@
                 id = container.attr('id');
             return CS.chart.workHours(id, data);
         },
-        workHourSection:function (beginDate, workHours) {
+        workHourSection:function (begin, workHours) {
             var section = $(this);
 
             var data =(function(){
                 var data = []
                 if(!workHours) return data;
-                var last = new Date(beginDate);
-                console.log('last', last);
+                var beginDate = new Date(begin).getDate();
                 Object.keys(workHours).forEach(function (key) {
                     var utc = Number(key),
-                        date = new Date(utc),
-                        work_hour = workHours[utc];
-                    console.log('work_hour', work_hour, work_hour.total);
+                        date = new Date(utc).getDate();
+                    while(beginDate + data.length < date - 1){
+                        data.push(0);
+                    }
+                    var work_hour = workHours[utc];
+                    data.push(Number(work_hour.total));
                 });
                 return data;
             })();
-            //TODO
-            data = [
-                0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-                0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-                0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-                0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357
-            ];
+            console.log('data', data);
             $('#work-hour-chart', section).workHourChart(data);
             return section;
         }

@@ -820,7 +820,10 @@
             });
 
             (function (work_hours) {
-                if (!work_hours) return;
+                if (!work_hours) {
+                    workHourForm.submit();
+                    return;
+                }
                 Object.keys(work_hours).forEach(function (utc) {
                     var date = new Date(Number(utc));
                     var isSameDay = CS.isSameDay(CS.today, date);
