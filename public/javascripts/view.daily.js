@@ -496,7 +496,7 @@
                 .on('refresh-calendar.holiday', function () {
                     $('.holiday', section).removeClass('holiday');
                     Object.keys(CS.holidays).forEach(function (holiday) {
-                        holiday = new Date(Number(holiday));
+                        holiday = new Date(holiday);
                         section.findByAttr({
                             'data-year':holiday.getFullYear(),
                             'data-month':holiday.getMonth()
