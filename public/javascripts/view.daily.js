@@ -205,7 +205,7 @@
                 $(document).on('update-alert-line', function () {
                     var tmpl = Handlebars.templates['tmpl.alert-line-tooltip'];
                     var data = {
-                        task_remain_assume:CS.task_remain_assume
+                        task_remain_assume:Math.round(Number(CS.task_remain_assume) * 100)
                     }
                     $('#task-remain-assume-tooltip', section).append(tmpl(data));
                     table.summaryTable();

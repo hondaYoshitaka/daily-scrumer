@@ -443,11 +443,12 @@ exports.alert_line = function (req, res) {
                                 color = alert_line.color;
                                 return;
                             }
-                            var over = ratio > Number(alert_line.percent);
+                            var over = (ratio * 100) > Number(alert_line.percent);
                             if (over) color = alert_line.color;
                         });
                     return color;
-                })(team.alert_lines)
+                })(team.alert_lines);
+                console.log('color', color);
                 res.json({
                     success:true,
                     leftOpenTaskAssumeRatio:ratio,
