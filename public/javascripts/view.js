@@ -553,7 +553,7 @@ var CS = {};
         body.ajaxError(function (e, req, setting, err) {
             if(req.status){
                 var statusCode = req.statusCode();
-                alert(statusCode + 'something is wrong!');
+//                alert(statusCode + 'something is wrong!');
                 console.error('[ajax err]', statusCode, err);
             }
         });
