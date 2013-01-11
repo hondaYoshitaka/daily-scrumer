@@ -20,6 +20,9 @@ exports = module.exports = {
         grouping:'grouping',
         bug_to_hurry:'HOT bugs',
         events:'events',
+        alert_line:{
+            caption:'alert line'
+        },
         keep_in_mind:'Trial for this sprint',
         task_time:{
             estimated:'estimated',

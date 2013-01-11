@@ -82,15 +82,15 @@
             });
             return display;
         },
-        summaryTable:function(){
+        summaryTable:function () {
             var table = $(this);
-            table.findByRole('summary-tr').click(function(){
+            table.findByRole('summary-tr').click(function () {
                 var tr = $(this);
-                if(tr.data('busy'))return;
+                if (tr.data('busy'))return;
                 tr.busy(500);
                 var detail = $(tr.data('detail'))
                     .findByRole('detail');
-                if(tr.hasClass('opened')){
+                if (tr.hasClass('opened')) {
                     tr.removeClass('opened');
                     detail
                         .closeDown();
@@ -146,16 +146,16 @@
             });
             return section;
         },
-        bugModifiedAssignList:function(assign){
+        bugModifiedAssignList:function (assign) {
             var ul = $(this);
             var tmpl = {
                 li:Handlebars.templates['tmpl.bug-modified-assign-list-item']
             }
-            Object.keys(assign).forEach(function(redmine_id){
-                CS.team.members.forEach(function(member){
-                    if(!member.redmine_id) return;
+            Object.keys(assign).forEach(function (redmine_id) {
+                CS.team.members.forEach(function (member) {
+                    if (!member.redmine_id) return;
                     var hit = member.redmine_id === redmine_id;
-                    if(hit){
+                    if (hit) {
                         $(tmpl.li(member)).appendTo(ul);
                     }
                 });
@@ -164,6 +164,7 @@
         },
         taskSection:function (sprint) {
             var section = $(this),
+                table = $('table', section),
                 trackers = section.data('trackers');
 
             if (!trackers.length) {
@@ -199,6 +200,16 @@
                     rateCircle.rateCircle(rate);
 
                     section.trigger('task_times_changed', [rate]);
+                });
+
+                $(document).on('update-alert-line', function () {
+                    var tmpl = Handlebars.templates['tmpl.alert-line-tooltip'];
+                    var data = {
+                        task_remain_assume:CS.task_remain_assume
+                    }
+                    $('#task-remain-assume-tooltip', section).append(tmpl(data));
+                    table.summaryTable();
+
                 });
             }
             return section;
@@ -699,7 +710,7 @@
                 item.randomEach(function (i, item) {
                     var isFull = group.eq(index).children().size() >= 2;
                     if (isFull) {
-                        var last = (i === (size-1));
+                        var last = (i === (size - 1));
                         if (!last) index++;
                     }
                     group.eq(index).append(item);
@@ -832,6 +843,7 @@
 //            });
 
             $(document).on('task_times_changed', function (e, rate) {
+                var doc = $(this);
                 var data = {
                     sprint_number:CS.sprint.number,
                     team_id:CS.team._id,
@@ -841,6 +853,8 @@
                 $.get('/sprint/get_alert_line', data, function (data) {
                     if (data.success) {
                         $('.traffic-light-' + data.color).addClass('on');
+                        CS.task_remain_assume = data.leftOpenTaskAssumeRatio;
+                        doc.trigger('update-alert-line');
                     } else {
                         console.error('failed to get alert line');
                     }

@@ -715,7 +715,7 @@ fieldset{
 .summary-tr{
   cursor: pointer;
   @arrowColor:lighten(@black, 35);
-  .openeable{
+  .openable{
       position:relative;
       &:before{
         opacity:0;
@@ -728,12 +728,12 @@ fieldset{
       }
   }
   &:hover{
-    .openeable:before{
+    .openable:before{
       opacity: 1;
     }
   }
   &.opened{
-    .openeable:before{
+    .openable:before{
         .arrow;
         border-bottom-width: 0;
         border-top-color: @arrowColor;
@@ -741,4 +741,17 @@ fieldset{
         left:-13px;
     }
   }
+}
+#traffic-light-section{
+  position: relative;
+  &:hover{
+    #alert-line-tooltip{
+      opacity: 0.8;
+    }
+  }
+}
+#task-remain-assume-tooltip{
+  text-align: right;
+  margin: 0 0 0 auto;
+  width:110px;
 }
