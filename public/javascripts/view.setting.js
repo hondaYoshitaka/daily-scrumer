@@ -94,17 +94,29 @@
             var data = {
                 team_id:CS.team._id
             };
+            var tmpl = {
+                li:Handlebars.templates['tmpl.member-list-item'],
+                redmineMemberSelect:Handlebars.templates['tmpl.redmine-member-select']
+            };
             $.get('/setting/get_redmine_members', data, function (data) {
                 if (data.success) {
-                    console.log('redmine mmebers', data);
+                    CS.redmine_members = data.members;
+
+                    memberList.findByRole('redmine-member-select-wrapper').each(function(){
+                        var wrapper = $(this),
+                            selected = wrapper.data('redmine-id');
+                        var select = $(tmpl.redmineMemberSelect({members:data.members}))
+                            .appendTo(wrapper);
+                        if(selected){
+                            select.val(selected);
+                        }
+
+                    });
                 } else {
                     console.error('failed to load redmine members');
                 }
             });
 
-            var tmpl = {
-                li:Handlebars.templates['tmpl.member-list-item']
-            };
             memberList.data('members').forEach(function (data) {
                 $(tmpl.li(data)).appendTo(memberList)
                     .memberListItem();
