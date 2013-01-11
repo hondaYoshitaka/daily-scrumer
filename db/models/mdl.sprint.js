@@ -45,9 +45,7 @@ Sprint.prototype.defaultValue = {
     /* 労働実績 日付がキー、労働時間が値に入る */
     work_hours:{
 
-    },
-
-
+    }
 };
 
 
@@ -65,5 +63,5 @@ Sprint.findLatestByTeam = function (team_name, callback) {
     return s.findByTeamName(team_name,function (data) {
         callback.call(s, data && data.length && data[0] || null);
     }).sort({number:-1}).limit(1);
-
 };
+

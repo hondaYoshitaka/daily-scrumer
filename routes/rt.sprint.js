@@ -114,8 +114,10 @@ function failJson(res) {
 
 /* 不具合数を取得する */
 exports.count_bugs = function (req, res) {
-    var sprint = req.query.sprint,
+    var sprint_number = req.query.sprint_number,
+        team_name = req.query.team_name,
         team_id = req.query.team_id;
+
     var data = {
         total:0,
         open:0,
@@ -123,35 +125,44 @@ exports.count_bugs = function (req, res) {
         done:0,
         modified_assign:{}
     };
-    getBugs(team_id, sprint, function (sucess, bugs, team) {
-        if (!sucess) {
+    Sprint.findOneByCondition({
+        team_name:team_name,
+        number:Number(sprint_number)
+    }, function (sprint) {
+        if(!sprint){
             failJson(res);
             return;
         }
-        bugs.forEach(function (bug) {
-            data.total++;
-            var status = team.getStatus(bug);
-            if (status) {
-                switch (status.report_as) {
-                    case 'done':
-                        data.done++;
-                        break;
-                    case 'modified':
-                        if(bug.assigned_to_id){
-                            data.modified_assign[bug.assigned_to_id] = true;
-                        }
-                        data.modified++;
-                        break;
-                    default:
-                        data.open++;
-                        break;
-                }
-            } else {
-                console.error('status not find', bug.status_id);
+        getBugs(team_id, sprint, function (sucess, bugs, team) {
+            if (!sucess) {
+                failJson(res);
+                return;
             }
+            bugs.forEach(function (bug) {
+                data.total++;
+                var status = team.getStatus(bug);
+                if (status) {
+                    switch (status.report_as) {
+                        case 'done':
+                            data.done++;
+                            break;
+                        case 'modified':
+                            if (bug.assigned_to_id) {
+                                data.modified_assign[bug.assigned_to_id] = true;
+                            }
+                            data.modified++;
+                            break;
+                        default:
+                            data.open++;
+                            break;
+                    }
+                } else {
+                    console.error('status not find', bug.status_id);
+                }
+            });
+            data.success = true;
+            res.json(data);
         });
-        data.success = true;
-        res.json(data);
     });
 };
 
