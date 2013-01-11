@@ -36,6 +36,7 @@ exports.assumeLeftOpenTask = function (doneRate, today, sprint, calendar) {
     var totalDays = exports.totalDays(sprint, calendar),
         remainDays = exports.remainDays(today, sprint, calendar),
         passedDays = exports.passedDays(today, sprint, calendar);
+    if(!passedDays) return 0;
     var velocity = doneRate / passedDays,
         capable = remainDays * velocity;
     var rate = doneRate + capable;
