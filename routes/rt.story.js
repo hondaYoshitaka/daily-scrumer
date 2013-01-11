@@ -36,7 +36,7 @@ exports.update.checkpoints = function (req, res) {
     var body = req.body,
         redmine_id = body.redmine_id,
         checkpoints = body.checkpoints;
-    var valid = !!(redmine_id && checkpoints);
+    var valid = !!(redmine_id);
     if (!valid) {
         failJson(res);
         return;

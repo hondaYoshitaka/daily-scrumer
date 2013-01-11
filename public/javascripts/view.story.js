@@ -6,6 +6,7 @@
                     form = $('form', item);
                 item.removableListItem(function () {
                     form.remove();
+                    item.trigger('story-checkpoints-changed');
                 });
                 form
                     .validationForm('update_story_checkpoints')

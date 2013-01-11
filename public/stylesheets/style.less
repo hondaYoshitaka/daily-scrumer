@@ -981,9 +981,17 @@ legend{
 .book-page-left{
   .book-page(0deg);
   border-right-color:darken(@white, 12);
+  &:before{
+    .book-page(0deg);
+    border:none;
+  }
 }
 .book-page-right{
   .book-page(180deg);
+  &:before{
+    .book-page(180deg);
+    border:none;
+  }
 }
 
 .book-color(@spin){
@@ -1002,11 +1010,11 @@ legend{
 .book-color-8{.book-color(240);}
 
 .book{
-  padding: 10px;
+  padding: 8px 10px;
   .box-shadow(3px 3px 6px, 0.4);
   display: inline-block;
   .book-color-0;
-  .border-radius(4px);
+  .border-radius(6px);
   margin:5px 10px;
 }
 

@@ -14,6 +14,10 @@ exports.index = function (req, res) {
     }
     var team = new Team(res.locals.team);
     Sprint.findLatestByTeam(team.name, function (sprint) {
+        if(!sprint){
+            res.redirect(['/team', team.name, 'setting'].join('/'));
+            return;
+        }
         res.render('daily/index.jade', {
             sprint:sprint,
             trackers:{

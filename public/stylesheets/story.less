@@ -1,7 +1,32 @@
+@import 'bakery';
+@import 'color';
+
+
+@pageCornerOut:6px;
+@pageCornerIn:3px;
 .book-page-left,
 .book-page-right{
   width:200px;
+  position:relative;
+  &:before{
+    .cover;
+    height: 7px;
+    top: -3px;
+  }
 }
+.book-page-left{
+  .border-radius(@pageCornerOut, @pageCornerIn, @pageCornerIn, @pageCornerOut);
+  &:before{
+    border-radius: 135% 80% 0% 50%;
+  }
+}
+.book-page-right{
+  .border-radius(@pageCornerIn, @pageCornerOut, @pageCornerOut, @pageCornerIn);
+  &:before{
+    border-radius: 80% 135%  50% 0%;
+  }
+}
+
 
 .inline-checkbox{
   position: relative;
@@ -10,12 +35,18 @@
 
 .checkpoint-list-item{
   .list-remove-btn{
-    top:4px;
+    top:2px;
     opacity: 0;
+    visibility: hidden;
   }
+  border:1px solid transparent;
   &:hover{
+    background-color:lighten(@white, 2);
+    border-color:darken(@white, 5);
+
     .list-remove-btn{
       opacity: 1;
+      visibility: visible;
     }
   }
 
