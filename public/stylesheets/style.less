@@ -956,29 +956,6 @@ legend{
   cursor: default;
 }
 
-.book-color(@spin){
-  @color:spin(lighten(@red, 22), @spin + 5deg);
-  background-color: @color;
-};
-
-.book-color-0{.book-color(0deg);}
-.book-color-1{.book-color(30deg);}
-.book-color-2{.book-color(60deg);}
-.book-color-3{.book-color(90deg);}
-.book-color-4{.book-color(120deg);}
-.book-color-5{.book-color(150deg);}
-.book-color-6{.book-color(180deg);}
-.book-color-7{.book-color(210deg);}
-.book-color-8{.book-color(240deg);}
-
-.book{
-  padding: 10px;
-  .box-shadow(3px 3px 6px, 0.4);
-  display: inline-block;
-  .book-color-0;
-  .border-radius(4px);
-}
-
 
 
 .book-page-left,
@@ -1004,3 +981,27 @@ legend{
 .book-page-right{
   .book-page(180deg);
 }
+
+.book-color(@spin){
+  @color:spin(lighten(@red, 22), @spin + 5);
+  background-color: @color;
+};
+
+.book-color-0{.book-color(0);}
+.book-color-1{.book-color(30);}
+.book-color-2{.book-color(60);}
+.book-color-3{.book-color(90);}
+.book-color-4{.book-color(120);}
+.book-color-5{.book-color(150);}
+.book-color-6{.book-color(180);}
+.book-color-7{.book-color(210);}
+.book-color-8{.book-color(240);}
+
+.book{
+  padding: 10px;
+  .box-shadow(3px 3px 6px, 0.4);
+  display: inline-block;
+  .book-color-0;
+  .border-radius(4px);
+}
+
