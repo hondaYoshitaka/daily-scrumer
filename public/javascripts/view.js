@@ -230,7 +230,7 @@ var CS = {};
             var elm = $(this),
                 spin = $('.spin', elm);
             if (!spin.size()) {
-                var spin = $('<div/>').css({
+                spin = $('<div/>').css({
                     width:size,
                     height:size,
                     position:'absolute',
@@ -297,9 +297,10 @@ var CS = {};
             });
         },
         errForm:function () {
-            var form = $(this).addClass('err');
+
+
             //TODO
-            return form;
+            return $(this).addClass('err');
         },
         /* ajax投稿フォーム */
         ajaxForm:function (callback) {

@@ -26,7 +26,7 @@
         return  day1.getYear() === day2.getYear()
             && day1.getMonth() === day2.getMonth()
             && day1.getDate() === day2.getDate();
-    }
+    };
 
     Array.prototype.shuffle = function () {
         var s = this;
@@ -42,7 +42,7 @@
             string = "0" + string;
         }
         return string;
-    }
+    };
 
     $.extend({
     });
@@ -753,7 +753,7 @@
                 .groupingRoulette();
 
 
-            var availableCount = $('#availabel-group-count', workHourForm)
+            var availableCount = $('#availabel-group-count', section)
                 .text($('.grouping-group', roulette).not(':empty').size());
             roulette
                 .on('roulette-group.change', function () {
