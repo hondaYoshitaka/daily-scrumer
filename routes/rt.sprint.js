@@ -406,41 +406,51 @@ exports.in_hurry_bugs = function (req, res) {
 };
 
 exports.alert_line = function (req, res) {
-    var sprint = req.query.sprint,
+    var sprint_number = req.query.sprint_number,
         team_id = req.query.team_id,
+        team_name = req.query.team_name,
         done_rate = req.query.done_rate,
         today = util.date.truncateHours(util.date.getNow());
-    var isValid = !!(sprint && team_id);
+    var isValid = !!(sprint_number && team_id && team_name);
     if (!isValid) {
         failJson(res);
         return;
     }
-    Team.findById(team_id, function (team) {
-        if (!team) {
+    Sprint.findByCondition({
+        number:sprint_number,
+        team_name:team_name
+    }, function (sprint) {
+        if (!sprint) {
             failJson(res);
             return;
         }
-        Calendar.findByTeamName(team.name, function (calendar) {
-            var ratio = logic.alert_line.assumeLeftOpenTask(
-                done_rate, today, sprint, calendar);
-            var color = (function (alert_lines) {
-                var color = '';
-                alert_lines.sort(function (a, b) {
-                    return Number(a.percent) - Number(b.percent);
-                }).forEach(function (alert_line) {
-                        if (!color) {
-                            color = alert_line.color;
-                            return;
-                        }
-                        var over = ratio > Number(alert_line.percent);
-                        if (over) color = alert_line.color;
-                    });
-                return color;
-            })(team.alert_lines)
-            res.json({
-                success:true,
-                leftOpenTaskAssumeRatio:ratio,
-                color:color
+        Team.findById(team_id, function (team) {
+            if (!team) {
+                failJson(res);
+                return;
+            }
+            Calendar.findByTeamName(team.name, function (calendar) {
+                var ratio = logic.alert_line.assumeLeftOpenTask(
+                    done_rate, today, sprint, calendar);
+                var color = (function (alert_lines) {
+                    var color = '';
+                    alert_lines.sort(function (a, b) {
+                        return Number(a.percent) - Number(b.percent);
+                    }).forEach(function (alert_line) {
+                            if (!color) {
+                                color = alert_line.color;
+                                return;
+                            }
+                            var over = ratio > Number(alert_line.percent);
+                            if (over) color = alert_line.color;
+                        });
+                    return color;
+                })(team.alert_lines)
+                res.json({
+                    success:true,
+                    leftOpenTaskAssumeRatio:ratio,
+                    color:color
+                });
             });
         });
     });

@@ -833,8 +833,9 @@
 
             $(document).on('task_times_changed', function (e, rate) {
                 var data = {
-                    sprint:CS.sprint,
+                    sprint_number:CS.sprint.number,
                     team_id:CS.team._id,
+                    team_name:CS.team.name,
                     done_rate:rate
                 };
                 $.get('/sprint/get_alert_line', data, function (data) {
