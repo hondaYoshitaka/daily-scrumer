@@ -135,8 +135,9 @@ block content
                         th #{label.bug_count.open}
                         td.number-data
                             span(data-key='open').suffix-ticket
-                    tr.summary-tr(data-role='summary-tr', data-detail="#bug-report-modified-detail-row")
-                        th #{label.bug_count.modified}
+                    tr(data-role='summary-tr', data-detail="#bug-report-modified-detail-row")
+                        th
+                            .openeable #{label.bug_count.modified}
                         td.number-data
                             span(data-key='modified').suffix-ticket
                     tr#bug-report-modified-detail-row(data-role='detail-tr')

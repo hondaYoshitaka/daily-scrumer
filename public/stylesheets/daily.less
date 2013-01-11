@@ -696,13 +696,49 @@
 fieldset{
   min-height: 60px;
 }
+.arrow {
+  content: '';
+  display: inline-block;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 6px;
+  margin: 0 2px;
+}
 .number-data{
   min-width: 30px;
 }
 #bug-modified-assign-list{
   margin-left: 20px;
   width: 80px;
+  text-align: right;
 }
 .summary-tr{
   cursor: pointer;
+  @arrowColor:lighten(@black, 35);
+  .openeable{
+      position:relative;
+      &:before{
+        opacity:0;
+        .arrow;
+        border-right-width: 0;
+        border-left-color: @arrowColor;
+        position: absolute;
+        left:-11px;
+        top:3px;
+      }
+  }
+  &:hover{
+    .openeable:before{
+      opacity: 1;
+    }
+  }
+  &.opened{
+    .openeable:before{
+        .arrow;
+        border-bottom-width: 0;
+        border-top-color: @arrowColor;
+        top:5px;
+        left:-13px;
+    }
+  }
 }
