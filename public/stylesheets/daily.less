@@ -645,6 +645,19 @@
     left: auto;
     right: 0;
   }
+  #days-line-grid{
+    position: absolute;
+    left: -1px;
+    top:-2px;
+    width: 100%;
+    clear: both;
+    .grid{
+      float: left;
+      height: 6px;
+      border-right:1px solid darken(@brown, 5);
+      .box-shadow(1px 0 0 rgba(255,255,255,0.4))
+    }
+  }
 }
 #days-line-head-arrow{
   float: right;

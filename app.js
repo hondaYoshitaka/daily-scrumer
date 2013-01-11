@@ -14,7 +14,7 @@ var express = require('express')
 var app = express();
 app.locals({
     app:{
-        title:package.name
+        title:"Daily Scrumer"
     },
     msg:msg,
     url:logic.url

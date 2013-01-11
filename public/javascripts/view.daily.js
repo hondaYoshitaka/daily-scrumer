@@ -911,7 +911,6 @@
         progressBar:function (rate) {
             var bar = $(this).addClass('progress-bar'),
                 width = bar.width();
-            bar.empty();
             $('<div/>')
                 .addClass('progress-bar-filled')
                 .appendTo(bar)
@@ -921,16 +920,43 @@
                 });
             return bar;
         },
-        daysSection:function () {
-            var section = $(this);
-            var rate = (function (sprint) {
-                var begin = new Date(sprint.begin),
-                    today = CS.today,
-                    end = new Date(sprint.end);
+        gridLine:function(count){
+            var line = $(this);
+            var grid = '';
+            for(var i=0; i<count-1; i++){
+                grid += '<div class="grid"/>'
+            }
+            var width = ((1 / count) * 100).toFixed();
+            line.append(grid)
+                .find('.grid')
+                .css('width',  (width + '%'));
+            return line;
+        },
+        daysLine:function(tooltip){
+            var line = $(this);
+            var begin = new Date(CS.sprint.begin).getDate(),
+                today = new Date(CS.today).getDate(),
+                end = new Date(CS.sprint.end).getDate();
+
+            var rate = (function () {
                 if ((end - begin) == 0) return 1;
                 return (today - begin) / (end - begin);
-            })(CS.sprint);
-            var progressBar = $('#days-line', section).progressBar(rate);
+            })();
+
+            line.progressBar(rate);
+
+            tooltip
+                .css({
+                    left:line.width() * rate - (tooltip.width() / 2)
+                });
+            $('#days-line-grid', line).gridLine(end - begin)
+            return line;
+        },
+        daysSection:function () {
+            var section = $(this),
+                progressBarTip = section.findByRole('progress-bar-tip');
+
+            $('#days-line', section).daysLine(progressBarTip);
             var form = $('form', section);
             form
                 .findByRole('date-input')
@@ -947,11 +973,6 @@
                     e.preventDefault();
                 });
 
-            var tip = section.findByRole('progress-bar-tip');
-            tip
-                .css({
-                    left:progressBar.width() * rate - (tip.width() / 2)
-                })
             return section;
         }
     });
