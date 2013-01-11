@@ -11,16 +11,6 @@
 
     });
     $.fn.extend({
-        openUp:function () {
-            var elm = $(this),
-                height = elm.height();
-            elm.height(0)
-                .animate({
-                    height:height
-                }, function () {
-                    elm.removeAttr('style');
-                });
-        },
         open:function () {
             var elm = $(this);
             var w = elm.width(),

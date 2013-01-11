@@ -545,6 +545,29 @@ var CS = {};
                 distance:10,
                 handle:handle
             });
+        },
+        openUp:function () {
+            var elm = $(this),
+                height = elm.height();
+            elm
+                .show()
+                .removeClass('hidden')
+                .height(0)
+                .animate({
+                    height:height
+                }, function () {
+                    elm.removeAttr('style');
+                });
+        },
+        closeDown:function(){
+            var elm = $(this)
+            elm.animate({
+                height:0
+            }, function(){
+                elm
+                    .removeAttr('style')
+                    .hide();
+            });
         }
     });
     $(function () {

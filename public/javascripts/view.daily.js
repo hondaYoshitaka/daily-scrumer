@@ -82,10 +82,34 @@
             });
             return display;
         },
+        summaryTable:function(){
+            var table = $(this);
+            table.findByRole('summary-tr').click(function(){
+                var tr = $(this);
+                if(tr.data('busy'))return;
+                tr.busy(500);
+                var detailTr = $(tr.data('detail'));
+                if(detailTr.hasClass('opened')){
+                    detailTr
+                        .removeClass('opened')
+                        .findByRole('detail')
+                        .closeDown();
+                } else {
+                    detailTr
+                        .show()
+                        .addClass('opened')
+                        .findByRole('detail')
+                        .openUp();
+                }
+            });
+            return table;
+        },
         bugsSection:function (sprint) {
             var section = $(this),
+                table = $('table', section),
                 trackers = section.data('trackers');
 
+            table.summaryTable();
             if (!trackers.length) {
                 var tmpl = Handlebars.templates['tmpl.err_msg'],
                     err = msg.err.bugs.no_tracker;
@@ -118,8 +142,27 @@
                 var rate = data.done / data.total;
                 doneRate.text((rate * 100).toFixed(1));
                 rateCircle.rateCircle(rate);
+
+                $('#bug-modified-assign-list', section)
+                    .bugModifiedAssignList(data.modified_assign);
             });
             return section;
+        },
+        bugModifiedAssignList:function(assign){
+            var ul = $(this);
+            var tmpl = {
+                li:Handlebars.templates['tmpl.bug-modified-assign-list-item']
+            }
+            Object.keys(assign).forEach(function(redmine_id){
+                CS.team.members.forEach(function(member){
+                    if(!member.redmine_id) return;
+                    var hit = member.redmine_id === redmine_id;
+                    if(hit){
+                        $(tmpl.li(member)).appendTo(ul);
+                    }
+                });
+            });
+            return ul;
         },
         taskSection:function (sprint) {
             var section = $(this),

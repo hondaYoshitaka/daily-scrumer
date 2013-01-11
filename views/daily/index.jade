@@ -135,10 +135,16 @@ block content
                         th #{label.bug_count.open}
                         td.number-data
                             span(data-key='open').suffix-ticket
-                    tr
+                    tr.summary-tr(data-role='summary-tr', data-detail="#bug-report-modified-detail-row")
                         th #{label.bug_count.modified}
                         td.number-data
                             span(data-key='modified').suffix-ticket
+                    tr#bug-report-modified-detail-row(data-role='detail-tr')
+                        td(colspan="2")
+                            ul#bug-modified-assign-list.half-transparent.small.no-style-list.clear.hidden(
+                                data-role='detail')
+
+
                     tr
                         th #{label.bug_count.done}
                         td.number-data
