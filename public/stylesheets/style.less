@@ -956,6 +956,11 @@ legend{
   cursor: default;
 }
 
+.book-color(@spin){
+  @color:spin(lighten(@red, 22), @spin + 5deg);
+  background-color: @color;
+};
+
 .book-color-0{.book-color(0deg)}
 .book-color-1{.book-color(30deg)}
 .book-color-2{.book-color(60deg)}
@@ -973,10 +978,7 @@ legend{
   .book-color-0;
   .border-radius(4px);
 }
-.book-color(@spin){
-  @color:spin(lighten(@red, 22), @spin + 5deg);
-  background-color: @color;
-};
+
 
 
 .book-page-left,
