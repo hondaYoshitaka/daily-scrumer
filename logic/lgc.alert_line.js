@@ -29,6 +29,7 @@ exports.remainDays = function (today, sprint, calendar) {
     return countDays(today, endNext, calendar);
 };
 
+
 exports.totalDays = function (sprint, calendar) {
     var endNext = new Date(sprint.end);
     endNext.setDate(endNext.getDate() + 1);

@@ -30,14 +30,15 @@ describe('rt.story.js', function () {
 
     it('story (no team)', function (done) {
         route.index(new Req({
-
         }), new Res({
+            locals:{},
             redirect:function (path) {
                 path.should.equal('/');
                 done();
             }
         }));
     });
+
     it('story', function (done) {
         route.index(new Req({
 
