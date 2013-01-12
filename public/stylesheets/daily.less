@@ -808,3 +808,19 @@ fieldset{
     text-align: right;
   }
 }
+.traffic-light-box{
+  .box-shadow(2px 2px 3px, 0.3);
+  &:hover{
+    .box-shadow(2px 2px 5px, 0.5);
+    &:after{
+      .cover;
+      .white-back(0.02);
+    }
+  }
+  &:active{
+    .box-shadow(none);
+    &:after{
+      background-color: transparent;
+    }
+  }
+}
