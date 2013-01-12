@@ -450,12 +450,24 @@ exports.alert_line = function (req, res) {
                 })(team.alert_lines);
                 var passed_days = logic.alert_line.passedDays(today, sprint, calendar),
                     remain_days = logic.alert_line.remainDays(today, sprint, calendar);
+
+                var done_task = (Number(done_rate) * 100) | 0,
+                    remain_task = 100 - done_task;
                 res.json({
                     success:true,
                     leftOpenTaskAssumeRatio:ratio,
                     color:color,
-                    passed_days:passed_days,
-                    remain_days:remain_days
+                    record:{
+                        days:passed_days,
+                        task:done_task,
+                        per_day:(done_task / passed_days) | 0
+                    },
+                    remain:{
+                        task:remain_task,
+                        days:remain_days,
+                        will_left:(ratio * 100) | 0
+                    }
+
                 });
             });
         });

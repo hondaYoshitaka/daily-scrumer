@@ -837,7 +837,19 @@
             return section;
         },
         trafficLightSection:function () {
-            var section = $(this);
+            var section = $(this),
+                 box = $('.traffic-light-box', section),
+                velocityReport = $('#velocity-report');
+
+            box.click(function(){
+                if(box.data('busy')) return;
+                var duration = 300;
+                box.busy(duration);
+                velocityReport
+                    .filter(':visible').fadeOut(duration)
+                    .end()
+                    .filter(':hidden').fadeIn(duration);
+            });
 
             var tmpl = {
                 reportTable:Handlebars.templates['tmpl.velocity-report-table']
@@ -855,7 +867,8 @@
                         $('.traffic-light-' + data.color).addClass('on');
                         CS.task_remain_assume = data.leftOpenTaskAssumeRatio;
                         doc.trigger('update-alert-line');
-                        $('#velocity-report').html(tmpl.reportTable(data));
+
+                        velocityReport.html(tmpl.reportTable(data));
                     } else {
                         console.error('failed to get alert line');
                     }

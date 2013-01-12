@@ -1,12 +1,20 @@
-<table>
-    <tbody>
-    <tr>
-        <th>passed</th>
-        <td>{{passed_days}} days</td>
-    </tr>
-    <tr>
-        <th>remain</th>
-        <td>{{remain_days}} days</td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <table class="center-block velocity-report-table">
+        <tbody>
+        <tr>
+            <th>velocity</th>
+            <td>
+                {{record.per_day}}% per day
+            </td>
+        </tr>
+        <tr>
+            <th>remain task</th>
+            <td>{{remain.task}}%</td>
+        </tr>
+        <tr>
+            <th>remain days</th>
+            <td>{{remain.days}} days</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

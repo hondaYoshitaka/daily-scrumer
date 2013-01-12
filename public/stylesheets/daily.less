@@ -774,19 +774,24 @@ fieldset{
 .half-transparent{
   opacity: 0.7;
 }
-
+.center-block{
+  margin: 0 auto;
+}
 
 #velocity-report{
+  .hidden;
+  @width:155px;
   position: absolute;
-  width:100px;
+  width:@width;
   font-size:10px;
-  right: -100px;
+  right: @width * -1 - 5px;
   top: -10px;
   min-height:40px;
   background-color:@white;
-  .border-radius(3px);
+  border:1px solid darken(@white, 4);
+  .border-radius(2px);
   .box-shadow(3px 3px 6px, 0.4);
-  padding:4px;
+  padding:6px;
   z-index:200;
   &:before{
     .arrow;
@@ -794,6 +799,12 @@ fieldset{
     border-right-color:@white;
     border-left-width:0;
     left:-8px;
-    top:6px;
+    top:10px;
+    display: none;
+  }
+}
+.velocity-report-table{
+  td{
+    text-align: right;
   }
 }
