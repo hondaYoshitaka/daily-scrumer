@@ -18,5 +18,6 @@ block content
         - for sprint in sprints
             option(value=sprint._id, data-sprint=sprint)
                 | #{sprint.name}
-    section#work-hour-section
-        #work-hour-chart
+
+    section#work-hour-section.tucked-corners-top
+        .tucked-corners-bottom#work-hour-chart
