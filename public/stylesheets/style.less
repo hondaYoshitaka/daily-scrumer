@@ -971,12 +971,14 @@ legend{
   .box-shadow(2px 2px 4px, 0.4);
   float: left;
   .border-radius(2px);
+
 }
 .book-page(@deg){
   @back:@white;
   .linear-gradient(@deg, @back 50%, darken(@back, 2) 75%, darken(@back, 1));
   border:1px solid darken(@back, 2);
   .border-radius(2px);
+  background-image: url('../images/texture/linedpaper.png');
 }
 .book-page-left{
   .book-page(0deg);
