@@ -937,7 +937,7 @@
             for(var i=0; i<count-1; i++){
                 grid += '<div class="grid"/>'
             }
-            var width = ((1 / count) * 100).toFixed();
+            var width = Math.floor((1 / count) * 100);
             line.append(grid)
                 .find('.grid')
                 .css('width',  (width + '%'));
@@ -960,7 +960,8 @@
                 .css({
                     left:line.width() * rate - (tooltip.width() / 2)
                 });
-            $('#days-line-grid', line).gridLine((end - begin) / (24 * 60 * 60 * 1000))
+            var days = Math.round((end - begin) / (24 * 60 * 60 * 1000));
+            $('#days-line-grid', line).gridLine(days)
             return line;
         },
         daysSection:function () {
