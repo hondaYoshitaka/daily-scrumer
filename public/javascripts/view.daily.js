@@ -945,9 +945,9 @@
         },
         daysLine:function(tooltip){
             var line = $(this);
-            var begin = new Date(CS.sprint.begin).getDate(),
-                today = new Date(CS.today).getDate(),
-                end = new Date(CS.sprint.end).getDate();
+            var begin = new Date(CS.sprint.begin),
+                today = new Date(CS.today),
+                end = new Date(CS.sprint.end);
 
             var rate = (function () {
                 if ((end - begin) == 0) return 1;
@@ -960,7 +960,7 @@
                 .css({
                     left:line.width() * rate - (tooltip.width() / 2)
                 });
-            $('#days-line-grid', line).gridLine(end - begin)
+            $('#days-line-grid', line).gridLine((end - begin) / (24 * 60 * 60 * 1000))
             return line;
         },
         daysSection:function () {
