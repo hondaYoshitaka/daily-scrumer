@@ -13,7 +13,11 @@ exports.index = function (req, res) {
         return;
     }
     var team = new Team(res.locals.team);
-    Sprint.findLatestByTeam(team.name, function (sprint) {
+    Sprint.findByTeamName(team.name, function (sprints) {
+        var sprint = (function(){
+            if(!sprints.length) return null;
+            return sprints.sort(function(a, b){Number(a) - Number(b)})[0];
+        })();
         if(!sprint){
             res.redirect(['/team', team.name, 'setting'].join('/'));
             return;
