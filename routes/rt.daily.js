@@ -16,7 +16,9 @@ exports.index = function (req, res) {
     Sprint.findByTeamName(team.name, function (sprints) {
         var sprint = (function(){
             if(!sprints.length) return null;
-            return sprints.sort(function(a, b){Number(a) - Number(b)})[0];
+            return sprints.sort(function(a, b){
+                return Number(b.number) - Number(a.number);
+            })[0];
         })();
         if(!sprint){
             res.redirect(['/team', team.name, 'setting'].join('/'));
