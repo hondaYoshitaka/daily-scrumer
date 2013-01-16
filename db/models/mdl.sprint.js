@@ -64,6 +64,6 @@ Sprint.findLatestByTeam = function (team_name, callback) {
     var s = this;
     return s.findByTeamName(team_name,function (data) {
         callback.call(s, data && data.length && data[0] || null);
-    }).sort({end:-1}).limit(1);
+    }).sort({number:-1}).limit(1);
 };
 
