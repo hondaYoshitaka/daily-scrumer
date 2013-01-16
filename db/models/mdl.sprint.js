@@ -34,7 +34,6 @@ Sprint.prototype.defaultValue = {
 
     /* */
     redmine_versions:[],
-
     /* スプリントでの心がけ */
     keep_in_mind_0:null,
     /* スプリントでの心がけ */
@@ -62,6 +61,7 @@ Sprint.findByTeamName = function (team_name, callback) {
 /* チーム名検索で、最新のものを取得する */
 Sprint.findLatestByTeam = function (team_name, callback) {
     var s = this;
+
     return s.findByTeamName(team_name,function (data) {
         callback.call(s, data && data.length && data[0] || null);
     }).sort({number:-1}).limit(1);

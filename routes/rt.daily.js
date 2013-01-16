@@ -26,6 +26,7 @@ exports.index = function (req, res) {
             },
             today:util.date.truncateHours(util.date.getNow())
         });
+
     });
 };
 
