@@ -937,7 +937,7 @@
             for(var i=0; i<count-1; i++){
                 grid += '<div class="grid"/>'
             }
-            var width = Math.floor((1 / count) * 100);
+            var width = ((1 / count) * 100).toFixed(2);
             line.append(grid)
                 .find('.grid')
                 .css('width',  (width + '%'));
