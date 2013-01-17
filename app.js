@@ -40,11 +40,12 @@ app.configure(function () {
 app.configure('development', function () {
     app.use(express.errorHandler());
     (function (precompiler) {
-        ['setting', 'daily', 'think_back', 'story'].forEach(function (key) {
-            var watchDir = [__dirname, "views", key].join('/');
-            if (!util.file.exists(watchDir)) return;
-
-            var outFileName = ["handlebars.template", key, "min", "js"].join('.'),
+        var viewDir = [__dirname, "views"].join('/');
+        fs.readdirSync(viewDir).forEach(function(name){
+            var watchDir = [viewDir, name].join('/');
+            var isDir = util.file.isDir(watchDir);
+            if(!isDir) return;
+            var outFileName = ["handlebars.template", name, "min", "js"].join('.'),
                 outFile = [__dirname, "public/javascripts", outFileName].join('/');
 
             precompiler.do(watchDir, outFile);
@@ -123,6 +124,7 @@ app.configure('development', function () {
     app.post('/calendar/add_event', r.calendar.add_event);
     app.post('/calendar/update_events', r.calendar.update_events);
 
+    app.get('/rule', r.rule.index);
 
     app.get('/err', function (req, res) {
         res.render('err.jade');
