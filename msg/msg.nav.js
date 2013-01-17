@@ -7,6 +7,7 @@ exports = module.exports = nav = {
     think_back:'think back',
     story:'story',
     setting:'setting',
+    rule:'rule',
     login:'login',
     logout:'logout'
 };

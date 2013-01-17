@@ -70,6 +70,7 @@
                     rule_id:CS.rule._id
                 };
                 $.post('/styledocco/load', data, function (data) {
+                    section.removeSpin();
                     if (data.success) {
 
                     } else {
