@@ -106,6 +106,7 @@ app.configure('development', function () {
     app.post('/sprint/update_keep_in_mind', r.sprint.update_keep_in_mind);
     app.post('/sprint/update_days', r.sprint.update_days);
     app.post('/sprint/update_work_hours', r.sprint.update_work_hours);
+    app.post('/sprint/update_all_work_hours', r.sprint.update_all_work_hours);
     app.post('/sprint/remove', r.sprint.remove);
 
     app.post('/story/update_checkpoints', r.story.update.checkpoints);

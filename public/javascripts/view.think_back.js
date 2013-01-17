@@ -2,11 +2,11 @@
 (function ($) {
 
     CS.active_sprint = null;//選択中のスプリント
-    Date.prototype.isSunday = function(){
+    Date.prototype.isSunday = function () {
         var s = this;
         return s.getDay() === 0;
     }
-    Date.prototype.isSaturday = function(){
+    Date.prototype.isSaturday = function () {
         var s = this;
         return s.getDay() === 6;
     }
@@ -27,7 +27,7 @@
                 id = container.attr('id');
             return CS.chart.workHours(id, data);
         },
-        workHourTableForm:function (begin, end, work_hours) {
+        workHourTableForm:function (begin, end, work_hours, sprint_id) {
             var form = $(this);
             var days = (end - begin) / (24 * 60 * 60 * 1000);
 
@@ -47,11 +47,11 @@
                         month:(date.getMonth() + 1),
                         date:date.getDate(),
                         utc:utc,
-                        class:(function(){
-                            if(date.isSunday()){
+                        class:(function () {
+                            if (date.isSunday()) {
                                 return 'sunday';
                             }
-                            if(date.isSaturday()){
+                            if (date.isSaturday()) {
                                 return 'saturday';
                             }
                             return '';
@@ -59,9 +59,9 @@
                     });
 
                     var work_hour = work_hours[utc];
-                    data.groups.push(work_hour?work_hour.group:0);
-                    data.hours.push(work_hour?work_hour.hour:0);
-                    data.totals.push(work_hour?work_hour.total:0);
+                    data.groups.push(work_hour ? work_hour.group : 0);
+                    data.hours.push(work_hour ? work_hour.hour : 0);
+                    data.totals.push(work_hour ? work_hour.total : 0);
                     date.setDate(date.getDate() + 1);
                 }
                 return data;
@@ -69,30 +69,39 @@
             var tmpl = {
                 table:Handlebars.templates['tmpl.work-hours-table']
             }
-            form.submit(function(e){
-                var data = (function(){
+            form.submit(function (e) {
+                var data = {};
+                data._id = sprint_id;
+                data.work_hours = (function () {
                     var array = [];
-                    $('thead', table).find('th').each(function(i){
-                        if(i==0) return;
+                    $('thead', table).find('th').each(function (i) {
+                        if (i == 0) return;
                         var obj = {};
                         var input = $('input', this);
                         obj[input.attr('name')] = parseInt(input.val(), 10);
-                        array[i-1] = obj;
+                        array[i - 1] = obj;
                     });
-                    $('tbody', table).find('tr').each(function(){
-                        $('td', this).each(function(i){
+                    $('tbody', table).find('tr').each(function () {
+                        $('td', this).each(function (i) {
                             var input = $('input', this),
                                 name = input.attr('name');
                             array[i][name] = input.val();
                         });
                     });
-                    console.log(array);
-
+                    return array;
                 })();
+                $.post('/sprint/update_all_work_hours', data, function(data){
+                    if(data.success){
+                        console.log('work hour update done', data.sprint);
+                        //TODO
+                    } else {
+                        console.error('failed to update wrok hours');
+                    }
+                });
                 e.preventDefault();
             });
             var table = $(tmpl.table(data)).appendTo(form);
-            table.findByRole('editable-text').editableText().change(function(){
+            table.findByRole('editable-text').editableText().change(function () {
                 form.submit();
             });
 
@@ -103,7 +112,8 @@
             var section = $(this);
             var workHours = sprint.work_hours,
                 begin = new Date(sprint.begin),
-                end = new Date(sprint.end);
+                end = new Date(sprint.end),
+                id = sprint._id;
             var data = (function () {
                 var data = []
                 if (!workHours) return data;
@@ -120,7 +130,7 @@
                 return data;
             })();
             $('#work-hour-chart', section).workHourChart(data);
-            $('#work-hour-table-form', section).workHourTableForm(begin, end, workHours);
+            $('#work-hour-table-form', section).workHourTableForm(begin, end, workHours, id);
             return section;
         }
     });

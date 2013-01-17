@@ -347,6 +347,35 @@ exports.update_work_hours = function (req, res) {
 };
 
 
+exports.update_all_work_hours = function (req, res) {
+    var body = req.body;
+    var valid = body._id && body.work_hours;
+    if (!valid) {
+        failJson(res);
+        return;
+    }
+    Sprint.findById(body._id, function (sprint) {
+        if (!sprint) {
+            failJson(res);
+            return;
+        }
+        sprint.work_hours = {};
+        body.work_hours.forEach(function (obj) {
+            sprint.work_hours["" + obj.utc] = {
+                group:obj.group,
+                hour:obj.hour,
+                total:obj.total
+            }
+        });
+        sprint.update(function () {
+            res.json({
+                success:true,
+                sprint:sprint
+            });
+        });
+    });
+};
+
 exports.in_hurry_bugs = function (req, res) {
     var sprint_number = req.query.sprint_number,
         team_name = req.query.team_name,
