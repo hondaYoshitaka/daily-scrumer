@@ -41,7 +41,7 @@
         <th>total</th>
         {{#each totals}}
             <td class="align-right">
-                <span>{{this}}</span>
+                <span data-role="work-hour-total">{{this}}</span>
                 <input type="hidden" name="total" value="{{this}}"/>
             </td>
         {{/each}}

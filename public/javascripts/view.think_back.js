@@ -20,6 +20,15 @@
                 var sprint = $('option:selected', select).data('sprint');
                 callback && callback.call(select, sprint);
             }).trigger('change');
+
+            $(document).on('update-sprint', function(e, sprint){
+                var selected = $('option:selected', select);
+                var hit = (selected.data('sprint')._id == sprint._id);
+                if(hit){
+                    selected.data('sprint', sprint);
+                    selected.trigger('change');
+                }
+            });
             return select;
         },
         workHourChart:function (data) {
@@ -92,8 +101,7 @@
                 })();
                 $.post('/sprint/update_all_work_hours', data, function(data){
                     if(data.success){
-                        console.log('work hour update done', data.sprint);
-                        //TODO
+                        form.trigger('update-sprint', [data.sprint])
                     } else {
                         console.error('failed to update wrok hours');
                     }
@@ -102,6 +110,15 @@
             });
             var table = $(tmpl.table(data)).appendTo(form);
             table.findByRole('editable-text').editableText().change(function () {
+                var groups = table.findByName('group'),
+                    hours = table.findByName('hour'),
+                    total = table.findByName('total'),
+                    totalDisplay = table.findByRole('work-hour-total');
+                for(var i=0; i<days;i++){
+                    var val = Number(groups.eq(i).val()) + Number(hours.eq(i).val());
+                    totalDisplay.eq(i).text(val);
+                    total.eq(i).val(val);
+                }
                 form.submit();
             });
 
