@@ -11,7 +11,17 @@ exports.index = function (req, res) {
         return;
     }
     var team = new Team(res.locals.team);
-    Sprint.findLatestByTeam(team.name, function (sprint) {
+    Sprint.findByTeamName(team.name, function (sprints) {
+        var sprint = (function () {
+            if (!sprints.length) return null;
+            return sprints.sort(function (a, b) {
+                return Number(b.number) - Number(a.number);
+            })[0];
+        })();
+        if (!sprint) {
+            res.redirect(['/team', team.name, 'setting'].join('/'));
+            return;
+        }
         res.render('story/index.jade', {
             sprint:sprint,
             trackers:{

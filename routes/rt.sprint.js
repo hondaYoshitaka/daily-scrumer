@@ -219,7 +219,7 @@ exports.task_time = function (req, res) {
                 }
                 data.consumed = timeTrack.spent;
                 data.success = true;
-                data.remain = Math.round(data.remain);
+                data.remain = Number(data.remain.toFixed(1));
                 res.json(data);
             });
         });

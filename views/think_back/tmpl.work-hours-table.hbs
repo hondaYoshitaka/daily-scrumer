@@ -1,0 +1,28 @@
+<table id="work-hours-table">
+    <thead>
+    <tr>
+        <th> </th>
+        {{#each labels}}
+        <th>{{this.month}}/{{this.date}}</th>
+        {{/each}}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>groups</th>
+        {{#each groups}}
+            <td>
+                {{this}}
+            </td>
+        {{/each}}
+    </tr>
+    <tr>
+        <th>hours</th>
+        {{#each hours}}
+            <td>
+                {{this}}
+            </td>
+        {{/each}}
+    </tr>
+    </tbody>
+</table>

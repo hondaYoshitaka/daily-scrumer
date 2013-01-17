@@ -1,4 +1,5 @@
-;(function ($) {
+;
+(function ($) {
 
     CS.active_sprint = null;//選択中のスプリント
 
@@ -19,17 +20,46 @@
                 id = container.attr('id');
             return CS.chart.workHours(id, data);
         },
-        workHourSection:function (begin, workHours) {
-            var section = $(this);
+        workHourTableForm:function (begin, end, work_hours) {
+            var form = $(this);
+            var days = (end - begin) / (24 * 60 * 60 * 1000);
 
-            var data =(function(){
+            var data = (function (date) {
+                var data = {
+                    labels:[],
+                    groups:[],
+                    hours:[]
+                };
+                for (var i = 0; i < days; i++) {
+                    data.labels.push({
+                        year:date.getFullYear(),
+                        month:(date.getMonth() + 1),
+                        date:date.getDate()
+                    });
+                    date.setDate(date.getDate() + 1);
+                }
+                return data;
+            })(new Date(begin));
+            var tmpl = {
+                table:Handlebars.templates['tmpl.work-hours-table']
+            }
+            var table = $(tmpl.table(data)).appendTo(form);
+
+            return form;
+        },
+        workHourSection:function (sprint) {
+            var section = $(this);
+            var workHours = sprint.work_hours,
+                begin = new Date(sprint.begin),
+                end = new Date(sprint.end);
+            var data = (function () {
                 var data = []
-                if(!workHours) return data;
+                if (!workHours) return data;
                 var beginDate = new Date(begin).getDate();
                 Object.keys(workHours).forEach(function (key) {
                     var utc = Number(key),
                         date = new Date(utc).getDate();
-                    while(beginDate + data.length < date - 1){
+                    while (beginDate + data.length < date - 1) {
                         data.push(0);
                     }
                     var work_hour = workHours[utc];
@@ -37,8 +67,8 @@
                 });
                 return data;
             })();
-            console.log('data', data);
             $('#work-hour-chart', section).workHourChart(data);
+            $('#work-hour-table-form', section).workHourTableForm(begin, end, workHours);
             return section;
         }
     });
@@ -47,7 +77,7 @@
         $('#head-nav', body).nav('think_back');
         $('#sprint-select', body).sprintSelect(function (sprint) {
             CS.active_sprint = sprint;
-            $('#work-hour-section', body).workHourSection(sprint.begin, sprint.work_hours);
+            $('#work-hour-section', body).workHourSection(sprint);
 
         });
     });
