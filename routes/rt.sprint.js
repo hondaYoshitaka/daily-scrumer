@@ -509,6 +509,7 @@ exports.stories = function (req, res) {
                             break;
                         }
                     }
+                    data.link = [RedmineAgent.conf.url.base, 'issues', data.redmine_id].join('/');
                 });
                 var stories = data.sort(function (a, b) {
                     return Number(b.priority && b.priority.id || b.priority_id);

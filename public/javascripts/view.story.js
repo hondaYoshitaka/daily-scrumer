@@ -79,8 +79,13 @@
 
             var tmpl = Handlebars.templates['tmpl.story-list-item'];
             data.forEach(function (data) {
-                $(tmpl(data)).appendTo(ul)
+                var li = $(tmpl(data)).appendTo(ul)
                     .storyListItem(data);
+                li.find('a').each(function(){
+                    var a = $(this),
+                        ref = $(this).data('ref');
+                    a.attr('href', ref);
+                })
             });
             $('.book', ul).each(function(i){
                 var book = $(this);
