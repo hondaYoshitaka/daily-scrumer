@@ -12,7 +12,12 @@
         <th>groups</th>
         {{#each groups}}
             <td>
-                {{this}}
+                <input type="number"
+                       class="shortest"
+                       name="group"
+                       value="{{this}}"
+                       data-role="editable-text"
+                        />
             </td>
         {{/each}}
     </tr>
@@ -20,7 +25,12 @@
         <th>hours</th>
         {{#each hours}}
             <td>
-                {{this}}
+                <input type="number"
+                       name="group"
+                       class="shortest"
+                       value="{{this}}"
+                       data-role="editable-text"
+                        />
             </td>
         {{/each}}
     </tr>

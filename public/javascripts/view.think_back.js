@@ -36,6 +36,8 @@
                         month:(date.getMonth() + 1),
                         date:date.getDate()
                     });
+                    data.groups.push(0); //TODO
+                    data.hours.push(0); //TODO
                     date.setDate(date.getDate() + 1);
                 }
                 return data;
@@ -44,6 +46,15 @@
                 table:Handlebars.templates['tmpl.work-hours-table']
             }
             var table = $(tmpl.table(data)).appendTo(form);
+            table.findByRole('editable-text').editableText().change(function(){
+
+            });
+            form.submit(function(e){
+                var values = form.serializeObj();
+                console.log('values');
+                e.preventDefault();
+            });
+
 
             return form;
         },
