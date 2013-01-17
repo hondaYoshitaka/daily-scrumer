@@ -82,6 +82,9 @@
         }
     });
     $(function () {
-        $('#style-section').styleSection();
+        var body = $(document.body);
+
+        $('#head-nav', body).nav('rule');
+        $('#style-section', body).styleSection();
     });
 })(jQuery);
