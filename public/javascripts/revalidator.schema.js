@@ -3,7 +3,7 @@
  * 文法は https://github.com/flatiron/revalidator　を参考。
  */
 
-(function(isServer){
+(function (isServer) {
     var schema = {
         new_event:{
             title:{
@@ -66,13 +66,19 @@
             }
         },
         update_story_checkpoints:{
-           text:{
-               label:'checkpoint title',
-               required:true
-           }
+            text:{
+                label:'checkpoint title',
+                required:true
+            }
+        },
+        style_urls:{
+            style_url:{
+                label:'style url',
+                format: 'url'
+            }
         }
     };
-    if(isServer){
+    if (isServer) {
         exports = module.exports = schema;
     } else {
         window.json.validate.schema = schema;

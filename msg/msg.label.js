@@ -100,5 +100,8 @@ exports = module.exports = {
         alert_line:{
             caption:'alert line'
         }
+    },
+    rule:{
+        style:'stylesheet'
     }
 };

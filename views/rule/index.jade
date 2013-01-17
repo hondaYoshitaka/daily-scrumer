@@ -4,10 +4,25 @@ block stylesheet
     link(rel='stylesheet', href='/stylesheets/rule.css')
 
 block javascript
-    script(src='/javascripts/handlebars.rule.min.js')
+    script(src='/javascripts/handlebars.template.rule.min.js')
     script(src='/javascripts/view.rule.js')
-
+    script
+        CS.rule = !{JSON.stringify(rule)};
 block content
 
+    - var label = msg.label.rule;
+    - var btn = msg.btn.rule;
+    section#style-section.paper.inline-section
+        .paper-content
+            h3.paper-title.lead #{label.style}
+            ul#style-url-list(data-urls=rule.style_urls)
+            a#style-url-add-btn.list-item-add-btn
+                i.icon
+                    span.add-icon-bar-v
+                    span.add-icon-bar-h
 
-    h1 rule!
+            a.btn.float-left #{btn.view_style}
+            br.clear
+
+
+

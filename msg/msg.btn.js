@@ -29,5 +29,9 @@ exports = module.exports = {
         new_routine_cancel:'cancel',
         new_member:'+ new member',
         new_routine:'+ new routine'
+    },
+    rule:{
+        view_style:'view style doc'
     }
+
 };

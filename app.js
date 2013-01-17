@@ -45,6 +45,7 @@ app.configure('development', function () {
             var watchDir = [viewDir, name].join('/');
             var isDir = util.file.isDir(watchDir);
             if(!isDir) return;
+            console.log('watchDir', watchDir);
             var outFileName = ["handlebars.template", name, "min", "js"].join('.'),
                 outFile = [__dirname, "public/javascripts", outFileName].join('/');
 
@@ -125,6 +126,7 @@ app.configure('development', function () {
     app.post('/calendar/update_events', r.calendar.update_events);
 
     app.get('/rule', r.rule.index);
+    app.post('/rule/update/style_urls', r.rule.update.style_urls)
 
     app.get('/err', function (req, res) {
         res.render('err.jade');
