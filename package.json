@@ -18,6 +18,10 @@
         "request":"2.12.0",
         "should":"1.2.1",
         "uglify-js":"1.3.4",
-        "node-xml-lite":"*"
+        "node-xml-lite":"*",
+        "styledocco":"*",
+        "grunt":"*",
+        "grunt-contrib":"*",
+        "grunt-styleguide":"*"
     }
 }

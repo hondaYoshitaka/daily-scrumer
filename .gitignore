@@ -30,5 +30,7 @@ npm-debug.log
 
 Gemfile.lock
 
+public/html/styledocco/*
+
 handlebars.template.js
 handlebars.template.*.js
