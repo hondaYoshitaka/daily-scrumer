@@ -11,7 +11,9 @@ exports.index = function (req, res) {
     var team_name = res.locals.team && res.locals.team.name;
     Sprint.findByTeamName(team_name, function (sprints) {
         res.render('think_back/index.jade', {
-            sprints:sprints
+            sprints:sprints.sort(function(a, b){
+                return Number(b.number) - Number(a.number);
+            })
         });
     }).sort({number:-1});
 };

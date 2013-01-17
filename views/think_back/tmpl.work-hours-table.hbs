@@ -5,6 +5,7 @@
         {{#each labels}}
         <th>
             <span class="{{class}}">{{this.month}}/{{this.date}}</span>
+            <input type="hidden" name='utc' value="{{this.utc}}"/>
         </th>
         {{/each}}
     </tr>
@@ -28,11 +29,20 @@
         {{#each hours}}
             <td>
                 <input type="number"
-                       name="group"
+                       name="hour"
                        class="shortest"
                        value="{{this}}"
                        data-role="editable-text"
                         />
+            </td>
+        {{/each}}
+    </tr>
+    <tr>
+        <th>total</th>
+        {{#each totals}}
+            <td class="align-right">
+                <span>{{this}}</span>
+                <input type="hidden" name="total" value="{{this}}"/>
             </td>
         {{/each}}
     </tr>

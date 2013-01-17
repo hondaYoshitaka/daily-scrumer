@@ -37,13 +37,16 @@
                 var data = {
                     labels:[],
                     groups:[],
-                    hours:[]
+                    hours:[],
+                    totals:[]
                 };
                 for (var i = 0; i < days; i++) {
+                    var utc = date.toUTC();
                     data.labels.push({
                         year:date.getFullYear(),
                         month:(date.getMonth() + 1),
                         date:date.getDate(),
+                        utc:utc,
                         class:(function(){
                             if(date.isSunday()){
                                 return 'sunday';
@@ -55,10 +58,10 @@
                         })()
                     });
 
-                    var utc = date.toUTC();
                     var work_hour = work_hours[utc];
                     data.groups.push(work_hour?work_hour.group:0);
                     data.hours.push(work_hour?work_hour.hour:0);
+                    data.totals.push(work_hour?work_hour.total:0);
                     date.setDate(date.getDate() + 1);
                 }
                 return data;
@@ -66,14 +69,31 @@
             var tmpl = {
                 table:Handlebars.templates['tmpl.work-hours-table']
             }
+            form.submit(function(e){
+                var data = (function(){
+                    var array = [];
+                    $('thead', table).find('th').each(function(i){
+                        if(i==0) return;
+                        var obj = {};
+                        var input = $('input', this);
+                        obj[input.attr('name')] = parseInt(input.val(), 10);
+                        array[i-1] = obj;
+                    });
+                    $('tbody', table).find('tr').each(function(){
+                        $('td', this).each(function(i){
+                            var input = $('input', this),
+                                name = input.attr('name');
+                            array[i][name] = input.val();
+                        });
+                    });
+                    console.log(array);
+
+                })();
+                e.preventDefault();
+            });
             var table = $(tmpl.table(data)).appendTo(form);
             table.findByRole('editable-text').editableText().change(function(){
-
-            });
-            form.submit(function(e){
-                var values = form.serializeObj();
-                console.log('values');
-                e.preventDefault();
+                form.submit();
             });
 
 
