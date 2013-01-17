@@ -496,7 +496,7 @@
                 .on('refresh-calendar.holiday', function () {
                     $('.holiday', section).removeClass('holiday');
                     Object.keys(CS.holidays).forEach(function (holiday) {
-                        if(holiday.match(/^\d+$/)) holiday = Number(holiday);
+                        if (holiday.match(/^\d+$/)) holiday = Number(holiday);
                         holiday = new Date(holiday);
                         section.findByAttr({
                             'data-year':holiday.getFullYear(),
@@ -801,7 +801,13 @@
                     groupCount = group.size();
                 $.post('/sprint/update_work_hours', {
                     _id:CS.sprint._id,
-                    day:CS.today,
+                    day:(function (date) {
+                        var hours = date.getHours();
+                        if (hours > 15) {
+                            date.setDate(date.getDate() + 1);
+                        }
+                        return date;
+                    })(new Date(CS.today)),
                     work_hours:{
                         group:groupCount,
                         hour:Number(hour),
@@ -838,11 +844,11 @@
         },
         trafficLightSection:function () {
             var section = $(this),
-                 box = $('.traffic-light-box', section),
+                box = $('.traffic-light-box', section),
                 velocityReport = $('#velocity-report');
 
-            box.click(function(){
-                if(box.data('busy')) return;
+            box.click(function () {
+                if (box.data('busy')) return;
                 var duration = 300;
                 box.busy(duration);
                 velocityReport
@@ -931,19 +937,19 @@
                 });
             return bar;
         },
-        gridLine:function(count){
+        gridLine:function (count) {
             var line = $(this);
             var grid = '';
-            for(var i=0; i<count-1; i++){
+            for (var i = 0; i < count - 1; i++) {
                 grid += '<div class="grid"/>'
             }
             var width = ((1 / count) * 100).toFixed(2);
             line.append(grid)
                 .find('.grid')
-                .css('width',  (width + '%'));
+                .css('width', (width + '%'));
             return line;
         },
-        daysLine:function(tooltip){
+        daysLine:function (tooltip) {
             var line = $(this);
             var begin = new Date(CS.sprint.begin),
                 today = new Date(CS.today),
@@ -997,7 +1003,7 @@
             //初期表示を早めるために重い処理を後回しにしている。
             $('#bugs-section', body).bugsSection(CS.sprint);
             $('#task-section', body).taskSection(CS.sprint);
-            setTimeout(function(){
+            setTimeout(function () {
                 $('#calendar-section', body).calendarSection();
                 $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
             }, 200);
