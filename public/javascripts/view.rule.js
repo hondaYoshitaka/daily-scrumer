@@ -8,7 +8,6 @@
                     .validationForm('style_urls')
                     .submit(function (e) {
                         var valid = form.data('form.valid');
-                        console.log('valid', valid);
                         if (valid) {
                             form.trigger('style-list-item-change');
 
@@ -61,6 +60,20 @@
 
                     } else {
                         console.error('failed to update style urls');
+                    }
+                });
+            });
+
+            $('#style-load-btn', section).click(function () {
+                section.showSpin();
+                var data = {
+                    rule_id:CS.rule._id
+                };
+                $.post('/styledocco/load', data, function (data) {
+                    if (data.success) {
+
+                    } else {
+                        console.error('failed to load styles');
                     }
                 });
             });

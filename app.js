@@ -128,6 +128,8 @@ app.configure('development', function () {
     app.get('/rule', r.rule.index);
     app.post('/rule/update/style_urls', r.rule.update.style_urls)
 
+    app.post('/styledocco/load', r.styledocco.load);
+
     app.get('/err', function (req, res) {
         res.render('err.jade');
     });

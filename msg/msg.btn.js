@@ -31,7 +31,8 @@ exports = module.exports = {
         new_routine:'+ new routine'
     },
     rule:{
-        view_style:'view style doc'
+        load_style:'load',
+        view_style:'view'
     }
 
 };
