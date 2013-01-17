@@ -24,6 +24,8 @@
             var form = $(this);
             var days = (end - begin) / (24 * 60 * 60 * 1000);
 
+            form.empty();
+
             var data = (function (date) {
                 var data = {
                     labels:[],
@@ -36,8 +38,11 @@
                         month:(date.getMonth() + 1),
                         date:date.getDate()
                     });
-                    data.groups.push(0); //TODO
-                    data.hours.push(0); //TODO
+
+                    var utc = date.toUTC();
+                    var work_hour = work_hours[utc];
+                    data.groups.push(work_hour?work_hour.group:0);
+                    data.hours.push(work_hour?work_hour.hour:0);
                     date.setDate(date.getDate() + 1);
                 }
                 return data;
