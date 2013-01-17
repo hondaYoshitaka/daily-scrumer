@@ -2,7 +2,14 @@
 (function ($) {
 
     CS.active_sprint = null;//選択中のスプリント
-
+    Date.prototype.isSunday = function(){
+        var s = this;
+        return s.getDay() === 0;
+    }
+    Date.prototype.isSaturday = function(){
+        var s = this;
+        return s.getDay() === 6;
+    }
     $.extend({
 
     });
@@ -36,7 +43,16 @@
                     data.labels.push({
                         year:date.getFullYear(),
                         month:(date.getMonth() + 1),
-                        date:date.getDate()
+                        date:date.getDate(),
+                        class:(function(){
+                            if(date.isSunday()){
+                                return 'sunday';
+                            }
+                            if(date.isSaturday()){
+                                return 'saturday';
+                            }
+                            return '';
+                        })()
                     });
 
                     var utc = date.toUTC();

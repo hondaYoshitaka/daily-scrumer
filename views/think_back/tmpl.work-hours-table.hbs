@@ -3,7 +3,9 @@
     <tr>
         <th> </th>
         {{#each labels}}
-        <th>{{this.month}}/{{this.date}}</th>
+        <th>
+            <span class="{{class}}">{{this.month}}/{{this.date}}</span>
+        </th>
         {{/each}}
     </tr>
     </thead>
