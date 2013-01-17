@@ -60,6 +60,11 @@ exports = module.exports = {
     story:{
         checkpoints:'checkpoints'
     },
+    think_back:{
+        work_hours:{
+            title:'work hours'
+        }
+    },
     settings:{
         selected_team:'team',
         teams:'teams',

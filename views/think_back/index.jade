@@ -12,14 +12,23 @@ block javascript
         CS.sprints = !{JSON.stringify(sprints)};
 
 block content
+    - var label = msg.label.think_back;
+
     h1  think back!
+
 
     select#sprint-select(name="sprint_id")
         - for sprint in sprints
             option(value=sprint._id, data-sprint=sprint)
                 | #{sprint.name}
 
+    .etched-line
     section#work-hour-section
-        form#work-hour-table-form
+        h3.etched #{label.work_hours.title}
+        form#work-hour-table-form.graved.inline-block.etched
+        br.clear
         .tucked-corners-top
             .tucked-corners-bottom#work-hour-chart
+
+
+    .etched-line
