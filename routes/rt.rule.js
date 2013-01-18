@@ -31,7 +31,7 @@ exports.update = function () {
 
 exports.update.style_urls = function (req, res) {
     var body = req.body;
-    var isValid = !!(body._id && body.style_urls);
+    var isValid = !!(body._id);
     if (!isValid) {
         failJson(res);
         return;
@@ -41,7 +41,7 @@ exports.update.style_urls = function (req, res) {
             failJson(res);
             return;
         }
-        rule.style_urls = body.style_urls;
+        rule.style_urls = body.style_urls || [];
         rule.update(function () {
             res.json({
                 success:true,
