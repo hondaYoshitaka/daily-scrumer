@@ -155,7 +155,7 @@
         var body = $(document.body);
         $('#head-nav', body).nav('think_back');
         $('#sprint-select', body).sprintSelect(function (sprint) {
-            CS.active_sprint = sprint;
+            CS.active_sprint = sprint
             $('#work-hour-section', body).workHourSection(sprint);
 
         });

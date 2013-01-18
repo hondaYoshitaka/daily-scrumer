@@ -75,7 +75,7 @@
             });
         },
         storyList:function (data) {
-            var ul = $(this);
+            var ul = $(this).empty();
 
             var tmpl = Handlebars.templates['tmpl.story-list-item'];
             data.forEach(function (data) {
@@ -111,7 +111,9 @@
             $.get('/sprint/get_stories', data, function (data) {
                 article.removeSpin();
                 if (data.success) {
-                    CS.stories = data.stories;
+                    CS.stories = data.stories.sort(function(a,b){
+                        return new Date(a.created_on) - new Date(b.created_on);
+                    });
                     storyList.storyList(CS.stories);
                 } else {
                     console.error('failed to load stories');
