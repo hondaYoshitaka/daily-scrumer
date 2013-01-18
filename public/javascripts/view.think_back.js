@@ -31,10 +31,10 @@
             });
             return select;
         },
-        workHourChart:function (data) {
+        workHourChart:function (data, begin) {
             var container = $(this),
                 id = container.attr('id');
-            return CS.chart.workHours(id, data);
+            return CS.chart.workHours(id, data, begin);
         },
         workHourTableForm:function (begin, end, work_hours, sprint_id) {
             var form = $(this);
@@ -146,7 +146,7 @@
                 });
                 return data;
             })();
-            $('#work-hour-chart', section).workHourChart(data);
+            $('#work-hour-chart', section).workHourChart(data, new Date(begin));
             $('#work-hour-table-form', section).workHourTableForm(begin, end, workHours, id);
             return section;
         }

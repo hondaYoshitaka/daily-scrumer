@@ -1,5 +1,4 @@
-var http = require('http'),
-    request = require('request'),
+var exec = require('child_process')['exec'],
     db = require('../db'),
     fs = require('fs'),
     util = require('../util'),

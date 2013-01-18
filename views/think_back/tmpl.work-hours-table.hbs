@@ -16,6 +16,8 @@
         {{#each groups}}
             <td>
                 <input type="number"
+                       min="0"
+                       max="100"
                        class="shortest"
                        name="group"
                        value="{{this}}"
@@ -30,6 +32,8 @@
             <td>
                 <input type="number"
                        name="hour"
+                       min="0"
+                       max="24"
                        class="shortest"
                        value="{{this}}"
                        data-role="editable-text"

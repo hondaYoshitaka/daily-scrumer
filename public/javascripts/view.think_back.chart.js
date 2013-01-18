@@ -7,7 +7,7 @@ Date.prototype.toUTC = function(){
 };
 CS.chart = (function () {
     var chart = {};
-    chart.workHours = function (renderTo, data) {
+    chart.workHours = function (renderTo, data, begin) {
         return new Highcharts.Chart({
             chart:{
                 renderTo:renderTo,
@@ -52,7 +52,7 @@ CS.chart = (function () {
                     type:'area',
                     name:'work hours',
                     pointInterval:24 * 3600 * 1000,
-                    pointStart: data[0],
+                    pointStart: begin.toUTC(),
                     data:data
                 }
             ]
