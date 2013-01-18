@@ -8,3 +8,17 @@
   margin:10px;
   font-size:1.5em;
 }
+
+.btn.done{
+  position: relative;
+  &:after{
+    content:'done!';
+    color: @green;
+    position: absolute;
+    right: -15px;
+    top:-15px;
+    .rotate(10deg);
+    font-size:0.8em;
+    font-style: italic;
+  }
+}

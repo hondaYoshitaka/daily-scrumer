@@ -22,8 +22,11 @@ block content
                     span.add-icon-bar-h
             br
             .btn-area
-                a#style-load-btn.btn.large-btn #{btn.load_style}
-                a#style-view-btn.btn.large-btn #{btn.view_style}
+                a#style-load-btn.btn.large-btn
+                    | #{btn.load_style}
+                a#style-view-btn.btn.large-btn(
+                    href='/html/styledocco/index.html')
+                    | #{btn.view_style}
             br.clear
 
 

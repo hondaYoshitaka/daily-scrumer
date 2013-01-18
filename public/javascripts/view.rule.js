@@ -65,12 +65,22 @@
             });
 
             $('#style-load-btn', section).click(function () {
+                var btn = $(this);
+                if (btn.is('.active')) return;
+                btn.addClass('active');
                 section.showSpin();
                 var data = {
                     rule_id:CS.rule._id
                 };
                 $.post('/styledocco/load', data, function (data) {
                     section.removeSpin();
+                    btn
+                        .removeClass('active')
+                        .addClass('done');
+                    setTimeout(function(){
+                        btn.removeClass('done');
+                    }, 1000);
+
                     if (data.success) {
 
                     } else {

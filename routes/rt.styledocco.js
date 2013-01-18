@@ -1,6 +1,7 @@
 var exec = require('child_process')['exec'],
     db = require('../db'),
     fs = require('fs'),
+    conf = require('../conf'),
     util = require('../util'),
     urlParser = require('url'),
     Rule = db.models['Rule'];
@@ -28,7 +29,6 @@ function failJson(res){
     });
 }
 exports.load = function(req, res){
-
     var body = req.body;
     Rule.findById(body.rule_id, function (rule) {
         var urls = rule.style_urls || [];
@@ -47,8 +47,15 @@ exports.load = function(req, res){
                         return;
                     }
                     if (count === 0) {
-                        res.json({
-                            success:true
+                        var command = conf.styledocco.command;
+                        exec(command, function(err){
+                            if(err){
+                                failJson(res);
+                                return;
+                            }
+                            res.json({
+                                success:true
+                            });
                         });
                     }
                 });
