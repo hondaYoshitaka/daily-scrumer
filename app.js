@@ -87,6 +87,7 @@ app.configure('development', function () {
     app.get('/team/:name/story', r.story.index);
     app.get('/team/:name/think_back', r.think_back.index);
     app.get('/team/:name/setting', r.setting.index);
+    app.get('/team/:name/rule', r.rule.index);
 
     app.post('/new_team', r.team.new);
     app.post('/remove_team', r.team.remove);

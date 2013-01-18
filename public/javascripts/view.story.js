@@ -129,8 +129,6 @@
         var body = $(document.body);
 
         $('#head-nav', body).nav('story');
-
-
         $('#story-article', body).storyArticle();
 
 
