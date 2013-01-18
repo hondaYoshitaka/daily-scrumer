@@ -74,7 +74,7 @@
         style_urls:{
             style_url:{
                 label:'style url',
-                format: 'url'
+                pattern: '^http:\/\/'
             }
         }
     };

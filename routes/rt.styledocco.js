@@ -41,7 +41,7 @@ exports.load = function(req, res){
                 var file = [exports.style_dir, name].join('/');
                 fs.writeFile(file, body, function(err){
                     if(err){
-                        console.error(err)
+                        console.error(err);
                         failJson(res);
                         abort = true;
                         return;
@@ -50,6 +50,7 @@ exports.load = function(req, res){
                         var command = conf.styledocco.command;
                         exec(command, function(err){
                             if(err){
+                                console.error(err);
                                 failJson(res);
                                 return;
                             }

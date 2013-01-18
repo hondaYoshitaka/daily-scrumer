@@ -10,7 +10,6 @@
                         var valid = form.data('form.valid');
                         if (valid) {
                             form.trigger('style-list-item-change');
-
                         }
                         e.preventDefault();
                     });
