@@ -52,10 +52,10 @@ Agent.prototype.request = function (method, url, callback, headers) {
             body = s.converter.convert(body);
         }
         else {
-            body = body.toString();
+            body = body && body.toString();
         }
 
-        var $ = cheerio.load(body);
+        var $ = body ? cheerio.load(body) : null;
         callback && callback.call(s, res, body, $);
     });
     (function (form) {

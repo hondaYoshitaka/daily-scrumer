@@ -35,6 +35,11 @@ JenkinsAgent.prototype.login = function (auth, callback) {
         j_password:auth.j_password
     }
     s.post('j_acegi_security_check', function(res, body, $){
+        if(res.statusCode == 301){
+            console.log('location', res.headers && res.headers.location);
+            console.log('res.hea', res.headers);
+            return;
+        }
         if (res.statusCode == '411') {
             console.error('failed to login');
             callback.call(s, false);
