@@ -28,7 +28,20 @@ JenkinsAgent.conf = conf;
 })(Agent);
 
 JenkinsAgent.prototype.login = function (auth, callback) {
-    //TODO
+    var s = this;
+    if(!auth) auth = conf.auth;
+    var form = {
+        j_username:auth.j_username,
+        j_password:auth.j_password
+    }
+    s.post('j_acegi_security_check', function(res, body, $){
+        if (res.statusCode == '411') {
+            console.error('failed to login');
+            callback.call(s, false);
+            return;
+        }
+        callback.call(s, true);
+    }).form(form);
 };
 
 JenkinsAgent.prototype.getWhether = function (url, callback) {

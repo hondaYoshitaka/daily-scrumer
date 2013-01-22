@@ -1,7 +1,10 @@
+exports.auth = {
+    j_username:"",
+    j_password:""
+}
 
-exports.username = "";
-exports.password = "";
-
-exports.view_urls = [
+exports.url = {};
+exports.url.views = [
     "https://builds.apache.org/"
 ];
+exports.url.login = "https://builds.apache.org/login";
