@@ -1,0 +1,62 @@
+/*
+ * agent for jenkins
+ */
+
+var Agent = require('./agn.prototype.js'),
+    util = require('../util'),
+    conf = require('../conf')['jenkins'];
+
+
+var JenkinsAgent = exports = module.exports = function (data) {
+    var s = this;
+    if (data) {
+        util.obj.deepCopy(data, s);
+        s.cookie = new Agent.Cookie(data.cookie);
+    } else {
+        s.cookie = new Agent.Cookie();
+    }
+};
+
+JenkinsAgent.conf = conf;
+
+(function (Prototype) {
+    JenkinsAgent.prototype = new Prototype();
+    for (var name in Prototype) {
+        if (!Prototype.hasOwnProperty(name)) continue;
+        JenkinsAgent[name] = Prototype[name];
+    }
+})(Agent);
+
+JenkinsAgent.prototype.login = function (auth, callback) {
+    //TODO
+};
+
+JenkinsAgent.prototype.getWhether = function (url, callback) {
+    var s = this;
+    var base = (function (url) {
+        return [url.protocol, url.host].join('\/\/');
+    })(require('url').parse(url))
+    s.get(url, function (res, body, $) {
+        try {
+            var data = [];
+            $('#main-panel table#projectstatus').find('tr').each(function (i) {
+                if (i === 0) return;
+                var tr = $(this),
+                    td = tr.find('td');
+                var a = tr.find('.model-link').eq(0);
+
+                var name = a.text();
+                if (name) {
+                    data.push({
+                        name:name,
+                        img:base + td.eq(1).find('img').attr('src')
+                    });
+                }
+            });
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
