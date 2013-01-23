@@ -29,16 +29,16 @@ JenkinsAgent.conf = conf;
 
 JenkinsAgent.prototype.login = function (auth, callback) {
     var s = this;
-    if(!auth) auth = conf.auth;
+    if (!auth) auth = conf.auth;
     var form = {
         j_username:auth.j_username,
         j_password:auth.j_password
     }
-    s.post('j_acegi_security_check', function(res, body, $){
-        if(res.statusCode == 301){
+    var base = conf.url.base || '';
+    s.post(base + 'j_acegi_security_check',function (res, body, $) {
+        if (res.statusCode == 301) {
             console.log('location', res.headers && res.headers.location);
-            console.log('res.hea', res.headers);
-            return;
+            console.log('res.headers', res.headers);
         }
         if (res.statusCode == '411') {
             console.error('failed to login');

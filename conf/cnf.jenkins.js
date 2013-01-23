@@ -4,6 +4,7 @@ exports.auth = {
 }
 
 exports.url = {};
+exports.url.base = "https://builds.apache.org/";
 exports.url.views = [
     "https://builds.apache.org/"
 ];

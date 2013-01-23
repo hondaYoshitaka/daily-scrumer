@@ -19,6 +19,7 @@ exports = module.exports = {
         report:'report',
         tasks:'task time',
         grouping:'grouping',
+        jenkins:'jenkins',
         bug_to_hurry:'HOT bugs',
         events:'events',
         alert_line:{

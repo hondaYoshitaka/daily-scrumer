@@ -115,7 +115,7 @@
                     total = table.findByName('total'),
                     totalDisplay = table.findByRole('work-hour-total');
                 for(var i=0; i<days;i++){
-                    var val = Number(groups.eq(i).val()) + Number(hours.eq(i).val());
+                    var val = Number(groups.eq(i).val()) * Number(hours.eq(i).val());
                     totalDisplay.eq(i).text(val);
                     total.eq(i).val(val);
                 }
