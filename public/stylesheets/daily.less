@@ -826,8 +826,9 @@ fieldset{
 }
 #jenkins-section{
   min-width:300px;
-  min-height:80px;
-  min-height:80px;
+  .paper-content{
+    min-height:80px;
+  }
 }
 .jenkins-whether-list-item{
   list-style: none;
@@ -835,7 +836,9 @@ fieldset{
   @h:20px;
   a{
     &:hover{
-      text-decoration:underline;
+      small{
+        text-decoration:underline;
+      }
     }
   }
   img{
