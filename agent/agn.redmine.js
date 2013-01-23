@@ -309,7 +309,11 @@ RedmineAgent.prototype.getWiki = function (url, callback) {
     var s = this;
     s.get(url, function (res, body, $) {
         try {
-            var data = $('.wiki').eq(1).html();
+            var wiki = $('.wiki')
+                .eq(1);
+            wiki.find('.contextual').remove();
+            wiki.find('.wiki-anchor').remove();
+            var data = wiki.html();
             callback && callback.call(s, true, data);
         } catch (e) {
             console.error(e);
