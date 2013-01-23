@@ -827,10 +827,17 @@ fieldset{
 #jenkins-section{
   min-width:300px;
   min-height:80px;
+  min-height:80px;
 }
 .jenkins-whether-list-item{
   list-style: none;
+
   @h:20px;
+  a{
+    &:hover{
+      text-decoration:underline;
+    }
+  }
   img{
     max-width: @h;
     margin: 0 3px;

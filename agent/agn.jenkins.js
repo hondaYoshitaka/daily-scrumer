@@ -97,6 +97,7 @@ JenkinsAgent.prototype.getWhether = function (url, callback) {
                 if (name) {
                     data.push({
                         name:name,
+                        link:[base, a.attr('href')].join('/'),
                         img:base + td.eq(1).find('img').attr('src')
                     });
                 }
