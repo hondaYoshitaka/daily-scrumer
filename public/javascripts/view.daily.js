@@ -992,6 +992,29 @@
                 });
 
             return section;
+        },
+        jenkinsWhetherList:function (data) {
+            var ul = $(this);
+            var tmpl = {
+                li:Handlebars.templates['tmpl.jenkins-whether-list-item']
+            }
+            data && data.forEach(function(data){
+                ul.append(tmpl.li(data));
+            });
+            return ul;
+        },
+        jenkinsSection:function () {
+            var section = $(this);
+            section.showSpin();
+            $.get('/jenkins/whether', function (data) {
+                section.removeSpin();
+                if (data.success) {
+                    $('#jenkins-whether-list', section).jenkinsWhetherList(data.whether);
+                } else {
+                    console.error('failed to load jenkins whether');
+                }
+            });
+            return section;
         }
     });
     $(function () {
@@ -1007,6 +1030,9 @@
                 $('#calendar-section', body).calendarSection();
                 $('#bug-to-hurry-section', body).bugToHurrySection(CS.sprint);
             }, 200);
+            setTimeout(function () {
+                $('#jenkins-section', body).jenkinsSection();
+            }, 500);
         }, 100);
 
 

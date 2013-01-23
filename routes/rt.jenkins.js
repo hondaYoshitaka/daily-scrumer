@@ -1,10 +1,10 @@
 var JenkinsAgent = require('../agent/agn.jenkins');
 
 function failJson(res) {
-    res.render({
+    res.json({
         success:false
     });
-};
+}
 exports.get_whether = function (req, res) {
     var agent = new JenkinsAgent();
     agent.login(function (success) {
@@ -12,11 +12,11 @@ exports.get_whether = function (req, res) {
             failJson(res);
             return;
         }
-        failJson(res);
         var conf = JenkinsAgent['conf'];
         var reqCount = 0, abort = false;
         var result = [];
         conf.url.views.forEach(function (view) {
+            reqCount++;
             agent.getWhether(view, function (success, data) {
                 reqCount--;
                 if (abort) return;
@@ -25,7 +25,16 @@ exports.get_whether = function (req, res) {
                     abort = true;
                     return;
                 }
-                res.json(result);
+                result = result.concat(data);
+                if(reqCount === 0){
+                    while(result.length > 20){
+                        result.pop();
+                    }
+                    res.json({
+                        success:true,
+                        whether:result
+                    });
+                }
             });
         });
     });

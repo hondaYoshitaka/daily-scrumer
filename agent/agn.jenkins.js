@@ -28,6 +28,10 @@ JenkinsAgent.conf = conf;
 })(Agent);
 
 JenkinsAgent.prototype.login = function (auth, callback) {
+    if (typeof arguments[0] === 'function') {
+        callback = arguments[0];
+        auth = null;
+    }
     var s = this;
     if (!auth) auth = conf.auth;
     var form = {
@@ -45,7 +49,7 @@ JenkinsAgent.prototype.login = function (auth, callback) {
             callback.call(s, false);
             return;
         }
-        callback.call(s, true);
+        callback && callback.call(s, true);
     }).form(form);
 };
 
