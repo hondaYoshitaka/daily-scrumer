@@ -993,14 +993,36 @@
 
             return section;
         },
+        jenkinsImg:function(){
+            var img = $(this);
+            $(document).on('jenkins-whether-load', function(){
+                if(CS.jenkinsImage.angry){
+                    img.attr('src', '/images/jenkins/angry-jenkins.png')
+                } else if(CS.jenkinsImage.sad){
+                    img.attr('src', '/images/jenkins/sad-jenkins.png')
+                }
+            });
+            return img;
+        },
         jenkinsWhetherList:function (data) {
             var ul = $(this);
             var tmpl = {
                 li:Handlebars.templates['tmpl.jenkins-whether-list-item']
             }
+            CS.jenkinsImage = {angry:false, sad:false};
             data && data.forEach(function(data){
                 ul.append(tmpl.li(data));
+                var isAngry = !!data.img.match('health-00to19.png');
+                if(isAngry){
+                    CS.jenkinsImage.angry = true;
+                } else {
+                    var isSad = !!data.img.match('health-40to59.png');
+                    if(isSad){
+                        CS.jenkinsImage.sad = true;
+                    }
+                }
             });
+            ul.trigger('jenkins-whether-load');
             return ul;
         },
         jenkinsSection:function () {
@@ -1034,6 +1056,7 @@
             }, 200);
             setTimeout(function () {
                 $('#jenkins-section', body).jenkinsSection();
+                $('#jenkins-img').jenkinsImg();
             }, 500);
         }, 100);
 
@@ -1043,5 +1066,6 @@
         $('#traffic-light-section', body).trafficLightSection();
         $('#days-section', body).daysSection();
         $('#events-section', body).eventSection();
+
     });
 })(jQuery);
