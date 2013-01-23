@@ -270,3 +270,30 @@ exports.update.alert_line = function (req, res) {
         });
     });
 };
+exports.update.jenkins_view = function(req, res){
+    var body = req.body;
+    var valid = !!body.team_id;
+    if(!valid){
+        fail(res);
+        return;
+    }
+    Team.findById(body.team_id, function(team){
+        if (!team) {
+            fail(res);
+            return;
+        }
+        var isArray = (body.jenkins_view instanceof Array);
+        if(isArray) {
+            body.jenkins_view = [body.jenkins_view];
+        }
+        team.jenkins_view = body.jenkins_view;
+        team.update(function () {
+            req.session.team = team;
+            res.json({
+                success:true,
+                team:team,
+                jenkins_view:team.jenkins_view
+            });
+        });
+    });
+};

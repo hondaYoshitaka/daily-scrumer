@@ -577,9 +577,29 @@
                 section.removeSpin();
                 if (data.success) {
                     list.jenkinsViewList(data.views);
+                    var jenkins_view = CS.team.jenkins_view;
+                    jenkins_view && jenkins_view.each(function (view) {
+                        list.findByName('jenkins_view').each(function(){
+                            var input = $(this);
+                            input.get(0).checked = input.val() == view;
+                        });
+                    });
                 } else {
                     console.error('failed to load jenkins views');
                 }
+            });
+            $(document).on('change', '#jenkins-views-form input', function () {
+                var data = $('#jenkins-views-form').serializeObj();
+                data.team_id = CS.team._id;
+                section.busy(300);
+                $.post('/update_team/jenkins_view', data, function (data) {
+                    if (section.data('busy')) return;
+                    if (data.success) {
+
+                    } else {
+                        console.error('failed to update jenkins views');
+                    }
+                });
             });
             return section;
         }
