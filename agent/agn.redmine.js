@@ -221,6 +221,7 @@ RedmineAgent.prototype.getTimeTrack = function (version_id, callback) {
                             return parseInt(td.find('.hours-int').text(), 10)
                                 + parseFloat(td.find('.hours-dec').text());
                         }
+
                         return{
                             estimated:getTime(tr.eq(0).find('.total-hours')),
                             spent:getTime(tr.eq(1).find('.total-hours'))
@@ -280,14 +281,14 @@ RedmineAgent.prototype.getIssuePriorities = function (callback) {
     });
 };
 
-RedmineAgent.prototype.getUsers = function(project, callback){
+RedmineAgent.prototype.getUsers = function (project, callback) {
     var s = this,
         url = [conf.url.base, 'projects', project].join('/');
-    s.get(url, function(res, body, $){
-        try{
+    s.get(url, function (res, body, $) {
+        try {
             if (res.statusCode === 404) throw new Error(404);
             var members = {};
-            $('#content').find('.members.box').find('a').each(function(){
+            $('#content').find('.members.box').find('a').each(function () {
                 var a = $(this);
                 var member = {
                     id:Number(a.attr('href').replace("/redmine/users/", "")),
@@ -296,12 +297,27 @@ RedmineAgent.prototype.getUsers = function(project, callback){
                 members[member.id] = member;
             });
             callback && callback.call(s, true, members);
-        } catch(e){
+        } catch (e) {
             console.error(e);
             callback && callback.call(s, false);
         }
     });
 };
+
+
+RedmineAgent.prototype.getWiki = function (url, callback) {
+    var s = this;
+    s.get(url, function (res, body, $) {
+        try {
+            var data = $('.wiki').eq(1).html();
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+}
+
 //
 //
 //new RedmineAgent().login(conf.admin, function () {

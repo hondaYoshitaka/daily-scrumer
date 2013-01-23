@@ -41,10 +41,10 @@ app.configure('development', function () {
     app.use(express.errorHandler());
     (function (precompiler) {
         var viewDir = [__dirname, "views"].join('/');
-        fs.readdirSync(viewDir).forEach(function(name){
+        fs.readdirSync(viewDir).forEach(function (name) {
             var watchDir = [viewDir, name].join('/');
             var isDir = util.file.isDir(watchDir);
-            if(!isDir) return;
+            if (!isDir) return;
             console.log('watchDir', watchDir);
             var outFileName = ["handlebars.template", name, "min", "js"].join('.'),
                 outFile = [__dirname, "public/javascripts", outFileName].join('/');
@@ -134,6 +134,8 @@ app.configure('development', function () {
 
     app.get('/jenkins/whether', r.jenkins.get_whether);
     app.get('/jenkins/views', r.jenkins.get_views);
+
+    app.get('/procedure', r.procedure);
 
     app.get('/err', function (req, res) {
         res.render('err.jade');

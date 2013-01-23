@@ -10,6 +10,8 @@ exports.url = (function () {
 
     url.versions = base + '/versions/show';
 //    url.versions = base + '/versions';
+
+    url.procedure = base + "/projects/project00/wiki/Wiki";
     return url;
 })();
 
