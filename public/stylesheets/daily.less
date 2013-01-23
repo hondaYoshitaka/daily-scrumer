@@ -824,9 +824,18 @@ fieldset{
     }
   }
 }
+#jenkins-section{
+  min-width:300px;
+  min-height:80px;
+}
 .jenkins-whether-list-item{
   list-style: none;
+  @h:20px;
   img{
-    max-width:40px;
+    max-width: @h;
+    margin: 0 3px;
+  }
+  small{
+    line-height: @h;
   }
 }
