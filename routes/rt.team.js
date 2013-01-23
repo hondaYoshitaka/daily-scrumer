@@ -283,7 +283,7 @@ exports.update.jenkins_view = function(req, res){
             return;
         }
         var isArray = (body.jenkins_view instanceof Array);
-        if(isArray) {
+        if(!isArray) {
             body.jenkins_view = [body.jenkins_view];
         }
         team.jenkins_view = body.jenkins_view;

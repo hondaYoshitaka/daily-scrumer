@@ -578,10 +578,11 @@
                 if (data.success) {
                     list.jenkinsViewList(data.views);
                     var jenkins_view = CS.team.jenkins_view;
-                    jenkins_view && jenkins_view.forEach(function (view) {
-                        list.findByName('jenkins_view').each(function(){
-                            var input = $(this);
-                            input.get(0).checked = input.val() == view;
+                    list.findByName('jenkins_view').each(function () {
+                        var input = $(this);
+                        jenkins_view && jenkins_view.forEach(function (view) {
+                            console.log((input.val() == view), input.val(), view);
+                            input.get(0).checked = (input.val() == view);
                         });
                     });
                 } else {
@@ -595,7 +596,7 @@
                 $.post('/update_team/jenkins_view', data, function (data) {
                     if (section.data('busy')) return;
                     if (data.success) {
-
+                        CS.team.jenkins_view = data.jenkins_view;
                     } else {
                         console.error('failed to update jenkins views');
                     }
