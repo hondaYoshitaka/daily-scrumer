@@ -52,7 +52,33 @@ JenkinsAgent.prototype.login = function (auth, callback) {
         callback && callback.call(s, true);
     }).form(form);
 };
-
+JenkinsAgent.prototype.getViews = function (callback) {
+    var s = this;
+    var url = conf.url.base;
+    var base = (function (url) {
+        return [url.protocol, url.host].join('\/\/');
+    })(require('url').parse(url))
+    s.get(url, function (res, body, $) {
+        try {
+            var data = [];
+            $('#main-panel table#viewList').find('tr').eq(1).find('td')
+                .each(function () {
+                    var a = $(this).find('a');
+                    var name = a.text();
+                    if (name) {
+                        data.push({
+                            name:name,
+                            link:base + a.attr('href')
+                        });
+                    }
+                });
+            callback && callback.call(s, true, data);
+        } catch (e) {
+            console.error(e);
+            callback && callback.call(s, false);
+        }
+    });
+};
 JenkinsAgent.prototype.getWhether = function (url, callback) {
     var s = this;
     var base = (function (url) {

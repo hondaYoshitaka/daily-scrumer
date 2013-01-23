@@ -92,18 +92,18 @@
                 if (data.success) {
                     CS.redmine_members = data.members;
 
-                    memberList.findByRole('redmine-member-select-wrapper').each(function(){
+                    memberList.findByRole('redmine-member-select-wrapper').each(function () {
                         var wrapper = $(this),
                             selected = wrapper.data('redmine-id');
                         var select = $(tmpl.redmineMemberSelect({members:data.members}))
                             .appendTo(wrapper)
                             .selectableLabel();
 
-                        if(selected){
+                        if (selected) {
                             select.val(selected)
                                 .trigger('change');
                         }
-                        select.change(function(){
+                        select.change(function () {
                             wrapper.parent('form').submit();
                         });
 
@@ -558,6 +558,30 @@
             });
 
             return section;
+        },
+        jenkinsViewList:function (data) {
+            var ul = $(this);
+            var tmpl = {
+                li:Handlebars.templates['tmpl.jenkins-view-list-item']
+            }
+            data.forEach(function (view) {
+                ul.append(tmpl.li(view));
+            });
+            return ul;
+        },
+        jenkinsSection:function () {
+            var section = $(this),
+                list = $('#jenkins-view-list', section);
+            section.showSpin();
+            $.get('/jenkins/views', function (data) {
+                section.removeSpin();
+                if (data.success) {
+                    list.jenkinsViewList(data.views);
+                } else {
+                    console.error('failed to load jenkins views');
+                }
+            });
+            return section;
         }
     });
     $(function () {
@@ -578,5 +602,7 @@
         $('#routine-section', body).routineSection();
 
         $('#alert-line-section', body).alertLineSection();
+
+        $('#jenkins-section', body).jenkinsSection();
     });
 })(jQuery);

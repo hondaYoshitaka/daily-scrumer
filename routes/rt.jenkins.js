@@ -39,3 +39,22 @@ exports.get_whether = function (req, res) {
         });
     });
 };
+exports.get_views = function(req, res){
+    var agent = new JenkinsAgent();
+    agent.login(function (success) {
+        if (!success) {
+            failJson(res);
+            return;
+        }
+        agent.getViews(function (success, data) {
+            if (!success) {
+                failJson(res);
+                return;
+            }
+            res.json({
+                success:true,
+                views:data
+            });
+        });
+    });
+};

@@ -4,6 +4,10 @@ var Agent = require('../../agent')['Jenkins'];
 //    console.log(success, data);
 //});
 
-new Agent().login(null, function (success, data) {
+var agent = new Agent();
+agent.login(null, function (success, data) {
     console.log('login', success, data);
+    agent.getViews(function (success, data) {
+        console.log('get views', success, data);
+    });
 });

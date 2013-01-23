@@ -72,6 +72,7 @@ exports = module.exports = {
         teams:'teams',
         sprints:'sprints',
         redmine:'redmine',
+        jenkins:'Jenkins',
         redmine_projects:'proceeding projects',
         redmine_projects_lead:'Select projects proceeded by this team.',
         redmine_bug_status:'bug report',
