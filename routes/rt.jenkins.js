@@ -15,7 +15,9 @@ exports.get_whether = function (req, res) {
         var conf = JenkinsAgent['conf'];
         var reqCount = 0, abort = false;
         var result = [];
-        conf.url.views.forEach(function (view) {
+
+        var views = req.query.views || conf.url.views;
+        views.forEach(function (view) {
             reqCount++;
             agent.getWhether(view, function (success, data) {
                 reqCount--;
@@ -26,8 +28,8 @@ exports.get_whether = function (req, res) {
                     return;
                 }
                 result = result.concat(data);
-                if(reqCount === 0){
-                    while(result.length > 20){
+                if (reqCount === 0) {
+                    while (result.length > 20) {
                         result.pop();
                     }
                     res.json({
@@ -39,7 +41,7 @@ exports.get_whether = function (req, res) {
         });
     });
 };
-exports.get_views = function(req, res){
+exports.get_views = function (req, res) {
     var agent = new JenkinsAgent();
     agent.login(function (success) {
         if (!success) {

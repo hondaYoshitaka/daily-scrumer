@@ -1006,7 +1006,9 @@
         jenkinsSection:function () {
             var section = $(this);
             section.showSpin();
-            $.get('/jenkins/whether', function (data) {
+            var data = {};
+            if(CS.team.jenkins_view) data.views = CS.team.jenkins_view;
+            $.get('/jenkins/whether', data, function (data) {
                 section.removeSpin();
                 if (data.success) {
                     $('#jenkins-whether-list', section).jenkinsWhetherList(data.whether);

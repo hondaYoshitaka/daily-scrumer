@@ -581,8 +581,12 @@
                     list.findByName('jenkins_view').each(function () {
                         var input = $(this);
                         jenkins_view && jenkins_view.forEach(function (view) {
-                            console.log((input.val() == view), input.val(), view);
-                            input.get(0).checked = (input.val() == view);
+                            var hit = (input.val() === view);
+                            if (hit) {
+                                input.get(0).checked = hit;
+                                return false;
+                            }
+                            return true;
                         });
                     });
                 } else {
@@ -590,11 +594,11 @@
                 }
             });
             $(document).on('change', '#jenkins-views-form input', function () {
+                if (section.data('busy')) return;
+                section.busy(300);
                 var data = $('#jenkins-views-form').serializeObj();
                 data.team_id = CS.team._id;
-                section.busy(300);
                 $.post('/update_team/jenkins_view', data, function (data) {
-                    if (section.data('busy')) return;
                     if (data.success) {
                         CS.team.jenkins_view = data.jenkins_view;
                     } else {
