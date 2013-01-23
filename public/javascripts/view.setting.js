@@ -578,7 +578,7 @@
                 if (data.success) {
                     list.jenkinsViewList(data.views);
                     var jenkins_view = CS.team.jenkins_view;
-                    jenkins_view && jenkins_view.each(function (view) {
+                    jenkins_view && jenkins_view.forEach(function (view) {
                         list.findByName('jenkins_view').each(function(){
                             var input = $(this);
                             input.get(0).checked = input.val() == view;
