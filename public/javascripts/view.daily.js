@@ -1048,9 +1048,8 @@
             $.get('/procedure', function (data) {
                 content.removeSpin();
                 if (data.success) {
-                    console.log(data);
                     content.html(data.html);
-                    $('.contextual,.wiki-anchor', html).remove();
+                    $('.contextual,.wiki-anchor', content).remove();
                 } else {
                     console.error('fail to load procedure');
                 }
