@@ -1050,9 +1050,11 @@
                 if (data.success) {
                     console.log(data);
                     content.html(data.html);
+                    $('.contextual,.wiki-anchor', html).remove();
                 } else {
                     console.error('fail to load procedure');
                 }
+
             });
             return section;
         }
