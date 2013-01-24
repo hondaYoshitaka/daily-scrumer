@@ -19,6 +19,7 @@ exports = module.exports = function (req, res) {
         }
         res.json({
             success:true,
+            url:url,
             html:data
         });
     });

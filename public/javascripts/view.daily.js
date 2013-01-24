@@ -1050,6 +1050,7 @@
                 if (data.success) {
                     content.html(data.html);
                     $('.contextual,.wiki-anchor', content).remove();
+                    $('#procedure-edit-btn', section).attr('href', data.url);
                 } else {
                     console.error('fail to load procedure');
                 }

@@ -868,3 +868,16 @@ fieldset{
 }
 
 
+#procedure-section{
+  #procedure-edit-btn{
+    display: none;
+  }
+  &:hover{
+    #procedure-edit-btn{
+      display: inline-block;
+      &[href='']{
+        display: none;
+      }
+    }
+  }
+}
