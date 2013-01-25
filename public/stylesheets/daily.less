@@ -881,3 +881,44 @@ fieldset{
     }
   }
 }
+
+.toggle-btn{
+  display:inline-block;
+  margin: 0 4px;
+  font-size:0.5em;
+  padding:2px 4px;
+  @corner:4px;
+  .border-radius(@corner);
+  .box-shadow(2px 2px 4px, 0.4, inset);
+  background-color: lighten(@blue, 20);;
+  color: @white;
+  position:relative;
+  border:1px solid darken(@white, 5);
+  .pinch{
+    display: inline-block;
+    .border-radius(@corner - 1px);
+    border:1px solid darken(@white, 20);
+    position:absolute;
+    width:50%;
+    height: 90%;
+    left: 0;
+    top:3%;
+    .linear-gradient(@white, darken(@white, 10));
+    cursor: pointer;
+  }
+  .toggle-btn-left,
+  .toggle-btn-right{
+    padding: 0 2px;
+    text-align: center;
+  }
+  .toggle-btn-right{
+    background-color: lighten(@red, 20);
+  }
+}
+#jenkins-whether-list{
+  &.on-edit{
+    .toggle-btn{
+      display: inline-block;
+    }
+  }
+}

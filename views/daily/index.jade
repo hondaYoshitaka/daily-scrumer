@@ -252,14 +252,16 @@ block content
     br
 
     section#jenkins-section.float-left.positioned.paper
-        .paper-content
+        .paper-content.positioned
+            a#jenkins-edit-btn.stick-right.stick-top()
+                | #{msg.label.edit}
             h2.paper-title
                 |#{label.jenkins}
                 img.icon.jenkins-icon(src='/images/jenkins.fav.ico')
             ul#jenkins-whether-list.no-style-list
 
     section#procedure-section.float-left.no-margin
-        fieldset.positioned
+        fieldset.positioned.etched
             legend #{label.procedure}
             .positioned
                 a#procedure-edit-btn.stick-right.stick-top(

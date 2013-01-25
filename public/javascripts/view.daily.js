@@ -1027,17 +1027,22 @@
             return ul;
         },
         jenkinsSection:function () {
-            var section = $(this);
+            var section = $(this),
+                list = $('#jenkins-whether-list', section),
+                editBtn = $('#jenkins-edit-btn');
             section.showSpin();
             var data = {};
             if (CS.team.jenkins_view) data.views = CS.team.jenkins_view;
             $.get('/jenkins/whether', data, function (data) {
                 section.removeSpin();
                 if (data.success) {
-                    $('#jenkins-whether-list', section).jenkinsWhetherList(data.whether);
+                    list.jenkinsWhetherList(data.whether);
                 } else {
                     console.error('failed to load jenkins whether');
                 }
+            });
+            editBtn.click(function () {
+                list.toggleClass('on-edit');
             });
             return section;
         },
