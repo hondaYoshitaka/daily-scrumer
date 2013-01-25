@@ -1029,7 +1029,7 @@
         jenkinsSection:function () {
             var section = $(this),
                 list = $('#jenkins-whether-list', section),
-                editBtn = $('#jenkins-edit-btn');
+                editBtn = $('#jenkins-edit-btn', section);
             section.showSpin();
             var data = {};
             if (CS.team.jenkins_view) data.views = CS.team.jenkins_view;

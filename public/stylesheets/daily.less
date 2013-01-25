@@ -911,11 +911,21 @@ fieldset{
     padding: 0 2px;
     text-align: center;
   }
-  .toggle-btn-right{
-    background-color: lighten(@red, 20);
+}
+#jenkins-section{
+  #jenkins-edit-btn{
+    display: none;
+  }
+  &:hover{
+    #jenkins-edit-btn{
+      display: inline-block;
+    }
   }
 }
 #jenkins-whether-list{
+  .toggle-btn{
+    display: none;
+  }
   &.on-edit{
     .toggle-btn{
       display: inline-block;
