@@ -7,6 +7,7 @@ exports = module.exports = {
     sprint:'sprint',
     loading:'loading...',
     edit:'edit',
+    done:'done',
     login:{
         caption:'login',
         username:'username',

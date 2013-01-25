@@ -1029,7 +1029,8 @@
         jenkinsSection:function () {
             var section = $(this),
                 list = $('#jenkins-whether-list', section),
-                editBtn = $('#jenkins-edit-btn', section);
+                editBtn = $('#jenkins-edit-btn', section),
+                doneBtn = $('#jenkins-done-btn', section);
             section.showSpin();
             var data = {};
             if (CS.team.jenkins_view) data.views = CS.team.jenkins_view;
@@ -1042,8 +1043,15 @@
                 }
             });
             editBtn.click(function () {
-                list.toggleClass('on-edit');
+                list.addClass('on-edit');
+                doneBtn.show();
+                editBtn.hide();
             });
+            doneBtn.click(function () {
+                list.removeClass('on-edit');
+                doneBtn.hide();
+                editBtn.show();
+            }).hide();
             return section;
         },
         procedureSection:function () {

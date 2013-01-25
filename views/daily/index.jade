@@ -253,8 +253,10 @@ block content
 
     section#jenkins-section.float-left.positioned.paper
         .paper-content.positioned
-            a#jenkins-edit-btn.stick-right.stick-top()
+            a#jenkins-edit-btn.stick-right.stick-top
                 | #{msg.label.edit}
+            a#jenkins-done-btn.stick-right.stick-top
+                | #{msg.label.done}
             h2.paper-title
                 |#{label.jenkins}
                 img.icon.jenkins-icon(src='/images/jenkins.fav.ico')
