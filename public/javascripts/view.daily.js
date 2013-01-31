@@ -609,7 +609,7 @@
                             item = item
                                 .remove()
                                 .clone()
-                                .appendTo(ul)
+                            v.appendTo(ul)
                                 .groupingRouletteItem(data)
                                 .removeClass('grouping-roulette-item-absent');
                             item.findByName('absent').val('false');
@@ -1004,13 +1004,42 @@
             });
             return img;
         },
+        toggleBtn:function (change) {
+            var btn = $(this);
+            btn.click(function () {
+                btn.toggleClass('on');
+                var active = btn.hasClass('on');
+                change.call(btn, active);
+            });
+            $('.pinch', btn).draggable({
+                containment:'parent',
+                axis:'x',
+                stop:function () {
+                    var pinch = $(this);
+                    var x = pinch.position().left + pinch.width() / 2,
+                        w = btn.width();
+                    var on = btn.is('.on');
+
+                    var toggleOff = on && (x < w / 3);
+                    if (toggleOff) {
+                        btn.removeClass('on');
+                        change.call(btn, false);
+                    } else {
+                        var toggleOn = !on && (x > w / 3 * 2);
+                        if (toggleOn) {
+                            btn.addClass('on');
+                            change.call(btn, true);
+                        }
+                    }
+                    pinch.removeAttr('style');
+                }
+            });
+            return btn;
+        },
         jenkinsWhetherListItem:function () {
             return $(this).each(function () {
                 var li = $(this);
-                var toggleBtn = $('.toggle-btn', li).click(function () {
-                    var btn = $(this);
-                    btn.toggleClass('on');
-                    var active = btn.hasClass('on');
+                var toggleBtn = $('.toggle-btn', li).toggleBtn(function (active) {
                     if (active) {
                         li.removeClass('disabled');
                     } else {
@@ -1018,9 +1047,10 @@
                     }
                     li.trigger('jenkins-whether-toggled');
                 });
+
                 var isIgnore = (function (ignores, href) {
                     if (!ignores) return false;
-                    for (var i = 0; i < ignores.length; i++) {1
+                    for (var i = 0; i < ignores.length; i++) {
                         var hit = ignores[i] === href;
                         if (hit) return true;
                     }
@@ -1043,7 +1073,7 @@
                     .appendTo(ul)
                     .jenkinsWhetherListItem();
 
-                if(li.is('.disabled')) return;
+                if (li.is('.disabled')) return;
 
                 var isAngry = !!data.img.match('health-00to19.png');
                 if (isAngry) {
@@ -1100,7 +1130,6 @@
                     team_id:CS.team._id
                 }, function (data) {
                     if (data.success) {
-                        console.log(data);
                         CS.team.jenkins_ignore = data.jenkins_ignore;
                     } else {
                         console.error('failed to update jenkins ignore');

@@ -892,7 +892,7 @@ fieldset{
   display:inline-block;
   margin: 0 4px;
   font-size:0.5em;
-  padding:2px 4px;
+  padding:0;
   @corner:4px;
   .border-radius(@corner);
   .box-shadow(2px 2px 4px, 0.4, inset);
@@ -910,12 +910,16 @@ fieldset{
     left: 0;
     top:3%;
     .linear-gradient(@white, darken(@white, 10));
-    cursor: pointer;
+    .grabbable;
+    &.ui-draggable-dragging{
+      .box-shadow(none);
+    }
   }
   .toggle-btn-left,
   .toggle-btn-right{
-    padding: 0 2px;
+    padding: 2px 6px;
     text-align: center;
+    display: inline-block;
   }
 }
 #jenkins-section{
