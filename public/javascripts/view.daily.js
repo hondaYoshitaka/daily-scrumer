@@ -1004,16 +1004,10 @@
             });
             return img;
         },
-        jenkinsWhetherList:function (data) {
-            var ul = $(this);
-            var tmpl = {
-                li:Handlebars.templates['tmpl.jenkins-whether-list-item']
-            }
-            CS.jenkinsImage = {angry:false, sad:false};
-            data && data.forEach(function (data) {
-                var li = $(tmpl.li(data))
-                    .appendTo(ul);
-                $('.toggle-btn', li).click(function () {
+        jenkinsWhetherListItem:function () {
+            return $(this).each(function () {
+                var li = $(this);
+                var toggleBtn = $('.toggle-btn', li).click(function () {
                     var btn = $(this);
                     btn.toggleClass('on');
                     var active = btn.hasClass('on');
@@ -1024,6 +1018,32 @@
                     }
                     li.trigger('jenkins-whether-toggled');
                 });
+                var isIgnore = (function (ignores, href) {
+                    if (!ignores) return false;
+                    for (var i = 0; i < ignores.length; i++) {1
+                        var hit = ignores[i] === href;
+                        if (hit) return true;
+                    }
+                    return false;
+                })(CS.team.jenkins_ignore, li.find('a').attr('href'));
+                if (isIgnore) {
+                    toggleBtn.trigger('click');
+
+                }
+            });
+        },
+        jenkinsWhetherList:function (data) {
+            var ul = $(this);
+            var tmpl = {
+                li:Handlebars.templates['tmpl.jenkins-whether-list-item']
+            }
+            CS.jenkinsImage = {angry:false, sad:false};
+            data && data.forEach(function (data) {
+                var li = $(tmpl.li(data))
+                    .appendTo(ul)
+                    .jenkinsWhetherListItem();
+
+                if(li.is('.disabled')) return;
 
                 var isAngry = !!data.img.match('health-00to19.png');
                 if (isAngry) {
@@ -1066,17 +1086,26 @@
                 editBtn.show();
             }).hide();
             section.on('jenkins-whether-toggled', function () {
-                var ignoreItem = [];
+                var ignores = [];
                 $('.jenkins-whether-list-item', list).each(function () {
                     var li = $(this);
                     var href = li.find('a').attr('href');
                     var on = li.find('.toggle-btn').hasClass('on');
                     if (!on) {
-                        ignoreItem.push(href);
+                        ignores.push(href);
                     }
                 });
-                //TODO
-
+                $.post('/update_team/jenkins_ignore', {
+                    jenkins_ignore:ignores,
+                    team_id:CS.team._id
+                }, function (data) {
+                    if (data.success) {
+                        console.log(data);
+                        CS.team.jenkins_ignore = data.jenkins_ignore;
+                    } else {
+                        console.error('failed to update jenkins ignore');
+                    }
+                });
             });
             return section;
         },

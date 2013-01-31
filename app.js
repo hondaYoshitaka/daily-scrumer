@@ -99,6 +99,7 @@ app.configure('development', function () {
     app.post('/update_team/new_routine', r.team.update.routine.add);
     app.post('/update_team/alert_line', r.team.update.alert_line);
     app.post('/update_team/jenkins_view', r.team.update.jenkins_view);
+    app.post('/update_team/jenkins_ignore', r.team.update.jenkins_ignore);
 
     app.get('/sprint/count_bugs', r.sprint.count_bugs);
     app.get('/sprint/get_task_times', r.sprint.task_time);
