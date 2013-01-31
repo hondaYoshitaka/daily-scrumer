@@ -1011,7 +1011,18 @@
             }
             CS.jenkinsImage = {angry:false, sad:false};
             data && data.forEach(function (data) {
-                ul.append(tmpl.li(data));
+                var li = $(tmpl.li(data)).appendTo(ul);
+                $('.toggle-btn', li).click(function () {
+                    var btn = $(this);
+                    btn.toggleClass('on');
+                    var active = btn.hasClass('on');
+                    if(active){
+                        li.removeClass('disabled');
+                    } else {
+                        li.addClass('disabled');
+                    }
+                });
+
                 var isAngry = !!data.img.match('health-00to19.png');
                 if (isAngry) {
                     CS.jenkinsImage.angry = true;

@@ -931,10 +931,30 @@ fieldset{
 #jenkins-whether-list{
   .toggle-btn{
     display: none;
+    &.on{
+      .pinch{
+        left: auto;
+        right: 0;
+      }
+    }
   }
+
   &.on-edit{
     .toggle-btn{
       display: inline-block;
+    }
+  }
+  li{
+    &.disabled{
+      opacity: 0.2;
+      &:hover{
+        opacity: 0.5;
+      }
+      a{
+        small{
+          text-decoration: line-through;
+        }
+      }
     }
   }
 }
