@@ -944,9 +944,13 @@ fieldset{
     .toggle-btn{
       display: inline-block;
     }
+    li.disabled{
+      display: block;
+    }
   }
   li{
     &.disabled{
+      display: none;
       opacity: 0.4;
       &:hover{
         opacity: 0.6;

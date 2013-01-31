@@ -1011,16 +1011,18 @@
             }
             CS.jenkinsImage = {angry:false, sad:false};
             data && data.forEach(function (data) {
-                var li = $(tmpl.li(data)).appendTo(ul);
+                var li = $(tmpl.li(data))
+                    .appendTo(ul);
                 $('.toggle-btn', li).click(function () {
                     var btn = $(this);
                     btn.toggleClass('on');
                     var active = btn.hasClass('on');
-                    if(active){
+                    if (active) {
                         li.removeClass('disabled');
                     } else {
                         li.addClass('disabled');
                     }
+                    li.trigger('jenkins-whether-toggled');
                 });
 
                 var isAngry = !!data.img.match('health-00to19.png');
@@ -1063,6 +1065,19 @@
                 doneBtn.hide();
                 editBtn.show();
             }).hide();
+            section.on('jenkins-whether-toggled', function () {
+                var ignoreItem = [];
+                $('.jenkins-whether-list-item', list).each(function () {
+                    var li = $(this);
+                    var href = li.find('a').attr('href');
+                    var on = li.find('.toggle-btn').hasClass('on');
+                    if (!on) {
+                        ignoreItem.push(href);
+                    }
+                });
+                //TODO
+
+            });
             return section;
         },
         procedureSection:function () {
