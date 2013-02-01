@@ -81,7 +81,7 @@ JenkinsAgent.prototype.getViews = function (callback) {
 };
 JenkinsAgent.prototype.getWhether = function (url, callback) {
     var s = this;
-    var base = conf.url.base || (function (url) {
+    var base = (function (url) {
         return [url.protocol, url.host].join('\/\/');
     })(require('url').parse(url))
     s.get(url, function (res, body, $) {
@@ -97,7 +97,7 @@ JenkinsAgent.prototype.getWhether = function (url, callback) {
                 if (name) {
                     data.push({
                         name:name,
-                        link:[base, a.attr('href')].join('/'),
+                        link:conf.url.base + a.attr('href'),
                         img:base + td.eq(1).find('img').attr('src')
                     });
                 }
