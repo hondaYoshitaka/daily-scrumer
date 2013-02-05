@@ -609,7 +609,7 @@
                             item = item
                                 .remove()
                                 .clone()
-                            v.appendTo(ul)
+                                .appendTo(ul)
                                 .groupingRouletteItem(data)
                                 .removeClass('grouping-roulette-item-absent');
                             item.findByName('absent').val('false');
