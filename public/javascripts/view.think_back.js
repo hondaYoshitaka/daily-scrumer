@@ -110,6 +110,8 @@
             });
             var table = $(tmpl.table(data)).appendTo(form);
             table.findByRole('editable-text').editableText().change(function () {
+                if(table.data('busy')) return;
+                table.busy(300);
                 var groups = table.findByName('group'),
                     hours = table.findByName('hour'),
                     total = table.findByName('total'),
