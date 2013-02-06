@@ -21,10 +21,10 @@
                 callback && callback.call(select, sprint);
             }).trigger('change');
 
-            $(document).on('update-sprint', function(e, sprint){
+            $(document).on('update-sprint', function (e, sprint) {
                 var selected = $('option:selected', select);
                 var hit = (selected.data('sprint')._id == sprint._id);
-                if(hit){
+                if (hit) {
                     selected.data('sprint', sprint);
                     selected.trigger('change');
                 }
@@ -40,7 +40,6 @@
             var form = $(this);
             var days = (end - begin) / (24 * 60 * 60 * 1000);
 
-            form.empty();
 
             var data = (function (date) {
                 var data = {
@@ -78,51 +77,55 @@
             var tmpl = {
                 table:Handlebars.templates['tmpl.work-hours-table']
             }
-            form.submit(function (e) {
-                var data = {};
-                data._id = sprint_id;
-                data.work_hours = (function () {
-                    var array = [];
-                    $('thead', table).find('th').each(function (i) {
-                        if (i == 0) return;
-                        var obj = {};
-                        var input = $('input', this);
-                        obj[input.attr('name')] = parseInt(input.val(), 10);
-                        array[i - 1] = obj;
-                    });
-                    $('tbody', table).find('tr').each(function () {
-                        $('td', this).each(function (i) {
-                            var input = $('input', this),
-                                name = input.attr('name');
-                            array[i][name] = input.val();
+            if (!form.data('bound')) {
+                form.empty();
+                form.data('bound', true);
+                form.submit(function (e) {
+                    var data = {};
+                    data._id = sprint_id;
+                    data.work_hours = (function () {
+                        var array = [];
+                        $('thead', table).find('th').each(function (i) {
+                            if (i == 0) return;
+                            var obj = {};
+                            var input = $('input', this);
+                            obj[input.attr('name')] = parseInt(input.val(), 10);
+                            array[i - 1] = obj;
                         });
+                        $('tbody', table).find('tr').each(function () {
+                            $('td', this).each(function (i) {
+                                var input = $('input', this),
+                                    name = input.attr('name');
+                                array[i][name] = input.val();
+                            });
+                        });
+                        return array;
+                    })();
+                    $.post('/sprint/update_all_work_hours', data, function (data) {
+                        if (data.success) {
+                            form.trigger('update-sprint', [data.sprint])
+                        } else {
+                            console.error('failed to update wrok hours');
+                        }
                     });
-                    return array;
-                })();
-                $.post('/sprint/update_all_work_hours', data, function(data){
-                    if(data.success){
-//                        form.trigger('update-sprint', [data.sprint])
-                    } else {
-                        console.error('failed to update wrok hours');
-                    }
+                    e.preventDefault();
                 });
-                e.preventDefault();
-            });
-            var table = $(tmpl.table(data)).appendTo(form);
-            table.findByRole('editable-text').editableText().change(function () {
-                if(table.data('busy')) return;
-                table.busy(300);
-                var groups = table.findByName('group'),
-                    hours = table.findByName('hour'),
-                    total = table.findByName('total'),
-                    totalDisplay = table.findByRole('work-hour-total');
-                for(var i=0; i<days;i++){
-                    var val = Number(groups.eq(i).val()) * Number(hours.eq(i).val());
-                    totalDisplay.eq(i).text(val);
-                    total.eq(i).val(val);
-                }
-                form.submit();
-            });
+                var table = $(tmpl.table(data)).appendTo(form);
+                table.findByRole('editable-text').editableText().change(function () {
+                    if (table.data('busy')) return;
+                    table.busy(300);
+                    var groups = table.findByName('group'),
+                        hours = table.findByName('hour'),
+                        total = table.findByName('total'),
+                        totalDisplay = table.findByRole('work-hour-total');
+                    for (var i = 0; i < days; i++) {
+                        var val = Number(groups.eq(i).val()) * Number(hours.eq(i).val());
+                        totalDisplay.eq(i).text(val);
+                        total.eq(i).val(val);
+                    }
+                    form.submit();
+                });
+            }
 
 
             return form;
