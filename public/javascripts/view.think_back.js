@@ -101,7 +101,7 @@
                 })();
                 $.post('/sprint/update_all_work_hours', data, function(data){
                     if(data.success){
-                        form.trigger('update-sprint', [data.sprint])
+//                        form.trigger('update-sprint', [data.sprint])
                     } else {
                         console.error('failed to update wrok hours');
                     }
